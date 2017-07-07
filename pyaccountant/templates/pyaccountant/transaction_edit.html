@@ -1,0 +1,72 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap3-typeahead.min.js' %}"></script>
+
+<script>
+$(function() {
+  $('#id_date').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd',
+
+  })
+  if ($('input#id_source_account').length > 0) {
+      $.getJSON('{% url 'api_accounts' 'revenue' %}').done(function (data) {
+          $('#id_source_account').typeahead({source: data});
+      });
+  }
+  if ($('input#id_destination_account').length > 0) {
+      $.getJSON('{% url 'api_accounts' 'expense' %}').done(function (data) {
+          $('#id_destination_account').typeahead({source: data});
+      });
+  }
+})
+</script>
+{% endblock %}
+
+{% block content_header %}
+<h1>Transactions
+  <small>Add new transaction</small>
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="{% url 'transactions' %}">Transactions</a></li>
+  <li class="active">New {{ submenu }}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
+</div>
+<div class="box-body">
+<div class="row justify-content-md-center">
+  <div class="col-sm-8">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.errors }}
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field|add_class:"form-control" }}
+        </div>
+        {% for error in field.errors %}
+        <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">{% trans 'Add' %}</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}

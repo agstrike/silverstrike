@@ -1,0 +1,147 @@
+{% load staticfiles %}
+{% load i18n %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/skin-blue-light.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pyaccountant/css/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    {% block stylesheets %}
+    {% endblock %}
+  </head>
+  <body class="sidebar-mini skin-blue-light">
+    <div class="wrapper">
+      <header class="main-header">
+        <a href="/" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>PyA</b></span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>PyA</b>ccountant</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span class="hidden-xs">Example User</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="user-header" id="navbar-user">
+                    <p>
+                    Example User
+                    </p>
+                  </li>
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            <li {% if menu == "home" %}class="active"{% endif %}>
+              <a href="/">
+                <i class="fa fa-home"></i> <span>Home</span>
+              </a>
+            </li>
+            <li class="treeview{% if menu == "accounts" %} active{% endif %}">
+              <a href="#">
+                <i class="fa fa-book fa-fw"></i>
+                <span>Accounts</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li{% if submenu == "personal" %} class="active"{% endif %}>
+                  <a href="{% url 'personal_accounts' %}">{% trans 'Personal Accounts' %}</a>
+                </li>
+                <li{% if submenu == "expense" %} class="active"{% endif %}>
+                  <a href="{% url 'expense_accounts' %}">{% trans 'Expense Accounts' %}</a>
+                </li>
+                <li{% if submenu == "revenue" %} class="active"{% endif %}>
+                  <a href="{% url 'revenue_accounts' %}">{% trans 'Revenue Accounts' %}</a>
+                </li>
+                <li{% if submenu == "new" %} class="active"{% endif %}>
+                  <a href="{% url 'account_new' %}">{% trans 'Create Account' %}</a>
+                </li>
+              </ul>
+            </li>
+            <li class="treeview{% if menu == "transactions" %} active{% endif %}">
+              <a href="#">
+                <i class="fa fa-handshake-o fa-fw"></i>
+                <span>Transactions</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li{% if submenu == "all" %} class="active"{% endif %}>
+                  <a href="{% url 'transactions' %}">{% trans 'All Transactions' %}</a>
+                </li>
+                <li{% if submenu == "withdraw" %} class="active"{% endif %}>
+                  <a href="{% url 'withdraw_new' %}">{% trans 'New Withdrawl' %}</a>
+                </li>
+                <li{% if submenu == "deposit" %} class="active"{% endif %}>
+                  <a href="{% url 'deposit_new' %}">{% trans 'New Deposit' %}</a>
+                </li>
+                <li{% if submenu == "transfer" %} class="active"{% endif %}>
+                  <a href="{% url 'transfer_new' %}">{% trans 'New Transfer' %}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper">
+        <section class="content-header">
+          {% block content_header %}
+          <h1>Home
+            <small>All the important stuff</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active">Home</li>
+          </ol>
+          {% endblock %}
+        </section>
+        <section class="content">
+          {% block content %}
+          {% endblock %}
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 0.1
+        </div>
+        <strong><a href="https://github.com/PyAccountant/PyAccountant">PyAccountant</a></strong>
+      </footer>
+    </div>
+    <script src="{% static 'pyaccountant/js/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/js/adminlte.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

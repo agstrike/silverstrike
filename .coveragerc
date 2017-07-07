@@ -1,0 +1,8 @@
+[run]
+source = pyaccountant
+omit =
+  pyaccountant/migrations/*.py
+  pyaccountant/tests/*.py
+
+[html]
+directory = coverage

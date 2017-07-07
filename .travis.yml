@@ -1,0 +1,29 @@
+sudo: false
+language: python
+before_script:
+- pip install tox
+
+script: tox
+notifications:
+  on_success: change
+  on_failure: always
+
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=flake8
+    - python: 3.6
+      env: TOXENV=codecov
+    - python: 3.6
+      env: TOXENV=django_110
+    - python: 3.6
+      env: TOXENV=django_111
+    - python: 3.6
+      env: TOXENV=django_latest
+    - python: 3.5
+      env: TOXENV=django_110
+    - python: 3.5
+      env: TOXENV=django_111
+  allow_failures:
+    - python: 3.6
+      env: TOXENV=django_latest

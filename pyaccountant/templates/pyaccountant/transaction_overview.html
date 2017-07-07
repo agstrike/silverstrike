@@ -1,0 +1,44 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+
+
+{% block content_header %}
+<h1>Transactions
+  <small>{{ account.name }}</small>
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  {% if account %}
+  <li>Transactions</li>
+  <li class="active">{{ account.name }}</li>
+  {% else %}
+  <li class="active">Transactions</li>
+  {% endif %}
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transaction list' %}</h3>
+</div>
+<div class="box-body">
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <th>Title</th>
+    <th>Amount</th>
+    <th>Account</th>
+  </tr>
+{% for transaction in transactions %}
+<tr>
+  <td>{{ transaction.journal.date }}</td>
+  <td>{{ transaction.journal.title }}</td>
+  <td>{{ transaction.amount }}</td>
+  <td>{{ transaction.account }}</td>
+  </tr>
+{% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}
