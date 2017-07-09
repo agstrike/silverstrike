@@ -1,0 +1,5 @@
+gunicorn
+psycopg2
+whitenoise
+dj-database-url
+-e .

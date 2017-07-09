@@ -1,29 +1,39 @@
 sudo: false
 language: python
-before_script:
-- pip install tox
-
-script: tox
+python:
+  - 3.6
 notifications:
   on_success: change
   on_failure: always
-
-matrix:
+before_script:
+- pip install tox
+jobs:
   include:
-    - python: 3.6
-      env: TOXENV=flake8
-    - python: 3.6
-      env: TOXENV=codecov
-    - python: 3.6
-      env: TOXENV=django_110
-    - python: 3.6
-      env: TOXENV=django_111
-    - python: 3.6
-      env: TOXENV=django_latest
-    - python: 3.5
-      env: TOXENV=django_110
-    - python: 3.5
-      env: TOXENV=django_111
-  allow_failures:
-    - python: 3.6
-      env: TOXENV=django_latest
+    - stage: test
+      script: tox -e django_111
+    - script: tox -e django_110
+    - script: tox -e flake8
+    - script: tox -e codecov
+    - stage: test
+      python: 3.5
+      script: tox -e django_111
+    - stage: test
+      python: 3.5
+      script: tox -e django_110
+    - stage: deploy
+      python: 2.7
+      before_script: skip
+      script: skip
+      before_deploy:
+      - mv heroku/requirements.txt .
+      - mv heroku/Procfile .
+      deploy:
+        provider: heroku
+        app: pyaccountant
+        on: master
+        run:
+        - python heroku/manage.py collectstatic --noinput
+        - python heroku/manage.py migrate
+        skip_cleanup: true
+        api_key:
+          secure: g0AZZdbzNcoVyBfCBhs123h2IeujqOPWIUDaArMQyRcvwzwP2VlFrAeh4+YURfMLgPtwsFT1qx48HXvwgRPTenpPnHSNewq7lr9upXp8OwlTxFqCE9YezmTTzmpYY5FrJTcrTFgWdVLgOHG9PTdoPC3Ajj5MN3/bMxUubbC9kdVTayuixx+sjEh6+fA+trHp67Gi6B3hSTotZSxA+S5IPP0aNcU0KHRgFGRxCkvzNOPidVj9GklSvLN0VdgnhmBwImrzysCFdCbMXKzzVKwNXOH9wgkYEP3ju/EWYEt1ROcgbKluPN9F5YUBFgyXIugA8pdqeEX2nPmfuLsTzeIv/cAy5TnEPAvGYf2ngEBCqVlH+g3T0Fo1QoawF9B0MNDx/wnEK34Or6j0UR5U/SjgJtKH7nJZcN2wZAhlxU/EByLVuaV6d1/IyBomfP58CFKvgGjB/YxrxoR8jqRKwLlyjZiZ8Ke7vjv5hL2OeJoXZsrECbpXaLf9hg9uPuJiQDtuMbEfCk3Kr0uhPfgDZIRqKsVAFXHUPIcHTIHw6a/GaL1pjWEyJVbrb/E1peeASVMCuc/RLIOPVbtzt0o4U5LqMrZhxvbIQslPGxGNu+p4ho71YEqyrKY1HCEcPIUp2XDoqZZKUofkf8tb+ZaQNLYjmwyqxR4NVqHLg64iEwl70ok=
