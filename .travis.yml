@@ -25,6 +25,7 @@ jobs:
       before_script: skip
       script: skip
       before_deploy:
+      - rm demo -rf
       - mv heroku/requirements.txt .
       - mv heroku/Procfile .
       deploy:
@@ -32,7 +33,6 @@ jobs:
         app: pyaccountant
         on: master
         run:
-        - python heroku/manage.py collectstatic --noinput
         - python heroku/manage.py migrate
         skip_cleanup: true
         api_key:
