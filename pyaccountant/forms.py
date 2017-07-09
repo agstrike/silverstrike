@@ -22,6 +22,7 @@ class TransferForm(forms.ModelForm):
                                              defaults={'amount': -amount, 'account': src})
         Transaction.objects.update_or_create(journal=journal, amount__gt=0,
                                              defaults={'amount': amount, 'account': dst})
+        return journal
 
 
 class WithdrawForm(TransferForm):
