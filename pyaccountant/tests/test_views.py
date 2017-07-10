@@ -89,3 +89,7 @@ class ViewTests(TestCase):
         self.assertEquals(context['form']['destination_account'].value(), 2)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+
+    def test_context_IndexView(self):
+        context = self.client.get(reverse('index')).context
+        self.assertEquals(context['menu'], 'home')
