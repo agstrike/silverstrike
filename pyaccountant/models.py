@@ -34,7 +34,8 @@ class Account(models.Model):
     internal_type = models.IntegerField(choices=[
         (InternalAccountType.personal.value, _('Personal')),
         (InternalAccountType.revenue.value, _('Revenue')),
-        (InternalAccountType.expense.value, _('Expense'))])
+        (InternalAccountType.expense.value, _('Expense'))],
+        default=InternalAccountType.personal.value)
     account_type = models.ForeignKey(AccountType, models.CASCADE, null=True)
     active = models.BooleanField(default=True)
 

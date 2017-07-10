@@ -18,12 +18,6 @@ class AccountCreate(generic.edit.CreateView):
         context['submenu'] = 'new'
         return context
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.internal_type = InternalAccountType.personal.value
-        self.object.save()
-        return http.HttpResponseRedirect(self.get_success_url())
-
 
 class AccountUpdate(generic.edit.UpdateView):
     model = Account
