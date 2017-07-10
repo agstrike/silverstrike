@@ -62,6 +62,8 @@ class TransactionJournal(models.Model):
 
 class Transaction(models.Model):
     account = models.ForeignKey(Account, models.CASCADE)
+    opposing_account = models.ForeignKey(Account, models.CASCADE,
+                                         related_name='opposing_transactions')
     journal = models.ForeignKey(TransactionJournal, models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
 

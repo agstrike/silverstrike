@@ -19,9 +19,11 @@ class TransferForm(forms.ModelForm):
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
         Transaction.objects.update_or_create(journal=journal, amount__lt=0,
-                                             defaults={'amount': -amount, 'account': src})
+                                             defaults={'amount': -amount, 'account': src,
+                                                       'opposing_account': dst})
         Transaction.objects.update_or_create(journal=journal, amount__gt=0,
-                                             defaults={'amount': amount, 'account': dst})
+                                             defaults={'amount': amount, 'account': dst,
+                                                       'opposing_account': src})
         return journal
 
 

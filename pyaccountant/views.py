@@ -1,4 +1,3 @@
-from django import http
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -108,10 +107,10 @@ class TransactionUpdate(generic.edit.UpdateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        transactions = Transaction.objects.filter(journal_id=self.kwargs.get('pk'))
-        initial['source_account'] = transactions.get(amount__lt=0).account.pk
-        initial['destination_account'] = transactions.get(amount__gt=0).account.pk
-        initial['amount'] = transactions.get(amount__gt=0).amount
+        transaction = Transaction.objects.get(journal_id=self.kwargs.get('pk'), amount__gt=0)
+        initial['source_account'] = transaction.opposing_account.pk
+        initial['destination_account'] = transaction.account.pk
+        initial['amount'] = transaction.amount
         return initial
 
     def get_context_data(self, **kwargs):
