@@ -53,15 +53,14 @@ $(function() {
   <div class="col-sm-8">
     <form method="post">
       {% csrf_token %}
-      {{ form.errors }}
       {% for field in form %}
-        <div class="form-group">
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
           {{ field.label_tag }}
           {{ field|add_class:"form-control" }}
+          {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
         </div>
-        {% for error in field.errors %}
-        <span class="help-block">{{ error }}</span>
-        {% endfor %}
       {% endfor %}
       <button type="submit" class="btn btn-primary">{% trans 'Add' %}</button>
     </form>

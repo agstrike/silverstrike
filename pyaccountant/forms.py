@@ -10,8 +10,10 @@ class TransferForm(forms.ModelForm):
         fields = ['title', 'source_account', 'destination_account', 'amount', 'date', 'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
-    source_account = forms.ModelChoiceField(queryset=Account.objects.all())
-    destination_account = forms.ModelChoiceField(queryset=Account.objects.all())
+    source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
+        internal_type=InternalAccountType.personal.value))
+    destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
+        internal_type=InternalAccountType.personal.value))
 
     def save(self, commit=True):
         journal = super().save(commit)
@@ -25,6 +27,13 @@ class TransferForm(forms.ModelForm):
                                              defaults={'amount': amount, 'account': dst,
                                                        'opposing_account': src})
         return journal
+
+    def clean(self):
+        super().clean()
+        if self.cleaned_data['source_account'] == self.cleaned_data['destination_account']:
+            error = 'source and destination account have to be different'
+            self.add_error('destination_account', error)
+            self.add_error('source_account', error)
 
 
 class WithdrawForm(TransferForm):
