@@ -4,7 +4,7 @@ from . import api, views
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.IndexView.as_view(), name='index'),
 
     url(r'^transactions/$', views.TransactionIndex.as_view(), name='transactions'),
     url(r'^transactions/(?P<pk>\d+)$',

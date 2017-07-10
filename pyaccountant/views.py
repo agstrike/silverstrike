@@ -137,5 +137,10 @@ class DepositCreate(TransferCreate):
         return context
 
 
-def index(request):
-    return render(request, 'pyaccountant/index.html', {'menu': 'home'})
+class IndexView(generic.TemplateView):
+    template_name = 'pyaccountant/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = 'home'
+        return context
