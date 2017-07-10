@@ -36,7 +36,7 @@ class WithdrawForm(TransferForm):
                                                    active=True,
                                                    internal_type=InternalAccountType.expense.value)
         self.cleaned_data['destination_account'] = account
-        super().save(commit)
+        return super().save(commit)
 
 
 class DepositForm(TransferForm):
@@ -48,4 +48,4 @@ class DepositForm(TransferForm):
                                                    active=True,
                                                    internal_type=InternalAccountType.revenue.value)
         self.cleaned_data['source_account'] = account
-        super().save(commit)
+        return super().save(commit)
