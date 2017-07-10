@@ -19,9 +19,12 @@ urlpatterns = [
         views.TransactionUpdate.as_view(), name='transaction_edit'),
 
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
-    url(r'^accounts/personal$', views.PersonalAccountIndex.as_view(), name='personal_accounts'),
-    url(r'^accounts/expense$', views.ExpenseAccountIndex.as_view(), name='expense_accounts'),
-    url(r'^accounts/revenue$', views.RevenueAccountIndex.as_view(), name='revenue_accounts'),
+    url(r'^accounts/personal$',
+        views.AccountIndex.as_view(account_type='personal'), name='personal_accounts'),
+    url(r'^accounts/expense$',
+        views.AccountIndex.as_view(account_type='expense'), name='expense_accounts'),
+    url(r'^accounts/revenue$',
+        views.AccountIndex.as_view(account_type='revenue'), name='revenue_accounts'),
     url(r'^accounts/update/(?P<pk>\d+)$', views.AccountUpdate.as_view(), name='account_update'),
 
     url(r'^api/accounts/(?P<account_type>\w+)$', api.get_accounts, name='api_accounts')

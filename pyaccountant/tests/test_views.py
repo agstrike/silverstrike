@@ -6,6 +6,16 @@ from pyaccountant.models import Account, InternalAccountType
 
 
 class ViewTests(TestCase):
+    def setUp(self):
+        self.account = Account.objects.create(
+            name="first account", internal_type=InternalAccountType.personal.value)
+        self.personal = Account.objects.create(
+            name="personal account", internal_type=InternalAccountType.personal.value)
+        self.expense = Account.objects.create(
+            name="expense account", internal_type=InternalAccountType.expense.value)
+        self.revenue = Account.objects.create(
+            name="revenue account", internal_type=InternalAccountType.revenue.value)
+
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context
         self.assertEquals(context['menu'], 'accounts')
@@ -15,16 +25,23 @@ class ViewTests(TestCase):
         context = self.client.get(reverse('expense_accounts')).context
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'expense')
+        self.assertEquals(len(context['accounts']), 1)
+        self.assertEquals(context['accounts'][0], self.expense)
 
     def test_context_RevenueAccountIndex(self):
         context = self.client.get(reverse('revenue_accounts')).context
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'revenue')
+        self.assertEquals(len(context['accounts']), 1)
+        self.assertEquals(context['accounts'][0], self.revenue)
 
     def test_context_PersonalAccountIndex(self):
         context = self.client.get(reverse('personal_accounts')).context
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'personal')
+        self.assertEquals(len(context['accounts']), 2)
+        self.assertIn(self.personal, context['accounts'])
+        self.assertIn(self.account, context['accounts'])
 
     def test_context_TransactionIndex(self):
         context = self.client.get(reverse('transactions')).context
@@ -32,12 +49,10 @@ class ViewTests(TestCase):
         self.assertEquals(context['submenu'], 'all')
 
     def test_context_account_TransactionIndex(self):
-        account = Account.objects.create(
-            name="some_account", internal_type=InternalAccountType.personal.value)
-        context = self.client.get(reverse('account_transactions', args=[account.pk])).context
+        context = self.client.get(reverse('account_transactions', args=[self.account.pk])).context
         self.assertEquals(context['menu'], 'transactions')
         self.assertEquals(context['submenu'], 'all')
-        self.assertEquals(context['account'], account)
+        self.assertEquals(context['account'], self.account)
 
     def test_context_TransferCreate(self):
         context = self.client.get(reverse('transfer_new')).context
@@ -55,11 +70,6 @@ class ViewTests(TestCase):
         self.assertEquals(context['submenu'], 'withdraw')
 
     def test_context_and_initial_TransactionUpdate(self):
-        Account.objects.create(
-            name="first account", internal_type=InternalAccountType.personal.value)
-        Account.objects.create(
-            name="second account", internal_type=InternalAccountType.personal.value)
-
         form = TransferForm({
             'title': 'transaction_title',
             'source_account': 1,

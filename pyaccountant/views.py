@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -28,45 +27,19 @@ class AccountDelete(generic.edit.DeleteView):
     success_url = reverse_lazy('personal_accounts')
 
 
-class ExpenseAccountIndex(generic.ListView):
+class AccountIndex(generic.ListView):
     template_name = 'pyaccountant/accounts.html'
     context_object_name = 'accounts'
+    account_type = ''
 
     def get_queryset(self):
-        return Account.objects.filter(internal_type=InternalAccountType.expense.value)
+        account_type = getattr(InternalAccountType, self.account_type).value
+        return Account.objects.filter(internal_type=account_type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        context['submenu'] = 'expense'
-        return context
-
-
-class PersonalAccountIndex(generic.ListView):
-    template_name = 'pyaccountant/accounts.html'
-    context_object_name = 'accounts'
-
-    def get_queryset(self):
-        return Account.objects.filter(internal_type=InternalAccountType.personal.value)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['menu'] = 'accounts'
-        context['submenu'] = 'personal'
-        return context
-
-
-class RevenueAccountIndex(generic.ListView):
-    template_name = 'pyaccountant/accounts.html'
-    context_object_name = 'accounts'
-
-    def get_queryset(self):
-        return Account.objects.filter(internal_type=InternalAccountType.revenue.value)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['menu'] = 'accounts'
-        context['submenu'] = 'revenue'
+        context['submenu'] = self.account_type
         return context
 
 
