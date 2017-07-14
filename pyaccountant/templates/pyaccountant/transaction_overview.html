@@ -1,6 +1,9 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
 
+{% block stylesheets %}
+{% endblock %}
+
 
 {% block content_header %}
 <h1>Transactions
@@ -18,6 +21,13 @@
 {% endblock %}
 
 {% block content %}
+{% if account %}
+<div class="box">
+  <div class="box-body">
+  <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+</div>
+{% endif %}
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Transaction list' %}</h3>
@@ -40,5 +50,85 @@
 {% endfor %}
 </table>
 </div>
+<div class="box-footer text-center">
+{% if is_paginated %}
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li><a href="{{ request.path }}?page={{ page_obj.previous_page_number}}"><i class="force-parent-lh fa fa-chevron-left" aria-hidden="true"></i>
+</a>
+{% endif %}
+</li>
+<li>
+  <select class="form-control">
+            {% for _ in ''|center:page_obj.paginator.num_pages %}
+            {% if forloop.counter == page_obj.number %}
+            <option selected="">
+            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </option>
+            {% else %}
+            <option>
+            {{ forloop.counter }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+</li>
+{% if page_obj.has_next %}
+<li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right" aria-hidden="true"></i>
+</a></li>
+{% endif %}
+</ul>
+
+{% endif %}
 </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+  $('select').change(function() {
+    $( "select option:selected" ).each(function() {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  })
+  {% if account %}
+
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+  {% for label, value in account.get_data_points %}
+  "{{ label }}",
+  {% endfor %}
+  ],
+        datasets: [{
+            label: 'Balance',
+            fill: false,
+            pointRadius: 2,
+            borderColor: 'red',
+            backgroundColor: 'red',
+            data: [
+      {% for label, value in account.get_data_points %}
+      {{ value }},
+      {% endfor %}
+    ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+
+
+  {% endif %}
+</script>
 {% endblock %}

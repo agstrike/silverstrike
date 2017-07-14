@@ -46,11 +46,15 @@ class AccountIndex(generic.ListView):
 class TransactionIndex(generic.ListView):
     template_name = 'pyaccountant/transaction_overview.html'
     context_object_name = 'transactions'
+    model = Transaction
+    paginate_by = 50
+    ordering = ["-journal__date"]
 
     def get_queryset(self):
+        queryset = super().get_queryset()
         if 'pk' in self.kwargs:
-            return Transaction.objects.filter(account=self.kwargs.get('pk'))
-        return Transaction.objects.filter(account__internal_type=InternalAccountType.personal.value)
+            return queryset.filter(account=self.kwargs.get('pk'))
+        return queryset.filter(account__internal_type=InternalAccountType.personal.value)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

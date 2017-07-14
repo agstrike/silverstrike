@@ -1,3 +1,14 @@
 #navbar-user {
     height: unset;
 }
+.pagination select {
+    display:inline-block;
+    width:120px;
+    border-radius:0px;
+    float: left;
+    vertical-align: top;
+    margin-left: -1px;
+}
+.force-parent-lh {
+  line-height: inherit !important;
+}

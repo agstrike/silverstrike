@@ -13,6 +13,11 @@
 
 {% block content %}
 <div class="box">
+  <div class="box-body">
+  <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+</div>
+<div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{% trans 'Accounts' %}</h3>
   </div>
@@ -37,4 +42,52 @@
     </table>
   </div>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+var ctx = document.getElementById("myChart").getContext('2d');
+colors = ['red', 'blue', 'orange']
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels:
+        [
+        {% for label, value in accounts.0.get_data_points %}
+        "{{ label }}",
+        {% endfor %}
+        ],
+        datasets: [
+        {% for account in accounts %}
+        {
+            label: '{{ account.name }}',
+            fill: false,
+            pointRadius: 2,
+            backgroundColor: colors[{{ forloop.counter }} - 1],
+            borderColor: colors[{{ forloop.counter }} - 1],
+            data: [
+            {% for label, value in account.get_data_points %}
+            {{ value }},
+            {% endfor %}
+            ],
+        },
+        {% endfor %}
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        tooltips: {
+            mode: 'x'
+        }
+    }
+});
+</script>
 {% endblock %}

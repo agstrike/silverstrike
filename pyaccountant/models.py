@@ -1,6 +1,6 @@
 import enum
 
-from datetime import date
+from datetime import date, timedelta
 
 from django.db import models
 from django.urls import reverse
@@ -47,8 +47,22 @@ class Account(models.Model):
         return Transaction.objects.filter(account=self).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
+    def balance_on(self, date):
+        return Transaction.objects.filter(account=self, journal__date__lte=date).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0
+
     def get_absolute_url(self):
         return reverse('account_detail', kwargs={'pk': self.pk})
+
+    def get_data_points(self, dstart=date.today() - timedelta(days=365),
+                        dend=date.today(), steps=50):
+        step = (dend - dstart) / steps
+        data_points = []
+        for i in range(steps):
+            balance = self.balance_on(dstart)
+            data_points.append((dstart, balance))
+            dstart += step
+        return data_points
 
 
 class TransactionJournal(models.Model):
