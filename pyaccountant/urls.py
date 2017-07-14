@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'^transactions/$', views.TransactionIndex.as_view(), name='transactions'),
     url(r'^accounts/(?P<pk>\d+)/(?P<dstart>\S+)/$',
         views.AccountView.as_view(), name='account_detail'),
+
+    url(r'^recurrances/$', views.RecurringTransactionIndex.as_view(), name='recurrances'),
+
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
     url(r'^accounts/personal$',
         views.AccountIndex.as_view(account_type=Account.PERSONAL), name='personal_accounts'),

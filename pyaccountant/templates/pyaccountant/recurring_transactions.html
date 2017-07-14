@@ -1,0 +1,78 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block content_header %}
+<h1>Recurring Transactions
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Recurring Transactions</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transaction list' %}</h3>
+</div>
+<div class="box-body">
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <th>Title</th>
+    <th>Amount</th>
+    <th>Source Account</th>
+    <th>Destination Account</th>
+    <th>Recurrance</th>
+    <th>Actions</th>
+  </tr>
+{% for transaction in transactions %}
+<tr>
+  <td>{{ transaction.date }}</td>
+  <td>{{ transaction.title }}</td>
+  <td>{{ transaction.amount }}</td>
+  <td>{{ transaction.src }}</td>
+  <td>{{ transaction.dst }}</td>
+  <td>{{ transaction.get_recurrence }}</td>
+  <td>{% if transaction.is_due %}<a class="btn btn-xs btn-danger" href="#!">Create Transaction</a>{% endif %}</td>
+  </tr>
+{% endfor %}
+</table>
+</div>
+<div class="box-footer text-center">
+{% if is_paginated %}
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li><a href="{{ request.path }}?page={{ page_obj.previous_page_number}}"><i class="force-parent-lh fa fa-chevron-left" aria-hidden="true"></i>
+</a>
+{% endif %}
+</li>
+<li>
+  <select class="form-control">
+            {% for _ in ''|center:page_obj.paginator.num_pages %}
+            {% if forloop.counter == page_obj.number %}
+            <option selected="">
+            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </option>
+            {% else %}
+            <option>
+            {{ forloop.counter }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+</li>
+{% if page_obj.has_next %}
+<li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right" aria-hidden="true"></i>
+</a></li>
+{% endif %}
+</ul>
+
+{% endif %}
+</div>
+</div>
+{% endblock %}

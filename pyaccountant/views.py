@@ -12,7 +12,7 @@ from django.views import generic
 from .forms import CSVDefinitionForm, DepositForm, ImportUploadForm, TransferForm, WithdrawForm
 from .lib import import_csv, import_firefly, last_day_of_month
 from .models import (Account, Category, ImportConfiguration,
-                     ImportFile, Transaction, TransactionJournal)
+                     ImportFile, RecurringTransaction, Transaction, TransactionJournal)
 
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -135,6 +135,19 @@ class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
         context['submenu'] = 'transfer'
+        return context
+
+
+class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
+    template_name = 'pyaccountant/recurring_transactions.html'
+    context_object_name = 'transactions'
+    model = RecurringTransaction
+    paginate_by = 50
+    ordering = ["-date"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = 'recurrances'
         return context
 
 

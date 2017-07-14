@@ -85,6 +85,7 @@ class TransactionJournal(models.Model):
     category = models.ForeignKey('Category', related_name='transactions', blank=True, null=True)
     last_modified = models.DateTimeField(auto_now=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
+    bill = models.ForeignKey('RecurringTransaction', blank=True, null=True)
 
     def __str__(self):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
@@ -165,3 +166,30 @@ class ImportConfiguration(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RecurringTransaction(models.Model):
+    WEEKLY = 1
+    MONTHLY = 2
+    YEARLY = 3
+    RECCURENCE_OPTIONS = ((WEEKLY, _('Weekly')),
+        (MONTHLY, _('Monthly')),
+        (YEARLY, _('Yearly')))
+
+    title = models.CharField(max_length=64)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
+    src = models.ForeignKey(Account)
+    dst = models.ForeignKey(Account, related_name='opposing_recurring_transactions')
+    recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+
+    def __str__(self):
+        return '{}({}) due on {}'.format(self.title, self.amount, self.date)
+
+    @property
+    def is_due(self):
+        return date.today() > self.date
+
+    @property
+    def get_recurrence(self):
+        return Recurrence(self.recurrence).name
