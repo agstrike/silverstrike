@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import DepositForm, TransferForm, WithdrawForm
-from .models import Account, InternalAccountType, Transaction, TransactionJournal
+from .models import Account, Category, InternalAccountType, Transaction, TransactionJournal
 
 
 class AccountCreate(generic.edit.CreateView):
@@ -43,12 +43,24 @@ class AccountIndex(generic.ListView):
         return context
 
 
+class CategoryIndex(generic.ListView):
+    template_name = 'pyaccountant/category_index.html'
+    context_object_name = 'categories'
+    model = Category
+    ordering = ['group']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = 'categories'
+        return context
+
+
 class TransactionIndex(generic.ListView):
     template_name = 'pyaccountant/transaction_overview.html'
     context_object_name = 'transactions'
     model = Transaction
     paginate_by = 50
-    ordering = ["-journal__date"]
+    ordering = ['-journal__date']
 
     def get_queryset(self):
         queryset = super().get_queryset()

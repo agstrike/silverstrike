@@ -44,7 +44,7 @@ class ViewTests(TestCase):
         self.assertIn(self.account, context['accounts'])
 
     def test_context_TransactionIndex(self):
-        context = self.client.get(reverse('transactions')).context
+        context = self.client.get(reverse('accounts')).context
         self.assertEquals(context['menu'], 'transactions')
         self.assertEquals(context['submenu'], 'all')
 
@@ -89,6 +89,11 @@ class ViewTests(TestCase):
         self.assertEquals(context['form']['destination_account'].value(), 2)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+
+    def test_context_CategoryIndex(self):
+        context = self.client.get(reverse('categories')).context
+        self.assertEquals(context['menu'], 'categories')
+        self.assertFalse('submenu' in context)
 
     def test_context_IndexView(self):
         context = self.client.get(reverse('index')).context

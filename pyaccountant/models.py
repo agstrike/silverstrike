@@ -52,7 +52,7 @@ class Account(models.Model):
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
-        return reverse('account_detail', kwargs={'pk': self.pk})
+        return reverse('account_transactions', kwargs={'pk': self.pk})
 
     def get_data_points(self, dstart=date.today() - timedelta(days=365),
                         dend=date.today(), steps=50):
@@ -69,6 +69,7 @@ class TransactionJournal(models.Model):
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True)
+    category = models.ForeignKey('Category', related_name='transactions', blank=True, null=True)
 
     def __str__(self):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
@@ -83,3 +84,25 @@ class Transaction(models.Model):
 
     def __str__(self):
         return '{} -> {}'.format(self.journal, self.amount)
+
+
+class CategoryGroup(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=64)
+    group = models.ForeignKey(CategoryGroup)
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def money_spent(self):
+        return Transaction.objects.filter(
+                journal__category=self, amount__lt=0,
+                account__internal_type=InternalAccountType.personal.value).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0

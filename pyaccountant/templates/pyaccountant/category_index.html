@@ -1,0 +1,35 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+
+{% block content_header %}
+<h1>Categories
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Categories</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Categories' %}</h3>
+  </div>
+  <div class="box-body no-padding">
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Group</th>
+        <th>Money spent</th>
+      </tr>
+      {% for category in categories %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.group }}</td>
+        <td>{{ category.money_spent }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

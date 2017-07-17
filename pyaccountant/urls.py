@@ -6,9 +6,6 @@ from . import api, views
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
 
-    url(r'^transactions/$', views.TransactionIndex.as_view(), name='transactions'),
-    url(r'^transactions/(?P<pk>\d+)$',
-        views.TransactionIndex.as_view(), name='account_transactions'),
     url(r'^transactions/create/transfer$',
         views.TransferCreate.as_view(), name='transfer_new'),
     url(r'^transactions/create/withdraw$',
@@ -18,6 +15,11 @@ urlpatterns = [
     url(r'^transactions/edit/(?P<pk>\d+)$',
         views.TransactionUpdate.as_view(), name='transaction_edit'),
 
+    url(r'^categories$', views.CategoryIndex.as_view(), name='categories'),
+
+    url(r'^accounts/$', views.TransactionIndex.as_view(), name='accounts'),
+    url(r'^accounts/(?P<pk>\d+)$',
+        views.TransactionIndex.as_view(), name='account_transactions'),
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
     url(r'^accounts/personal$',
         views.AccountIndex.as_view(account_type='personal'), name='personal_accounts'),

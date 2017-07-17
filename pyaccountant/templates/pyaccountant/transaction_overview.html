@@ -35,17 +35,19 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Date</th>
     <th>Title</th>
+    <th>Date</th>
     <th>Amount</th>
     <th>Account</th>
+    <th>Category</th>
   </tr>
 {% for transaction in transactions %}
 <tr>
-  <td>{{ transaction.journal.date }}</td>
   <td>{{ transaction.journal.title }}</td>
+  <td>{{ transaction.journal.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td>{{ transaction.account }}</td>
+  <td>{{ transaction.journal.category }}</td>
   </tr>
 {% endfor %}
 </table>

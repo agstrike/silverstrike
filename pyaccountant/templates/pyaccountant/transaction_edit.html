@@ -38,7 +38,7 @@ $(function() {
 </h1>
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
-  <li><a href="{% url 'transactions' %}">Transactions</a></li>
+  <li><a href="{% url 'accounts' %}">Transactions</a></li>
   <li class="active">New {{ submenu }}</li>
 </ol>
 {% endblock %}
@@ -49,23 +49,22 @@ $(function() {
   <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
 </div>
 <div class="box-body">
-<div class="row justify-content-md-center">
-  <div class="col-sm-8">
-    <form method="post">
+    <form method="post" class="form-horizontal">
       {% csrf_token %}
       {% for field in form %}
         <div class="form-group{% if field.errors %} has-error{% endif %}">
-          {{ field.label_tag }}
+          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
+          </label>
+          <div class="col-sm-8">
           {{ field|add_class:"form-control" }}
           {% for error in field.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
         </div>
+        </div>
       {% endfor %}
       <button type="submit" class="btn btn-primary">{% trans 'Add' %}</button>
     </form>
-  </div>
-</div>
 </div>
 </div>
 {% endblock %}
