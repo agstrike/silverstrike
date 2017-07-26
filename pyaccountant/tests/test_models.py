@@ -62,4 +62,4 @@ class ModelTests(TestCase):
             account=expense, opposing_account=account,
             journal=journal, amount=25.02)
 
-        self.assertEquals(float(category.money_spent), t.amount)
+        self.assertEquals(float(category.money_spent), -t.amount)

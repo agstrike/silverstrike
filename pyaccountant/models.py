@@ -107,7 +107,7 @@ class Category(models.Model):
 
     @property
     def money_spent(self):
-        return Transaction.objects.filter(
+        return abs(Transaction.objects.filter(
                 journal__category=self, account__internal_type=Account.PERSONAL,
                 journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0
+            models.Sum('amount'))['amount__sum'] or 0)

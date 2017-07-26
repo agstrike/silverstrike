@@ -1,6 +1,6 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
-
+{% load staticfiles %}
 {% block stylesheets %}
 {% endblock %}
 
@@ -109,23 +109,14 @@ var myChart = new Chart(ctx, {
             label: 'Balance',
             fill: false,
             pointRadius: 2,
-            borderColor: 'red',
-            backgroundColor: 'red',
+            borderColor: '#357ca5',
+            backgroundColor: '#357ca5',
             data: [
       {% for label, value in account.get_data_points %}
       {{ value }},
       {% endfor %}
     ],
         }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
     }
 });
 

@@ -1,5 +1,6 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block content_header %}
 <h1>Categories
@@ -11,6 +12,19 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+  <div class="col-md-4 col-md-push-8">
+  <div class="box">
+    <div class="box-body">
+      <canvas id="myChart" style="padding-left: 0;
+      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;"></canvas>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-8 col-md-pull-4">
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{% trans 'Categories' %}</h3>
@@ -32,4 +46,60 @@
     </table>
   </div>
 </div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script type="text/javascript">
+  $('select').change(function() {
+    $( "select option:selected" ).each(function() {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  })
+  var colors =
+    ['#357ca5',
+     '#008d4c',
+     '#db8b0b',
+     '#ca195a',
+     '#555299',
+     '#4285f4',
+     '#db4437',
+     '#f4b400',
+     '#0f9d58',
+     '#ab47bc',
+     '#00acc1',
+     '#ff7043',
+     '#9e9d24',
+     '#5c6bc0',
+     '#f06292',
+     '#00796b',
+     '#c2185b'
+  ];
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    options: {
+      responsive: false
+    },
+    data: {
+        labels: [
+  {% for category in categories %}
+  "{{ category.name }}",
+  {% endfor %}
+  ],
+        datasets: [{
+            label: 'Balance',
+            backgroundColor: colors,
+            data: [
+      {% for category in categories %}
+      {{ category.money_spent }},
+      {% endfor %}
+    ],
+        }]
+    }
+});
+</script>
 {% endblock %}
