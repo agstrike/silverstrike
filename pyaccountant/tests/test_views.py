@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from pyaccountant.forms import TransferForm
+from pyaccountant.forms import DepositForm, TransferForm, WithdrawForm
 from pyaccountant.models import Account, TransactionJournal
 
 
@@ -67,7 +67,7 @@ class ViewTests(TestCase):
         self.assertEquals(context['menu'], 'transactions')
         self.assertEquals(context['submenu'], 'withdraw')
 
-    def test_context_and_initial_TransactionUpdate(self):
+    def test_context_and_initial_TransferUpdate(self):
         form = TransferForm({
             'title': 'transaction_title',
             'source_account': 1,
@@ -79,12 +79,80 @@ class ViewTests(TestCase):
 
         self.assertTrue(form.is_valid())
         journal = form.save()
-        context = self.client.get(reverse('transaction_edit', args=[journal.pk])).context
+        url = reverse('transaction_update', args=[journal.pk])
+        context = self.client.get(url).context
+        self.assertRedirects(self.client.post(url, {
+                    'title': 'transaction_title',
+                    'source_account': 1,
+                    'destination_account': 2,
+                    'amount': 123,
+                    'date': '2017-01-01'},
+                    args=[journal.pk]), url)
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
         self.assertEquals(context['form']['title'].value(), 'transaction_title')
         self.assertEquals(context['form']['source_account'].value(), 1)
+        self.assertEquals(context['form']['destination_account'].value(), 2)
+        self.assertEquals(context['form']['amount'].value(), 123)
+        self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+
+    def test_context_and_initial_WithdrawUpdate(self):
+        form = WithdrawForm({
+            'title': 'transaction_title',
+            'source_account': 1,
+            'destination_account': self.expense,
+            'amount': 123,
+            'date': '2017-01-01',
+            'transaction_type': TransactionJournal.WITHDRAW
+            })
+
+        self.assertTrue(form.is_valid())
+        journal = form.save()
+        url = reverse('transaction_update', args=[journal.pk])
+        context = self.client.get(url).context
+        self.assertRedirects(self.client.post(url, {
+                    'title': 'transaction_title',
+                    'source_account': 1,
+                    'destination_account': self.expense,
+                    'amount': 123,
+                    'date': '2017-01-01'},
+                    args=[journal.pk]), url)
+        self.assertEquals(context['menu'], 'transactions')
+        self.assertFalse('submenu' in context)
+
+        self.assertEquals(context['form']['title'].value(), 'transaction_title')
+        self.assertEquals(context['form']['source_account'].value(), 1)
+        self.assertEquals(context['form']['destination_account'].value(), self.expense)
+        self.assertEquals(context['form']['amount'].value(), 123)
+        self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+
+    def test_context_and_initial_DepositUpdate(self):
+        form = DepositForm({
+            'title': 'transaction_title',
+            'source_account': self.revenue,
+            'destination_account': 2,
+            'amount': 123,
+            'date': '2017-01-01',
+            'transaction_type': TransactionJournal.DEPOSIT
+            })
+
+        self.assertTrue(form.is_valid())
+        journal = form.save()
+        url = reverse('transaction_update', args=[journal.pk])
+        context = self.client.get(url).context
+        self.assertRedirects(self.client.post(url, {
+                    'title': 'transaction_title',
+                    'source_account': self.revenue,
+                    'destination_account': 2,
+                    'amount': 123,
+                    'date': '2017-01-01'},
+                    args=[journal.pk]), url)
+        self.assertEquals(context['menu'], 'transactions')
+        self.assertFalse('submenu' in context)
+
+        self.assertEquals(context['form']['title'].value(), 'transaction_title')
+        self.assertEquals(context['form']['source_account'].value(), self.revenue)
         self.assertEquals(context['form']['destination_account'].value(), 2)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')

@@ -93,18 +93,29 @@ class TransferCreate(generic.edit.CreateView):
         return context
 
 
-class TransactionUpdate(generic.edit.UpdateView):
+class TransferUpdate(generic.edit.UpdateView):
     template_name = 'pyaccountant/transaction_edit.html'
-    form_class = TransferForm
     model = TransactionJournal
 
     def get_initial(self):
         initial = super().get_initial()
-        transaction = Transaction.objects.get(journal_id=self.kwargs.get('pk'), amount__gt=0)
-        initial['source_account'] = transaction.opposing_account.pk
-        initial['destination_account'] = transaction.account.pk
-        initial['amount'] = transaction.amount
+        self.transaction = Transaction.objects.get(journal_id=self.kwargs.get('pk'), amount__gt=0)
+        initial['source_account'] = self.transaction.opposing_account.pk
+        initial['destination_account'] = self.transaction.account.pk
+        if self.object.transaction_type == TransactionJournal.WITHDRAW:
+            initial['destination_account'] = self.transaction.account
+        elif self.object.transaction_type == TransactionJournal.DEPOSIT:
+            initial['source_account'] = self.transaction.opposing_account
+        initial['amount'] = self.transaction.amount
         return initial
+
+    def get_form_class(self):
+        if self.object.transaction_type == TransactionJournal.WITHDRAW:
+            return WithdrawForm
+        elif self.object.transaction_type == TransactionJournal.DEPOSIT:
+            return DepositForm
+        else:
+            return TransferForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

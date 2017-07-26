@@ -1,9 +1,6 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
-{% block stylesheets %}
-{% endblock %}
-
 
 {% block content_header %}
 <h1>Transactions
@@ -43,7 +40,7 @@
   </tr>
 {% for transaction in transactions %}
 <tr>
-  <td>{{ transaction.journal.title }}</td>
+  <td><a href="{% url 'transaction_update' transaction.journal.pk %}">{{ transaction.journal.title }}</a></td>
   <td>{{ transaction.journal.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td>{{ transaction.account }}</td>

@@ -27,10 +27,10 @@ class FormTests(TestCase):
         self.assertEquals(len(Transaction.objects.all()), 2)
         self.assertEquals(Transaction.objects.all().aggregate(
             models.Sum('amount'))['amount__sum'], 0)
-        self.assertIsInstance(Transaction.objects.get(
-            account_id=1, opposing_account_id=2, amount=-123), Transaction)
-        self.assertIsInstance(Transaction.objects.get(
-            account_id=2, opposing_account_id=1, amount=123), Transaction)
+        self.assertTrue(Transaction.objects.get(
+            account_id=2, opposing_account_id=1, amount=123).is_transfer)
+        self.assertTrue(Transaction.objects.get(
+            account_id=1, opposing_account_id=2, amount=-123).is_transfer)
 
     def test_DepositForm(self):
         data = {
@@ -54,14 +54,12 @@ class FormTests(TestCase):
                 internal_type=Account.REVENUE)
             self.assertEquals(Transaction.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
-            self.assertIsInstance(
+            self.assertTrue(
                 Transaction.objects.get(account=new_account, opposing_account_id=1,
-                                        amount=-123, journal=journal),
-                Transaction)
-            self.assertIsInstance(
+                                        amount=-123, journal=journal).is_deposit)
+            self.assertTrue(
                 Transaction.objects.get(account_id=1, opposing_account=new_account,
-                                        amount=123, journal=journal),
-                Transaction)
+                                        amount=123, journal=journal).is_deposit)
 
     def test_WithdrawForm(self):
         data = {
@@ -83,14 +81,12 @@ class FormTests(TestCase):
                 internal_type=Account.EXPENSE)), 1)
             new_account = Account.objects.get(
                 internal_type=Account.EXPENSE)
-            self.assertIsInstance(
+            self.assertTrue(
                 Transaction.objects.get(account_id=1, opposing_account=new_account,
-                                        amount=-123, journal=journal),
-                Transaction)
-            self.assertIsInstance(
+                                        amount=-123, journal=journal).is_withdraw)
+            self.assertTrue(
                 Transaction.objects.get(account=new_account, opposing_account_id=1,
-                                        amount=123, journal=journal),
-                Transaction)
+                                        amount=123, journal=journal).is_withdraw)
             self.assertEquals(Transaction.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
 

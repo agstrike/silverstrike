@@ -77,6 +77,9 @@ class TransactionJournal(models.Model):
     def __str__(self):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
 
+    def get_absolute_url(self):
+        return reverse('transaction_update', args=[self.pk])
+
 
 class Transaction(models.Model):
     account = models.ForeignKey(Account, models.CASCADE)
@@ -87,6 +90,18 @@ class Transaction(models.Model):
 
     def __str__(self):
         return '{} -> {}'.format(self.journal, self.amount)
+
+    @property
+    def is_transfer(self):
+        return self.journal.transaction_type == TransactionJournal.TRANSFER
+
+    @property
+    def is_withdraw(self):
+        return self.journal.transaction_type == TransactionJournal.WITHDRAW
+
+    @property
+    def is_deposit(self):
+        return self.journal.transaction_type == TransactionJournal.DEPOSIT
 
 
 class CategoryGroup(models.Model):

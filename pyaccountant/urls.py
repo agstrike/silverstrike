@@ -7,14 +7,15 @@ from .models import Account
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
 
-    url(r'^transactions/create/transfer$',
+    url(r'^transactions/transfer/create$',
         views.TransferCreate.as_view(), name='transfer_new'),
-    url(r'^transactions/create/withdraw$',
+    url(r'^transactions/withdraw/create$',
         views.WithdrawCreate.as_view(), name='withdraw_new'),
-    url(r'^transactions/create/deposit$',
+    url(r'^transactions/deposit/create$',
         views.DepositCreate.as_view(), name='deposit_new'),
+
     url(r'^transactions/edit/(?P<pk>\d+)$',
-        views.TransactionUpdate.as_view(), name='transaction_edit'),
+        views.TransferUpdate.as_view(), name='transaction_update'),
 
     url(r'^categories$', views.CategoryIndex.as_view(), name='categories'),
 
