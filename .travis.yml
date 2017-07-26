@@ -34,6 +34,7 @@ jobs:
         on: master
         run:
         - python heroku/manage.py migrate
+        - python heroku/manage.py createtestdata
         skip_cleanup: true
         api_key:
           secure: g0AZZdbzNcoVyBfCBhs123h2IeujqOPWIUDaArMQyRcvwzwP2VlFrAeh4+YURfMLgPtwsFT1qx48HXvwgRPTenpPnHSNewq7lr9upXp8OwlTxFqCE9YezmTTzmpYY5FrJTcrTFgWdVLgOHG9PTdoPC3Ajj5MN3/bMxUubbC9kdVTayuixx+sjEh6+fA+trHp67Gi6B3hSTotZSxA+S5IPP0aNcU0KHRgFGRxCkvzNOPidVj9GklSvLN0VdgnhmBwImrzysCFdCbMXKzzVKwNXOH9wgkYEP3ju/EWYEt1ROcgbKluPN9F5YUBFgyXIugA8pdqeEX2nPmfuLsTzeIv/cAy5TnEPAvGYf2ngEBCqVlH+g3T0Fo1QoawF9B0MNDx/wnEK34Or6j0UR5U/SjgJtKH7nJZcN2wZAhlxU/EByLVuaV6d1/IyBomfP58CFKvgGjB/YxrxoR8jqRKwLlyjZiZ8Ke7vjv5hL2OeJoXZsrECbpXaLf9hg9uPuJiQDtuMbEfCk3Kr0uhPfgDZIRqKsVAFXHUPIcHTIHw6a/GaL1pjWEyJVbrb/E1peeASVMCuc/RLIOPVbtzt0o4U5LqMrZhxvbIQslPGxGNu+p4ho71YEqyrKY1HCEcPIUp2XDoqZZKUofkf8tb+ZaQNLYjmwyqxR4NVqHLg64iEwl70ok=
