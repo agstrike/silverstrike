@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.generic import TemplateView
 
 from . import api, views
 from .models import Account
@@ -35,4 +36,6 @@ urlpatterns = [
     url(r'^api/accounts/(?P<account_type>\w+)$', api.get_accounts, name='api_accounts'),
     url(r'^api/accounts_balance/(?P<dstart>\S+)/(?P<dend>\S+)/$',
         api.get_accounts_balance, name='api_accounts_balance'),
+    url(r'^manifest.json$', TemplateView.as_view(template_name='pyaccountant/manifest.json'),
+        name='manifest')
 ]
