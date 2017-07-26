@@ -21,16 +21,8 @@ class AccountType(models.Model):
         return self.name
 
 
-class Currency(models.Model):
-    name = models.CharField(max_length=64)
-
-    def __str__(self):
-        return self.name
-
-
 class Account(models.Model):
     name = models.CharField(max_length=64)
-    currency = models.ForeignKey('Currency', models.SET_NULL, null=True)
     internal_type = models.IntegerField(choices=[
         (InternalAccountType.personal.value, _('Personal')),
         (InternalAccountType.revenue.value, _('Revenue')),

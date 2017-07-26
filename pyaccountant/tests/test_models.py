@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from pyaccountant.models import (
-        Account, AccountType, Category, CategoryGroup, Currency, InternalAccountType,
+        Account, AccountType, Category, CategoryGroup, InternalAccountType,
         Transaction, TransactionJournal)
 
 
@@ -38,10 +38,6 @@ class ModelTests(TestCase):
             journal=journal, amount=-25.02)
         self.assertEquals(str(transaction), '{} -> {}'.format(
             transaction.journal, transaction.amount))
-
-    def test_currency_str_method(self):
-        currency = Currency.objects.create(name="Euro")
-        self.assertEquals(str(currency), currency.name)
 
     def test_category_str_method(self):
         group = CategoryGroup.objects.create(name="group 1")

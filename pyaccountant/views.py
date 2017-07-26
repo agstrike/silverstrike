@@ -7,7 +7,7 @@ from .models import Account, Category, InternalAccountType, Transaction, Transac
 
 class AccountCreate(generic.edit.CreateView):
     model = Account
-    fields = ['name', 'currency', 'account_type', 'active']
+    fields = ['name', 'account_type', 'active']
     success_url = reverse_lazy('personal_accounts')
 
     def get_context_data(self, **kwargs):
@@ -19,7 +19,7 @@ class AccountCreate(generic.edit.CreateView):
 
 class AccountUpdate(generic.edit.UpdateView):
     model = Account
-    fields = ['name', 'currency', 'account_type', 'active']
+    fields = ['name', 'account_type', 'active']
 
 
 class AccountDelete(generic.edit.DeleteView):

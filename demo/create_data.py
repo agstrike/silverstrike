@@ -1,4 +1,4 @@
-from pyaccountant.models import Account, AccountType, Category, CategoryGroup, Currency, InternalAccountType, Transaction, TransactionJournal
+from pyaccountant.models import Account, AccountType, Category, CategoryGroup, InternalAccountType, Transaction, TransactionJournal
 from datetime import timedelta, date
 from random import randrange
 

@@ -27,7 +27,6 @@
         <th>Name</th>
         <th>Type</th>
         <th>Balance</th>
-        <th>Currency</th>
         <th>Active</th>
       </tr>
       {% for account in accounts %}
@@ -35,7 +34,6 @@
         <td><a href="{% url 'account_transactions' account.id %}">{{ account.name }}</a></td>
         <td>{{ account.account_type }}</td>
         <td>{{ account.balance }}</td>
-        <td>{{ account.currency }}</td>
         <td>{{ account.active }}</td>
       </tr>
       {% endfor %}
