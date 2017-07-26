@@ -8,3 +8,5 @@ Personal Accounting webapp based on Django
 
 There is a [demo](https://pyaccountant.herokuapp.com/) available.
 It is hosted on heruko and is auto deployed from the master branch.
+
+If you want your very own Production setup, you can create a very own instance for free using this button [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/PyAccountant/PyAccountant/tree/heroku)
