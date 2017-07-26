@@ -1,4 +1,4 @@
-from pyaccountant.models import Account, AccountType, Category, CategoryGroup, InternalAccountType, Transaction, TransactionJournal
+from pyaccountant.models import Account, AccountType, Category, CategoryGroup, Transaction, TransactionJournal
 from datetime import timedelta, date
 from random import randrange
 
@@ -11,15 +11,15 @@ def _create_transaction(date, amount, src, dst, title, category):
 
 class TestData():
     def __init__(self):
-        self.work, _ = Account.objects.get_or_create(name='work', internal_type=InternalAccountType.revenue.value)
+        self.work, _ = Account.objects.get_or_create(name='work', internal_type=Account.REVENUE)
 
         self.checking, _ = Account.objects.get_or_create(name='checking')
         self.savings, _ = Account.objects.get_or_create(name='savings')
 
-        self.landlord, _ = Account.objects.get_or_create(name='landlord', internal_type=InternalAccountType.expense.value)
-        self.supermarket, _ = Account.objects.get_or_create(name='supermarket', internal_type=InternalAccountType.expense.value)
-        self.insurer, _ = Account.objects.get_or_create(name='insurnace', internal_type=InternalAccountType.expense.value)
-        self.club, _ = Account.objects.get_or_create(name='club', internal_type=InternalAccountType.expense.value)
+        self.landlord, _ = Account.objects.get_or_create(name='landlord', internal_type=Account.EXPENSE)
+        self.supermarket, _ = Account.objects.get_or_create(name='supermarket', internal_type=Account.EXPENSE)
+        self.insurer, _ = Account.objects.get_or_create(name='insurnace', internal_type=Account.EXPENSE)
+        self.club, _ = Account.objects.get_or_create(name='club', internal_type=Account.EXPENSE)
 
         self.group, _ = CategoryGroup.objects.get_or_create(name='all')
         self.home, _ = Category.objects.get_or_create(name='home', group=self.group)

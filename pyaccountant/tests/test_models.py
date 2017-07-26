@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from pyaccountant.models import (
-        Account, AccountType, Category, CategoryGroup, InternalAccountType,
+        Account, AccountType, Category, CategoryGroup,
         Transaction, TransactionJournal)
 
 
@@ -22,15 +22,15 @@ class ModelTests(TestCase):
         self.assertFalse(accountType.creatable)
 
     def test_account_balance_with_no_transactions(self):
-        account = Account.objects.create(
-            name="some_account", internal_type=InternalAccountType.personal.value)
+        account = Account.objects.create(name="some_account")
         self.assertEquals(account.balance, 0)
 
     def test_transaction_str_method(self):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", internal_type=InternalAccountType.expense.value)
-        journal = TransactionJournal.objects.create(title="journal")
+            name="some_account", internal_type=Account.EXPENSE)
+        journal = TransactionJournal.objects.create(title="journal",
+                                                    transaction_type=TransactionJournal.WITHDRAW)
         self.assertEquals(str(journal), '{}:{} @ {}'.format(journal.pk, journal.title,
                                                             journal.date))
         transaction = Transaction.objects.create(
@@ -52,8 +52,9 @@ class ModelTests(TestCase):
 
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", internal_type=InternalAccountType.expense.value)
-        journal = TransactionJournal.objects.create(title="journal", category=category)
+            name="some_account", internal_type=Account.EXPENSE)
+        journal = TransactionJournal.objects.create(title="journal", category=category,
+                                                    transaction_type=TransactionJournal.WITHDRAW)
         t = Transaction.objects.create(
             account=account, opposing_account=expense,
             journal=journal, amount=-25.02)

@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import DepositForm, TransferForm, WithdrawForm
-from .models import Account, Category, InternalAccountType, Transaction, TransactionJournal
+from .models import Account, Category, Transaction, TransactionJournal
 
 
 class AccountCreate(generic.edit.CreateView):
@@ -33,13 +33,17 @@ class AccountIndex(generic.ListView):
     account_type = ''
 
     def get_queryset(self):
-        account_type = getattr(InternalAccountType, self.account_type).value
-        return Account.objects.filter(internal_type=account_type)
+        return Account.objects.filter(internal_type=self.account_type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        context['submenu'] = self.account_type
+        if self.account_type == Account.PERSONAL:
+            context['submenu'] = 'personal'
+        elif self.account_type == Account.EXPENSE:
+            context['submenu'] = 'expense'
+        else:
+            context['submenu'] = 'revenue'
         return context
 
 
@@ -66,7 +70,7 @@ class TransactionIndex(generic.ListView):
         queryset = super().get_queryset()
         if 'pk' in self.kwargs:
             return queryset.filter(account=self.kwargs.get('pk'))
-        return queryset.filter(account__internal_type=InternalAccountType.personal.value)
+        return queryset.filter(account__internal_type=Account.PERSONAL)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

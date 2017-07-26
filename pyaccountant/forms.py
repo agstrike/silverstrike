@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import Account, InternalAccountType, Transaction, TransactionJournal
+from .models import Account, Transaction, TransactionJournal
 
 
 class TransferForm(forms.ModelForm):
@@ -11,9 +11,9 @@ class TransferForm(forms.ModelForm):
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        internal_type=InternalAccountType.personal.value))
+        internal_type=Account.PERSONAL))
     destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        internal_type=InternalAccountType.personal.value))
+        internal_type=Account.PERSONAL))
 
     def save(self, commit=True):
         journal = super().save(commit)
@@ -30,6 +30,7 @@ class TransferForm(forms.ModelForm):
 
     def clean(self):
         super().clean()
+        self.instance.transaction_type = TransactionJournal.TRANSFER
         if self.cleaned_data['source_account'] == self.cleaned_data['destination_account']:
             error = 'source and destination account have to be different'
             self.add_error('destination_account', error)
@@ -43,9 +44,13 @@ class WithdrawForm(TransferForm):
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['destination_account'],
                                                    active=True,
-                                                   internal_type=InternalAccountType.expense.value)
+                                                   internal_type=Account.EXPENSE)
         self.cleaned_data['destination_account'] = account
         return super().save(commit)
+
+    def clean(self):
+        super().clean()
+        self.instance.transaction_type = TransactionJournal.WITHDRAW
 
 
 class DepositForm(TransferForm):
@@ -55,6 +60,10 @@ class DepositForm(TransferForm):
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['source_account'],
                                                    active=True,
-                                                   internal_type=InternalAccountType.revenue.value)
+                                                   internal_type=Account.REVENUE)
         self.cleaned_data['source_account'] = account
         return super().save(commit)
+
+    def clean(self):
+        super().clean()
+        self.instance.transaction_type = TransactionJournal.DEPOSIT

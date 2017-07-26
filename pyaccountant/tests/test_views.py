@@ -2,19 +2,17 @@ from django.test import TestCase
 from django.urls import reverse
 
 from pyaccountant.forms import TransferForm
-from pyaccountant.models import Account, InternalAccountType
+from pyaccountant.models import Account, TransactionJournal
 
 
 class ViewTests(TestCase):
     def setUp(self):
-        self.account = Account.objects.create(
-            name="first account", internal_type=InternalAccountType.personal.value)
-        self.personal = Account.objects.create(
-            name="personal account", internal_type=InternalAccountType.personal.value)
+        self.account = Account.objects.create(name="first account")
+        self.personal = Account.objects.create(name="personal account")
         self.expense = Account.objects.create(
-            name="expense account", internal_type=InternalAccountType.expense.value)
+            name="expense account", internal_type=Account.EXPENSE)
         self.revenue = Account.objects.create(
-            name="revenue account", internal_type=InternalAccountType.revenue.value)
+            name="revenue account", internal_type=Account.REVENUE)
 
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context
@@ -75,7 +73,8 @@ class ViewTests(TestCase):
             'source_account': 1,
             'destination_account': 2,
             'amount': 123,
-            'date': '2017-01-01'
+            'date': '2017-01-01',
+            'transaction_type': TransactionJournal.TRANSFER
             })
 
         self.assertTrue(form.is_valid())

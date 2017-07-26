@@ -1,5 +1,3 @@
-import enum
-
 from datetime import date, timedelta
 
 from django.db import models
@@ -7,14 +5,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 
-class InternalAccountType(enum.Enum):
-    personal = 1
-    revenue = 2
-    expense = 3
-
-
 class AccountType(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     creatable = models.BooleanField(default=False)
 
     def __str__(self):
@@ -22,14 +14,20 @@ class AccountType(models.Model):
 
 
 class Account(models.Model):
+    PERSONAL = 1
+    REVENUE = 2
+    EXPENSE = 3
+    ACCOUNT_TYPES = (
+        (PERSONAL, _('Personal')),
+        (REVENUE, _('Revenue')),
+        (EXPENSE, _('Expense')),
+    )
+
     name = models.CharField(max_length=64)
-    internal_type = models.IntegerField(choices=[
-        (InternalAccountType.personal.value, _('Personal')),
-        (InternalAccountType.revenue.value, _('Revenue')),
-        (InternalAccountType.expense.value, _('Expense'))],
-        default=InternalAccountType.personal.value)
+    internal_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
     account_type = models.ForeignKey(AccountType, models.CASCADE, null=True)
     active = models.BooleanField(default=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -58,10 +56,23 @@ class Account(models.Model):
 
 
 class TransactionJournal(models.Model):
+    DEPOSIT = 1
+    WITHDRAW = 2
+    TRANSFER = 3
+    SYSTEM = 4
+    TRANSACTION_TYPES = (
+        (DEPOSIT, 'Deposit'),
+        (WITHDRAW, 'Withdrawl'),
+        (TRANSFER, 'Transfer'),
+        (SYSTEM, 'SYSTEM'),
+    )
+
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True)
     category = models.ForeignKey('Category', related_name='transactions', blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
 
     def __str__(self):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
@@ -80,6 +91,7 @@ class Transaction(models.Model):
 
 class CategoryGroup(models.Model):
     name = models.CharField(max_length=64)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -88,6 +100,7 @@ class CategoryGroup(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=64)
     group = models.ForeignKey(CategoryGroup)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -95,6 +108,6 @@ class Category(models.Model):
     @property
     def money_spent(self):
         return Transaction.objects.filter(
-                journal__category=self, amount__lt=0,
-                account__internal_type=InternalAccountType.personal.value).aggregate(
+                journal__category=self, account__internal_type=Account.PERSONAL,
+                journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
