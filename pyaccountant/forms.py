@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 from django.utils.translation import ugettext as _
 
@@ -35,6 +37,8 @@ class TransferForm(forms.ModelForm):
             error = 'source and destination account have to be different'
             self.add_error('destination_account', error)
             self.add_error('source_account', error)
+        if self.cleaned_data['date'] > date.today():
+            self.add_error('date', _("You can't create future Transactions"))
 
 
 class WithdrawForm(TransferForm):

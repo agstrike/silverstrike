@@ -137,10 +137,28 @@ class FormTests(TestCase):
             'source_account': 1,
             'destination_account': 1,
             'amount': 123,
-            'date': '2017-01-01'
+            'date': '2017-01-01',
+            'transaction_type': TransactionJournal.TRANSFER
             }
         form = TransferForm(data)
         self.assertFalse(form.is_valid())
+        self.assertEquals(len(form.errors), 2)
+        self.assertEquals(len(form.errors['source_account']), 1)
+        self.assertEquals(len(form.errors['destination_account']), 1)
+
+    def test_future_transfer(self):
+        data = {
+            'title': 'transfer',
+            'source_account': 1,
+            'destination_account': 2,
+            'amount': 123,
+            'date': '2117-01-01',
+            'transaction_type': TransactionJournal.TRANSFER
+            }
+        form = TransferForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEquals(len(form.errors), 1)
+        self.assertEquals(len(form.errors['date']), 1)
 
     def test_transfer_form_only_shows_personal_accounts(self):
         pass
