@@ -34,6 +34,20 @@
 
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">New</a>
+              <ul class="dropdown-menu">
+                <li class="header">
+                  <a href="{% url 'withdraw_new' %}">{% trans 'New Withdrawl' %}</a>
+                </li>
+                <li>
+                  <a href="{% url 'deposit_new' %}">{% trans 'New Deposit' %}</a>
+                </li>
+                <li>
+                  <a href="{% url 'transfer_new' %}">{% trans 'New Transfer' %}</a>
+                </li>
+              </ul>
+              </li>
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-user" aria-hidden="true"></i>
@@ -101,23 +115,20 @@
               </a>
               <ul class="treeview-menu">
                 <li{% if submenu == "all" %} class="active"{% endif %}>
-                  <a href="{% url 'accounts' %}">{% trans 'All Transactions' %}</a>
-                </li>
-                <li{% if submenu == "withdraw" %} class="active"{% endif %}>
-                  <a href="{% url 'withdraw_new' %}">{% trans 'New Withdrawl' %}</a>
-                </li>
-                <li{% if submenu == "deposit" %} class="active"{% endif %}>
-                  <a href="{% url 'deposit_new' %}">{% trans 'New Deposit' %}</a>
-                </li>
-                <li{% if submenu == "transfer" %} class="active"{% endif %}>
-                  <a href="{% url 'transfer_new' %}">{% trans 'New Transfer' %}</a>
+                  <a href="{% url 'transactions' %}">{% trans 'All Transactions' %}</a>
                 </li>
               </ul>
             </li>
-            <li>
+            <li{% if menu == "categories" %} class="active"{% endif%}>
               <a href="{% url 'categories' %}">
               <i class="fa fa-tags" aria-hidden="true"></i>
               <span>{% trans 'Categories' %}</span>
+              </a>
+            </li>
+            <li{% if menu == "charts" %} class="active"{% endif %}>
+              <a href="{% url 'charts' %}">
+              <i class="fa fa-line-chart" aria-hidden="true"></i>
+              <span>{% trans 'Charts' %}</span>
               </a>
             </li>
           </ul>
@@ -126,13 +137,6 @@
       <div class="content-wrapper">
         <section class="content-header">
           {% block content_header %}
-          <h1>Home
-            <small>All the important stuff</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li class="active">Home</li>
-          </ol>
           {% endblock %}
         </section>
         <section class="content">

@@ -9,7 +9,8 @@ from .models import Account, Transaction, TransactionJournal
 class TransferForm(forms.ModelForm):
     class Meta:
         model = TransactionJournal
-        fields = ['title', 'source_account', 'destination_account', 'amount', 'date', 'notes']
+        fields = ['title', 'source_account', 'destination_account',
+                  'amount', 'date', 'category', 'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(

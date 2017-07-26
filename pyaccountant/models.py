@@ -5,14 +5,6 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 
-class AccountType(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-    creatable = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-
 class Account(models.Model):
     PERSONAL = 1
     REVENUE = 2
@@ -25,7 +17,6 @@ class Account(models.Model):
 
     name = models.CharField(max_length=64)
     internal_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
-    account_type = models.ForeignKey(AccountType, models.CASCADE, null=True)
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -42,16 +33,29 @@ class Account(models.Model):
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
-        return reverse('account_transactions', kwargs={'pk': self.pk})
+        return reverse('account_detail',
+                       kwargs={'pk': self.pk, 'dstart': date.today().replace(day=1)})
 
     def get_data_points(self, dstart=date.today() - timedelta(days=365),
-                        dend=date.today(), steps=50):
+                        dend=date.today(), steps=30):
         step = (dend - dstart) / steps
+        if step < timedelta(days=1):
+            step = timedelta(days=1)
+            steps = int((dend - dstart) / step)
         data_points = []
+        balance = self.balance_on(dstart)
+        transactions = list(Transaction.objects.prefetch_related('journal').filter(
+            account_id=self.pk, journal__date__gt=dstart,
+            journal__date__lte=dend).order_by('-journal__date'))
         for i in range(steps):
-            balance = self.balance_on(dstart)
+            while len(transactions) > 0 and transactions[-1].journal.date <= dstart.date():
+                t = transactions.pop()
+                balance += t.amount
             data_points.append((dstart, balance))
             dstart += step
+        for t in transactions:
+            balance += t.amount
+        data_points.append((dend, balance))
         return data_points
 
 
@@ -104,17 +108,8 @@ class Transaction(models.Model):
         return self.journal.transaction_type == TransactionJournal.DEPOSIT
 
 
-class CategoryGroup(models.Model):
-    name = models.CharField(max_length=64)
-    last_modified = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Category(models.Model):
     name = models.CharField(max_length=64)
-    group = models.ForeignKey(CategoryGroup)
     last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):

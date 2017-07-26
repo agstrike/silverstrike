@@ -3,18 +3,47 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1>Transactions
-  <small>{{ account.name }} {{ start_date|date:'F Y'}}</small>
+<h1>{{ account.name }}
+  <small>{{ dstart|date:'F Y'}}</small>
 </h1>
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
-  <li class="active">Transactions</li>
+  <li>Transactions</li>
+  <li class="active">{{ account.name }}</li>
 </ol>
 {% endblock %}
 
 {% block content %}
+<div class="box">
+  <div class="box-body">
+    <div class="text-center">
+      <a href="{% url 'account_detail' account.pk previous_month|date:'Y-m-d' %}" class="btn btn-xs btn-default">Previous</a>
+      <span>{{ dstart|date:'F Y'}}</span>
+      <a href="{% url 'account_detail' account.pk next_month|date:'Y-m-d' %}" class="btn btn-xs btn-default">Next</a>
+    </div>
+  </div>
+</div>
+{% if dataset %}
 <div class="row">
-<div class="col-md-10">
+  <div class="col-md-4 col-md-push-8">
+    <div class="box">
+      <div class="box-header with-boarder">
+        <h3 class="box-title">Important data</h3>
+      </div>
+    <div class="box-content">
+      {% include 'pyaccountant/account_info.html.j2' %}
+    </div>
+  </div>
+</div>
+<div class="col-md-8 col-md-pull-4">
+<div class="box">
+  <div class="box-body">
+  <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Transaction list' %}</h3>
@@ -71,16 +100,38 @@
 {% endif %}
 </div>
 </div>
-</div>
-</div>
 {% endblock %}
 
 {% block scripts %}
+{% if dataset %}
+<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script type="text/javascript">
-  $('select').change(function() {
-    $( "select option:selected" ).each(function() {
-      window.location.href = "{{ request.path }}?page=" + $(this).val();
-    });
-  })
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+  {% for label, value in dataset %}
+  "{{ label|date }}",
+  {% endfor %}
+  ],
+        datasets: [{
+            label: 'Balance',
+            fill: false,
+            pointRadius: 2,
+            borderColor: '#357ca5',
+            backgroundColor: '#357ca5',
+            data: [
+      {% for label, value in dataset %}
+      {{ value }},
+      {% endfor %}
+    ],
+        }]
+    }
+});
+
+
+
+  {% endif %}
 </script>
 {% endblock %}

@@ -1,13 +1,17 @@
+from datetime import date, datetime, timedelta
+
+from django.db import models
 from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import DepositForm, TransferForm, WithdrawForm
+from .lib import last_day_of_month
 from .models import Account, Category, Transaction, TransactionJournal
 
 
 class AccountCreate(generic.edit.CreateView):
     model = Account
-    fields = ['name', 'account_type', 'active']
+    fields = ['name', 'active']
     success_url = reverse_lazy('personal_accounts')
 
     def get_context_data(self, **kwargs):
@@ -19,7 +23,7 @@ class AccountCreate(generic.edit.CreateView):
 
 class AccountUpdate(generic.edit.UpdateView):
     model = Account
-    fields = ['name', 'account_type', 'active']
+    fields = ['name', 'active']
 
 
 class AccountDelete(generic.edit.DeleteView):
@@ -51,7 +55,6 @@ class CategoryIndex(generic.ListView):
     template_name = 'pyaccountant/category_index.html'
     context_object_name = 'categories'
     model = Category
-    ordering = ['group']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,17 +70,53 @@ class TransactionIndex(generic.ListView):
     ordering = ['-journal__date']
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        if 'pk' in self.kwargs:
-            return queryset.filter(account=self.kwargs.get('pk'))
-        return queryset.filter(account__internal_type=Account.PERSONAL)
+        queryset = super().get_queryset().filter(account__internal_type=Account.PERSONAL)
+        if 'category' in self.request.GET:
+            queryset = queryset.filter(journal__category_id=self.request.GET['category'])
+        if 'account' in self.request.GET:
+            queryset = queryset.filter(account_id=self.request.GET['account'])
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
         context['submenu'] = 'all'
-        if 'pk' in self.kwargs:
-            context['account'] = Account.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
+class AccountView(generic.ListView):
+    template_name = 'pyaccountant/account_detail.html'
+    context_object_name = 'transactions'
+    model = Transaction
+    paginate_by = 50
+    ordering = ['-journal__date']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
+            'journal__category', 'account')
+        self.dstart = datetime.strptime(self.kwargs.get('dstart'), '%Y-%m-%d')
+
+        queryset = queryset.filter(journal__date__gte=self.dstart)
+        self.dend = last_day_of_month(self.dstart)
+        queryset = queryset.filter(journal__date__lte=self.dend)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = 'accounts'
+        context['submenu'] = 'personal'
+        context['dstart'] = self.dstart
+
+        context['previous_month'] = (self.dstart - timedelta(days=1)).replace(day=1)
+        context['next_month'] = self.dend + timedelta(days=1)
+        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
+        context.update(_get_account_info(self.dstart, self.dend, context['account']))
+
+        delta = timedelta(days=3)
+        if context['account'].internal_type == Account.PERSONAL:
+            context['dataset'] = context['account'].get_data_points(
+                self.dstart - delta, self.dend + delta)
         return context
 
 
@@ -141,10 +180,64 @@ class DepositCreate(TransferCreate):
         return context
 
 
+def _get_account_info(dstart, dend, account=None):
+    context = dict()
+    queryset = Transaction.objects.filter(
+        journal__date__gte=dstart,
+        journal__date__lte=dend)
+    if account:
+        queryset = queryset.filter(account=account)
+    context['income'] = abs(queryset.filter(
+        account__internal_type=Account.PERSONAL,
+        opposing_account__internal_type=Account.REVENUE).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0)
+
+    context['expenses'] = abs(queryset.filter(
+        account__internal_type=Account.PERSONAL,
+        opposing_account__internal_type=Account.EXPENSE).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0)
+    context['difference'] = context['income'] - context['expenses']
+    return context
+
+
 class IndexView(generic.TemplateView):
     template_name = 'pyaccountant/index.html'
 
     def get_context_data(self, **kwargs):
+        first = date.today().replace(day=1)
+        last = last_day_of_month(first)
         context = super().get_context_data(**kwargs)
         context['menu'] = 'home'
+        queryset = Transaction.objects.filter(account__internal_type=Account.PERSONAL)
+        context['balance'] = queryset.aggregate(
+            models.Sum('amount'))['amount__sum'] or 0
+        context.update(_get_account_info(first, last))
+        return context
+
+
+class ChartView(generic.TemplateView):
+    template_name = 'pyaccountant/charts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = 'charts'
+        context['today'] = date.today()
+        currentMonth = date.today().month
+        currentYear = date.today().year
+        minus_3_m = currentMonth - 3
+        minus_3_y = currentYear
+        if minus_3_m < 1:
+            minus_3_m += 12
+            minus_3_y -= 1
+        minus_6_m = currentMonth - 6
+        minus_6_y = currentYear
+        if minus_6_m < 1:
+            minus_6_m += 12
+            minus_6_y -= 1
+        context['minus_3_months'] = date.today().replace(month=minus_3_m, year=minus_3_y)
+        context['minus_6_months'] = date.today().replace(month=minus_6_m, year=minus_6_y)
+        context['minus_12_months'] = date.today().replace(year=currentYear - 1)
+
+        context['first_day_of_month'] = date.today().replace(day=1)
+        context['last_day_of_month'] = last_day_of_month(date.today())
         return context

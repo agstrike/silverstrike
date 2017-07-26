@@ -4,7 +4,7 @@ from random import randrange
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
-from pyaccountant.models import Account, Category, CategoryGroup, Transaction, TransactionJournal
+from pyaccountant.models import Account, Category, Transaction, TransactionJournal
 
 
 def _create_transaction(date, amount, src, dst, title, category, type):
@@ -55,11 +55,10 @@ class Command(BaseCommand):
             name='insurnace', internal_type=Account.EXPENSE)
         self.club, _ = Account.objects.get_or_create(name='club', internal_type=Account.EXPENSE)
 
-        self.group, _ = CategoryGroup.objects.get_or_create(name='all')
-        self.home, _ = Category.objects.get_or_create(name='home', group=self.group)
-        self.groceries, _ = Category.objects.get_or_create(name='groceries', group=self.group)
-        self.insurance, _ = Category.objects.get_or_create(name='insurance', group=self.group)
-        self.leisure, _ = Category.objects.get_or_create(name='leisure', group=self.group)
+        self.home, _ = Category.objects.get_or_create(name='home')
+        self.groceries, _ = Category.objects.get_or_create(name='groceries')
+        self.insurance, _ = Category.objects.get_or_create(name='insurance')
+        self.leisure, _ = Category.objects.get_or_create(name='leisure')
 
         self.YEARLY = [
             ('special expense', [2, 4, 6, 8, 10, 12], self.checking, self.supermarket,

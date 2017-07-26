@@ -3,33 +3,28 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1>Home
-  <small>All imporant stuff</small>
+<h1>Charts
+  <small>because they are fun!</small>
 </h1>
 <ol class="breadcrumb">
-  <li class="active">Home</li>
+  <li><a href="/">Home</a></li>
+  <li class="active">Charts</li>
 </ol>
 {% endblock %}
 {% block content %}
-<div class="row">
-<div class="col-md-4 col-md-push-8">
-<div class="box">
-<div class="box-header with-boarder">
-  <h3 class="box-title">Important data</h3>
-</div>
-<div class="box-content">
-  {% include 'pyaccountant/account_info.html.j2' %}
-</div>
-</div>
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Actions</h3>
-  </div>
-  <div class="box-body">
+  <div class="row text-center">
+    <button id="12month" class="btn btn-s btn-default range-chooser">Last year</button>
+    <button id="6month" class="btn btn-s btn-default range-chooser">Last 6 Months</button>
+    <button id="3month" class="btn btn-s btn-default range-chooser">Last 3 Months</button>
+    <button id="currentMonth" class="btn btn-s btn-default range-chooser">Current Month</button>
+    <button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button>
   </div>
 </div>
 </div>
-<div class="col-md-8 col-md-pull-4">
+<div class="row">
+<div class="col-md-10">
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Personal Accounts</h3>
@@ -94,6 +89,26 @@ var drawChart = function(res) {
 }
 $.getJSON("{% url 'api_accounts_balance' '2017-05-01' '2017-08-01' %}", {}, function(res, status) {
   drawChart(res);
+});
+$('#12month').click(function() {
+  $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
+    drawChart(res);
+  });
+});
+$('#6month').click(function() {
+  $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
+    drawChart(res);
+  });
+});
+$('#3month').click(function() {
+  $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
+    drawChart(res);
+  });
+});
+$('#currentMonth').click(function() {
+  $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+    drawChart(res);
+  });
 });
 </script>
 {% endblock %}

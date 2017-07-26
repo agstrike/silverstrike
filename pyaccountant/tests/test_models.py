@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from pyaccountant.models import (
-        Account, AccountType, Category, CategoryGroup,
+        Account, Category,
         Transaction, TransactionJournal)
 
 
@@ -12,14 +12,6 @@ class ModelTests(TestCase):
         response = self.client.get(account.get_absolute_url())
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.context['account'], account)
-
-    def test_accountType_str_method(self):
-        accountType = AccountType.objects.create(name="some_account_type")
-        self.assertEquals(str(accountType), accountType.name)
-
-    def test_accountType_creatable_default(self):
-        accountType = AccountType.objects.create(name="some_account_type")
-        self.assertFalse(accountType.creatable)
 
     def test_account_balance_with_no_transactions(self):
         account = Account.objects.create(name="some_account")
@@ -40,14 +32,11 @@ class ModelTests(TestCase):
             transaction.journal, transaction.amount))
 
     def test_category_str_method(self):
-        group = CategoryGroup.objects.create(name="group 1")
-        self.assertEquals(str(group), group.name)
-        category = Category.objects.create(name="cat 1", group=group)
+        category = Category.objects.create(name="cat 1")
         self.assertEquals(str(category), category.name)
 
     def test_category_money_spent(self):
-        group = CategoryGroup.objects.create(name="group 1")
-        category = Category.objects.create(name="cat 1", group=group)
+        category = Category.objects.create(name="cat 1")
         self.assertEquals(category.money_spent, 0)
 
         account = Account.objects.create(name="some_account")

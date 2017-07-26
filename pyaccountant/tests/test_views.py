@@ -42,14 +42,14 @@ class ViewTests(TestCase):
         self.assertIn(self.account, context['accounts'])
 
     def test_context_TransactionIndex(self):
-        context = self.client.get(reverse('accounts')).context
+        context = self.client.get(reverse('transactions')).context
         self.assertEquals(context['menu'], 'transactions')
         self.assertEquals(context['submenu'], 'all')
 
     def test_context_account_TransactionIndex(self):
-        context = self.client.get(reverse('account_transactions', args=[self.account.pk])).context
-        self.assertEquals(context['menu'], 'transactions')
-        self.assertEquals(context['submenu'], 'all')
+        context = self.client.get(self.account.get_absolute_url()).context
+        self.assertEquals(context['menu'], 'accounts')
+        self.assertEquals(context['submenu'], 'personal')
         self.assertEquals(context['account'], self.account)
 
     def test_context_TransferCreate(self):
@@ -165,3 +165,15 @@ class ViewTests(TestCase):
     def test_context_IndexView(self):
         context = self.client.get(reverse('index')).context
         self.assertEquals(context['menu'], 'home')
+
+    def test_get_account_info(self):
+        # TODO
+        pass
+
+    def test_ChartView(self):
+        # TODO
+        self.client.get(reverse('charts'))
+
+    def test_api_accounts_balance(self):
+        # TODO
+        self.client.get(reverse('api_accounts_balance', args=['2017-01-01', '2017-06-01']))

@@ -1,5 +1,6 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block content_header %}
 <h1>Accounts
@@ -12,11 +13,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="box">
-  <div class="box-body">
-  <canvas id="myChart" width="400" height="200"></canvas>
-</div>
-</div>
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{% trans 'Accounts' %}</h3>
@@ -31,7 +27,7 @@
       </tr>
       {% for account in accounts %}
       <tr>
-        <td><a href="{% url 'account_transactions' account.id %}">{{ account.name }}</a></td>
+        <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
         <td>{{ account.account_type }}</td>
         <td>{{ account.balance }}</td>
         <td>{{ account.active }}</td>
@@ -40,63 +36,4 @@
     </table>
   </div>
 </div>
-{% endblock %}
-
-
-{% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
-<script type="text/javascript">
-var ctx = document.getElementById("myChart").getContext('2d');
-var colors =
-  ['#357ca5',
-   '#008d4c',
-   '#db8b0b',
-   '#ca195a',
-   '#555299',
-   '#4285f4',
-   '#db4437',
-   '#f4b400',
-   '#0f9d58',
-   '#ab47bc',
-   '#00acc1',
-   '#ff7043',
-   '#9e9d24',
-   '#5c6bc0',
-   '#f06292',
-   '#00796b',
-   '#c2185b'
-];
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels:
-        [
-        {% for label, value in accounts.0.get_data_points %}
-        "{{ label }}",
-        {% endfor %}
-        ],
-        datasets: [
-        {% for account in accounts %}
-        {
-            label: '{{ account.name }}',
-            fill: false,
-            pointRadius: 2,
-            backgroundColor: colors[{{ forloop.counter }} - 1],
-            borderColor: colors[{{ forloop.counter }} - 1],
-            data: [
-            {% for label, value in account.get_data_points %}
-            {{ value }},
-            {% endfor %}
-            ],
-        },
-        {% endfor %}
-        ]
-    },
-    options: {
-        tooltips: {
-            mode: 'x'
-        }
-    }
-});
-</script>
 {% endblock %}
