@@ -132,6 +132,22 @@
               <i class="fa fa-line-chart" aria-hidden="true"></i>
               <span>{% trans 'Charts' %}</span>
               </a>
+            <li class="treeview{% if menu == "settings" %} active{% endif %}">
+              <a href="#">
+                <i class="fa fa-wrench fa-fw"></i>
+                <span>Settings</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li>
+                  <a href="{% url 'import' %}"><i class="fa fa-download fa-fw"></i>{% trans 'Import' %}</a>
+                </li>
+                <li>
+                  <a href="{% url 'withdraw_new' %}"><i class="fa fa-upload fa-fw"></i>{% trans 'Export' %}</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </section>

@@ -1,12 +1,15 @@
-from datetime import date, datetime, timedelta
+import csv
 
+from datetime import date, datetime, timedelta
+from io import TextIOWrapper
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-from .forms import DepositForm, TransferForm, WithdrawForm
+from .forms import DepositForm, ImportForm, TransferForm, WithdrawForm
 from .lib import last_day_of_month
 from .models import Account, Category, Transaction, TransactionJournal
 
@@ -216,6 +219,28 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context.update(_get_account_info(first, last))
         context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL)
         return context
+
+
+class ImportView(LoginRequiredMixin, generic.FormView):
+    template_name = 'pyaccountant/import.html'
+    form_class = ImportForm
+    success_url = reverse_lazy('import')
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        f = TextIOWrapper(self.request.FILES['file'].file, encoding='utf8')
+        data = []
+        for line in csv.reader(f):
+            data.append(line)
+            print(line)
+            print(type(line))
+        if form.cleaned_data['headers']:
+            headers = data[0]
+            del data[0]
+            data = {'headers': headers, 'data': data}
+        else:
+            data = {'headers': '', 'data': data}
+        return render(self.request, 'pyaccountant/import-2.html', data)
 
 
 class ChartView(LoginRequiredMixin, generic.TemplateView):

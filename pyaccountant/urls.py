@@ -39,5 +39,7 @@ urlpatterns = [
     url(r'^api/accounts_balance/(?P<dstart>\S+)/(?P<dend>\S+)/$',
         api.get_accounts_balance, name='api_accounts_balance'),
     url(r'^manifest.json$', TemplateView.as_view(template_name='pyaccountant/manifest.json'),
-        name='manifest')
+        name='manifest'),
+
+    url(r'^import/$', views.ImportView.as_view(), name='import'),
 ]

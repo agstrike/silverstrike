@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 from pyaccountant.models import (
@@ -9,6 +10,8 @@ class ModelTests(TestCase):
     def test_account_str_method(self):
         account = Account.objects.create(name="some_account")
         self.assertEquals(str(account), account.name)
+        User.objects.create_superuser(username='admin', email='admin@example.com', password='pass')
+        self.client.login(username='admin', password='pass')
         response = self.client.get(account.get_absolute_url())
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.context['account'], account)

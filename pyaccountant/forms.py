@@ -6,6 +6,11 @@ from django.utils.translation import ugettext as _
 from .models import Account, Transaction, TransactionJournal
 
 
+class ImportForm(forms.Form):
+    file = forms.FileField()
+    headers = forms.BooleanField(required=False)
+
+
 class TransferForm(forms.ModelForm):
     class Meta:
         model = TransactionJournal

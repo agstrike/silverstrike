@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -8,6 +9,8 @@ from pyaccountant.models import Account
 
 class ApiTests(TestCase):
     def setUp(self):
+        User.objects.create(username='admin', password='pass')
+        self.client.login(username='admin', password='pass')
         Account.objects.bulk_create(
             [Account(name=t[1], internal_type=t[0]) for t in Account.ACCOUNT_TYPES])
 

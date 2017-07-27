@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -7,6 +8,8 @@ from pyaccountant.models import Account, TransactionJournal
 
 class ViewTests(TestCase):
     def setUp(self):
+        User.objects.create_superuser(username='admin', email='email@example.com', password='pass')
+        self.client.login(username='admin', password='pass')
         self.account = Account.objects.create(name="first account")
         self.personal = Account.objects.create(name="personal account")
         self.expense = Account.objects.create(
