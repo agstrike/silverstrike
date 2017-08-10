@@ -1,6 +1,6 @@
 {% load staticfiles %}
 {
-  "name": "PyAccountamt",
+  "name": "PyAccountant",
   "short_name": "PyAccountant",
   "icons": [
     {
