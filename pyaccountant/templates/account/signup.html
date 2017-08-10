@@ -1,0 +1,33 @@
+
+{% extends '_plain.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}SilverStrike | {% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="login-box">
+  <div class="login-logo">
+    <b>SilverStrike</b> | Sign up
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+
+<p class="login-box-msg">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  {% for field in form %}
+  <div class="form-group">
+  {{ field|add_class:"form-control" }}
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary btn-block btn-flat" type="submit">{% trans 'Sign up' %}</button>
+</form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+{% endblock %}

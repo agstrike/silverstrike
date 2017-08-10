@@ -1,5 +1,6 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.views.generic import TemplateView
+
 
 from . import api, views
 from .models import Account
@@ -7,6 +8,7 @@ from .models import Account
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^auth/', include('allauth.urls')),
 
     url(r'^transactions/transfer/create$',
         views.TransferCreate.as_view(), name='transfer_new'),

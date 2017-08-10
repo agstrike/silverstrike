@@ -1,0 +1,72 @@
+{% extends "_plain.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load widget_tweaks %}
+
+  {% block title %}SilverStrike | Log in{% endblock %}
+  {% block content %}
+<div class="login-box">
+  <div class="login-logo">
+    <b>SilverStrike</b> | Log in
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+  {% get_providers as socialaccount_providers %}
+  {% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p class="login-box-msg">{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <div class="form-group has-feedback">
+        {{ form.login|add_class:"form-control" }}
+        <span class="fa fa-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        {{ form.password|add_class:"form-control" }}
+        <span class="fa fa-key form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox">
+              {{ form.remember }}
+              <label for="checkbox">Remember Me</label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">{% trans "Sign In" %}</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+    <br>
+      <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+      <br>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+{% endblock %}

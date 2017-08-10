@@ -11,4 +11,6 @@ setup(name='PyAccountant',
 	  include_package_data=True,
 	  install_requires=[
 	  	'Django',
-	  	'django-widget-tweaks'])
+	  	'django-widget-tweaks',
+        'django-allauth',
+        ])

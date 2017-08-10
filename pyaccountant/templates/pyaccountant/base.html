@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load i18n %}
+{% load account %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" sizes="192x192" href="{% static 'pyaccountant/img/icon-192.png' %}">
     <link rel="icon" sizes="128x128" href="{% static 'pyaccountant/img/icon-128.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'pyaccountant/img/favicon.png' %} />
     <link rel="manifest" href="{% url 'manifest' %}">
     <link rel="stylesheet" href="{% static 'pyaccountant/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
@@ -15,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'vendor/css/AdminLTE.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/skin-blue-light.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <title>PyAccountant</title>
+    <title>SilverStrike</title>
 
     {% block stylesheets %}
     {% endblock %}
@@ -26,9 +28,9 @@
       <header class="main-header">
         <a href="/" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>PyA</b></span>
+          <span class="logo-mini"><b>AgS</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>PyA</b>ccountant</span>
+          <span class="logo-lg"><b>Silver</b>strike</span>
         </a>
         <nav class="navbar navbar-static-top">
           <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -54,20 +56,25 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-user" aria-hidden="true"></i>
-                  <span class="hidden-xs">Example User</span>
+                  <span class="hidden-xs">{% user_display user %}
+</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="user-header" id="navbar-user">
                     <p>
-                    Example User
+                    {% if request.user.first_name %}
+                    {{ request.user.first_name }} {{ request.user.last_name }}
+                    {% else %}
+                    {% user_display user %}
+                    {% endif %}
                     </p>
                   </li>
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <a href="{% url 'account_email' %}" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -108,19 +115,11 @@
                 </li>
               </ul>
             </li>
-            <li class="treeview{% if menu == "transactions" %} active{% endif %}">
-              <a href="#">
+            <li class="{% if menu == "transactions" %}active{% endif %}">
+              <a href="{% url 'transactions' %}">
                 <i class="fa fa-exchange fa-fw"></i>
                 <span>Transactions</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
               </a>
-              <ul class="treeview-menu">
-                <li{% if submenu == "all" %} class="active"{% endif %}>
-                  <a href="{% url 'transactions' %}">{% trans 'All Transactions' %}</a>
-                </li>
-              </ul>
             </li>
             <li{% if menu == "categories" %} class="active"{% endif%}>
               <a href="{% url 'categories' %}">
@@ -151,7 +150,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 0.1
         </div>
-        <strong><a href="https://github.com/PyAccountant/PyAccountant">PyAccountant</a></strong>
+        <strong><a href="https://github.com/PyAccountant/PyAccountant">SilverStrike</a></strong>
       </footer>
     </div>
     <script src="{% static 'pyaccountant/js/jquery.min.js' %}"></script>

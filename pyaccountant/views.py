@@ -3,13 +3,15 @@ from datetime import date, datetime, timedelta
 from django.db import models
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .forms import DepositForm, TransferForm, WithdrawForm
 from .lib import last_day_of_month
 from .models import Account, Category, Transaction, TransactionJournal
 
 
-class AccountCreate(generic.edit.CreateView):
+class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
     fields = ['name', 'active']
     success_url = reverse_lazy('personal_accounts')
@@ -21,17 +23,17 @@ class AccountCreate(generic.edit.CreateView):
         return context
 
 
-class AccountUpdate(generic.edit.UpdateView):
+class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Account
     fields = ['name', 'active']
 
 
-class AccountDelete(generic.edit.DeleteView):
+class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     model = Account
     success_url = reverse_lazy('personal_accounts')
 
 
-class AccountIndex(generic.ListView):
+class AccountIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/accounts.html'
     context_object_name = 'accounts'
     account_type = ''
@@ -51,7 +53,7 @@ class AccountIndex(generic.ListView):
         return context
 
 
-class CategoryIndex(generic.ListView):
+class CategoryIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/category_index.html'
     context_object_name = 'categories'
     model = Category
@@ -62,7 +64,7 @@ class CategoryIndex(generic.ListView):
         return context
 
 
-class TransactionIndex(generic.ListView):
+class TransactionIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/transaction_overview.html'
     context_object_name = 'transactions'
     model = Transaction
@@ -84,7 +86,7 @@ class TransactionIndex(generic.ListView):
         return context
 
 
-class AccountView(generic.ListView):
+class AccountView(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/account_detail.html'
     context_object_name = 'transactions'
     model = Transaction
@@ -120,7 +122,7 @@ class AccountView(generic.ListView):
         return context
 
 
-class TransferCreate(generic.edit.CreateView):
+class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = TransactionJournal
     form_class = TransferForm
     template_name = 'pyaccountant/transaction_edit.html'
@@ -132,7 +134,7 @@ class TransferCreate(generic.edit.CreateView):
         return context
 
 
-class TransferUpdate(generic.edit.UpdateView):
+class TransferUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'pyaccountant/transaction_edit.html'
     model = TransactionJournal
 
@@ -200,7 +202,7 @@ def _get_account_info(dstart, dend, account=None):
     return context
 
 
-class IndexView(generic.TemplateView):
+class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'pyaccountant/index.html'
 
     def get_context_data(self, **kwargs):
@@ -215,7 +217,7 @@ class IndexView(generic.TemplateView):
         return context
 
 
-class ChartView(generic.TemplateView):
+class ChartView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'pyaccountant/charts.html'
 
     def get_context_data(self, **kwargs):

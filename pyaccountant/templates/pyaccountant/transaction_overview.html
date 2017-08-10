@@ -26,14 +26,16 @@
     <th>Date</th>
     <th>Amount</th>
     <th>Account</th>
+    <th>Opposing Account</th>
     <th>Category</th>
   </tr>
 {% for transaction in transactions %}
 <tr>
   <td><a href="{% url 'transaction_update' transaction.journal.pk %}">{{ transaction.journal.title }}</a></td>
   <td>{{ transaction.journal.date }}</td>
-  <td>{{ transaction.amount }}</td>
+  <td class="text-{% if transaction.amount > 0 %}green{% else %}red{% endif %}">{{ transaction.amount }}</td>
   <td>{{ transaction.account }}</td>
+  <td>{{ transaction.opposing_account }}</td>
   <td>{{ transaction.journal.category }}</td>
   </tr>
 {% endfor %}

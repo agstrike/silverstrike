@@ -1,0 +1,27 @@
+{% extends '_plain.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load widget_tweaks %}
+  {% block title %}SilverStrike | Sign out{% endblock %}
+  {% block content %}
+<div class="login-box">
+  <div class="login-logo">
+    <b>SilverStrike</b> <small>| Sign out</small>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+
+<p class="login-box-msg">{% trans 'Are you sure you want to sign out?' %}</p>
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button class="btn btn-primary btn-block btn-flat" type="submit">{% trans 'Sign Out' %}</button>
+</form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+{% endblock %}
