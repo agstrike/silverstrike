@@ -214,6 +214,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         context.update(_get_account_info(first, last))
+        context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL)
         return context
 
 
