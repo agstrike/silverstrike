@@ -3,12 +3,14 @@ from datetime import date
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import Account, Transaction, TransactionJournal
+from .models import Account, ImportConfiguration, ImportFile, Transaction, TransactionJournal
 
 
-class ImportForm(forms.Form):
-    file = forms.FileField()
-    headers = forms.BooleanField(required=False)
+class ImportUploadForm(forms.ModelForm):
+    class Meta:
+        model = ImportFile
+        fields = ['file']
+    configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(), required=False)
 
 
 class TransferForm(forms.ModelForm):

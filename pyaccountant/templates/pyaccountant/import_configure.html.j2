@@ -19,20 +19,32 @@
   <form method="post" class="form-horizontal" enctype="multipart/form-data">
     <div class="box-body">
       {% csrf_token %}
+      {% for field in form %}
       <div class="form-group">
-        <label class="text-right col-sm-2" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+        {% if field|widget_type != "checkboxinput" %}
+        <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
         <div class="col-sm-8">
-          {{ form.file }}
+          {% render_field field placeholder=field.label class="form-control" %}
         </div>
+        {% else %}
+        <div class="col-sm-offset-2 col-sm-8 ">
+          <div class="checkbox">
+            <label>
+              {{ field }}
+              {{ field.label }}
+            </label>
+          </div>
+        </div>
+        {% endif %}
+        {% for error in  field.errors %}
+        <span class="help-block">{{ errror }}<span>
+            {% endfor %}
       </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="{{ form.configuration.id_for_label }}">{{ form.configuration.label }}</label>
-        <div class="col-sm-8">{{ form.configuration|add_class:"form-control" }}</div>
-      </div>
+      {% endfor %}
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary">Continue</button>
       </div>
     </div>
   </form>

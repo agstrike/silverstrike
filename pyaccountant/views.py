@@ -1,17 +1,18 @@
 import csv
+import os
 
 from datetime import date, datetime, timedelta
-from io import TextIOWrapper
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .forms import DepositForm, ImportForm, TransferForm, WithdrawForm
+from .forms import DepositForm, ImportUploadForm, TransferForm, WithdrawForm
 from .lib import last_day_of_month
-from .models import Account, Category, Transaction, TransactionJournal
+from .models import Account, Category, ImportConfiguration, ImportFile, Transaction, TransactionJournal
 
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -221,26 +222,33 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class ImportView(LoginRequiredMixin, generic.FormView):
+class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
     template_name = 'pyaccountant/import.html'
-    form_class = ImportForm
-    success_url = reverse_lazy('import')
+    model = ImportFile
+    form_class = ImportUploadForm
 
     def form_valid(self, form):
-        super().form_valid(form)
-        f = TextIOWrapper(self.request.FILES['file'].file, encoding='utf8')
-        data = []
-        for line in csv.reader(f):
-            data.append(line)
-            print(line)
-            print(type(line))
-        if form.cleaned_data['headers']:
-            headers = data[0]
-            del data[0]
-            data = {'headers': headers, 'data': data}
+        self.configuration = form.cleaned_data['configuration']
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if self.configuration:
+            return reverse('import_process', args=[self.object.pk, self.configuration.pk])
         else:
-            data = {'headers': '', 'data': data}
-        return render(self.request, 'pyaccountant/import-2.html', data)
+            return reverse('import_configure', args=(self.object.pk,))
+
+
+class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
+    model = ImportConfiguration
+    template_name = 'pyaccountant/import_configure.html.j2'
+    fields = ['name', 'headers']
+
+    def get_success_url(self):
+        return reverse('import_process', args=[self.kwargs['pk'], self.object.pk])
+
+
+class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'pyaccountant/import_process.html.j2'
 
 
 class ChartView(LoginRequiredMixin, generic.TemplateView):

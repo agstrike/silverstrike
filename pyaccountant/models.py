@@ -1,3 +1,5 @@
+import uuid
+
 from datetime import date, timedelta
 
 from django.db import models
@@ -121,3 +123,16 @@ class Category(models.Model):
                 journal__category=self, account__internal_type=Account.PERSONAL,
                 journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
+
+
+class ImportFile(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    file = models.FileField(upload_to='imports')
+
+
+class ImportConfiguration(models.Model):
+    name = models.CharField(max_length=64)
+    headers = models.BooleanField()
+
+    def __str__(self):
+        return self.name

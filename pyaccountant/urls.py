@@ -41,5 +41,7 @@ urlpatterns = [
     url(r'^manifest.json$', TemplateView.as_view(template_name='pyaccountant/manifest.json'),
         name='manifest'),
 
-    url(r'^import/$', views.ImportView.as_view(), name='import'),
+    url(r'^import/$', views.ImportUploadView.as_view(), name='import_upload'),
+    url(r'^import/(?P<pk>[0-9a-f-]+)/$', views.ImportConfigureView.as_view(), name='import_configure'),
+    url(r'^import/(?P<pk>[0-9a-f-]+)/process/(?P<config_pk>\d+)/$', views.ImportProcessView.as_view(), name='import_process'),
 ]
