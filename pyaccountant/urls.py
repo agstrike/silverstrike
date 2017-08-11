@@ -41,7 +41,9 @@ urlpatterns = [
     url(r'^manifest.json$', TemplateView.as_view(template_name='pyaccountant/manifest.json'),
         name='manifest'),
 
-    url(r'^import/$', views.ImportUploadView.as_view(), name='import_upload'),
-    url(r'^import/(?P<uuid>[0-9a-f-]+)/$', views.ImportConfigureView.as_view(), name='import_configure'),
-    url(r'^import/(?P<uuid>[0-9a-f-]+)/process/(?P<config_pk>\d+)/$', views.ImportProcessView.as_view(), name='import_process'),
+    url(r'^import/$', views.ImportView.as_view(), name='import'),
+    url(r'^import/firefly/$', views.ImportFireflyView.as_view(), name='import_firefly'),
+    url(r'^import/generic$', views.ImportUploadView.as_view(), name='import_generic'),
+    url(r'^import/generic/(?P<uuid>[0-9a-f-]+)/$', views.ImportConfigureView.as_view(), name='import_configure'),
+    url(r'^import/generic/(?P<uuid>[0-9a-f-]+)/process/(?P<config_pk>\d+)/$', views.ImportProcessView.as_view(), name='import_process'),
 ]

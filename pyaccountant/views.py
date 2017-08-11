@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .forms import CSVDefinitionForm, DepositForm, ImportUploadForm, TransferForm, WithdrawForm
-from .lib import last_day_of_month, import_csv
+from .lib import last_day_of_month, import_csv, import_firefly
 from .models import Account, Category, ImportConfiguration, ImportFile, Transaction, TransactionJournal
 
 
@@ -223,9 +223,23 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL)
         return context
 
+class ImportView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'pyaccountant/import.html'
+
+
+class ImportFireflyView(LoginRequiredMixin, generic.edit.CreateView):
+    model = ImportFile
+    fields = ['file']
+    template_name = 'pyaccountant/import_upload.html.j2'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        import_firefly(self.object.file.path)
+        return HttpResponseRedirect(reverse('index'))
+
 
 class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
-    template_name = 'pyaccountant/import.html'
+    template_name = 'pyaccountant/import_upload.html.j2'
     model = ImportFile
     form_class = ImportUploadForm
 

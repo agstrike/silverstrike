@@ -1,0 +1,41 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content_header %}
+<h1>Import</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="#">Settings</a></li>
+  <li class="active">Import</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Import</h3>
+  </div>
+  <form method="post" class="form-horizontal" enctype="multipart/form-data">
+    <div class="box-body">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="text-right col-sm-2" for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+        <div class="col-sm-8">
+          {{ form.file }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.configuration.id_for_label }}">{{ form.configuration.label }}</label>
+        <div class="col-sm-8">{{ form.configuration|add_class:"form-control" }}</div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <div class="col-sm-offset-2">
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock %}
