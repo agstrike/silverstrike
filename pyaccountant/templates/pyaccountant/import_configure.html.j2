@@ -19,6 +19,7 @@
   <form method="post" class="form-horizontal" enctype="multipart/form-data">
     <div class="box-body">
       {% csrf_token %}
+      {{ formset.management_form }}
       {% for field in form %}
       <div class="form-group">
         {% if field|widget_type != "checkboxinput" %}
@@ -41,6 +42,22 @@
             {% endfor %}
       </div>
       {% endfor %}
+      <div class="table-responsive">
+      <table class="table">
+      <tr>
+        {% for form in formset %}
+        <th>{{ form.field_type }}</th>
+        {% endfor %}
+      </tr>
+      {% for datum in data %}
+      <tr>
+        {% for entry in datum %}
+        <td>{{ entry }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">

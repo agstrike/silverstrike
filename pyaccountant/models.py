@@ -11,10 +11,12 @@ class Account(models.Model):
     PERSONAL = 1
     REVENUE = 2
     EXPENSE = 3
+    SYSTEM = 4
     ACCOUNT_TYPES = (
         (PERSONAL, _('Personal')),
         (REVENUE, _('Revenue')),
         (EXPENSE, _('Expense')),
+        (SYSTEM, _('System account')),
     )
 
     name = models.CharField(max_length=64)
@@ -131,8 +133,31 @@ class ImportFile(models.Model):
 
 
 class ImportConfiguration(models.Model):
+    DO_NOT_USE = 0
+    SOURCE_ACCOUNT = 1
+    DESTINATION_ACCOUNT = 2
+    AMOUNT = 3
+    DATE = 4
+    NOTES = 5
+    CATEGORY = 6
+    TITLE = 7
+
+    FIELD_TYPES = (
+        (DO_NOT_USE, _('Do not use')),
+        (SOURCE_ACCOUNT, _('Source Account')),
+        (DESTINATION_ACCOUNT, _('Destination Account')),
+        (AMOUNT, _('Amount')),
+        (DATE, _('Date')),
+        (NOTES, _('Notes')),
+        (CATEGORY, _('Category')),
+        )
+
     name = models.CharField(max_length=64)
-    headers = models.BooleanField()
+    headers = models.BooleanField(help_text=_('First line contains headers'))
+    default_account = models.ForeignKey(Account,
+                                        limit_choices_to={'internal_type': Account.PERSONAL},
+                                        null=True, blank=True)
+    config = models.TextField()
 
     def __str__(self):
         return self.name

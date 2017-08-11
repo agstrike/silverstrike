@@ -13,6 +13,10 @@ class ImportUploadForm(forms.ModelForm):
     configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(), required=False)
 
 
+class CSVDefinitionForm(forms.Form):
+    field_type = forms.ChoiceField(choices=ImportConfiguration.FIELD_TYPES)
+
+
 class TransferForm(forms.ModelForm):
     class Meta:
         model = TransactionJournal

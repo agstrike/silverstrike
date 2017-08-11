@@ -33,7 +33,7 @@
   </tr>
   {% for account in accounts %}
   <tr>
-    <td>{{ account.name }}</td>
+    <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
     <td{% if account.balance < 0 %} class="text-red"{% endif %}>{{ account.balance }}</td>
   </tr>
   {% endfor %}

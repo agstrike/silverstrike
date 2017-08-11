@@ -6,12 +6,14 @@ from datetime import date, datetime, timedelta
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
+from django.forms import formset_factory
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .forms import DepositForm, ImportUploadForm, TransferForm, WithdrawForm
-from .lib import last_day_of_month
+from .forms import CSVDefinitionForm, DepositForm, ImportUploadForm, TransferForm, WithdrawForm
+from .lib import last_day_of_month, import_csv
 from .models import Account, Category, ImportConfiguration, ImportFile, Transaction, TransactionJournal
 
 
@@ -241,14 +243,49 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
 class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
     model = ImportConfiguration
     template_name = 'pyaccountant/import_configure.html.j2'
-    fields = ['name', 'headers']
+    fields = ['name', 'headers', 'default_account']
 
     def get_success_url(self):
-        return reverse('import_process', args=[self.kwargs['pk'], self.object.pk])
+        return reverse('import_process', args=[self.kwargs['uuid'], self.object.pk])
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        formset = self.get_form(formset_factory(CSVDefinitionForm))
+        if formset.is_valid() and form.is_valid():
+            # process formset here
+            col_types =  ' '.join([f.cleaned_data['field_type'] for f in formset])
+            self.object = form.save(commit=False)
+            self.object.config = col_types
+            self.object.save()
+            import_csv(ImportFile.objects.get(uuid=self.kwargs['uuid']).file.path, self.object)
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        file = ImportFile.objects.get(uuid=self.kwargs['uuid']).file
+        data = []
+        for line in csv.reader(open(file.path)):
+            data.append(line)
+            if len(data) > 19:
+                break
+        context['data'] = data
+        context['formset'] = formset_factory(CSVDefinitionForm, extra=len(data[0]))
+        return context
 
 
 class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'pyaccountant/import_process.html.j2'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        file = ImportFile.objects.get(uuid=self.kwargs['uuid']).file
+        data = []
+        for line in csv.reader(open(file.path)):
+            data.append(line)
+        context['data'] = data
+        return context
 
 
 class ChartView(LoginRequiredMixin, generic.TemplateView):
