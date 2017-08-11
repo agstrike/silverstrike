@@ -3,12 +3,12 @@
     <th>Balance</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
   </tr>
   <tr>
-    <th>Income this month</th><td class="text-green">{{ income }}</td>
+    <th>Income this month</th><td>{{ income }}</td>
   </tr>
   <tr>
     <th>Expenses this month</th><td class="text-red">{{ expenses }}</td>
   </tr>
   <tr>
-    <th>Difference this month</th><td class="text-{% if difference < 0 %}red{% else %}green{% endif %}">{{ difference }}</td>
+    <th>Difference this month</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
   </tr>
   </table>

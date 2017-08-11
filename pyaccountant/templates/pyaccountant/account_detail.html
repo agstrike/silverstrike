@@ -61,7 +61,7 @@
 <tr>
   <td><a href="{% url 'transaction_update' transaction.journal.pk %}">{{ transaction.journal.title }}</a></td>
   <td>{{ transaction.journal.date }}</td>
-  <td>{{ transaction.amount }}</td>
+  <td{% if transaction.amount < 0 %} class="text-red"{% endif %}>{{ transaction.amount }}</td>
   <td>{{ transaction.account }}</td>
   <td>{{ transaction.journal.category }}</td>
   </tr>

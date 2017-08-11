@@ -140,10 +140,12 @@ def import_firefly(csv_file):
 
         if line[category_name] in categories:
             line[category_name] = categories[line[category_name]]
-        else:
+        elif line[category_name]:
             c = Category.objects.create(name=line[category_name])
             categories[c.name] = c.id
             line[category_name] = c.id
+        else:
+            line[category_name] = None
         line[date] = datetime.datetime.strptime(line[date], '%Y-%m-%d')
 
         journal = TransactionJournal.objects.create(
