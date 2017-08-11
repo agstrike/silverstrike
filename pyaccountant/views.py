@@ -1,20 +1,18 @@
 import csv
-import os
 
 from datetime import date, datetime, timedelta
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .forms import CSVDefinitionForm, DepositForm, ImportUploadForm, TransferForm, WithdrawForm
-from .lib import last_day_of_month, import_csv, import_firefly
-from .models import Account, Category, ImportConfiguration, ImportFile, Transaction, TransactionJournal
+from .lib import import_csv, import_firefly, last_day_of_month
+from .models import (Account, Category, ImportConfiguration,
+                     ImportFile, Transaction, TransactionJournal)
 
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -223,6 +221,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL)
         return context
 
+
 class ImportView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'pyaccountant/import.html'
 
@@ -267,7 +266,7 @@ class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
         formset = self.get_form(formset_factory(CSVDefinitionForm))
         if formset.is_valid() and form.is_valid():
             # process formset here
-            col_types =  ' '.join([f.cleaned_data['field_type'] for f in formset])
+            col_types = ' '.join([f.cleaned_data['field_type'] for f in formset])
             self.object = form.save(commit=False)
             self.object.config = col_types
             self.object.save()
@@ -275,7 +274,7 @@ class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         file = ImportFile.objects.get(uuid=self.kwargs['uuid']).file

@@ -16,7 +16,7 @@ class Account(models.Model):
         (PERSONAL, _('Personal')),
         (REVENUE, _('Revenue')),
         (EXPENSE, _('Expense')),
-        (SYSTEM, _('System account')),
+        (SYSTEM, _('System')),
     )
 
     name = models.CharField(max_length=64)

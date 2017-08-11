@@ -10,7 +10,8 @@ class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = ImportFile
         fields = ['file']
-    configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(), required=False)
+    configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(),
+                                           required=False)
 
 
 class CSVDefinitionForm(forms.Form):
