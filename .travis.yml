@@ -31,6 +31,7 @@ jobs:
       - rm demo -rf
       - mv heroku/requirements.txt .
       - mv heroku/Procfile .
+      - mv heroku/app.json .
       deploy:
         provider: heroku
         app: pyaccountant

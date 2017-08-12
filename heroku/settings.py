@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$_99bc($w4iv1h8qn=q5*g-gtb&99db+0kls8m6+avmzu8w^8x'
+SECRET_KEY = os.environ['SECRET_KEY'] or '$_99bc($w4iv1h8qn=q5*g-gtb&99db+0kls8m6+avmzu8w^8x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -139,4 +139,4 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
-ACCOUNT_EMAIL_VERIFICATION = False
+ACCOUNT_EMAIL_VERIFICATION = os.environ['ACCOUNT_EMAIL_VERIFICATION'] or False
