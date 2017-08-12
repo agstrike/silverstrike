@@ -72,6 +72,11 @@ class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
             return queryset.get(amount__gt=0)
 
 
+class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
+    model = TransactionJournal
+    success_url = reverse_lazy('personal_accounts')
+
+
 class CategoryIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/category_index.html'
     context_object_name = 'categories'
@@ -166,7 +171,7 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class TransferUpdate(LoginRequiredMixin, generic.edit.UpdateView):
+class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'pyaccountant/transaction_edit.html'
     model = TransactionJournal
 
