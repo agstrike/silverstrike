@@ -71,10 +71,13 @@
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td>{{ transaction.get_recurrence }}</td>
+  <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
+  {% csrf_token %}
   <td class="btn-toolbar">
     <a class="btn btn-xs btn-success" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
-    <a class="btn btn-xs btn-warning" href="{% url 'recurrence_skip' transaction.pk %}">{% trans 'Skip this iteration' %}</a>
+    <input type="submit" class="btn btn-xs btn-warning" value="{% trans 'Skip this iteration' %}">
   </td>
+  </form>
   </tr>
 {% endfor %}
 </table>

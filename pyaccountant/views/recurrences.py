@@ -56,6 +56,7 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         self.recurrence.update_date()
         return response
 
+
 class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = RecurringTransaction
     success_url = reverse_lazy('recurrences')

@@ -37,7 +37,7 @@
   <td>{{ transaction.src }}</td>
   <td>{{ transaction.dst }}</td>
   <td>{{ transaction.get_recurrence }}</td>
-  <form method="post" action="{% url 'recurrence_skip' transaction.pk %}">
+  <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
   {% csrf_token %}
   <td class="btn-toolbar">
     <a class="btn btn-xs btn-success" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
