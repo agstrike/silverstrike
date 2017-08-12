@@ -15,7 +15,7 @@
 
 <p class="login-box-msg">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-<form method="post" action="{% url 'account_logout' %}">
+<form method="post" action="">
   {% csrf_token %}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
@@ -23,6 +23,9 @@
   {% for field in form %}
   <div class="form-group">
   {{ field|add_class:"form-control" }}
+  {% for error in field.errors %}
+  <p class="text-red">{{ error }}</p>
+  {% endfor %}
   </div>
   {% endfor %}
   <button class="btn btn-primary btn-block btn-flat" type="submit">{% trans 'Sign up' %}</button>
