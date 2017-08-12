@@ -31,14 +31,14 @@
     <th>Actions</th>
   </tr>
 {% for transaction in transactions %}
-<tr>
+<tr{% if transaction.is_due %} class="text-red"{% endif %}>
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.title }}</td>
   <td>{{ transaction.amount }}</td>
   <td>{{ transaction.src }}</td>
   <td>{{ transaction.dst }}</td>
   <td>{{ transaction.get_recurrence }}</td>
-  <td>{% if transaction.is_due %}<a class="btn btn-xs btn-danger" href="#!">Create Transaction</a>{% endif %}</td>
+  <td class="btn-toolbar">{% if transaction.is_due %}<a class="btn btn-xs btn-success" href="#!">Create Transaction</a><a class="btn btn-xs btn-warning" href="#!">{% trans 'Skip this iteration' %}</a>{% endif %}<a class="btn btn-xs btn-default" href="#!">{% trans 'Edit' %}</a><a class="btn btn-xs btn-danger" href="#!">{% trans 'Delete' %}</a></td>
   </tr>
 {% endfor %}
 </table>

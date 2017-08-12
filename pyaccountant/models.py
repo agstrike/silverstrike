@@ -6,7 +6,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-
 class Account(models.Model):
     PERSONAL = 1
     REVENUE = 2
@@ -83,6 +82,9 @@ class TransactionJournal(models.Model):
         (SYSTEM, 'SYSTEM'),
     )
 
+    class Meta:
+        ordering = ['-date', 'title']
+
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True)
@@ -105,12 +107,24 @@ class TransactionJournal(models.Model):
         return ''
 
 
+class TransactionManager(models.Manager):
+    def transactions(self):
+        queryset = self.get_queryset().filter(account__internal_type=Account.PERSONAL)
+        return queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER, amount__gt=0)
+
+
 class Transaction(models.Model):
     account = models.ForeignKey(Account, models.CASCADE)
     opposing_account = models.ForeignKey(Account, models.CASCADE,
                                          related_name='opposing_transactions')
     journal = models.ForeignKey(TransactionJournal, models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+    objects = TransactionManager()
+
+    class Meta:
+        ordering = ['-journal__date', 'journal__title']
+
 
     def __str__(self):
         return '{} -> {}'.format(self.journal, self.amount)
@@ -185,6 +199,15 @@ class ImportConfiguration(models.Model):
         return self.name
 
 
+class RecurringTransactionManager(models.Manager):
+    def due_in_month(self, month=None):
+        from .lib import last_day_of_month
+        if not month:
+            month = date.today()
+        month = last_day_of_month(month)
+        return self.get_queryset().filter(date__lte=month)
+
+
 class RecurringTransaction(models.Model):
     WEEKLY = 1
     MONTHLY = 2
@@ -193,6 +216,11 @@ class RecurringTransaction(models.Model):
         (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
         (YEARLY, _('Yearly')))
+
+    class Meta:
+        ordering = ['date']
+
+    objects = RecurringTransactionManager()
 
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -206,7 +234,7 @@ class RecurringTransaction(models.Model):
 
     @property
     def is_due(self):
-        return date.today() > self.date
+        return date.today() >= self.date
 
     @property
     def get_recurrence(self):

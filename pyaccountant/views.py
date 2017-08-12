@@ -92,7 +92,6 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
     context_object_name = 'transactions'
     model = Transaction
     paginate_by = 50
-    ordering = ['-journal__date']
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(account__internal_type=Account.PERSONAL)
@@ -115,7 +114,6 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'transactions'
     model = Transaction
     paginate_by = 50
-    ordering = ['-journal__date']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -163,7 +161,6 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     context_object_name = 'transactions'
     model = RecurringTransaction
     paginate_by = 50
-    ordering = ["-date"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -253,6 +250,8 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context.update(_get_account_info(first, last))
         context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
+        context['due_transactions'] = RecurringTransaction.objects.due_in_month()
+        context['transactions'] = Transaction.objects.transactions()[:10]
         return context
 
 

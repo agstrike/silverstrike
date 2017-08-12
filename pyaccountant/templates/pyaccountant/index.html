@@ -1,6 +1,7 @@
 {% extends 'pyaccountant/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load tags %}
 
 {% block content_header %}
 <h1>Home
@@ -50,9 +51,62 @@
   <canvas id="myChart" width="450" height="250"></canvas>
 </div>
 </div>
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transactions due this month' %}</h3>
+</div>
+<div class="box-body">
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Recurrance</th>
+    <th>Actions</th>
+  </tr>
+{% for transaction in due_transactions %}
+<tr {% if transaction.is_due %}class="text-red"{% endif %}>
+  <td>{{ transaction.title }}</td>
+  <td>{{ transaction.date }}</td>
+  <td>{{ transaction.amount }}</td>
+  <td>{{ transaction.get_recurrence }}</td>
+  <td class="btn-toolbar">{% if transaction.is_due %}<a class="btn btn-xs btn-success" href="#!">Create Transaction</a><a class="btn btn-xs btn-warning" href="#!">{% trans 'Skip this iteration' %}</a>{% endif %}</td>
+  </tr>
+{% endfor %}
+</table>
 </div>
 </div>
-
+</div>
+</div>
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Recent Transactions' %}</h3>
+</div>
+<div class="box-body">
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Source Account</th>
+    <th>Destination Account</th>
+    <th>Category</th>
+  </tr>
+{% for transaction in transactions %}
+<tr>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.journal.title }}</a></td>
+  <td>{{ transaction.journal.get_transaction_type_str }}</td>
+  <td>{{ transaction.journal.date }}</td>
+  <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>
+  <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
+  <td><a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a></td>
+  <td>{{ transaction.journal.category }}</td>
+  </tr>
+{% endfor %}
+</table>
+</div>
+</div>
 {% endblock %}
 
 {% block scripts %}
