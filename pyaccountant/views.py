@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
@@ -96,7 +97,8 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(account__internal_type=Account.PERSONAL)
-        queryset = queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER, amount__gt=0)
+        queryset = queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER,
+                                    amount__gt=0)
         if 'category' in self.request.GET:
             queryset = queryset.filter(journal__category_id=self.request.GET['category'])
         if 'account' in self.request.GET:
@@ -233,6 +235,40 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         initial['src'] = self.object.src
         initial['dst'] = self.object.dst
         return initial
+
+
+class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    model = TransactionJournal
+    template_name = 'pyaccountant/transaction_edit.html'
+
+    def get_form(self, form_class=None):
+        self.recurrence = get_object_or_404(RecurringTransaction, pk=self.kwargs['pk'])
+        if self.recurrence.transaction_type == TransactionJournal.WITHDRAW:
+            form_class = WithdrawForm
+        elif self.recurrence.transaction_type == TransactionJournal.DEPOSIT:
+            form_class = DepositForm
+        else:
+            form_class = TransferForm
+        return form_class(**self.get_form_kwargs())
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['title'] = self.recurrence.title
+        initial['source_account'] = self.recurrence.src
+        initial['destination_account'] = self.recurrence.dst
+        initial['amount'] = self.recurrence.amount
+        initial['date'] = self.recurrence.date
+        return initial
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.recurrence.update_date()
+        return response
+
+
+class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
+    model = RecurringTransaction
+    success_url = reverse_lazy('recurrences')
 
 
 def _get_account_info(dstart, dend, account=None):

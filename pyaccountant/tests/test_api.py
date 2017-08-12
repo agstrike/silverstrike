@@ -19,5 +19,6 @@ class ApiTests(TestCase):
         for t in Account.ACCOUNT_TYPES:
             response = self.client.get(reverse('api_accounts', args=[t[1].upper()]))
             data = json.loads(response.content.decode('utf-8'))
-            self.assertEquals(data, list(Account.objects.filter(
-                internal_type=t[0]).values_list('name', flat=True)))
+            queryset = Account.objects.filter(internal_type=t[0])
+            queryset = queryset.exclude(internal_type=Account.SYSTEM)
+            self.assertEquals(data, list(queryset.values_list('name', flat=True)))

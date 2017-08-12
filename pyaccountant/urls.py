@@ -38,7 +38,16 @@ urlpatterns = [
 
     url(r'^recurrences/$', views.RecurringTransactionIndex.as_view(), name='recurrences'),
     url(r'^recurrences/create$', views.RecurrenceCreateView.as_view(), name='recurrence_create'),
-    url(r'^recurrences/(?P<pk>\d+)/update$', views.RecurrenceUpdateView.as_view(), name='recurrence_update'),
+    url(r'^recurrences/(?P<pk>\d+)/update$', views.RecurrenceUpdateView.as_view(),
+        name='recurrence_update'),
+    url(r'^recurrences/(?P<pk>\d+)/delete$', views.RecurrenceDeleteView.as_view(),
+        name='recurrence_delete'),
+    url(r'^recurrences/(?P<pk>\d+)/skip$', views.RecurrenceUpdateView.as_view(),
+        name='recurrence_skip'),
+    url(r'^recurrences/(?P<pk>\d+)/transaction/create$',
+        views.RecurrenceTransactionCreateView.as_view(),
+        name='recurrence_transaction_create'),
+
 
     url(r'^categories$', views.CategoryIndex.as_view(), name='categories'),
     url(r'^charts$', views.ChartView.as_view(), name='charts'),

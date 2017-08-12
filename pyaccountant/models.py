@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
+
 class Account(models.Model):
     PERSONAL = 1
     REVENUE = 2
@@ -125,7 +126,6 @@ class Transaction(models.Model):
     class Meta:
         ordering = ['-journal__date', 'journal__title']
 
-
     def __str__(self):
         return '{} -> {}'.format(self.journal, self.amount)
 
@@ -236,6 +236,15 @@ class RecurringTransaction(models.Model):
     @property
     def is_due(self):
         return date.today() >= self.date
+
+    def update_date(self):
+        if self.recurrence == self.WEEKLY:
+            self.date += timedelta(days=7)
+        elif self.recurrence == self.MONTHLY:
+            self.date += timedelta(days=30)
+        else:
+            self.date += timedelta(days=365)
+        self.save()
 
     @property
     def get_recurrence(self):

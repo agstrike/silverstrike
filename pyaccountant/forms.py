@@ -3,7 +3,8 @@ from datetime import date
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import Account, ImportConfiguration, ImportFile, RecurringTransaction, Transaction, TransactionJournal
+from .models import (Account, ImportConfiguration, ImportFile,
+                     RecurringTransaction, Transaction, TransactionJournal)
 
 
 class ImportUploadForm(forms.ModelForm):
