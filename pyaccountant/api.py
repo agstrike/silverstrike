@@ -17,7 +17,7 @@ def get_accounts_balance(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d') - delta
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d') + delta
     dataset = []
-    for account in Account.objects.filter(internal_type=Account.PERSONAL):
+    for account in Account.objects.filter(internal_type=Account.PERSONAL, show_on_dashboard=True):
         data = list(zip(*account.get_data_points(dstart, dend)))
         dataset.append({'name': account.name, 'data': data[1]})
     labels = [datetime.datetime.strftime(x, '%d %b %Y') for x in data[0]]

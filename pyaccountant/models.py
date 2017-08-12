@@ -23,6 +23,7 @@ class Account(models.Model):
     internal_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
+    show_on_dashboard = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
