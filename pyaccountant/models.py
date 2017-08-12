@@ -2,6 +2,8 @@ import uuid
 
 from datetime import date, timedelta
 
+from dateutil.relativedelta import relativedelta
+
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
@@ -241,10 +243,9 @@ class RecurringTransaction(models.Model):
         if self.recurrence == self.WEEKLY:
             self.date += timedelta(days=7)
         elif self.recurrence == self.MONTHLY:
-            self.date += timedelta(days=30)
+            self.date += relativedelta(months=+1)
         else:
-            self.date += timedelta(days=365)
-        self.save()
+            self.date += relativedelta(years=+1)
 
     @property
     def get_recurrence(self):
@@ -252,3 +253,19 @@ class RecurringTransaction(models.Model):
             if r == self.recurrence:
                 return name
         return ''
+
+    @classmethod
+    def outstanding_transaction_sum(cls):
+        from .lib import last_day_of_month
+        outstanding = 0
+        dend = last_day_of_month(date.today())
+        transactions = cls.objects.due_in_month().exclude(
+            transaction_type=TransactionJournal.TRANSFER)
+        for t in transactions:
+            while t.date <= dend:
+                if t.transaction_type == TransactionJournal.WITHDRAW:
+                    outstanding -= t.amount
+                else:
+                    outstanding += t.amount
+                t.update_date()
+        return outstanding

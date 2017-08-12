@@ -16,10 +16,31 @@
 <div class="col-md-4 col-md-push-8">
 <div class="box">
 <div class="box-header with-boarder">
-  <h3 class="box-title">Important data</h3>
+  <h3 class="box-title">Quick Overview</h3>
 </div>
 <div class="box-content">
-  {% include 'pyaccountant/account_info.html.j2' %}
+  <table class="table">
+    <tr>
+      <th>Income</th><td>{{ income }}</td>
+    </tr>
+    <tr>
+      <th>Expenses</th><td class="text-red">{{ expenses }}</td>
+    </tr>
+    <tr>
+      <th>Difference</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
+    </tr>
+    <tr>
+    <th>Total Balance</th><th class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</th>
+    </tr>
+    {% if outstanding %}
+    <tr>
+      <th>{% trans 'Outstanding' %}</th><td>{{ outstanding }}</td>
+    </tr>
+    <tr>
+    <th>Expected end of month</th><th class="text-{% if expected_balance < 0 %}red{% else %}green{% endif %}">{{ expected_balance }}</th>
+    </tr>
+    {% endif %}
+  </table>
 </div>
 </div>
 <div class="box">

@@ -45,4 +45,6 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                                                      show_on_dashboard=True)
         context['due_transactions'] = RecurringTransaction.objects.due_in_month()
         context['transactions'] = Transaction.objects.transactions()[:10]
+        context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
+        context['expected_balance'] = context['balance'] + context['outstanding']
         return context

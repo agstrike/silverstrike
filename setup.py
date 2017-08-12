@@ -13,4 +13,5 @@ setup(name='PyAccountant',
 	  	'Django',
 	  	'django-widget-tweaks',
         'django-allauth',
+        'python-dateutil',
         ])

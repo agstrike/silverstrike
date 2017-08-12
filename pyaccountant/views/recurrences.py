@@ -54,6 +54,7 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         self.object.recurrence = self.recurrence
         self.object.save()
         self.recurrence.update_date()
+        self.recurrence.save()
         return response
 
 

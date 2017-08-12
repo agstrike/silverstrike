@@ -35,4 +35,5 @@ def skip_recurrence(request, pk):
         return HttpResponseNotAllowed(['POST'])
     recurrence = get_object_or_404(RecurringTransaction, pk=pk)
     recurrence.update_date()
+    recurrence.save()
     return HttpResponseRedirect(request.GET['next'])
