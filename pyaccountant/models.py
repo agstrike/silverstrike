@@ -93,7 +93,7 @@ class TransactionJournal(models.Model):
                                  blank=True, null=True, on_delete=models.SET_NULL)
     last_modified = models.DateTimeField(auto_now=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
-    bill = models.ForeignKey('RecurringTransaction', blank=True, null=True)
+    recurrence = models.ForeignKey('RecurringTransaction', blank=True, null=True)
 
     def __str__(self):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
@@ -231,7 +231,7 @@ class RecurringTransaction(models.Model):
     transaction_type = models.IntegerField(choices=TransactionJournal.TRANSACTION_TYPES[:3])
 
     def __str__(self):
-        return '{}({}) due on {}'.format(self.title, self.amount, self.date)
+        return self.title
 
     @property
     def is_due(self):

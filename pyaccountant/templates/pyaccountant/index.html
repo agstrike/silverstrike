@@ -56,6 +56,7 @@
   <h3 class="box-title">{% trans 'Transactions due this month' %}</h3>
 </div>
 <div class="box-body">
+{% if due_transactions %}
 <table class="table table-striped">
   <tr>
     <th>Title</th>
@@ -70,10 +71,16 @@
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td>{{ transaction.get_recurrence }}</td>
-  <td class="btn-toolbar">{% if transaction.is_due %}<a class="btn btn-xs btn-success" href="#!">Create Transaction</a><a class="btn btn-xs btn-warning" href="#!">{% trans 'Skip this iteration' %}</a>{% endif %}</td>
+  <td class="btn-toolbar">
+    <a class="btn btn-xs btn-success" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
+    <a class="btn btn-xs btn-warning" href="{% url 'recurrence_skip' transaction.pk %}">{% trans 'Skip this iteration' %}</a>
+  </td>
   </tr>
 {% endfor %}
 </table>
+{% else %}
+<p>{% trans 'Nothing due anymore' %}</p>
+{% endif %}
 </div>
 </div>
 </div>

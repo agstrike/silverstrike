@@ -46,13 +46,15 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         initial['destination_account'] = self.recurrence.dst
         initial['amount'] = self.recurrence.amount
         initial['date'] = self.recurrence.date
+        initial['recurrence'] = self.recurrence.pk
         return initial
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        self.object.recurrence = self.recurrence
+        self.object.save()
         self.recurrence.update_date()
         return response
-
 
 class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = RecurringTransaction
