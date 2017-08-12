@@ -1,0 +1,64 @@
+{% extends 'pyaccountant/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content_header %}
+<h1>
+  {% if object %}
+  Edit {{ object.title }}
+  {% else %}
+  {% trans 'New Recurring Transaction' %}
+  {% endif %}
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
+</div>
+<div class="box-body">
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
+          </label>
+          <div class="col-sm-8">
+          {{ field|add_class:"form-control" }}
+          {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
+    </form>
+</div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
+
+<script>
+$(function() {
+  $('#id_date').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd',
+  startDate: '0d',
+
+  })
+  $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
+      $('#id_src').typeahead({source: data});
+      $('#id_dst').typeahead({source: data});
+  });
+  })
+</script>
+{% endblock %}

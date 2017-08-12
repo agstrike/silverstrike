@@ -8,10 +8,9 @@
 {% block content_header %}
 <h1>Recurring Transactions
 </h1>
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Recurring Transactions</li>
-</ol>
+<div class="breadcrumb">
+  <a href="{% url 'recurrence_create' %}" class="btn btn-default btn-xs">{% trans 'Create' %}</a>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -38,7 +37,11 @@
   <td>{{ transaction.src }}</td>
   <td>{{ transaction.dst }}</td>
   <td>{{ transaction.get_recurrence }}</td>
-  <td class="btn-toolbar">{% if transaction.is_due %}<a class="btn btn-xs btn-success" href="#!">Create Transaction</a><a class="btn btn-xs btn-warning" href="#!">{% trans 'Skip this iteration' %}</a>{% endif %}<a class="btn btn-xs btn-default" href="#!">{% trans 'Edit' %}</a><a class="btn btn-xs btn-danger" href="#!">{% trans 'Delete' %}</a></td>
+  <td class="btn-toolbar">
+    <a class="btn btn-xs btn-success" href="#!">Create Transaction</a>
+    <a class="btn btn-xs btn-warning" href="#!">{% trans 'Skip this iteration' %}</a>
+    <a class="btn btn-xs btn-default" href="{% url 'recurrence_update' transaction.pk %}">{% trans 'Edit' %}</a>
+    <a class="btn btn-xs btn-danger" href="#!">{% trans 'Delete' %}</a></td>
   </tr>
 {% endfor %}
 </table>

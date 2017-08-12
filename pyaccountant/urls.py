@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^transactions/$', views.TransactionIndex.as_view(), name='transactions'),
     url(r'^transactions/(?P<pk>\d+)/$',
         views.TransactionDetailView.as_view(), name='transaction_detail'),
-    url(r'^transactions/(?P<pk>\d+)/edit/$',
+    url(r'^transactions/(?P<pk>\d+)/update/$',
         views.TransactionUpdateView.as_view(), name='transaction_update'),
     url(r'^transactions/(?P<pk>\d+)/delete/$',
         views.TransactionDeleteView.as_view(), name='transaction_delete'),
@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^transactions/create/deposit/$',
         views.DepositCreate.as_view(), name='deposit_new'),
 
-    url(r'^accounts/(?P<pk>\d+)/edit/$', views.AccountUpdate.as_view(), name='account_update'),
+    url(r'^accounts/(?P<pk>\d+)/update/$', views.AccountUpdate.as_view(), name='account_update'),
     url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),
     url(r'^accounts/(?P<pk>\d+)/(?P<dstart>\S+)/$',
         views.AccountView.as_view(), name='account_detail'),
@@ -36,7 +36,10 @@ urlpatterns = [
     url(r'^accounts/revenue$',
         views.AccountIndex.as_view(account_type=Account.REVENUE), name='revenue_accounts'),
 
-    url(r'^recurrances/$', views.RecurringTransactionIndex.as_view(), name='recurrances'),
+    url(r'^recurrences/$', views.RecurringTransactionIndex.as_view(), name='recurrences'),
+    url(r'^recurrences/create$', views.RecurrenceCreateView.as_view(), name='recurrence_create'),
+    url(r'^recurrences/(?P<pk>\d+)/update$', views.RecurrenceUpdateView.as_view(), name='recurrence_update'),
+
     url(r'^categories$', views.CategoryIndex.as_view(), name='categories'),
     url(r'^charts$', views.ChartView.as_view(), name='charts'),
 

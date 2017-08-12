@@ -9,7 +9,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .forms import CSVDefinitionForm, DepositForm, ImportUploadForm, TransferForm, WithdrawForm
+from .forms import (CSVDefinitionForm, DepositForm, ImportUploadForm,
+                    RecurringTransactionForm, TransferForm, WithdrawForm)
 from .lib import import_csv, import_firefly, last_day_of_month
 from .models import (Account, Category, ImportConfiguration,
                      ImportFile, RecurringTransaction, Transaction, TransactionJournal)
@@ -164,7 +165,7 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = 'recurrances'
+        context['menu'] = 'recurrences'
         return context
 
 
@@ -214,6 +215,24 @@ class DepositCreate(TransferCreate):
         context = super().get_context_data(**kwargs)
         context['submenu'] = 'deposit'
         return context
+
+
+class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    form_class = RecurringTransactionForm
+    model = RecurringTransaction
+    success_url = reverse_lazy('recurrences')
+
+
+class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+    form_class = RecurringTransactionForm
+    model = RecurringTransaction
+    success_url = reverse_lazy('recurrences')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['src'] = self.object.src
+        initial['dst'] = self.object.dst
+        return initial
 
 
 def _get_account_info(dstart, dend, account=None):

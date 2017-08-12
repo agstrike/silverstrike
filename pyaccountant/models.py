@@ -228,6 +228,7 @@ class RecurringTransaction(models.Model):
     src = models.ForeignKey(Account)
     dst = models.ForeignKey(Account, related_name='opposing_recurring_transactions')
     recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+    transaction_type = models.IntegerField(choices=TransactionJournal.TRANSACTION_TYPES[:3])
 
     def __str__(self):
         return '{}({}) due on {}'.format(self.title, self.amount, self.date)
