@@ -44,8 +44,8 @@ class Command(BaseCommand):
         T = TransactionJournal.TRANSFER
         self.work, _ = Account.objects.get_or_create(name='work', internal_type=Account.REVENUE)
 
-        self.checking, _ = Account.objects.get_or_create(name='checking')
-        self.savings, _ = Account.objects.get_or_create(name='savings')
+        self.checking, _ = Account.objects.get_or_create(name='checking', show_on_dashboard=True)
+        self.savings, _ = Account.objects.get_or_create(name='savings', show_on_dashboard=True)
 
         self.landlord, _ = Account.objects.get_or_create(
             name='landlord', internal_type=Account.EXPENSE)
