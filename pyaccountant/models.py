@@ -25,6 +25,9 @@ class Account(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-show_on_dashboard', 'name']
+
     def __str__(self):
         return self.name
 
