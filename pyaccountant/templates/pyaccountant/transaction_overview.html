@@ -31,7 +31,7 @@
   </tr>
 {% for transaction in transactions %}
 <tr>
-  <td><a href="{% url 'transaction_update' transaction.journal.pk %}">{{ transaction.journal.title }}</a></td>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.journal.title }}</a></td>
   <td>{{ transaction.journal.date }}</td>
   <td class="text-{% if transaction.amount > 0 %}green{% else %}red{% endif %}">{{ transaction.amount }}</td>
   <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>

@@ -3,6 +3,44 @@
 {% load static %}
 {% load widget_tweaks %}
 
+{% block content_header %}
+<h1>Transactions
+  <small>
+  {% if object %}
+  Edit {{ object.title }}
+  {% else %}
+  Add new {{ submenu }}
+  {% endif %}
+  </small>
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
+</div>
+<div class="box-body">
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
+          </label>
+          <div class="col-sm-8">
+          {{ field|add_class:"form-control" }}
+          {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
+    </form>
+</div>
+</div>
+{% endblock %}
+
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
 {% endblock %}
@@ -31,41 +69,4 @@ $(function() {
   }
 })
 </script>
-{% endblock %}
-
-{% block content_header %}
-<h1>Transactions
-  <small>Add new transaction</small>
-</h1>
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'transactions' %}">Transactions</a></li>
-  <li class="active">New {{ submenu }}</li>
-</ol>
-{% endblock %}
-
-{% block content %}
-<div class="box">
-  <div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
-</div>
-<div class="box-body">
-    <form method="post" class="form-horizontal">
-      {% csrf_token %}
-      {% for field in form %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
-          </label>
-          <div class="col-sm-8">
-          {{ field|add_class:"form-control" }}
-          {% for error in field.errors %}
-          <span class="help-block">{{ error }}</span>
-          {% endfor %}
-        </div>
-        </div>
-      {% endfor %}
-      <button type="submit" class="btn btn-primary">{% trans 'Add' %}</button>
-    </form>
-</div>
-</div>
 {% endblock %}

@@ -57,6 +57,21 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
         return context
 
 
+class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Transaction
+    context_object_name = 'transaction'
+
+    def get_object(self, queryset=None):
+        queryset = Transaction.objects.all()
+        queryset = queryset.filter(journal_id=self.kwargs['pk'])
+        queryset = queryset.select_related('journal', 'journal__category',
+                                           'account', 'opposing_account')
+        if queryset[0].journal.transaction_type == TransactionJournal.WITHDRAW:
+            return queryset.get(amount__lt=0)
+        else:
+            return queryset.get(amount__gt=0)
+
+
 class CategoryIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'pyaccountant/category_index.html'
     context_object_name = 'categories'

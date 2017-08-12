@@ -90,7 +90,7 @@ class ViewTests(TestCase):
                     'destination_account': 2,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), url)
+                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -120,7 +120,7 @@ class ViewTests(TestCase):
                     'destination_account': self.expense,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), url)
+                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -150,7 +150,7 @@ class ViewTests(TestCase):
                     'destination_account': 2,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), url)
+                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 

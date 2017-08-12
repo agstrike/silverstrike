@@ -95,7 +95,7 @@ class TransactionJournal(models.Model):
         return '{}:{} @ {}'.format(self.pk, self.title, self.date)
 
     def get_absolute_url(self):
-        return reverse('transaction_update', args=[self.pk])
+        return reverse('transaction_detail', args=[self.pk])
 
 
 class Transaction(models.Model):
@@ -119,6 +119,9 @@ class Transaction(models.Model):
     @property
     def is_deposit(self):
         return self.journal.transaction_type == TransactionJournal.DEPOSIT
+
+    def get_absolute_url(self):
+        return self.journal.get_absolute_url()
 
 
 class Category(models.Model):
