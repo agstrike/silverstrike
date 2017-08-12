@@ -47,7 +47,7 @@
     <h3 class="box-title">Personal Accounts</h3>
   </div>
   <div class="box-body">
-  <canvas id="myChart" width="400" height="200"></canvas>
+  <canvas id="myChart" width="400" height="250"></canvas>
 </div>
 </div>
 </div>
@@ -99,8 +99,16 @@ var drawChart = function(res) {
       data: data,
       options: {
           tooltips: {
-              mode: 'x'
+              mode: 'index',
+              position: 'nearest',
+              intersect: false,
+              caretSize: 0,
+              caretPadding: 5,
+          },
+          legend: {
+            position: 'none',
           }
+
       }
   });
 }
