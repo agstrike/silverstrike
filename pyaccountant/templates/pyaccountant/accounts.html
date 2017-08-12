@@ -21,14 +21,12 @@
     <table class="table table-striped">
       <tr>
         <th>Name</th>
-        <th>Type</th>
         <th>Balance</th>
         <th>Active</th>
       </tr>
       {% for account in accounts %}
       <tr>
         <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
-        <td>{{ account.account_type }}</td>
         <td>{{ account.balance }}</td>
         <td>{{ account.active }}</td>
       </tr>

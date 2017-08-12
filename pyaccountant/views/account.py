@@ -90,13 +90,19 @@ class AccountView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
+
         context['menu'] = 'accounts'
-        context['submenu'] = 'personal'
+        if context['account'].internal_type == Account.PERSONAL:
+            context['submenu'] = 'personal'
+        elif context['account'].internal_type == Account.REVENUE:
+            context['submenu'] = 'revenue'
+        else:
+            context['submenu'] = 'expense'
         context['dstart'] = self.dstart
 
         context['previous_month'] = (self.dstart - timedelta(days=1)).replace(day=1)
         context['next_month'] = self.dend + timedelta(days=1)
-        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
         context.update(_get_account_info(self.dstart, self.dend, context['account']))
 
         delta = timedelta(days=3)
