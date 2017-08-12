@@ -25,7 +25,7 @@
   <tr><th>Source Account</th><td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td></tr>
   <tr><th>Destination Account</th><td><a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a></td></tr>
   <tr><th>Amount</th><td class="text-{% if transaction.is_withdraw %}red{% elif transaction.is_deposit %}green{% endif %}">{{ transaction.amount }}</td></tr>
-  <tr><th>Category</th><td>{% if transaction.category %}<a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>{% else %}{% trans 'No category specified' %}{% endif %}</td></tr>
+  <tr><th>Category</th><td>{% if transaction.category %}<a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>{% else %}{% trans 'None' %}{% endif %}</td></tr>
   <tr><th>{% trans 'Notes' %}</th><td>{{ transaction.journal.notes }}</td></tr>
 </table>
 </div>

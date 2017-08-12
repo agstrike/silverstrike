@@ -33,7 +33,7 @@
 <tr>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.journal.title }}</a></td>
   <td>{{ transaction.journal.date }}</td>
-  <td class="text-{% if transaction.amount > 0 %}green{% else %}red{% endif %}">{{ transaction.amount }}</td>
+  <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{{ transaction.amount }}</td>
   <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
   <td><a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a></td>
   <td>{{ transaction.journal.category }}</td>

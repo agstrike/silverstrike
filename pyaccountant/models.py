@@ -86,7 +86,8 @@ class TransactionJournal(models.Model):
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True)
-    category = models.ForeignKey('Category', related_name='transactions', blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', related_name='transactions',
+                                 blank=True, null=True, on_delete=models.SET_NULL)
     last_modified = models.DateTimeField(auto_now=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
     bill = models.ForeignKey('RecurringTransaction', blank=True, null=True)
