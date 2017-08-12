@@ -12,7 +12,8 @@ class ApiTests(TestCase):
         User.objects.create(username='admin', password='pass')
         self.client.login(username='admin', password='pass')
         Account.objects.bulk_create(
-            [Account(name=t[1], internal_type=t[0]) for t in Account.ACCOUNT_TYPES])
+            [Account(name=t[1], internal_type=t[0],
+                     show_on_dashboard=True) for t in Account.ACCOUNT_TYPES])
 
     def test_get_accounts_return_value(self):
         for t in Account.ACCOUNT_TYPES:

@@ -14,6 +14,7 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = ('journal', 'account', 'opposing_account', 'amount')
     list_filter = ('account', 'opposing_account', 'journal__category')
 
+
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('name',)

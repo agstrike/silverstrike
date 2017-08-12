@@ -17,7 +17,7 @@ from .models import (Account, Category, ImportConfiguration,
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
-    fields = ['name', 'active', 'show_on_dasboard']
+    fields = ['name', 'active', 'show_on_dashboard']
     success_url = reverse_lazy('personal_accounts')
 
     def get_context_data(self, **kwargs):
@@ -231,7 +231,8 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         context.update(_get_account_info(first, last))
-        context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL, show_on_dashboard=True)
+        context['accounts'] = Account.objects.filter(internal_type=Account.PERSONAL,
+                                                     show_on_dashboard=True)
         return context
 
 

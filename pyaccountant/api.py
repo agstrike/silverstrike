@@ -20,5 +20,8 @@ def get_accounts_balance(request, dstart, dend):
     for account in Account.objects.filter(internal_type=Account.PERSONAL, show_on_dashboard=True):
         data = list(zip(*account.get_data_points(dstart, dend)))
         dataset.append({'name': account.name, 'data': data[1]})
-    labels = [datetime.datetime.strftime(x, '%d %b %Y') for x in data[0]]
+    if dataset:
+        labels = [datetime.datetime.strftime(x, '%d %b %Y') for x in data[0]]
+    else:
+        labels = []
     return JsonResponse({'labels': labels, 'dataset': dataset})

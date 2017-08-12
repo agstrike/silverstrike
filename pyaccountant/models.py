@@ -176,7 +176,8 @@ class RecurringTransaction(models.Model):
     WEEKLY = 1
     MONTHLY = 2
     YEARLY = 3
-    RECCURENCE_OPTIONS = ((WEEKLY, _('Weekly')),
+    RECCURENCE_OPTIONS = (
+        (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
         (YEARLY, _('Yearly')))
 
