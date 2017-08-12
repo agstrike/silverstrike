@@ -29,7 +29,7 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
 
 class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Account
-    fields = ['name', 'active', 'show_on_dasboard']
+    fields = ['name', 'active', 'show_on_dashboard']
 
 
 class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):

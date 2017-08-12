@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^charts$', views.ChartView.as_view(), name='charts'),
 
     url(r'^transactions/$', views.TransactionIndex.as_view(), name='transactions'),
+    url(r'^accounts/(?P<pk>\d+)/edit/$', views.AccountUpdate.as_view(), name='account_update'),
+    url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),
     url(r'^accounts/(?P<pk>\d+)/(?P<dstart>\S+)/$',
         views.AccountView.as_view(), name='account_detail'),
 

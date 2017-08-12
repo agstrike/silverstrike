@@ -6,11 +6,10 @@
 <h1>{{ account.name }}
   <small>{{ dstart|date:'F Y'}}</small>
 </h1>
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li>Transactions</li>
-  <li class="active">{{ account.name }}</li>
-</ol>
+<div class="breadcrumb">
+  <a href="{% url 'account_update' account.pk %}" class="btn btn-default btn-xs">Edit</a>
+  <a href="{% url 'account_delete' account.pk %}" class="btn btn-default btn-xs">Delete</a>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -27,14 +26,14 @@
 <div class="row">
   <div class="col-md-4 col-md-push-8">
     <div class="box">
-      <div class="box-header with-boarder">
+      <div class="box-header">
         <h3 class="box-title">Important data</h3>
       </div>
-    <div class="box-content">
-      {% include 'pyaccountant/account_info.html.j2' %}
+      <div class="box-content">
+        {% include 'pyaccountant/account_info.html.j2' %}
+      </div>
     </div>
   </div>
-</div>
 <div class="col-md-8 col-md-pull-4">
 <div class="box">
   <div class="box-body">
@@ -109,6 +108,11 @@
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
+    options: {
+        legend: {
+          position: 'none',
+        }
+    },
     data: {
         labels: [
   {% for label, value in dataset %}

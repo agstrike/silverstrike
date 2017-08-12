@@ -32,6 +32,10 @@ class Account(models.Model):
         return self.name
 
     @property
+    def transaction_num(self):
+        return Transaction.objects.filter(account=self).count()
+
+    @property
     def balance(self):
         return Transaction.objects.filter(account=self).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
@@ -192,4 +196,7 @@ class RecurringTransaction(models.Model):
 
     @property
     def get_recurrence(self):
-        return Recurrence(self.recurrence).name
+        for r, name in self.RECCURENCE_OPTIONS:
+            if r == self.recurrence:
+                return name
+        return ''

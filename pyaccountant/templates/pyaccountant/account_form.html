@@ -50,6 +50,7 @@
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
+        <a href="{{ account.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
         <button type="submit" class="btn btn-primary">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
       </div>
     </div>
