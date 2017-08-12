@@ -139,3 +139,4 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+ACCOUNT_EMAIL_VERIFICATION = False

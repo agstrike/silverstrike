@@ -63,13 +63,12 @@ class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_object(self, queryset=None):
         queryset = Transaction.objects.all()
-        queryset = queryset.filter(journal_id=self.kwargs['pk'])
         queryset = queryset.select_related('journal', 'journal__category',
                                            'account', 'opposing_account')
-        if queryset[0].journal.transaction_type == TransactionJournal.WITHDRAW:
-            return queryset.get(amount__lt=0)
-        else:
-            return queryset.get(amount__gt=0)
+        transaction = queryset.get(journal_id=self.kwargs['pk'], amount__lt=0)
+        if transaction.journal.transaction_type != TransactionJournal.WITHDRAW:
+            transaction.amount = -transaction.amount
+        return transaction
 
 
 class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):

@@ -97,6 +97,12 @@ class TransactionJournal(models.Model):
     def get_absolute_url(self):
         return reverse('transaction_detail', args=[self.pk])
 
+    def get_transaction_type_str(self):
+        for i, name in self.TRANSACTION_TYPES:
+            if i == self.transaction_type:
+                return name
+        return ''
+
 
 class Transaction(models.Model):
     account = models.ForeignKey(Account, models.CASCADE)
