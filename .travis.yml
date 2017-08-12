@@ -3,8 +3,8 @@ language: python
 python:
   - 3.6
 notifications:
-  on_success: change
-  on_failure: always
+  on_success: never
+  on_failure: never
 branches:
   except:
   - heroku
