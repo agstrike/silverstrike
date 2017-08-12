@@ -1,8 +1,7 @@
 import datetime
 
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST
 
 from .models import Account, RecurringTransaction
 
@@ -31,8 +30,9 @@ def get_accounts_balance(request, dstart, dend):
     return JsonResponse({'labels': labels, 'dataset': dataset})
 
 
-@require_POST
 def skip_recurrence(request, pk):
+    if request.method == 'GET':
+        return HttpResponseNotAllowed(['POST'])
     recurrence = get_object_or_404(RecurringTransaction, pk=pk)
     recurrence.update_date()
     return HttpResponseRedirect(request.GET['next'])
