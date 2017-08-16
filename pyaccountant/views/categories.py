@@ -13,3 +13,14 @@ class CategoryIndex(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'categories'
         return context
+
+class CategoryCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    pass
+
+
+class CategoryUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+    pass
+
+
+class CategroyDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
+    pass
