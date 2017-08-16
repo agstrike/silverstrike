@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'widget_tweaks',
-    'pyaccountant',
+    'silverstrike',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

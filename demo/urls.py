@@ -4,5 +4,5 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('pyaccountant.urls')),
+    url(r'', include('silverstrike.urls')),
 ]
