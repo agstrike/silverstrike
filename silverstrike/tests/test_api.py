@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from pyaccountant.models import Account
+from silverstrike.models import Account
 
 
 class ApiTests(TestCase):

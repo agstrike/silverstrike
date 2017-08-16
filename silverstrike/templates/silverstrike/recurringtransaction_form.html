@@ -1,17 +1,15 @@
-{% extends 'pyaccountant/base.html' %}
+{% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Transactions
-  <small>
+<h1>
   {% if object %}
   Edit {{ object.title }}
   {% else %}
-  Add new {{ submenu }}
+  {% trans 'New Recurring Transaction' %}
   {% endif %}
-  </small>
 </h1>
 {% endblock %}
 
@@ -54,19 +52,13 @@ $(function() {
   $('#id_date').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
-  endDate: '0d',
+  startDate: '0d',
 
   })
-  if ($('input#id_source_account').length > 0) {
-      $.getJSON('{% url 'api_accounts' 'REVENUE' %}').done(function (data) {
-          $('#id_source_account').typeahead({source: data});
-      });
-  }
-  if ($('input#id_destination_account').length > 0) {
-      $.getJSON('{% url 'api_accounts' 'EXPENSE' %}').done(function (data) {
-          $('#id_destination_account').typeahead({source: data});
-      });
-  }
-})
+  $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
+      $('#id_src').typeahead({source: data});
+      $('#id_dst').typeahead({source: data});
+  });
+  })
 </script>
 {% endblock %}

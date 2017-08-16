@@ -4,7 +4,7 @@ from random import randrange
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
-from pyaccountant.models import Account, Category, Transaction, TransactionJournal
+from silverstrike.models import Account, Category, Transaction, TransactionJournal
 
 
 def _create_transaction(date, amount, src, dst, title, category, type):

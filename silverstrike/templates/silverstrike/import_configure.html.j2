@@ -1,30 +1,25 @@
-{% extends 'pyaccountant/base.html' %}
+{% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Accounts
-  {% if object %}
-  <small>Update {{ object.name }}</small>
-  {% else %}
-  <small>Create new account</small>
-  {% endif %}
-</h1>
+<h1>Import</h1>
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
-  <li><a href="#">Accounts</a></li>
-  <li class="active">{% if object %}{% trans 'Update' %}{% else %}{% trans 'New' %}{% endif %}</li>
+  <li><a href="#">Settings</a></li>
+  <li class="active">Import</li>
 </ol>
 {% endblock %}
 
 {% block content %}
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">{% trans 'Account Details' %}</h3>
+    <h3 class="box-title">Import</h3>
   </div>
-  <form method="post" class="form-horizontal">
+  <form method="post" class="form-horizontal" enctype="multipart/form-data">
     <div class="box-body">
       {% csrf_token %}
+      {{ formset.management_form }}
       {% for field in form %}
       <div class="form-group">
         {% if field|widget_type != "checkboxinput" %}
@@ -47,11 +42,26 @@
             {% endfor %}
       </div>
       {% endfor %}
+      <div class="table-responsive">
+      <table class="table">
+      <tr>
+        {% for form in formset %}
+        <th>{{ form.field_type }}</th>
+        {% endfor %}
+      </tr>
+      {% for datum in data %}
+      <tr>
+        {% for entry in datum %}
+        <td>{{ entry }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
-        <a href="{{ account.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
-        <button type="submit" class="btn btn-primary">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
+        <button type="submit" class="btn btn-primary">Continue</button>
       </div>
     </div>
   </form>

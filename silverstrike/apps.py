@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class PyAccountantConfig(AppConfig):
-    name = 'pyaccountant'
+class SilverStrikeConfig(AppConfig):
+    name = 'silverstrik'

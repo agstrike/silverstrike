@@ -1,9 +1,9 @@
-{% extends 'pyaccountant/base.html' %}
+{% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Delete '{{ object.title }}' transaction
+<h1>Delete '{{ object.title }}' recurring transaction
 </h1>
 {% endblock %}
 
@@ -13,7 +13,7 @@
   <form method="post" class="form-horizontal">
     <div class="box-body">
       {% csrf_token %}
-        <p>Are you sure you want to delete the transaction?</p>
+        <p>Are you sure you want to delete the recurring transaction?</p>
         <div class="text-center">
         <a href="{{ object.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
         <button type="submit" class="btn btn-danger">{% trans 'Delete' %}</button>

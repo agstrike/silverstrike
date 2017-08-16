@@ -5,8 +5,8 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.views import generic
 
-from pyaccountant.lib import last_day_of_month
-from pyaccountant.models import Account, Transaction
+from silverstrike.lib import last_day_of_month
+from silverstrike.models import Account, Transaction
 
 
 def _get_account_info(dstart, dend, account=None):
@@ -52,7 +52,7 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
 
 
 class AccountIndex(LoginRequiredMixin, generic.ListView):
-    template_name = 'pyaccountant/accounts.html'
+    template_name = 'silverstrike/accounts.html'
     context_object_name = 'accounts'
     account_type = ''
 
@@ -72,7 +72,7 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
 
 
 class AccountView(LoginRequiredMixin, generic.ListView):
-    template_name = 'pyaccountant/account_detail.html'
+    template_name = 'silverstrike/account_detail.html'
     context_object_name = 'transactions'
     model = Transaction
     paginate_by = 50

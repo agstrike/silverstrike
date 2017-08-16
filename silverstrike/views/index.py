@@ -5,8 +5,8 @@ from django.db import models
 from django.views import generic
 
 
-from pyaccountant.lib import last_day_of_month
-from pyaccountant.models import Account, RecurringTransaction, Transaction
+from silverstrike.lib import last_day_of_month
+from silverstrike.models import Account, RecurringTransaction, Transaction
 
 
 def _get_account_info(dstart, dend, account=None):
@@ -30,7 +30,7 @@ def _get_account_info(dstart, dend, account=None):
 
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'pyaccountant/index.html'
+    template_name = 'silverstrike/index.html'
 
     def get_context_data(self, **kwargs):
         first = date.today().replace(day=1)

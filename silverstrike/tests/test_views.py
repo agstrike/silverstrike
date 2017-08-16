@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from pyaccountant.forms import DepositForm, TransferForm, WithdrawForm
-from pyaccountant.models import Account, TransactionJournal
+from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
+from silverstrike.models import Account, TransactionJournal
 
 
 class ViewTests(TestCase):

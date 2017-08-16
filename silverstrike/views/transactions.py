@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from pyaccountant.forms import DepositForm, TransferForm, WithdrawForm
-from pyaccountant.models import Account, Transaction, TransactionJournal
+from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
+from silverstrike.models import Account, Transaction, TransactionJournal
 
 
 class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
@@ -26,7 +26,7 @@ class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
 
 
 class TransactionIndex(LoginRequiredMixin, generic.ListView):
-    template_name = 'pyaccountant/transaction_overview.html'
+    template_name = 'silverstrike/transaction_overview.html'
     context_object_name = 'transactions'
     model = Transaction
     paginate_by = 50
@@ -51,7 +51,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
 class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = TransactionJournal
     form_class = TransferForm
-    template_name = 'pyaccountant/transaction_edit.html'
+    template_name = 'silverstrike/transaction_edit.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,7 +61,7 @@ class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
-    template_name = 'pyaccountant/transaction_edit.html'
+    template_name = 'silverstrike/transaction_edit.html'
     model = TransactionJournal
 
     def get_initial(self):

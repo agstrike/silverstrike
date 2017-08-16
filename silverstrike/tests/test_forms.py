@@ -1,8 +1,8 @@
 from django.db import models
 from django.test import TestCase
 
-from pyaccountant.forms import DepositForm, TransferForm, WithdrawForm
-from pyaccountant.models import Account, Transaction, TransactionJournal
+from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
+from silverstrike.models import Account, Transaction, TransactionJournal
 
 
 class FormTests(TestCase):

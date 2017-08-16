@@ -1,7 +1,7 @@
 from django.core.management import call_command
 from django.test import TestCase
 
-from pyaccountant.models import TransactionJournal
+from silverstrike.models import TransactionJournal
 
 
 class CommandsTestCase(TestCase):

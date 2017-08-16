@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from pyaccountant.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm
-from pyaccountant.models import RecurringTransaction, TransactionJournal
+from silverstrike.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm
+from silverstrike.models import RecurringTransaction, TransactionJournal
 
 
 class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
@@ -27,7 +27,7 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
 class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = TransactionJournal
-    template_name = 'pyaccountant/transaction_edit.html'
+    template_name = 'silverstrike/transaction_edit.html'
 
     def get_form(self, form_class=None):
         self.recurrence = get_object_or_404(RecurringTransaction, pk=self.kwargs['pk'])
@@ -64,7 +64,7 @@ class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
 
 
 class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
-    template_name = 'pyaccountant/recurring_transactions.html'
+    template_name = 'silverstrike/recurring_transactions.html'
     context_object_name = 'transactions'
     model = RecurringTransaction
     paginate_by = 50

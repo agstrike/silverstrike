@@ -6,19 +6,19 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
-from pyaccountant.forms import CSVDefinitionForm, ImportUploadForm
-from pyaccountant.lib import import_csv, import_firefly
-from pyaccountant.models import ImportConfiguration, ImportFile
+from silverstrike.forms import CSVDefinitionForm, ImportUploadForm
+from silverstrike.lib import import_csv, import_firefly
+from silverstrike.models import ImportConfiguration, ImportFile
 
 
 class ImportView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'pyaccountant/import.html'
+    template_name = 'silverstrike/import.html'
 
 
 class ImportFireflyView(LoginRequiredMixin, generic.edit.CreateView):
     model = ImportFile
     fields = ['file']
-    template_name = 'pyaccountant/import_upload.html.j2'
+    template_name = 'silverstrike/import_upload.html.j2'
 
     def form_valid(self, form):
         self.object = form.save()
@@ -27,7 +27,7 @@ class ImportFireflyView(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
-    template_name = 'pyaccountant/import_upload.html.j2'
+    template_name = 'silverstrike/import_upload.html.j2'
     model = ImportFile
     form_class = ImportUploadForm
 
@@ -44,7 +44,7 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
 
 class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
     model = ImportConfiguration
-    template_name = 'pyaccountant/import_configure.html.j2'
+    template_name = 'silverstrike/import_configure.html.j2'
     fields = ['name', 'headers', 'default_account']
 
     def get_success_url(self):
@@ -78,7 +78,7 @@ class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
 
 
 class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'pyaccountant/import_process.html.j2'
+    template_name = 'silverstrike/import_process.html.j2'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

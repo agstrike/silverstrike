@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from pyaccountant.apps import PyAccountantConfig
+from silverstrike.apps import SilverStrikeConfig
 
 
 class AppConfigTest(TestCase):
     def test(self):
-        self.assertEquals(PyAccountantConfig.name, 'pyaccountant')
+        self.assertEquals(SilverStrikeConfig.name, 'silverstrike')

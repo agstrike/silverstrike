@@ -3,11 +3,11 @@ from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
-from pyaccountant.lib import last_day_of_month
+from silverstrike.lib import last_day_of_month
 
 
 class ChartView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'pyaccountant/charts.html'
+    template_name = 'silverstrike/charts.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
