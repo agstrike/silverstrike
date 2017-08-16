@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class SilverStrikeConfig(AppConfig):
-    name = 'silverstrik'
+    name = 'silverstrike'

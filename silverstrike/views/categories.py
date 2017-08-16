@@ -14,6 +14,7 @@ class CategoryIndex(LoginRequiredMixin, generic.ListView):
         context['menu'] = 'categories'
         return context
 
+
 class CategoryCreateView(LoginRequiredMixin, generic.edit.CreateView):
     pass
 

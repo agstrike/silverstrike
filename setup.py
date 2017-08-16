@@ -7,7 +7,7 @@ setup(name='SilverStrike',
 	  description='Python Accounting Webapp',
 	  author='Simon Hanna',
 	  url='https://github.com/AgStrike/SilverStrike',
-	  packages=['silverstrik',],
+	  packages=['silverstrike',],
 	  include_package_data=True,
 	  install_requires=[
 	  	'Django',
