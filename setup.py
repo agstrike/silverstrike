@@ -10,7 +10,7 @@ setup(name='SilverStrike',
 	  packages=['silverstrike',],
 	  include_package_data=True,
 	  install_requires=[
-	  	'Django',
+	  	'django',
 	  	'django-widget-tweaks',
                 'django-allauth',
                 'python-dateutil',

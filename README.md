@@ -16,4 +16,4 @@ If you want your very own Production setup, you can create a very own instance f
 
 SilverStrike is derived from the German name Silberschlag. Silberschlag is the name of a German Scientist who also has a crater on the moon named after him.
 
-SilverStrike is abbreviated as AgS. The abbreviation is pronounced SilverS.
+SilverStrike is abbreviated as AgStrike or AgS. The abbreviation is pronounced SilverStrike or SilverS.
