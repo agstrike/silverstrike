@@ -13,9 +13,9 @@ class ViewTests(TestCase):
         self.account = Account.objects.create(name="first account")
         self.personal = Account.objects.create(name="personal account")
         self.expense = Account.objects.create(
-            name="expense account", internal_type=Account.EXPENSE)
+            name="expense account", account_type=Account.EXPENSE)
         self.revenue = Account.objects.create(
-            name="revenue account", internal_type=Account.REVENUE)
+            name="revenue account", account_type=Account.REVENUE)
 
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context

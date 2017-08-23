@@ -32,7 +32,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(account__internal_type=Account.PERSONAL)
+        queryset = super().get_queryset().filter(account__account_type=Account.PERSONAL)
         queryset = queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER,
                                     amount__gt=0)
         if 'category' in self.request.GET:

@@ -17,13 +17,13 @@ def _get_account_info(dstart, dend, account=None):
     if account:
         queryset = queryset.filter(account=account)
     context['income'] = abs(queryset.filter(
-        account__internal_type=Account.PERSONAL,
-        opposing_account__internal_type=Account.REVENUE).aggregate(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.REVENUE).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     context['expenses'] = abs(queryset.filter(
-        account__internal_type=Account.PERSONAL,
-        opposing_account__internal_type=Account.EXPENSE).aggregate(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.EXPENSE).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
     context['difference'] = context['income'] - context['expenses']
     return context
@@ -57,7 +57,7 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
     account_type = ''
 
     def get_queryset(self):
-        return Account.objects.filter(internal_type=self.account_type)
+        return Account.objects.filter(account_type=self.account_type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -93,9 +93,9 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context['account'] = Account.objects.get(pk=self.kwargs['pk'])
 
         context['menu'] = 'accounts'
-        if context['account'].internal_type == Account.PERSONAL:
+        if context['account'].account_type == Account.PERSONAL:
             context['submenu'] = 'personal'
-        elif context['account'].internal_type == Account.REVENUE:
+        elif context['account'].account_type == Account.REVENUE:
             context['submenu'] = 'revenue'
         else:
             context['submenu'] = 'expense'
@@ -106,7 +106,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context.update(_get_account_info(self.dstart, self.dend, context['account']))
 
         delta = timedelta(days=3)
-        if context['account'].internal_type == Account.PERSONAL:
+        if context['account'].account_type == Account.PERSONAL:
             context['dataset'] = context['account'].get_data_points(
                 self.dstart - delta, self.dend + delta)
         return context

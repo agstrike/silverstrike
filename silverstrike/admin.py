@@ -18,4 +18,4 @@ class TransactionAdmin(admin.ModelAdmin):
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    list_filter = ('internal_type',)
+    list_filter = ('account_type',)

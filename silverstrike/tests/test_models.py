@@ -23,7 +23,7 @@ class ModelTests(TestCase):
     def test_transaction_str_method(self):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", internal_type=Account.EXPENSE)
+            name="some_account", account_type=Account.EXPENSE)
         journal = TransactionJournal.objects.create(title="journal",
                                                     transaction_type=TransactionJournal.WITHDRAW)
         self.assertEquals(str(journal), '{}:{} @ {}'.format(journal.pk, journal.title,
@@ -44,7 +44,7 @@ class ModelTests(TestCase):
 
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", internal_type=Account.EXPENSE)
+            name="some_account", account_type=Account.EXPENSE)
         journal = TransactionJournal.objects.create(title="journal", category=category,
                                                     transaction_type=TransactionJournal.WITHDRAW)
         t = Transaction.objects.create(

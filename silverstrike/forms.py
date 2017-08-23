@@ -27,9 +27,9 @@ class TransferForm(forms.ModelForm):
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        internal_type=Account.PERSONAL))
+        account_type=Account.PERSONAL))
     destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        internal_type=Account.PERSONAL))
+        account_type=Account.PERSONAL))
 
     def save(self, commit=True):
         journal = super().save(commit)
@@ -61,7 +61,7 @@ class WithdrawForm(TransferForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['destination_account'],
-                                                   internal_type=Account.EXPENSE)
+                                                   account_type=Account.EXPENSE)
         self.cleaned_data['destination_account'] = account
         return super().save(commit)
 
@@ -76,7 +76,7 @@ class DepositForm(TransferForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['source_account'],
-                                                   internal_type=Account.REVENUE)
+                                                   account_type=Account.REVENUE)
         self.cleaned_data['source_account'] = account
         return super().save(commit)
 
@@ -117,8 +117,8 @@ class RecurringTransactionForm(forms.ModelForm):
             src_type = Account.REVENUE
             dst_type = Account.PERSONAL
         src, _ = Account.objects.get_or_create(name=self.cleaned_data['src'],
-                                               internal_type=src_type)
+                                               account_type=src_type)
         self.cleaned_data['src'] = src
         dst, _ = Account.objects.get_or_create(name=self.cleaned_data['dst'],
-                                               internal_type=dst_type)
+                                               account_type=dst_type)
         self.cleaned_data['dst'] = dst

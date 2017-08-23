@@ -7,10 +7,10 @@ from .models import Account, RecurringTransaction
 
 
 def get_accounts(request, account_type):
-    accounts = Account.objects.exclude(internal_type=Account.SYSTEM)
+    accounts = Account.objects.exclude(account_type=Account.SYSTEM)
     if account_type != 'all':
         account_type = getattr(Account, account_type)
-        accounts = accounts.filter(internal_type=account_type)
+        accounts = accounts.filter(account_type=account_type)
 
     return JsonResponse(list(accounts.values_list('name', flat=True)), safe=False)
 
@@ -20,7 +20,7 @@ def get_accounts_balance(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d') - delta
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d') + delta
     dataset = []
-    for account in Account.objects.filter(internal_type=Account.PERSONAL, show_on_dashboard=True):
+    for account in Account.objects.filter(account_type=Account.PERSONAL, show_on_dashboard=True):
         data = list(zip(*account.get_data_points(dstart, dend)))
         dataset.append({'name': account.name, 'data': data[1]})
     if dataset:

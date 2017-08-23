@@ -71,12 +71,12 @@ def import_firefly(csv_file):
     # category_id = 12
     category_name = 13
 
-    system_account, _ = Account.objects.get_or_create(name='system', internal_type=Account.SYSTEM)
+    system_account, _ = Account.objects.get_or_create(name='system', account_type=Account.SYSTEM)
 
     personal_accounts = dict()
     expense_accounts = dict()
     revenue_accounts = dict()
-    for name, id, t in Account.objects.all().values_list('name', 'id', 'internal_type'):
+    for name, id, t in Account.objects.all().values_list('name', 'id', 'account_type'):
         if t == Account.PERSONAL:
             personal_accounts[name] = id
         elif t == Account.EXPENSE:
@@ -97,7 +97,7 @@ def import_firefly(csv_file):
                 line[source_account_name] = personal_accounts[line[source_account_name]]
         else:
             a = Account.objects.create(name=line[source_account_name],
-                                       internal_type=Account.PERSONAL)
+                                       account_type=Account.PERSONAL)
             personal_accounts[a.name] = a.id
             line[source_account_name] = a.id
 
@@ -109,7 +109,7 @@ def import_firefly(csv_file):
                 line[destination_account_name] = expense_accounts[line[destination_account_name]]
             else:
                 a = Account.objects.create(name=line[destination_account_name],
-                                           internal_type=Account.EXPENSE)
+                                           account_type=Account.EXPENSE)
                 expense_accounts[a.name] = a.id
                 line[destination_account_name] = a.id
 
@@ -122,7 +122,7 @@ def import_firefly(csv_file):
                 line[destination_account_name] = personal_accounts[line[destination_account_name]]
             else:
                 a = Account.objects.create(name=line[destination_account_name],
-                                           internal_type=Account.PERSONAL)
+                                           account_type=Account.PERSONAL)
                 personal_accounts[a.name] = a.id
                 line[destination_account_name] = a.id
 
@@ -132,7 +132,7 @@ def import_firefly(csv_file):
                 line[destination_account_name] = revenue_accounts[line[destination_account_name]]
             else:
                 a = Account.objects.create(name=line[destination_account_name],
-                                           internal_type=Account.REVENUE)
+                                           account_type=Account.REVENUE)
                 revenue_accounts[a.name] = a.id
                 line[destination_account_name] = a.id
         elif line[transaction_type] == 'Opening balance':

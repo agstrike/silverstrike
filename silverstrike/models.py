@@ -22,7 +22,7 @@ class Account(models.Model):
     )
 
     name = models.CharField(max_length=64)
-    internal_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
+    account_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
@@ -112,7 +112,7 @@ class TransactionJournal(models.Model):
 
 class TransactionManager(models.Manager):
     def transactions(self):
-        queryset = self.get_queryset().filter(account__internal_type=Account.PERSONAL)
+        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL)
         return queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER, amount__gt=0)
 
 
@@ -160,7 +160,7 @@ class Category(models.Model):
     @property
     def money_spent(self):
         return abs(Transaction.objects.filter(
-                journal__category=self, account__internal_type=Account.PERSONAL,
+                journal__category=self, account__account_type=Account.PERSONAL,
                 journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
@@ -193,7 +193,7 @@ class ImportConfiguration(models.Model):
     name = models.CharField(max_length=64)
     headers = models.BooleanField(help_text=_('First line contains headers'))
     default_account = models.ForeignKey(Account,
-                                        limit_choices_to={'internal_type': Account.PERSONAL},
+                                        limit_choices_to={'account_type': Account.PERSONAL},
                                         null=True, blank=True)
     config = models.TextField()
 
