@@ -122,3 +122,32 @@ class RecurringTransactionForm(forms.ModelForm):
         dst, _ = Account.objects.get_or_create(name=self.cleaned_data['dst'],
                                                account_type=dst_type)
         self.cleaned_data['dst'] = dst
+
+
+class ReconcilationForm(forms.ModelForm):
+    class Meta:
+        model = TransactionJournal
+        fields = ['title', 'amount', 'date', 'notes']
+
+    amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
+
+    def __init__(self, *args, **kwargs):
+        self.account = kwargs.pop('account')
+        super(ReconcilationForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        journal = super().save(commit)
+        src = Account.objects.get(account_type=Account.SYSTEM).pk
+        dst = self.account
+        amount = self.cleaned_data['amount']
+        Transaction.objects.create(journal=journal, amount=-amount,
+                                   account_id=src, opposing_account_id=dst)
+        Transaction.objects.create(journal=journal, amount=amount,
+                                   account_id=dst, opposing_account_id=src)
+        return journal
+
+    def clean(self):
+        super().clean()
+        self.instance.transaction_type = TransactionJournal.SYSTEM
+        if self.cleaned_data['date'] > date.today():
+            self.add_error('date', _("You can't create future Transactions"))

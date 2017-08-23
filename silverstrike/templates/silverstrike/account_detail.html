@@ -9,6 +9,7 @@
 <div class="breadcrumb">
   <a href="{% url 'account_update' account.pk %}" class="btn btn-default btn-xs">Edit</a>
   <a href="{% url 'account_delete' account.pk %}" class="btn btn-default btn-xs">Delete</a>
+  <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default btn-xs">Reconcile</a>
 </div>
 {% endblock %}
 

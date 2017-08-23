@@ -28,7 +28,11 @@ urlpatterns = [
     url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),
     url(r'^accounts/(?P<pk>\d+)/(?P<dstart>\S+)/$',
         views.AccountView.as_view(), name='account_detail'),
+    url(r'^accounts/(?P<pk>\d+)/reconcile$',
+        views.ReconcileView.as_view(), name='account_reconcile'),
+
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
+
     url(r'^accounts/personal$',
         views.AccountIndex.as_view(account_type=Account.PERSONAL), name='personal_accounts'),
     url(r'^accounts/expense$',
