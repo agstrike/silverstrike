@@ -53,7 +53,7 @@ $(function() {
   autoclose: true,
   format: 'yyyy-mm-dd',
   startDate: '0d',
-
+  orientation: 'bottom',
   })
   $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
       $('#id_src').typeahead({source: data});
