@@ -13,8 +13,8 @@ class FormTests(TestCase):
     def test_TransferForm(self):
         data = {
             'title': 'transfer',
-            'source_account': 1,
-            'destination_account': 2,
+            'source_account': self.account.pk,
+            'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2017-01-01'
             }
@@ -22,21 +22,21 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         transfer = form.save()
         self.assertIsInstance(transfer, TransactionJournal)
-        self.assertEquals(len(Account.objects.all()), 2)
+        self.assertEquals(len(Account.objects.all()), 3)  # Sytem account is also present
         self.assertEquals(len(TransactionJournal.objects.all()), 1)
         self.assertEquals(len(Transaction.objects.all()), 2)
         self.assertEquals(Transaction.objects.all().aggregate(
             models.Sum('amount'))['amount__sum'], 0)
         self.assertTrue(Transaction.objects.get(
-            account_id=2, opposing_account_id=1, amount=123).is_transfer)
+            account=self.personal, opposing_account=self.account, amount=123).is_transfer)
         self.assertTrue(Transaction.objects.get(
-            account_id=1, opposing_account_id=2, amount=-123).is_transfer)
+            account=self.account, opposing_account=self.personal, amount=-123).is_transfer)
 
     def test_DepositForm(self):
         data = {
             'title': 'deposit',
             'source_account': 'Work account',
-            'destination_account': 1,
+            'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01'
             }
@@ -47,7 +47,7 @@ class FormTests(TestCase):
             self.assertIsInstance(journal, TransactionJournal)
             self.assertEquals(len(TransactionJournal.objects.all()), i)
             self.assertEquals(len(Transaction.objects.all()), 2 * i)
-            self.assertEquals(len(Account.objects.all()), 3)
+            self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
                 account_type=Account.REVENUE)), 1)
             new_account = Account.objects.get(
@@ -55,16 +55,16 @@ class FormTests(TestCase):
             self.assertEquals(Transaction.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
             self.assertTrue(
-                Transaction.objects.get(account=new_account, opposing_account_id=1,
+                Transaction.objects.get(account=new_account, opposing_account_id=self.account.pk,
                                         amount=-123, journal=journal).is_deposit)
             self.assertTrue(
-                Transaction.objects.get(account_id=1, opposing_account=new_account,
+                Transaction.objects.get(account_id=self.account.pk, opposing_account=new_account,
                                         amount=123, journal=journal).is_deposit)
 
     def test_WithdrawForm(self):
         data = {
             'title': 'withdraw',
-            'source_account': 1,
+            'source_account': self.account.pk,
             'destination_account': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
@@ -76,16 +76,16 @@ class FormTests(TestCase):
             self.assertIsInstance(journal, TransactionJournal)
             self.assertEquals(len(TransactionJournal.objects.all()), i)
             self.assertEquals(len(Transaction.objects.all()), 2 * i)
-            self.assertEquals(len(Account.objects.all()), 3)
+            self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
                 account_type=Account.EXPENSE)), 1)
             new_account = Account.objects.get(
                 account_type=Account.EXPENSE)
             self.assertTrue(
-                Transaction.objects.get(account_id=1, opposing_account=new_account,
+                Transaction.objects.get(account_id=self.account.pk, opposing_account=new_account,
                                         amount=-123, journal=journal).is_withdraw)
             self.assertTrue(
-                Transaction.objects.get(account=new_account, opposing_account_id=1,
+                Transaction.objects.get(account=new_account, opposing_account_id=self.account.pk,
                                         amount=123, journal=journal).is_withdraw)
             self.assertEquals(Transaction.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
@@ -94,7 +94,7 @@ class FormTests(TestCase):
         data = {
             'title': 'deposit',
             'source_account': 'Job a',
-            'destination_account': 1,
+            'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': TransactionJournal.DEPOSIT,
@@ -112,7 +112,7 @@ class FormTests(TestCase):
     def test_different_expense_accounts(self):
         data = {
             'title': 'withdraw',
-            'source_account': 1,
+            'source_account': self.account.pk,
             'destination_account': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
@@ -130,8 +130,8 @@ class FormTests(TestCase):
     def test_transfer_to_same_account(self):
         data = {
             'title': 'transfer',
-            'source_account': 1,
-            'destination_account': 1,
+            'source_account': self.account.pk,
+            'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': TransactionJournal.TRANSFER
@@ -145,8 +145,8 @@ class FormTests(TestCase):
     def test_future_transfer(self):
         data = {
             'title': 'transfer',
-            'source_account': 1,
-            'destination_account': 2,
+            'source_account': self.account.pk,
+            'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2117-01-01',
             'transaction_type': TransactionJournal.TRANSFER

@@ -73,8 +73,8 @@ class ViewTests(TestCase):
     def test_context_and_initial_TransferUpdate(self):
         form = TransferForm({
             'title': 'transaction_title',
-            'source_account': 1,
-            'destination_account': 2,
+            'source_account': self.account.pk,
+            'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': TransactionJournal.TRANSFER
@@ -86,8 +86,8 @@ class ViewTests(TestCase):
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
-                    'source_account': 1,
-                    'destination_account': 2,
+                    'source_account': self.account.pk,
+                    'destination_account': self.personal.pk,
                     'amount': 123,
                     'date': '2017-01-01'},
                     args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
@@ -95,15 +95,15 @@ class ViewTests(TestCase):
         self.assertFalse('submenu' in context)
 
         self.assertEquals(context['form']['title'].value(), 'transaction_title')
-        self.assertEquals(context['form']['source_account'].value(), 1)
-        self.assertEquals(context['form']['destination_account'].value(), 2)
+        self.assertEquals(context['form']['source_account'].value(), self.account.pk)
+        self.assertEquals(context['form']['destination_account'].value(), self.personal.pk)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
 
     def test_context_and_initial_WithdrawUpdate(self):
         form = WithdrawForm({
             'title': 'transaction_title',
-            'source_account': 1,
+            'source_account': self.account.pk,
             'destination_account': self.expense,
             'amount': 123,
             'date': '2017-01-01',
@@ -116,7 +116,7 @@ class ViewTests(TestCase):
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
-                    'source_account': 1,
+                    'source_account': self.account.pk,
                     'destination_account': self.expense,
                     'amount': 123,
                     'date': '2017-01-01'},
@@ -125,7 +125,7 @@ class ViewTests(TestCase):
         self.assertFalse('submenu' in context)
 
         self.assertEquals(context['form']['title'].value(), 'transaction_title')
-        self.assertEquals(context['form']['source_account'].value(), 1)
+        self.assertEquals(context['form']['source_account'].value(), self.account.pk)
         self.assertEquals(context['form']['destination_account'].value(), self.expense)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
@@ -147,7 +147,7 @@ class ViewTests(TestCase):
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
                     'source_account': self.revenue,
-                    'destination_account': 2,
+                    'destination_account': self.account.pk,
                     'amount': 123,
                     'date': '2017-01-01'},
                     args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
@@ -156,7 +156,7 @@ class ViewTests(TestCase):
 
         self.assertEquals(context['form']['title'].value(), 'transaction_title')
         self.assertEquals(context['form']['source_account'].value(), self.revenue)
-        self.assertEquals(context['form']['destination_account'].value(), 2)
+        self.assertEquals(context['form']['destination_account'].value(), self.account.pk)
         self.assertEquals(context['form']['amount'].value(), 123)
         self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
 
