@@ -24,9 +24,9 @@
     <th>Date</th>
     <th>Title</th>
     <th>Amount</th>
-    <th>Source Account</th>
-    <th>Destination Account</th>
-    <th>Recurrance</th>
+    <th class="hidden-xs">Source Account</th>
+    <th class="hidden-xs">Destination Account</th>
+    <th class="hidden-xs">Recurrance</th>
     <th>Actions</th>
   </tr>
 {% for transaction in transactions %}
@@ -34,9 +34,9 @@
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.title }}</td>
   <td>{{ transaction.amount }}</td>
-  <td>{{ transaction.src }}</td>
-  <td>{{ transaction.dst }}</td>
-  <td>{{ transaction.get_recurrence }}</td>
+  <td class="hidden-xs">{{ transaction.src }}</td>
+  <td class="hidden-xs">{{ transaction.dst }}</td>
+  <td class="hidden-xs">{{ transaction.get_recurrence }}</td>
   <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
   {% csrf_token %}
   <td class="btn-toolbar">
