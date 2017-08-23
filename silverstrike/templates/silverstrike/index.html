@@ -83,7 +83,6 @@
     <th>Title</th>
     <th>Date</th>
     <th>Amount</th>
-    <th>Recurrance</th>
     <th>Actions</th>
   </tr>
 {% for transaction in due_transactions %}
@@ -91,7 +90,6 @@
   <td>{{ transaction.title }}</td>
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
-  <td>{{ transaction.get_recurrence }}</td>
   <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
   {% csrf_token %}
   <td class="btn-toolbar">
