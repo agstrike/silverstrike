@@ -82,10 +82,10 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
             'journal__category', 'account')
-        self.dstart = datetime.strptime(self.kwargs.get('dstart'), '%Y-%m-%d')
+        self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
 
-        queryset = queryset.filter(journal__date__gte=self.dstart)
-        self.dend = last_day_of_month(self.dstart)
+        queryset = queryset.filter(journal__date__gte=self.month)
+        self.dend = last_day_of_month(self.month)
         queryset = queryset.filter(journal__date__lte=self.dend)
         return queryset
 
@@ -100,14 +100,14 @@ class AccountView(LoginRequiredMixin, generic.ListView):
             context['submenu'] = 'revenue'
         else:
             context['submenu'] = 'expense'
-        context['dstart'] = self.dstart
+        context['month'] = self.month
 
-        context['previous_month'] = (self.dstart - timedelta(days=1)).replace(day=1)
+        context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)
         context['next_month'] = self.dend + timedelta(days=1)
-        context.update(_get_account_info(self.dstart, self.dend, context['account']))
+        context.update(_get_account_info(self.month, self.dend, context['account']))
 
         delta = timedelta(days=3)
         if context['account'].account_type == Account.PERSONAL:
             context['dataset'] = context['account'].get_data_points(
-                self.dstart - delta, self.dend + delta)
+                self.month - delta, self.dend + delta)
         return context

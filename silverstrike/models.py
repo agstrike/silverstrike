@@ -1,6 +1,6 @@
 import uuid
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from dateutil.relativedelta import relativedelta
 
@@ -48,7 +48,7 @@ class Account(models.Model):
 
     def get_absolute_url(self):
         return reverse('account_detail',
-                       kwargs={'pk': self.pk, 'dstart': date.today().replace(day=1)})
+                       kwargs={'pk': self.pk, 'month': datetime.strftime(date.today(), '%Y%m')})
 
     def get_data_points(self, dstart=date.today() - timedelta(days=365),
                         dend=date.today(), steps=30):

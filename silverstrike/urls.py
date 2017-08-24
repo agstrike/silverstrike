@@ -26,7 +26,7 @@ urlpatterns = [
 
     url(r'^accounts/(?P<pk>\d+)/update/$', views.AccountUpdate.as_view(), name='account_update'),
     url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),
-    url(r'^accounts/(?P<pk>\d+)/(?P<dstart>\S+)/$',
+    url(r'^accounts/(?P<pk>\d+)/(?P<month>\S+)/$',
         views.AccountView.as_view(), name='account_detail'),
     url(r'^accounts/(?P<pk>\d+)/reconcile$',
         views.ReconcileView.as_view(), name='account_reconcile'),
