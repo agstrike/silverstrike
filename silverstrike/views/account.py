@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.views import generic
 
+from silverstrike.forms import AccountCreateForm
 from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Transaction
 
@@ -31,7 +32,7 @@ def _get_account_info(dstart, dend, account=None):
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
-    fields = ['name', 'active', 'show_on_dashboard']
+    form_class = AccountCreateForm
     success_url = reverse_lazy('personal_accounts')
 
     def get_context_data(self, **kwargs):

@@ -72,6 +72,15 @@ class Account(models.Model):
         data_points.append((dend, balance))
         return data_points
 
+    def set_initial_balance(self, amount):
+        system = Account.objects.get(account_type=Account.SYSTEM)
+        journal = TransactionJournal.objects.create(title=_('Initial Balance'),
+                                                    transaction_type=TransactionJournal.SYSTEM)
+        Transaction.objects.create(journal=journal, amount=-amount,
+                                   account=system, opposing_account=self)
+        Transaction.objects.create(journal=journal, amount=amount,
+                                   account=self, opposing_account=system)
+
 
 class TransactionJournal(models.Model):
     DEPOSIT = 1

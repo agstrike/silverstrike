@@ -15,6 +15,20 @@ class ImportUploadForm(forms.ModelForm):
                                            required=False)
 
 
+class AccountCreateForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['name', 'initial_balance', 'active', 'show_on_dashboard']
+
+    initial_balance = forms.DecimalField(max_digits=10, decimal_places=2, initial=0)
+
+    def save(self, commit=True):
+        account = super(AccountCreateForm, self).save(commit)
+        if self.cleaned_data['initial_balance']:
+            account.set_initial_balance(self.cleaned_data['initial_balance'])
+        return account
+
+
 class CSVDefinitionForm(forms.Form):
     field_type = forms.ChoiceField(choices=ImportConfiguration.FIELD_TYPES)
 
