@@ -25,8 +25,8 @@
     <th class="hidden-xs">Type</th>
     <th>Date</th>
     <th>Amount</th>
-    <th class="hidden-xs">Source Account</th>
-    <th class="hidden-xs">Destination Account</th>
+    <th class="hidden-xs">Account</th>
+    <th class="hidden-xs">Opposing Account</th>
     <th class="hidden-xs">Category</th>
   </tr>
 {% for transaction in transactions %}
@@ -34,9 +34,9 @@
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.journal.title }}</a></td>
   <td class="hidden-xs">{{ transaction.journal.get_transaction_type_str }}</td>
   <td>{{ transaction.journal.date }}</td>
-  <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>
+  <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{{ transaction.amount }}</td>
   <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
-  <td class="hidden-xs"><a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a></td>
+  <td class="hidden-xs">{% if transaction.is_system %}None{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">{{ transaction.journal.category }}</td>
   </tr>
 {% endfor %}

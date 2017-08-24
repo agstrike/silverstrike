@@ -152,6 +152,10 @@ class Transaction(models.Model):
     def is_deposit(self):
         return self.journal.transaction_type == TransactionJournal.DEPOSIT
 
+    @property
+    def is_system(self):
+        return self.journal.transaction_type == TransactionJournal.SYSTEM
+
     def get_absolute_url(self):
         return self.journal.get_absolute_url()
 

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -90,9 +91,12 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        account = Account.objects.get(pk=self.kwargs['pk'])
+        if account.account_type == Account.SYSTEM:
+            # Techninally not true, but we dont want anyone to use it...
+            raise Http404('Account does not exist')
         context = super().get_context_data(**kwargs)
-        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
-
+        context['account'] = account
         context['menu'] = 'accounts'
         if context['account'].account_type == Account.PERSONAL:
             context['submenu'] = 'personal'
