@@ -91,7 +91,7 @@ class TransactionJournal(models.Model):
         (DEPOSIT, 'Deposit'),
         (WITHDRAW, 'Withdrawl'),
         (TRANSFER, 'Transfer'),
-        (SYSTEM, 'SYSTEM'),
+        (SYSTEM, 'Reconcile'),
     )
 
     class Meta:

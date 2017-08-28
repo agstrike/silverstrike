@@ -141,9 +141,9 @@ class RecurringTransactionForm(forms.ModelForm):
 class ReconcilationForm(forms.ModelForm):
     class Meta:
         model = TransactionJournal
-        fields = ['title', 'amount', 'date', 'notes']
+        fields = ['title', 'current_balance', 'date', 'notes']
 
-    amount = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
+    current_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
@@ -152,12 +152,13 @@ class ReconcilationForm(forms.ModelForm):
     def save(self, commit=True):
         journal = super().save(commit)
         src = Account.objects.get(account_type=Account.SYSTEM).pk
-        dst = self.account
-        amount = self.cleaned_data['amount']
+        dst = Account.objects.get(pk=self.account)
+        balance = self.cleaned_data['current_balance']
+        amount = balance - dst.balance
         Transaction.objects.create(journal=journal, amount=-amount,
-                                   account_id=src, opposing_account_id=dst)
+                                   account_id=src, opposing_account=dst)
         Transaction.objects.create(journal=journal, amount=amount,
-                                   account_id=dst, opposing_account_id=src)
+                                   account=dst, opposing_account_id=src)
         return journal
 
     def clean(self):
