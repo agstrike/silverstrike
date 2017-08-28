@@ -6,7 +6,7 @@ from django.views import generic
 
 
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.models import Account, RecurringTransaction, Transaction, TransactionJournal
 
 
 def _get_account_info(dstart, dend, account=None):
@@ -18,12 +18,12 @@ def _get_account_info(dstart, dend, account=None):
         queryset = queryset.filter(account=account)
     context['income'] = abs(queryset.filter(
         account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.REVENUE).aggregate(
+        journal__transaction_type=TransactionJournal.DEPOSIT).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     context['expenses'] = abs(queryset.filter(
-        account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.EXPENSE).aggregate(
+        opposing_account__account_type=Account.PERSONAL,
+        journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
     context['difference'] = context['income'] - context['expenses']
     return context

@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 
 
 from . import api, views
-from .models import Account
 
 
 urlpatterns = [
@@ -34,11 +33,7 @@ urlpatterns = [
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
 
     url(r'^accounts/personal$',
-        views.AccountIndex.as_view(account_type=Account.PERSONAL), name='personal_accounts'),
-    url(r'^accounts/expense$',
-        views.AccountIndex.as_view(account_type=Account.EXPENSE), name='expense_accounts'),
-    url(r'^accounts/revenue$',
-        views.AccountIndex.as_view(account_type=Account.REVENUE), name='revenue_accounts'),
+        views.AccountIndex.as_view(), name='personal_accounts'),
 
     url(r'^recurrences/$', views.RecurringTransactionIndex.as_view(), name='recurrences'),
     url(r'^recurrences/create$', views.RecurrenceCreateView.as_view(), name='recurrence_create'),

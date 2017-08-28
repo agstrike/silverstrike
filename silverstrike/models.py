@@ -11,13 +11,11 @@ from django.utils.translation import ugettext as _
 
 class Account(models.Model):
     PERSONAL = 1
-    REVENUE = 2
-    EXPENSE = 3
-    SYSTEM = 4
+    FOREIGN = 2
+    SYSTEM = 3
     ACCOUNT_TYPES = (
         (PERSONAL, _('Personal')),
-        (REVENUE, _('Revenue')),
-        (EXPENSE, _('Expense')),
+        (FOREIGN, _('Foreign')),
         (SYSTEM, _('System')),
     )
 

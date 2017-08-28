@@ -52,18 +52,7 @@ $(function() {
   format: 'yyyy-mm-dd',
   endDate: '0d',
   orientation: 'bottom',
-
   })
-  if ($('input#id_source_account').length > 0) {
-      $.getJSON('{% url 'api_accounts' 'REVENUE' %}').done(function (data) {
-          $('#id_source_account').typeahead({source: data});
-      });
-  }
-  if ($('input#id_destination_account').length > 0) {
-      $.getJSON('{% url 'api_accounts' 'EXPENSE' %}').done(function (data) {
-          $('#id_destination_account').typeahead({source: data});
-      });
-  }
   $('#id_date').attr('autocomplete', 'off');
 })
 </script>
