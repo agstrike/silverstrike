@@ -57,6 +57,11 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     model = Account
     success_url = reverse_lazy('personal_accounts')
 
+    def get_context_data(self, **kwargs):
+        if self.object.account_type == Account.SYSTEM:
+            raise Http404("You are not allowed to delete this account")
+        return super(AccountDelete, self).get_context_data(kwargs)
+
 
 class AccountIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/accounts.html'
