@@ -32,6 +32,10 @@ class Account(models.Model):
         return self.name
 
     @property
+    def is_personal(self):
+        return self.account_type == Account.PERSONAL
+
+    @property
     def transaction_num(self):
         return Transaction.objects.filter(account=self).count()
 

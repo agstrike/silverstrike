@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from silverstrike.forms import DepositForm, ReconcilationForm, TransferForm, WithdrawForm
+from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
 from silverstrike.models import Account, Transaction, TransactionJournal
 
 
@@ -108,19 +108,3 @@ class DepositCreate(TransferCreate):
         context = super().get_context_data(**kwargs)
         context['submenu'] = 'deposit'
         return context
-
-
-class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
-    template_name = 'silverstrike/reconcile.html'
-    form_class = ReconcilationForm
-    model = TransactionJournal
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
-        return context
-
-    def get_form_kwargs(self):
-        kwargs = super(ReconcileView, self).get_form_kwargs()
-        kwargs['account'] = self.kwargs['pk']
-        return kwargs
