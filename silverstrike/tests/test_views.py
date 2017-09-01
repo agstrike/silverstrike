@@ -13,14 +13,28 @@ class ViewTests(TestCase):
         self.account = Account.objects.create(name="first account")
         self.personal = Account.objects.create(name="personal account")
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.FOREIGN)
+            name="expense account", account_type=Account.EXPENSE)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.FOREIGN)
+            name="revenue account", account_type=Account.REVENUE)
 
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'new')
+
+    def test_context_ExpenseAccountIndex(self):
+        context = self.client.get(reverse('expense_accounts')).context
+        self.assertEquals(context['menu'], 'accounts')
+        self.assertEquals(context['submenu'], 'expense')
+        self.assertEquals(len(context['accounts']), 1)
+        self.assertEquals(context['accounts'][0], self.expense)
+
+    def test_context_RevenueAccountIndex(self):
+        context = self.client.get(reverse('revenue_accounts')).context
+        self.assertEquals(context['menu'], 'accounts')
+        self.assertEquals(context['submenu'], 'revenue')
+        self.assertEquals(len(context['accounts']), 1)
+        self.assertEquals(context['accounts'][0], self.revenue)
 
     def test_context_PersonalAccountIndex(self):
         context = self.client.get(reverse('personal_accounts')).context

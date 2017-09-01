@@ -8,7 +8,7 @@ from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, Transaction, TransactionJournal
+from silverstrike.models import Account, Transaction
 
 
 def _get_account_info(dstart, dend, account=None):
@@ -19,11 +19,13 @@ def _get_account_info(dstart, dend, account=None):
     if account:
         queryset = queryset.filter(account=account)
     context['income'] = abs(queryset.filter(
-        journal__transaction_type=TransactionJournal.DEPOSIT).aggregate(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.REVENUE).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     context['expenses'] = abs(queryset.filter(
-        journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.EXPENSE).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
     context['difference'] = context['income'] - context['expenses']
     return context
@@ -69,12 +71,17 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
     account_type = ''
 
     def get_queryset(self):
-        return Account.objects.filter(account_type=Account.PERSONAL)
+        return Account.objects.filter(account_type=self.account_type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        context['submenu'] = 'personal'
+        if self.account_type == Account.PERSONAL:
+            context['submenu'] = 'personal'
+        elif self.account_type == Account.EXPENSE:
+            context['submenu'] = 'expense'
+        else:
+            context['submenu'] = 'revenue'
         return context
 
 
@@ -102,7 +109,12 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['account'] = account
         context['menu'] = 'accounts'
-        context['submenu'] = 'personal'
+        if account.account_type == Account.PERSONAL:
+            context['submenu'] = 'personal'
+        elif account.account_type == Account.REVENUE:
+            context['submenu'] = 'revenue'
+        else:
+            context['submenu'] = 'expense'
         context['month'] = self.month
 
         context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)

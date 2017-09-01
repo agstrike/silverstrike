@@ -102,7 +102,13 @@
               </a>
               <ul class="treeview-menu">
                 <li{% if submenu == "personal" %} class="active"{% endif %}>
-                  <a href="{% url 'personal_accounts' %}">{% trans 'Accounts' %}</a>
+                  <a href="{% url 'personal_accounts' %}">{% trans 'Personal Accounts' %}</a>
+                </li>
+                <li{% if submenu == "expense" %} class="active"{% endif %}>
+                  <a href="{% url 'expense_accounts' %}">{% trans 'Expense Accounts' %}</a>
+                </li>
+                <li{% if submenu == "revenue" %} class="active"{% endif %}>
+                  <a href="{% url 'revenue_accounts' %}">{% trans 'Revenue Accounts' %}</a>
                 </li>
                 <li{% if submenu == "new" %} class="active"{% endif %}>
                   <a href="{% url 'account_new' %}">{% trans 'Create Account' %}</a>
