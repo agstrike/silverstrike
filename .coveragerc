@@ -1,8 +1,8 @@
 [run]
-source = pyaccountant
+source = silverstrike 
 omit =
-  pyaccountant/migrations/*.py
-  pyaccountant/tests/*.py
+  silverstrike/migrations/*.py
+  silverstrike/tests/*.py
 
 [html]
 directory = coverage
