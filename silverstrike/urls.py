@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 
 
 from . import api, views
-from .models import Account
 
 
 urlpatterns = [

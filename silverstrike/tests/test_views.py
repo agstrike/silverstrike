@@ -22,24 +22,9 @@ class ViewTests(TestCase):
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'new')
 
-    def test_context_ExpenseAccountIndex(self):
-        context = self.client.get(reverse('expense_accounts')).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['submenu'], 'expense')
-        self.assertEquals(len(context['accounts']), 1)
-        self.assertEquals(context['accounts'][0], self.expense)
-
-    def test_context_RevenueAccountIndex(self):
-        context = self.client.get(reverse('revenue_accounts')).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['submenu'], 'revenue')
-        self.assertEquals(len(context['accounts']), 1)
-        self.assertEquals(context['accounts'][0], self.revenue)
-
     def test_context_PersonalAccountIndex(self):
         context = self.client.get(reverse('personal_accounts')).context
         self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['submenu'], 'personal')
         self.assertEquals(len(context['accounts']), 2)
         self.assertIn(self.personal, context['accounts'])
         self.assertIn(self.account, context['accounts'])
@@ -52,7 +37,6 @@ class ViewTests(TestCase):
     def test_context_account_TransactionIndex(self):
         context = self.client.get(self.account.get_absolute_url()).context
         self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['submenu'], 'personal')
         self.assertEquals(context['account'], self.account)
 
     def test_context_TransferCreate(self):

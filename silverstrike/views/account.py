@@ -8,7 +8,7 @@ from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, Transaction
+from silverstrike.models import Account, Transaction, TransactionJournal
 
 
 def _get_account_info(dstart, dend, account=None):
@@ -71,17 +71,12 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
     account_type = ''
 
     def get_queryset(self):
-        return Account.objects.filter(account_type=self.account_type)
+        return Account.objects.filter(account_type=Account.PERSONAL)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        if self.account_type == Account.PERSONAL:
-            context['submenu'] = 'personal'
-        elif self.account_type == Account.EXPENSE:
-            context['submenu'] = 'expense'
-        else:
-            context['submenu'] = 'revenue'
+        context['submenu'] = 'personal'
         return context
 
 
@@ -109,12 +104,6 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['account'] = account
         context['menu'] = 'accounts'
-        if account.account_type == Account.PERSONAL:
-            context['submenu'] = 'personal'
-        elif account.account_type == Account.REVENUE:
-            context['submenu'] = 'revenue'
-        else:
-            context['submenu'] = 'expense'
         context['month'] = self.month
 
         context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)
