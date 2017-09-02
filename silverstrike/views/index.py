@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
@@ -9,13 +9,11 @@ from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, RecurringTransaction, Transaction
 
 
-def _get_account_info(dstart, dend, account=None):
+def _get_account_info(dstart, dend):
     context = dict()
     queryset = Transaction.objects.filter(
         journal__date__gte=dstart,
         journal__date__lte=dend)
-    if account:
-        queryset = queryset.filter(account=account)
     context['income'] = abs(queryset.filter(
         account__account_type=Account.PERSONAL,
         opposing_account__account_type=Account.REVENUE).aggregate(
@@ -47,4 +45,20 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['transactions'] = Transaction.objects.transactions()[:10]
         context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
         context['expected_balance'] = context['balance'] + context['outstanding']
+
+        # last month
+        previous_last = first - timedelta(days=1)
+        previous_first = previous_last.replace(day=1)
+        queryset = Transaction.objects.filter(journal__date__lte=previous_last, journal__date__gte=previous_first)
+        context['previous_income'] = abs(queryset.filter(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.REVENUE).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0)
+
+        context['previous_expenses'] = abs(queryset.filter(
+        account__account_type=Account.PERSONAL,
+        opposing_account__account_type=Account.EXPENSE).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0)
+        context['previous_difference'] = context['previous_income'] - context['previous_expenses']
+
         return context
