@@ -33,7 +33,7 @@ jobs:
       - mv heroku/Procfile .
       deploy:
         provider: heroku
-        app: pyaccountant
+        app: silverstrike 
         on: master
         run:
         - python heroku/manage.py migrate --noinput
