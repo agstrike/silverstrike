@@ -49,16 +49,17 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         # last month
         previous_last = first - timedelta(days=1)
         previous_first = previous_last.replace(day=1)
-        queryset = Transaction.objects.filter(journal__date__lte=previous_last, journal__date__gte=previous_first)
+        queryset = Transaction.objects.filter(journal__date__lte=previous_last,
+                                              journal__date__gte=previous_first)
         context['previous_income'] = abs(queryset.filter(
-        account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.REVENUE).aggregate(
+            account__account_type=Account.PERSONAL,
+            opposing_account__account_type=Account.REVENUE).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
         context['previous_expenses'] = abs(queryset.filter(
-        account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.EXPENSE).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0)
+            account__account_type=Account.PERSONAL,
+            opposing_account__account_type=Account.EXPENSE).aggregate(
+                models.Sum('amount'))['amount__sum'] or 0)
         context['previous_difference'] = context['previous_income'] - context['previous_expenses']
 
         return context
