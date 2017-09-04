@@ -16,8 +16,8 @@ def migrate_to_new_schema(apps, schema_editor):
                 notes=j.notes, transaction_type=j.transaction_type)
         for t in Transaction.objects.filter(journal=j):
             Split.objects.create(journal=journal,
-                                 source=t.account,
-                                 destination=t.opposing_account,
+                                 account=t.account,
+                                 opposing_account=t.opposing_account,
                                  description=j.title,
                                  amount=t.amount,
                                  date=j.date,
