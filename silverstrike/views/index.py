@@ -43,7 +43,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                                                      show_on_dashboard=True)
         context['due_transactions'] = RecurringTransaction.objects.due_in_month()
         context['transactions'] = Split.objects.filter(
-            account__account_type=Account.PERSONAL).order_by('-date')[:10]
+            account__account_type=Account.PERSONAL)[:10]
         context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
         context['expected_balance'] = context['balance'] + context['outstanding']
 

@@ -127,6 +127,10 @@ class Journal(models.Model):
                 return name
         return ''
 
+    @property
+    def is_split(self):
+        return len(self.split_set.all()) > 2
+
 
 class Split(models.Model):
     account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
@@ -139,7 +143,7 @@ class Split(models.Model):
     journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True)
 
     class Meta:
-        ordering = ['-date', 'description']
+        ordering = ['-date', 'journal', 'description']
 
     def __str__(self):
         return self.description

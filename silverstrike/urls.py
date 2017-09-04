@@ -14,6 +14,8 @@ urlpatterns = [
         views.TransactionDetailView.as_view(), name='transaction_detail'),
     url(r'^transactions/(?P<pk>\d+)/update/$',
         views.TransactionUpdateView.as_view(), name='transaction_update'),
+    url(r'^transactions/(?P<pk>\d+)/split/$',
+        views.SplitUpdate.as_view(), name='split_update'),
     url(r'^transactions/(?P<pk>\d+)/delete/$',
         views.TransactionDeleteView.as_view(), name='transaction_delete'),
     url(r'^transactions/create/transfer/$',
@@ -22,7 +24,8 @@ urlpatterns = [
         views.WithdrawCreate.as_view(), name='withdraw_new'),
     url(r'^transactions/create/deposit/$',
         views.DepositCreate.as_view(), name='deposit_new'),
-    url(r'^transactions/new/$', views.NewTransactionView.as_view()),
+    url(r'^transactions/create/split/$',
+        views.SplitCreate.as_view(), name='split_create'),
 
     url(r'^accounts/(?P<pk>\d+)/update/$', views.AccountUpdate.as_view(), name='account_update'),
     url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),

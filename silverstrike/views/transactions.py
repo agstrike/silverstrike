@@ -102,14 +102,14 @@ class DepositCreate(TransferCreate):
         return context
 
 
-class NewTransactionView(generic.edit.CreateView):
+class SplitCreate(generic.edit.CreateView):
     model = Journal
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
     fields = '__all__'
 
     def get_context_data(self, **kwargs):
-        context = super(NewTransactionView, self).get_context_data(**kwargs)
+        context = super(SplitCreate, self).get_context_data(**kwargs)
         context['formset'] = self.formset_class()
         return context
 
@@ -126,18 +126,19 @@ class NewTransactionView(generic.edit.CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class EditTransactionView(generic.edit.UpdateView):
+class SplitUpdate(generic.edit.UpdateView):
     model = Journal
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
     fields = '__all__'
 
     def get_context_data(self, **kwargs):
-        context = super(NewTransactionView, self).get_context_data(**kwargs)
-        context['formset'] = self.formset_class()
+        context = super(SplitUpdate, self).get_context_data(**kwargs)
+        context['formset'] = self.formset_class(**self.get_form_kwargs())
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         form = self.get_form(self.get_form_class())
 
         if form.is_valid():

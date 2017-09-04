@@ -8,4 +8,4 @@ from .recurrences import (RecurrenceCreateView, RecurrenceDeleteView,
                           RecurringTransactionIndex)
 from .transactions import DepositCreate, TransactionDeleteView, TransactionDetailView, TransactionIndex, TransferCreate, TransactionUpdateView, WithdrawCreate
 
-from .transactions import NewTransactionView
+from .transactions import SplitCreate, SplitUpdate

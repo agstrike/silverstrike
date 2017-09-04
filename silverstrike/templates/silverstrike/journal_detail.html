@@ -6,7 +6,10 @@
 {% block content_header %}
 <h1>{{ journal.title }}</h1>
 <div class="breadcrumb">
+{% if not journal.is_split %}
 <a href="{% url 'transaction_update' journal.id %}" class="btn btn-default btn-xs">{% trans 'Edit' %}</a>
+{% endif %}
+<a href="{% url 'split_update' journal.id %}" class="btn btn-default btn-xs">{% trans 'Edit as Split transaction' %}</a>
 <a href="{% url 'transaction_delete' journal.id %}" class="btn btn-default btn-xs">{% trans 'Delete' %}</a>
 </div>
 {% endblock %}
