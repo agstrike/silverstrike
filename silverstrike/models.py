@@ -137,7 +137,7 @@ class Split(models.Model):
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', blank=True, null=True)
     journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True)
-    
+
     class Meta:
         ordering = ['-date', 'description']
 
