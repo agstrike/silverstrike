@@ -2,7 +2,7 @@ from django.db import models
 from django.test import TestCase
 
 from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
-from silverstrike.models import Account, Transaction, TransactionJournal
+from silverstrike.models import Account, Journal, Split
 
 
 class FormTests(TestCase):
@@ -21,15 +21,15 @@ class FormTests(TestCase):
         form = TransferForm(data)
         self.assertTrue(form.is_valid())
         transfer = form.save()
-        self.assertIsInstance(transfer, TransactionJournal)
+        self.assertIsInstance(transfer, Journal)
         self.assertEquals(len(Account.objects.all()), 3)  # Sytem account is also present
-        self.assertEquals(len(TransactionJournal.objects.all()), 1)
-        self.assertEquals(len(Transaction.objects.all()), 2)
-        self.assertEquals(Transaction.objects.all().aggregate(
+        self.assertEquals(len(Journal.objects.all()), 1)
+        self.assertEquals(len(Split.objects.all()), 2)
+        self.assertEquals(Split.objects.all().aggregate(
             models.Sum('amount'))['amount__sum'], 0)
-        self.assertTrue(Transaction.objects.get(
+        self.assertTrue(Split.objects.get(
             account=self.personal, opposing_account=self.account, amount=123).is_transfer)
-        self.assertTrue(Transaction.objects.get(
+        self.assertTrue(Split.objects.get(
             account=self.account, opposing_account=self.personal, amount=-123).is_transfer)
 
     def test_DepositForm(self):
@@ -44,22 +44,22 @@ class FormTests(TestCase):
             form = DepositForm(data)
             self.assertTrue(form.is_valid())
             journal = form.save()
-            self.assertIsInstance(journal, TransactionJournal)
-            self.assertEquals(len(TransactionJournal.objects.all()), i)
-            self.assertEquals(len(Transaction.objects.all()), 2 * i)
+            self.assertIsInstance(journal, Journal)
+            self.assertEquals(len(Journal.objects.all()), i)
+            self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
                 account_type=Account.REVENUE)), 1)
             new_account = Account.objects.get(
                 account_type=Account.REVENUE)
-            self.assertEquals(Transaction.objects.all().aggregate(
+            self.assertEquals(Split.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
             self.assertTrue(
-                Transaction.objects.get(account=new_account, opposing_account_id=self.account.pk,
-                                        amount=-123, journal=journal).is_deposit)
+                Split.objects.get(account=new_account, opposing_account_id=self.account.pk,
+                                  amount=-123, journal=journal).is_deposit)
             self.assertTrue(
-                Transaction.objects.get(account_id=self.account.pk, opposing_account=new_account,
-                                        amount=123, journal=journal).is_deposit)
+                Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
+                                  amount=123, journal=journal).is_deposit)
 
     def test_WithdrawForm(self):
         data = {
@@ -73,21 +73,21 @@ class FormTests(TestCase):
             form = WithdrawForm(data)
             self.assertTrue(form.is_valid())
             journal = form.save()
-            self.assertIsInstance(journal, TransactionJournal)
-            self.assertEquals(len(TransactionJournal.objects.all()), i)
-            self.assertEquals(len(Transaction.objects.all()), 2 * i)
+            self.assertIsInstance(journal, Journal)
+            self.assertEquals(len(Journal.objects.all()), i)
+            self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
                 account_type=Account.EXPENSE)), 1)
             new_account = Account.objects.get(
                 account_type=Account.EXPENSE)
             self.assertTrue(
-                Transaction.objects.get(account_id=self.account.pk, opposing_account=new_account,
-                                        amount=-123, journal=journal).is_withdraw)
+                Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
+                                  amount=-123, journal=journal).is_withdraw)
             self.assertTrue(
-                Transaction.objects.get(account=new_account, opposing_account_id=self.account.pk,
-                                        amount=123, journal=journal).is_withdraw)
-            self.assertEquals(Transaction.objects.all().aggregate(
+                Split.objects.get(account=new_account, opposing_account_id=self.account.pk,
+                                  amount=123, journal=journal).is_withdraw)
+            self.assertEquals(Split.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
 
     def test_different_revenue_accounts(self):
@@ -97,7 +97,7 @@ class FormTests(TestCase):
             'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
-            'transaction_type': TransactionJournal.DEPOSIT,
+            'transaction_type': Journal.DEPOSIT,
             }
         form = DepositForm(data)
         self.assertTrue(form.is_valid())
@@ -134,7 +134,7 @@ class FormTests(TestCase):
             'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
-            'transaction_type': TransactionJournal.TRANSFER
+            'transaction_type': Journal.TRANSFER
             }
         form = TransferForm(data)
         self.assertFalse(form.is_valid())
@@ -149,7 +149,7 @@ class FormTests(TestCase):
             'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2117-01-01',
-            'transaction_type': TransactionJournal.TRANSFER
+            'transaction_type': Journal.TRANSFER
             }
         form = TransferForm(data)
         self.assertFalse(form.is_valid())

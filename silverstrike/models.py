@@ -33,21 +33,24 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
+    def account_type_str(self):
+        return Account.ACCOUNT_TYPES[self.account_type - 1][1]
+
     @property
     def is_personal(self):
         return self.account_type == Account.PERSONAL
 
     @property
     def transaction_num(self):
-        return Transaction.objects.filter(account=self).count()
+        return Split.objects.filter(account=self).count()
 
     @property
     def balance(self):
-        return Transaction.objects.filter(account=self).aggregate(
+        return Split.objects.filter(account=self).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
     def balance_on(self, date):
-        return Transaction.objects.filter(account=self, journal__date__lte=date).aggregate(
+        return Split.objects.filter(account=self, journal__date__lte=date).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
@@ -62,7 +65,7 @@ class Account(models.Model):
             steps = int((dend - dstart) / step)
         data_points = []
         balance = self.balance_on(dstart)
-        transactions = list(Transaction.objects.prefetch_related('journal').filter(
+        transactions = list(Split.objects.prefetch_related('journal').filter(
             account_id=self.pk, journal__date__gt=dstart,
             journal__date__lte=dend).order_by('-journal__date'))
         for i in range(steps):
@@ -78,15 +81,21 @@ class Account(models.Model):
 
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
-        journal = TransactionJournal.objects.create(title=_('Initial Balance'),
-                                                    transaction_type=TransactionJournal.SYSTEM)
-        Transaction.objects.create(journal=journal, amount=-amount,
-                                   account=system, opposing_account=self)
-        Transaction.objects.create(journal=journal, amount=amount,
-                                   account=self, opposing_account=system)
+        journal = Journal.objects.create(title=_('Initial Balance'),
+                                         transaction_type=Journal.SYSTEM)
+        Split.objects.create(journal=journal, amount=-amount,
+                             account=system, opposing_account=self)
+        Split.objects.create(journal=journal, amount=amount,
+                             account=self, opposing_account=system)
 
 
-class TransactionJournal(models.Model):
+class TransactionManager(models.Manager):
+    def transactions(self):
+        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL)
+        return queryset.exclude(journal__transaction_type=Journal.TRANSFER, amount__gt=0)
+
+
+class Journal(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
     TRANSFER = 3
@@ -103,15 +112,11 @@ class TransactionJournal(models.Model):
 
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
-    notes = models.TextField(blank=True)
-    category = models.ForeignKey('Category', related_name='transactions',
-                                 blank=True, null=True, on_delete=models.SET_NULL)
-    last_modified = models.DateTimeField(auto_now=True)
+    notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
-    recurrence = models.ForeignKey('RecurringTransaction', blank=True, null=True)
 
     def __str__(self):
-        return '{}:{} @ {}'.format(self.pk, self.title, self.date)
+        return self.title
 
     def get_absolute_url(self):
         return reverse('transaction_detail', args=[self.pk])
@@ -123,42 +128,34 @@ class TransactionJournal(models.Model):
         return ''
 
 
-class TransactionManager(models.Manager):
-    def transactions(self):
-        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL)
-        return queryset.exclude(journal__transaction_type=TransactionJournal.TRANSFER, amount__gt=0)
-
-
-class Transaction(models.Model):
-    account = models.ForeignKey(Account, models.CASCADE)
+class Split(models.Model):
+    account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
     opposing_account = models.ForeignKey(Account, models.CASCADE,
-                                         related_name='opposing_transactions')
-    journal = models.ForeignKey(TransactionJournal, models.CASCADE)
+                                         related_name='outgoing_transactions')
+    description = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-
-    objects = TransactionManager()
-
-    class Meta:
-        ordering = ['-journal__date', 'journal__title']
+    date = models.DateField(default=date.today)
+    category = models.ForeignKey('Category', blank=True, null=True)
+    journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return '{} -> {}'.format(self.journal, self.amount)
+        return self.description
 
     @property
     def is_transfer(self):
-        return self.journal.transaction_type == TransactionJournal.TRANSFER
+        return self.journal.transaction_type == Journal.TRANSFER
 
     @property
     def is_withdraw(self):
-        return self.journal.transaction_type == TransactionJournal.WITHDRAW
+        return self.journal.transaction_type == Journal.WITHDRAW
 
     @property
     def is_deposit(self):
-        return self.journal.transaction_type == TransactionJournal.DEPOSIT
+        return self.journal.transaction_type == Journal.DEPOSIT
 
     @property
     def is_system(self):
-        return self.journal.transaction_type == TransactionJournal.SYSTEM
+        return self.journal.transaction_type == Journal.SYSTEM
 
     def get_absolute_url(self):
         return self.journal.get_absolute_url()
@@ -176,9 +173,9 @@ class Category(models.Model):
 
     @property
     def money_spent(self):
-        return abs(Transaction.objects.filter(
-                journal__category=self, account__account_type=Account.PERSONAL,
-                journal__transaction_type=TransactionJournal.WITHDRAW).aggregate(
+        return abs(Split.objects.filter(
+                category=self, account__account_type=Account.PERSONAL,
+                journal__transaction_type=Journal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
 
@@ -247,7 +244,7 @@ class RecurringTransaction(models.Model):
     src = models.ForeignKey(Account)
     dst = models.ForeignKey(Account, related_name='opposing_recurring_transactions')
     recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
-    transaction_type = models.IntegerField(choices=TransactionJournal.TRANSACTION_TYPES[:3])
+    transaction_type = models.IntegerField(choices=Journal.TRANSACTION_TYPES[:3])
 
     def __str__(self):
         return self.title
@@ -277,10 +274,10 @@ class RecurringTransaction(models.Model):
         outstanding = 0
         dend = last_day_of_month(date.today())
         transactions = cls.objects.due_in_month().exclude(
-            transaction_type=TransactionJournal.TRANSFER)
+            transaction_type=Journal.TRANSFER)
         for t in transactions:
             while t.date <= dend:
-                if t.transaction_type == TransactionJournal.WITHDRAW:
+                if t.transaction_type == Journal.WITHDRAW:
                     outstanding -= t.amount
                 else:
                     outstanding += t.amount

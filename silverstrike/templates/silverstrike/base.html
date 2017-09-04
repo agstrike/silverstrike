@@ -11,16 +11,17 @@
     <link rel="icon" sizes="128x128" href="{% static 'silverstrike/img/icon-128.png' %}">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'silverstrike/img/favicon.png' %}" />
     <link rel="manifest" href="{% url 'manifest' %}">
+    {% block stylesheets %}
+    {% endblock %}
     <link rel="stylesheet" href="{% static 'silverstrike/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/AdminLTE.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/skin-blue-light.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <title>SilverStrike</title>
 
-    {% block stylesheets %}
-    {% endblock %}
+
+    <title>SilverStrike</title>
   </head>
   <body class="hold-transition skin-blue-light sidebar-mini fixed">
     <div class="wrapper">

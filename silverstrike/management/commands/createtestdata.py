@@ -4,21 +4,23 @@ from random import randrange
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
-from silverstrike.models import Account, Category, Transaction, TransactionJournal
+from silverstrike.models import Account, Category, Journal, Split
 
 
 def _create_transaction(date, amount, src, dst, title, category, type):
-    journal = TransactionJournal.objects.create(title=title, date=date,
-                                                category=category, transaction_type=type)
-    Transaction.objects.create(account=src, opposing_account=dst, journal=journal, amount=-amount)
-    Transaction.objects.create(account=dst, opposing_account=src, journal=journal, amount=amount)
+    journal = Journal.objects.create(title=title, date=date,
+                                     transaction_type=type)
+    Split.objects.create(account=src, opposing_account=dst, journal=journal,
+                         amount=-amount, category=category)
+    Split.objects.create(account=dst, opposing_account=src, journal=journal,
+                         amount=amount, category=category)
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         self._initialize()
         try:
-            past = TransactionJournal.objects.latest('date')
+            past = Journal.objects.latest('date')
             start_month = past.date.month + 1
             start_year = past.date.year
             if start_month == 13:
@@ -39,9 +41,9 @@ class Command(BaseCommand):
                 self._create_yearly(y, 1, 13)
 
     def _initialize(self):
-        D = TransactionJournal.DEPOSIT
-        W = TransactionJournal.WITHDRAW
-        T = TransactionJournal.TRANSFER
+        D = Journal.DEPOSIT
+        W = Journal.WITHDRAW
+        T = Journal.TRANSFER
         self.work, _ = Account.objects.get_or_create(name='work', account_type=Account.REVENUE)
 
         self.checking, _ = Account.objects.get_or_create(name='checking', show_on_dashboard=True)

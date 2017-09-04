@@ -22,6 +22,7 @@ urlpatterns = [
         views.WithdrawCreate.as_view(), name='withdraw_new'),
     url(r'^transactions/create/deposit/$',
         views.DepositCreate.as_view(), name='deposit_new'),
+    url(r'^transactions/new/$', views.NewTransactionView.as_view()),
 
     url(r'^accounts/(?P<pk>\d+)/update/$', views.AccountUpdate.as_view(), name='account_update'),
     url(r'^accounts/(?P<pk>\d+)/delete/$', views.AccountDelete.as_view(), name='account_delete'),

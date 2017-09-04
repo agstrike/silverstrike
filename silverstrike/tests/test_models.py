@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from silverstrike.models import (
-        Account, Category,
-        Transaction, TransactionJournal)
+from silverstrike.models import Account, Category, Journal, Split
 
 
 class ModelTests(TestCase):
@@ -24,15 +22,13 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = TransactionJournal.objects.create(title="journal",
-                                                    transaction_type=TransactionJournal.WITHDRAW)
-        self.assertEquals(str(journal), '{}:{} @ {}'.format(journal.pk, journal.title,
-                                                            journal.date))
-        transaction = Transaction.objects.create(
+        journal = Journal.objects.create(title="journal",
+                                         transaction_type=Journal.WITHDRAW)
+        self.assertEquals(str(journal), journal.title)
+        transaction = Split.objects.create(
             account=account, opposing_account=expense,
-            journal=journal, amount=-25.02)
-        self.assertEquals(str(transaction), '{} -> {}'.format(
-            transaction.journal, transaction.amount))
+            journal=journal, amount=-25.02, description='meh')
+        self.assertEquals(str(transaction), transaction.description)
 
     def test_category_str_method(self):
         category = Category.objects.create(name="cat 1")
@@ -45,13 +41,13 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = TransactionJournal.objects.create(title="journal", category=category,
-                                                    transaction_type=TransactionJournal.WITHDRAW)
-        t = Transaction.objects.create(
+        journal = Journal.objects.create(title="journal",
+                                         transaction_type=Journal.WITHDRAW)
+        t = Split.objects.create(
             account=account, opposing_account=expense,
-            journal=journal, amount=-25.02)
-        Transaction.objects.create(
+            journal=journal, amount=-25.02, category=category)
+        Split.objects.create(
             account=expense, opposing_account=account,
-            journal=journal, amount=25.02)
+            journal=journal, amount=25.02, category=category)
 
         self.assertEquals(float(category.money_spent), -t.amount)

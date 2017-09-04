@@ -7,3 +7,5 @@ from .recurrences import (RecurrenceCreateView, RecurrenceDeleteView,
                           RecurrenceTransactionCreateView, RecurrenceUpdateView,
                           RecurringTransactionIndex)
 from .transactions import DepositCreate, TransactionDeleteView, TransactionDetailView, TransactionIndex, TransferCreate, TransactionUpdateView, WithdrawCreate
+
+from .transactions import NewTransactionView

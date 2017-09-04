@@ -6,14 +6,14 @@ from django.views import generic
 
 
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.models import Account, RecurringTransaction, Split
 
 
 def _get_account_info(dstart, dend):
     context = dict()
-    queryset = Transaction.objects.filter(
-        journal__date__gte=dstart,
-        journal__date__lte=dend)
+    queryset = Split.objects.filter(
+        date__gte=dstart,
+        date__lte=dend)
     context['income'] = abs(queryset.filter(
         account__account_type=Account.PERSONAL,
         opposing_account__account_type=Account.REVENUE).aggregate(
@@ -35,22 +35,23 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         last = last_day_of_month(first)
         context = super().get_context_data(**kwargs)
         context['menu'] = 'home'
-        queryset = Transaction.objects.filter(account__account_type=Account.PERSONAL)
+        queryset = Split.objects.filter(account__account_type=Account.PERSONAL)
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         context.update(_get_account_info(first, last))
         context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
         context['due_transactions'] = RecurringTransaction.objects.due_in_month()
-        context['transactions'] = Transaction.objects.transactions()[:10]
+        context['transactions'] = Split.objects.filter(
+            account__account_type=Account.PERSONAL).order_by('-date')[:10]
         context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
         context['expected_balance'] = context['balance'] + context['outstanding']
 
         # last month
         previous_last = first - timedelta(days=1)
         previous_first = previous_last.replace(day=1)
-        queryset = Transaction.objects.filter(journal__date__lte=previous_last,
-                                              journal__date__gte=previous_first)
+        queryset = Split.objects.filter(date__lte=previous_last,
+                                        date__gte=previous_first)
         context['previous_income'] = abs(queryset.filter(
             account__account_type=Account.PERSONAL,
             opposing_account__account_type=Account.REVENUE).aggregate(

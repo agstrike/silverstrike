@@ -8,14 +8,14 @@ from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, Transaction, TransactionJournal
+from silverstrike.models import Account, Journal, Split
 
 
 def _get_account_info(dstart, dend, account=None):
     context = dict()
-    queryset = Transaction.objects.filter(
-        journal__date__gte=dstart,
-        journal__date__lte=dend)
+    queryset = Split.objects.filter(
+        date__gte=dstart,
+        date__lte=dend)
     if account:
         queryset = queryset.filter(account=account)
     context['income'] = abs(queryset.filter(
@@ -83,18 +83,18 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
 class AccountView(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/account_detail.html'
     context_object_name = 'transactions'
-    model = Transaction
+    model = Split
     paginate_by = 50
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
-            'journal__category', 'account')
+            'category', 'account')
         self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
 
-        queryset = queryset.filter(journal__date__gte=self.month)
+        queryset = queryset.filter(date__gte=self.month)
         self.dend = last_day_of_month(self.month)
-        queryset = queryset.filter(journal__date__lte=self.dend)
+        queryset = queryset.filter(date__lte=self.dend)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -121,7 +121,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
 class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
     template_name = 'silverstrike/reconcile.html'
     form_class = ReconcilationForm
-    model = TransactionJournal
+    model = Journal
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

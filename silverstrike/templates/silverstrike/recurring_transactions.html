@@ -21,8 +21,8 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Date</th>
     <th>Title</th>
+    <th>Date</th>
     <th>Amount</th>
     <th class="hidden-xs">Source Account</th>
     <th class="hidden-xs">Destination Account</th>
@@ -31,8 +31,8 @@
   </tr>
 {% for transaction in transactions %}
 <tr{% if transaction.is_due %} class="text-red"{% endif %}>
-  <td>{{ transaction.date }}</td>
   <td>{{ transaction.title }}</td>
+  <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td class="hidden-xs">{{ transaction.src }}</td>
   <td class="hidden-xs">{{ transaction.dst }}</td>

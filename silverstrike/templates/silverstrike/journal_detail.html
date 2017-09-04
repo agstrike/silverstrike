@@ -1,0 +1,59 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content_header %}
+<h1>{{ journal.title }}</h1>
+<div class="breadcrumb">
+<a href="{% url 'transaction_update' journal.id %}" class="btn btn-default btn-xs">{% trans 'Edit' %}</a>
+<a href="{% url 'transaction_delete' journal.id %}" class="btn btn-default btn-xs">{% trans 'Delete' %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
+</div>
+<div class="box-body">
+<table class="table">
+  <tr><th>{% trans 'Transaction Type' %}</th><td>{{ journal.get_transaction_type_str }}</td></tr>
+  <tr>
+    <th>Date</th><td>{{ journal.date }}</td>
+  </tr>
+  <tr><th>{% trans 'Notes' %}</th><td>{{ journal.notes }}</td></tr>
+  {% if journal.recurrence %}
+  <tr><th>{% trans 'Recurrence' %}</th><td>{{ journal.recurrence }}</td></tr>
+  {% endif %}
+</table>
+</div>
+</div>
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">{% trans 'Splits' %}</h3>
+</div>
+<div class="box-body">
+<table class="table">
+  <tr>
+  <th>Description</th>
+  <th>Account</th>
+  <th>Opposing Account</th>
+  <th>Amount</th>
+  <th>Date</th>
+  <th>Category</th>
+  </tr>
+  {% for split in journal.split_set.all %}
+  <tr>
+    <td>{{ split.description }}</td>
+    <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>
+    <td><a href="{{ split.opposing_account.get_absolute_url }}">{{ split.opposing_account }}</a></td>
+    <td>{{ split.amount }}</td>
+    <td>{{ split.date }}</td>
+    <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% else %}None{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

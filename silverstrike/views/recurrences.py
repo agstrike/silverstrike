@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm
-from silverstrike.models import RecurringTransaction, TransactionJournal
+from silverstrike.models import Journal, RecurringTransaction
 
 
 class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
@@ -26,14 +26,14 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
 
 class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateView):
-    model = TransactionJournal
+    model = Journal
     template_name = 'silverstrike/transaction_edit.html'
 
     def get_form(self, form_class=None):
         self.recurrence = get_object_or_404(RecurringTransaction, pk=self.kwargs['pk'])
-        if self.recurrence.transaction_type == TransactionJournal.WITHDRAW:
+        if self.recurrence.transaction_type == Journal.WITHDRAW:
             form_class = WithdrawForm
-        elif self.recurrence.transaction_type == TransactionJournal.DEPOSIT:
+        elif self.recurrence.transaction_type == Journal.DEPOSIT:
             form_class = DepositForm
         else:
             form_class = TransferForm
