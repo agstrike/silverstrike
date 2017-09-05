@@ -213,7 +213,7 @@ var drawChart = function(res) {
       }
   });
 }
-$.getJSON("{% url 'api_accounts_balance' '2017-05-01' '2017-08-01' %}", {}, function(res, status) {
+$.getJSON("{% url 'api_accounts_balance' past today %}", {}, function(res, status) {
   drawChart(res);
 });
 </script>

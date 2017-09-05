@@ -37,7 +37,7 @@
       {% endfor %}
       <br>
       {{ formset.management_form }}
-      <table class="table col-md">
+      <table id="formset" class="table">
       {% for split in formset %}
         {% if forloop.first %}
         <tr>
@@ -72,6 +72,7 @@
       {% endfor %}
       </table>
       <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
+      <a id="add-split" class="btn btn-info">{% trans 'Add Split' %}</a>
     </form>
 </div>
 </div>
@@ -87,8 +88,23 @@
 <script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
+function cloneMore(selector, type) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    total++;
+    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+}
 $(function() {
-  $('select').select2({tags: true});
   $('#id_date').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
@@ -96,6 +112,11 @@ $(function() {
   orientation: 'bottom',
   })
   $('#id_date').attr('autocomplete', 'off');
+  $('#add-split').click(function() {
+    cloneMore('#formset tr:last', 'split');
+
+  });
 })
+
 </script>
 {% endblock %}
