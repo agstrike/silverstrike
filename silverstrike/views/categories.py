@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.models import Category
@@ -16,7 +17,9 @@ class CategoryIndex(LoginRequiredMixin, generic.ListView):
 
 
 class CategoryCreateView(LoginRequiredMixin, generic.edit.CreateView):
-    pass
+    model = Category
+    fields = ['name']
+    success_url = reverse_lazy('categories')
 
 
 class CategoryUpdateView(LoginRequiredMixin, generic.edit.UpdateView):

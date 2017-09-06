@@ -36,6 +36,13 @@
         </div>
       {% endfor %}
       <br>
+      {% for error in form.non_field_errors %}
+      {{ error }}
+      {% endfor %}
+      <p id="balance-note" style="display: none;">
+      Your transaction is not balanced. You need to add splits with a sum of <span id="balance-value"></span>
+      </p>
+      <p id="balanced">Your transaction is balanced</p>
       {{ formset.management_form }}
       <table id="formset" class="table">
       {% for split in formset %}
@@ -116,7 +123,21 @@ $(function() {
     cloneMore('#formset tr:last', 'split');
 
   });
-})
+  $(':input[type="number"]').change(function() {
+    var sum = 0;
+    $(':input[type="number"]').each(function() {
+      sum += parseInt($(this).val());
+    })
+    if (sum == 0) {
+      $('#balance-note').hide();
+      $('#balanced').show();
+    } else {
+      $('#balance-value').text(-sum);
+      $('#balanced').hide();
+      $('#balance-note').show();      
+    }
+  });
+});
 
 </script>
 {% endblock %}

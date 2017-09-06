@@ -1,9 +1,10 @@
 import datetime
 
+from django.db import models
 from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 
-from .models import Account, RecurringTransaction
+from .models import Account, RecurringTransaction, Split
 
 
 def get_accounts(request, account_type):
@@ -16,9 +17,8 @@ def get_accounts(request, account_type):
 
 
 def get_accounts_balance(request, dstart, dend):
-    delta = datetime.timedelta(days=3)
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d') - delta
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d') + delta
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
     dataset = []
     for account in Account.objects.filter(account_type=Account.PERSONAL, show_on_dashboard=True):
         data = list(zip(*account.get_data_points(dstart, dend)))
@@ -29,6 +29,16 @@ def get_accounts_balance(request, dstart, dend):
         labels = []
     return JsonResponse({'labels': labels, 'dataset': dataset})
 
+
+def get_balances(request, dstart, dend):
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
+    dataset = []
+    balance = Split.objects.filter(account__account_type=Account.PERSONAL,
+                                   date__lte=dstart).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0
+    for i in range(30):
+        pass
 
 def skip_recurrence(request, pk):
     if request.method == 'GET':

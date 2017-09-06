@@ -9,14 +9,15 @@
 <h1>Recurring Transactions
 </h1>
 <div class="breadcrumb">
-  <a href="{% url 'recurrence_create' %}" class="btn btn-default btn-xs">{% trans 'Create' %}</a>
+
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="box">
 <div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Transaction list' %}</h3>
+  <h3 class="box-title">{% trans 'Recurrences' %}</h3>
+    <a href="{% url 'recurrence_create' %}" class="btn btn-primary btn-xs pull-right">{% trans 'Create' %}</a>
 </div>
 <div class="box-body">
 <table class="table table-striped">

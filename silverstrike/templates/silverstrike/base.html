@@ -96,22 +96,11 @@
                 <i class="fa fa-home"></i> <span>Home</span>
               </a>
             </li>
-            <li class="treeview{% if menu == "accounts" %} active{% endif %}">
-              <a href="#">
-                <i class="fa fa-book fa-fw"></i>
-                <span>Accounts</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li{% if submenu == "personal" %} class="active"{% endif %}>
-                  <a href="{% url 'personal_accounts' %}">{% trans 'Personal Accounts' %}</a>
-                </li>
-                <li{% if submenu == "new" %} class="active"{% endif %}>
-                  <a href="{% url 'account_new' %}">{% trans 'Create Account' %}</a>
-                </li>
-              </ul>
+            <li{% if menu == "accounts" %} class="active"{% endif %}>
+                <a href="{% url 'personal_accounts' %}">
+                  <i class="fa fa-book fa-fw"></i>
+                  <span>{% trans 'Accounts' %}</span>
+                </a>
             </li>
             <li class="{% if menu == "transactions" %}active{% endif %}">
               <a href="{% url 'transactions' %}">

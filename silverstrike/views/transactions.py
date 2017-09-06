@@ -145,7 +145,12 @@ class SplitUpdate(generic.edit.UpdateView):
             journal = form.save(commit=False)
             formset = self.formset_class(self.request.POST, instance=journal)
             if formset.is_valid():
-                journal.save()
-                formset.save()
-                return HttpResponseRedirect('/')
+                fields = [form.cleaned_data.get('amount') for form in formset]
+                split_sums = sum([x for x in fields if x is not None])
+                if split_sums == 0:
+                    journal.save()
+                    formset.save()
+                    return HttpResponseRedirect('/')
+                else:
+                    form.add_error('', 'Sum of all splits has to be 0. You have {} remaining'.format(split_sums))
         return self.render_to_response(self.get_context_data(form=form))
