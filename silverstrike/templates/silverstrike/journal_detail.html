@@ -46,7 +46,7 @@
   <th>Date</th>
   <th>Category</th>
   </tr>
-  {% for split in journal.split_set.all %}
+  {% for split in journal.splits.all %}
   <tr>
     <td>{{ split.description }}</td>
     <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>

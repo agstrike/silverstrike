@@ -10,7 +10,13 @@
   {% else %}
   {% trans 'New Recurring Transaction' %}
   {% endif %}
+
 </h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="{% url 'recurrences' %}">Recurrences</a></li>
+  <li class="active">{% if object %}{{ object.title|title }}{% else %}{% trans 'New' %}{% endif %}</li>
+</ol>
 {% endblock %}
 
 {% block content %}

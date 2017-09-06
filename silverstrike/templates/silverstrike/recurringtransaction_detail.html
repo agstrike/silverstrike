@@ -1,0 +1,53 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content_header %}
+<h1>{{ recurrence.title }}</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Recurrences</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">{% trans 'Recurrence Details' %}</h3>
+</div>
+<div class="box-body">
+<table class="table">
+  <tr><th>{% trans 'Recurrence' %}</th><td>{{ recurrence.get_recurrence }}</td></tr>
+  <tr>
+    <th>Next expected ocurrence</th><td>{{ recurrence.date }}</td>
+  </tr>
+  <tr><th>{% trans 'Notes' %}</th><td>{{ journal.notes }}</td></tr>
+  {% if journal.recurrence %}
+  <tr><th>{% trans 'Recurrence' %}</th><td>{{ journal.recurrence }}</td></tr>
+  {% endif %}
+</table>
+</div>
+</div>
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">{% trans 'Recent ocurrences' %}</h3>
+</div>
+<div class="box-body">
+<table class="table">
+  <tr>
+  <th>Title</th>
+  <th>Amount</th>
+  <th>Date</th>
+  </tr>
+  {% for journal in recurrence.recurrences.all %}
+  <tr>
+    <td>{{ journal.title }}</td>
+    <td>{{ journal.amount }}</td>
+    <td>{{ journal.date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

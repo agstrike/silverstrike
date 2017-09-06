@@ -114,6 +114,7 @@ class Journal(models.Model):
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
+    recurrence = models.ForeignKey('RecurringTransaction', related_name='recurrences', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -128,8 +129,13 @@ class Journal(models.Model):
         return ''
 
     @property
+    def amount(self):
+        return self.splits.filter(account__account_type=Account.PERSONAL).aggregate(
+            models.Sum('amount'))['amount__sum'] or 0
+
+    @property
     def is_split(self):
-        return len(self.split_set.all()) > 2
+        return len(self.splits.all()) > 2
 
 
 class Split(models.Model):
@@ -140,7 +146,7 @@ class Split(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', blank=True, null=True)
-    journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True)
+    journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True, related_name='splits')
 
     class Meta:
         ordering = ['-date', 'journal', 'description']
@@ -255,6 +261,9 @@ class RecurringTransaction(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('recurrence_detail', args=[self.pk])
 
     @property
     def is_due(self):

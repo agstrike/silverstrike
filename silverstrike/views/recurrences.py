@@ -13,6 +13,11 @@ class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
     success_url = reverse_lazy('recurrences')
 
 
+class RecurrenceDetailView(LoginRequiredMixin, generic.DetailView):
+    model = RecurringTransaction
+    context_object_name = 'recurrence'
+
+
 class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     form_class = RecurringTransactionForm
     model = RecurringTransaction
