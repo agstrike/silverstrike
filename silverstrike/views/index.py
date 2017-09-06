@@ -62,6 +62,6 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
             opposing_account__account_type=Account.EXPENSE).aggregate(
                 models.Sum('amount'))['amount__sum'] or 0)
         context['previous_difference'] = context['previous_income'] - context['previous_expenses']
-        context['today'] = datetime.strftime(date.today(),'%Y-%m-%d')
+        context['today'] = datetime.strftime(date.today(), '%Y-%m-%d')
         context['past'] = datetime.strftime(date.today() - timedelta(days=60), '%Y-%m-%d')
         return context
