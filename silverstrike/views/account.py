@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import models
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -11,30 +10,10 @@ from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Journal, Split
 
 
-def _get_account_info(dstart, dend, account=None):
-    context = dict()
-    queryset = Split.objects.filter(
-        date__gte=dstart,
-        date__lte=dend)
-    if account:
-        queryset = queryset.filter(account=account)
-    context['income'] = abs(queryset.filter(
-        account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.REVENUE).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0)
-
-    context['expenses'] = abs(queryset.filter(
-        account__account_type=Account.PERSONAL,
-        opposing_account__account_type=Account.EXPENSE).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0)
-    context['difference'] = context['income'] - context['expenses']
-    return context
-
-
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
     form_class = AccountCreateForm
-    success_url = reverse_lazy('personal_accounts')
+    success_url = reverse_lazy('accounts')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,7 +36,7 @@ class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
 
 class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     model = Account
-    success_url = reverse_lazy('personal_accounts')
+    success_url = reverse_lazy('accounts')
 
     def get_context_data(self, **kwargs):
         if self.object.account_type == Account.SYSTEM:
@@ -108,7 +87,10 @@ class AccountView(LoginRequiredMixin, generic.ListView):
 
         context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)
         context['next_month'] = self.dend + timedelta(days=1)
-        context.update(_get_account_info(self.month, self.dend, account))
+
+        context['income'] = Split.objects.income(month=self.month, account=account)
+        context['expenses'] = Split.objects.expenses(month=self.month, account=account)
+        context['difference'] = context['income'] - context['expenses']
 
         delta = timedelta(days=3)
         if account.account_type == Account.PERSONAL:

@@ -23,7 +23,7 @@ class ViewTests(TestCase):
         self.assertEquals(context['submenu'], 'new')
 
     def test_context_PersonalAccountIndex(self):
-        context = self.client.get(reverse('personal_accounts')).context
+        context = self.client.get(reverse('accounts')).context
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(len(context['accounts']), 2)
         self.assertIn(self.personal, context['accounts'])

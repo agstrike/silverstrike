@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Account, Category, ImportConfiguration, Journal, RecurringTransaction, Split
+from .models import (Account, Category, ImportConfiguration,
+                     Journal, RecurringTransaction, Split)
 
 admin.site.register(Category)
 admin.site.register(ImportConfiguration)

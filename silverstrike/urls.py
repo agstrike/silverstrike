@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^accounts/new$', views.AccountCreate.as_view(), name='account_new'),
 
     url(r'^accounts$',
-        views.AccountIndex.as_view(), name='personal_accounts'),
+        views.AccountIndex.as_view(), name='accounts'),
 
     url(r'^recurrences/$', views.RecurringTransactionIndex.as_view(), name='recurrences'),
     url(r'^recurrences/create$', views.RecurrenceCreateView.as_view(), name='recurrence_create'),

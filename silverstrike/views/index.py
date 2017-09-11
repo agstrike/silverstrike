@@ -4,8 +4,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.views import generic
 
-
-from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, RecurringTransaction, Split
 
 
@@ -32,13 +30,16 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         first = date.today().replace(day=1)
-        last = last_day_of_month(first)
         context = super().get_context_data(**kwargs)
         context['menu'] = 'home'
         queryset = Split.objects.filter(account__account_type=Account.PERSONAL)
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
-        context.update(_get_account_info(first, last))
+
+        context['income'] = Split.objects.income(month=first)
+        context['expenses'] = abs(Split.objects.expenses(month=first))
+        context['difference'] = context['income'] - context['expenses']
+
         context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
         context['due_transactions'] = RecurringTransaction.objects.due_in_month()

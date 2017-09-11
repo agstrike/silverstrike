@@ -7,13 +7,14 @@
 <h1>{{ recurrence.title|title }}</h1>
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
-  <li class="active">Recurrences</li>
+  <li><a href="{% url 'recurrences' %}">Recurrences</a></li>
+  <li class="active">{{ recurrence.title|title }}</li>
 </ol>
 {% endblock %}
 
 {% block content %}
 <div class="row">
-<div class="col-md-8">
+<div class="col-md-9">
 <div class="box">
   <div class="box-header">
   <h3 class="box-title">{% trans 'Recurrence Details' %}</h3>
@@ -53,7 +54,7 @@
 </div>
 </div>
 </div>
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="box">
   <div class="box-header">
   <h3 class="box-title">{% trans 'Actions' %}</h3>
@@ -61,13 +62,13 @@
 <div class="box-body">
   <form method="post" action="{% url 'recurrence_skip' recurrence.pk %}?next={{ request.path }}">
   {% csrf_token %}
-    <a class="btn btn-success" href="{% url 'recurrence_transaction_create' recurrence.pk %}">Create Transaction</a>
+    <a class="btn btn-block btn-success" href="{% url 'recurrence_transaction_create' recurrence.pk %}">Create Transaction</a>
     <br>
-    <input type="submit" class="btn btn-warning" value="{% trans 'Skip this iteration' %}">
+    <input type="submit" class="btn btn-block btn-warning" value="{% trans 'Skip this iteration' %}">
     <br>
-    <a class="btn btn-default" href="{% url 'recurrence_update' recurrence.pk %}">{% trans 'Edit' %}</a>
+    <a class="btn btn-default btn-block" href="{% url 'recurrence_update' recurrence.pk %}">{% trans 'Edit' %}</a>
     <br>
-    <a class="btn btn-danger" href="{% url 'recurrence_delete' recurrence.pk %}">{% trans 'Delete' %}</a>
+    <a class="btn btn-danger btn-block" href="{% url 'recurrence_delete' recurrence.pk %}">{% trans 'Delete' %}</a>
     <br>
     </form>
 </div>

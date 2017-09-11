@@ -14,7 +14,7 @@ class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
 
 class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Journal
-    success_url = reverse_lazy('personal_accounts')
+    success_url = reverse_lazy('accounts')
 
 
 class TransactionIndex(LoginRequiredMixin, generic.ListView):
@@ -152,5 +152,7 @@ class SplitUpdate(generic.edit.UpdateView):
                     formset.save()
                     return HttpResponseRedirect('/')
                 else:
-                    form.add_error('', 'Sum of all splits has to be 0. You have {} remaining'.format(split_sums))
+                    form.add_error(
+                        '',
+                        'Sum of all splits has to be 0. You have {} remaining'.format(split_sums))
         return self.render_to_response(self.get_context_data(form=form))

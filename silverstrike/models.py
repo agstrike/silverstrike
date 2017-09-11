@@ -89,10 +89,34 @@ class Account(models.Model):
                              account=self, opposing_account=system)
 
 
-class TransactionManager(models.Manager):
+class SplitManager(models.Manager):
     def transactions(self):
         queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL)
         return queryset.exclude(journal__transaction_type=Journal.TRANSFER, amount__gt=0)
+
+    def income(self, month=date.today(), account=None):
+        from .lib import last_day_of_month
+
+        first = month.replace(day=1)
+        last = last_day_of_month(first)
+        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL,
+                                              opposing_account__account_type=Account.REVENUE)
+        queryset = queryset.filter(date__gte=first, date__lte=last)
+        if account:
+            queryset = queryset.filter(account=account)
+        return queryset.aggregate(models.Sum('amount'))['amount__sum'] or 0
+
+    def expenses(self, month=date.today(), account=None):
+        from .lib import last_day_of_month
+
+        first = month.replace(day=1)
+        last = last_day_of_month(first)
+        queryset = self.get_queryset().filter(account__account_type=Account.EXPENSE,
+                                              opposing_account__account_type=Account.PERSONAL)
+        queryset = queryset.filter(date__gte=first, date__lte=last)
+        if account:
+            queryset = queryset.filter(opposing_account=account)
+        return queryset.aggregate(models.Sum('amount'))['amount__sum'] or 0
 
 
 class Journal(models.Model):
@@ -114,7 +138,8 @@ class Journal(models.Model):
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
-    recurrence = models.ForeignKey('RecurringTransaction', related_name='recurrences', blank=True, null=True)
+    recurrence = models.ForeignKey('RecurringTransaction', related_name='recurrences',
+                                   blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -146,7 +171,10 @@ class Split(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', blank=True, null=True)
-    journal = models.ForeignKey(Journal, models.CASCADE, blank=True, null=True, related_name='splits')
+    journal = models.ForeignKey(Journal, models.CASCADE, related_name='splits',
+                                blank=True, null=True)
+
+    objects = SplitManager()
 
     class Meta:
         ordering = ['-date', 'journal', 'description']
