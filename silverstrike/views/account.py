@@ -41,7 +41,7 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     def get_context_data(self, **kwargs):
         if self.object.account_type == Account.SYSTEM:
             raise Http404("You are not allowed to delete this account")
-        return super(AccountDelete, self).get_context_data(kwargs)
+        return super(AccountDelete, self).get_context_data(**kwargs)
 
 
 class AccountIndex(LoginRequiredMixin, generic.ListView):

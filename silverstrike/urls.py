@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
 
-from . import api, views
+from silverstrike import api, views
 
 
 urlpatterns = [
