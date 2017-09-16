@@ -42,7 +42,10 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 
         context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
-        context['due_transactions'] = RecurringTransaction.objects.due_in_month()
+        if RecurringTransaction.objects.due_in_month().count() > 10:
+            context['due_transactions'] = RecurringTransaction.objects.due_in_month()
+        else:
+            context['due_transactions'] = RecurringTransaction.objects.all()[:10]
         context['transactions'] = Split.objects.filter(
             account__account_type=Account.PERSONAL)[:10]
         context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
