@@ -115,7 +115,12 @@
 {% endfor %}
 </table>
 {% else %}
-<p>{% trans 'Nothing due anymore' %}</p>
+<p>
+{% url 'recurrences' as recurrence_url %}
+{% blocktrans %}
+You haven't set up recurring transactions yet. You can do so <a href="{{ recurrence_url}}">here</a>.
+{% endblocktrans %}
+</p>
 {% endif %}
 </div>
 </div>
