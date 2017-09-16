@@ -105,16 +105,12 @@
   </tr>
 {% for transaction in due_transactions %}
 <tr {% if transaction.is_due %}class="text-red"{% endif %}>
-  <td>{{ transaction.title }}</td>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
-  <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
-  {% csrf_token %}
   <td class="btn-toolbar">
-    <a class="btn btn-xs btn-success" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
-    <input type="submit" class="btn btn-xs btn-warning" value="{% trans 'Skip this iteration' %}">
+    <a class="btn btn-xs btn-primary" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
   </td>
-  </form>
   </tr>
 {% endfor %}
 </table>
