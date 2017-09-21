@@ -28,4 +28,4 @@ class SplitInline(admin.TabularInline):
 class JournalAdmin(admin.ModelAdmin):
     inlines = [SplitInline]
     date_hierarchy = 'date'
-    search_fields = ['title', 'notes', 'split__description']
+    search_fields = ['title', 'notes', 'splits__description']
