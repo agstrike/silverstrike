@@ -219,6 +219,9 @@ class Category(models.Model):
                 journal__transaction_type=Journal.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
+    def get_absolute_url(self):
+        return '{}?category={}'.format(reverse('transactions'), self.id)
+
 
 class ImportFile(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
