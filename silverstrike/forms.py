@@ -56,11 +56,13 @@ class TransferForm(forms.ModelForm):
         Split.objects.update_or_create(journal=journal, amount__lt=0,
                                        defaults={'amount': -amount, 'account': src,
                                                  'opposing_account': dst, 'date': journal.date,
-                                                 'description': journal.title})
+                                                 'description': journal.title,
+                                                 'category': self.cleaned_data['category']})
         Split.objects.update_or_create(journal=journal, amount__gt=0,
                                        defaults={'amount': amount, 'account': dst,
                                                  'opposing_account': src, 'date': journal.date,
-                                                 'description': journal.title})
+                                                 'description': journal.title,
+                                                 'category': self.cleaned_data['category']})
         return journal
 
     def clean(self):
