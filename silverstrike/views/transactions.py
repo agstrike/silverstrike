@@ -68,6 +68,7 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         elif self.object.transaction_type == Journal.DEPOSIT:
             initial['source_account'] = self.transaction.opposing_account
         initial['amount'] = self.transaction.amount
+        initial['category'] = self.transaction.category
         return initial
 
     def get_form_class(self):
