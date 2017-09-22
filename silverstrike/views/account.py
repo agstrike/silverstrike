@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db.models import Sum
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
@@ -50,7 +51,12 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
     account_type = ''
 
     def get_queryset(self):
-        return Account.objects.filter(account_type=Account.PERSONAL)
+        queryset = Split.objects.filter(account__account_type=Account.PERSONAL)
+        queryset = queryset.order_by('account_id')
+        queryset = queryset.values('account_id')
+        queryset = queryset.annotate(balance=Sum('amount'))
+        queryset = queryset.values('account__name', 'account_id', 'account__active', 'balance')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,7 +75,10 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
             'category', 'account')
-        self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
+        if 'month' in self.kwargs:
+            self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
+        else:
+            self.month = datetime.combine(date.today().replace(day=1), datetime.min.time())
 
         queryset = queryset.filter(date__gte=self.month)
         self.dend = last_day_of_month(self.month)

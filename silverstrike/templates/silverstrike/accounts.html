@@ -27,9 +27,9 @@
       </tr>
       {% for account in accounts %}
       <tr>
-        <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
+        <td><a href="{% url 'account_view' account.account_id %}">{{ account.account__name }}</a></td>
         <td>{{ account.balance }}</td>
-        <td>{% if account.active %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-close"></i>{% endif %}</td>
+        <td>{% if account.account__active %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-close"></i>{% endif %}</td>
       </tr>
       {% endfor %}
     </table>
