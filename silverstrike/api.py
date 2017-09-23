@@ -37,8 +37,30 @@ def get_balances(request, dstart, dend):
     balance = Split.objects.filter(account__account_type=Account.PERSONAL,
                                    date__lte=dstart).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
-    for i in range(30):
-        pass
+    splits = Split.objects.filter(account__account_type=Account.PERSONAL,
+                                  date__gte=dstart, date__lte=dend)
+    splits = list(splits.order_by('-date'))
+
+    steps = 30
+    step = (dend - dstart) / steps
+    if step < datetime.timedelta(days=1):
+        step = datetime.timedelta(days=1)
+        steps = int((dend - dstart) / step)
+    data_points = []
+    labels = []
+    for i in range(steps):
+        while len(splits) > 0 and splits[-1].date <= dstart.date():
+            t = splits.pop()
+            balance += t.amount
+        labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
+        data_points.append(balance)
+        dstart += step
+    for s in splits:
+        balance += s.amount
+        labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
+    data_points.append(balance)
+    return JsonResponse({'labels': labels, 'data': data_points})
+
 
 def skip_recurrence(request, pk):
     if request.method == 'GET':

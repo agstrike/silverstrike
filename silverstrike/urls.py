@@ -60,6 +60,8 @@ urlpatterns = [
     url(r'^charts$', views.ChartView.as_view(), name='charts'),
 
     url(r'^api/accounts/(?P<account_type>\w+)$', api.get_accounts, name='api_accounts'),
+    url(r'^api/balance/(?P<dstart>\S+)/(?P<dend>\S+)/$',
+        api.get_balances, name='api_balance'),
     url(r'^api/accounts_balance/(?P<dstart>\S+)/(?P<dend>\S+)/$',
         api.get_accounts_balance, name='api_accounts_balance'),
     url(r'^manifest.json$', TemplateView.as_view(template_name='silverstrike/manifest.json'),

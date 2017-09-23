@@ -84,7 +84,7 @@
 <div class="col-md-8 col-md-pull-4">
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Personal Accounts</h3>
+    <h3 class="box-title">Balance</h3>
   </div>
   <div class="box-body">
   <canvas id="myChart" width="450" height="250"></canvas>
@@ -160,42 +160,21 @@ You haven't set up recurring transactions yet. You can do so <a href="{{ recurre
 {% block scripts %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script type="text/javascript">
-var colors =
-  ['#357ca5',
-   '#008d4c',
-   '#db8b0b',
-   '#ca195a',
-   '#555299',
-   '#4285f4',
-   '#db4437',
-   '#f4b400',
-   '#0f9d58',
-   '#ab47bc',
-   '#00acc1',
-   '#ff7043',
-   '#9e9d24',
-   '#5c6bc0',
-   '#f06292',
-   '#00796b',
-   '#c2185b'
-];
 var drawChart = function(res) {
   var ctx = document.getElementById("myChart").getContext('2d');
   data = {
       labels: res.labels,
       datasets: []
   }
-  for (i = 0; i < res.dataset.length; i++) {
-    dataset = {
-      label: res.dataset[i].name,
-      fill: false,
-      pointRadius: 2,
-      backgroundColor: colors[i],
-      borderColor: colors[i],
-      data: res.dataset[i].data,
-    }
-    data.datasets.push(dataset);
+  dataset = {
+    label: 'Balance',
+    fill: false,
+    pointRadius: 2,
+    backgroundColor: '#357ca5',
+    borderColor: '#357ca5',
+    data: res.data,
   }
+  data.datasets.push(dataset);
   var myChart = new Chart(ctx, {
       type: 'line',
       data: data,
@@ -214,7 +193,7 @@ var drawChart = function(res) {
       }
   });
 }
-$.getJSON("{% url 'api_accounts_balance' past today %}", {}, function(res, status) {
+$.getJSON("{% url 'api_balance' past today %}", {}, function(res, status) {
   drawChart(res);
 });
 </script>
