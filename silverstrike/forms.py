@@ -109,7 +109,7 @@ class DepositForm(TransferForm):
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = RecurringTransaction
-        fields = ['title', 'transaction_type', 'date', 'amount', 'src', 'dst', 'recurrence']
+        fields = ['title', 'transaction_type', 'date', 'amount', 'src', 'dst', 'category', 'recurrence']
 
     src = forms.CharField(max_length=64, label=_('Source Account'),
                           widget=forms.TextInput(attrs={'autocomplete': 'off'}))
