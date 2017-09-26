@@ -27,7 +27,7 @@
   </tr>
   <tr><th>{% trans 'Notes' %}</th><td>{{ journal.notes }}</td></tr>
   {% if journal.recurrence %}
-  <tr><th>{% trans 'Recurrence' %}</th><td>{{ journal.recurrence }}</td></tr>
+  <tr><th>{% trans 'Recurrence' %}</th><td><a href="{{ journal.recurrence.get_absolute_url }}">{{ journal.recurrence }}</a></td></tr>
   {% endif %}
 </table>
 </div>

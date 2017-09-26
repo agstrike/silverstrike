@@ -25,10 +25,8 @@
   <tr>
     <th>Next expected ocurrence</th><td>{{ recurrence.date }}</td>
   </tr>
-  <tr><th>{% trans 'Notes' %}</th><td>{{ journal.notes }}</td></tr>
-  {% if journal.recurrence %}
-  <tr><th>{% trans 'Recurrence' %}</th><td>{{ journal.recurrence }}</td></tr>
-  {% endif %}
+  <tr><th>{% trans 'Category' %}</th><td>{{ recurrence.category }}</td></tr>
+  <tr><th>{% trans 'Notes' %}</th><td>{{ recurrence.notes }}</td></tr>
 </table>
 </div>
 </div>
@@ -45,7 +43,7 @@
   </tr>
   {% for journal in recurrence.recurrences.all %}
   <tr>
-    <td>{{ journal.title }}</td>
+    <td><a href="{{ journal.get_absolute_url}} ">{{ journal.title }}</a></td>
     <td>{{ journal.amount }}</td>
     <td>{{ journal.date }}</td>
   </tr>
