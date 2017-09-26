@@ -170,7 +170,7 @@ class Split(models.Model):
     description = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
-    category = models.ForeignKey('Category', blank=True, null=True)
+    category = models.ForeignKey('Category', blank=True, null=True, related_name='splits')
     journal = models.ForeignKey(Journal, models.CASCADE, related_name='splits',
                                 blank=True, null=True)
 
