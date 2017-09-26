@@ -81,7 +81,13 @@
   <td>{{ transaction.journal.date }}</td>
   <td{% if transaction.amount < 0 %} class="text-red"{% endif %}>{{ transaction.amount }}</td>
   <td class="hidden-xs">{% if transaction.is_system %}Reconcilation{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
-  <td class="hidden-xs">{{ transaction.category }}</td>
+  <td class="hidden-xs">
+    {% if transaction.category %}
+    <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}
+    {% else %}
+    {{ transaction.category }}
+    {% endif %}
+  </td>
   </tr>
 {% endfor %}
 </table>
