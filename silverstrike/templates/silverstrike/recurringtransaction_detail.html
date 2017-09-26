@@ -25,7 +25,13 @@
   <tr>
     <th>Next expected ocurrence</th><td>{{ recurrence.date }}</td>
   </tr>
-  <tr><th>{% trans 'Category' %}</th><td>{{ recurrence.category }}</td></tr>
+  <tr><th>{% trans 'Category' %}</th><td>
+    {% if recurrence.category %}
+    <a href="{{ recurrence.category.get_absolute_url }}">{{ recurrence.category }}</a>
+    {% else %}
+    {{ recurrence.category }}
+    {% endif %}
+  </td></tr>
   <tr><th>{% trans 'Notes' %}</th><td>{{ recurrence.notes }}</td></tr>
 </table>
 </div>
