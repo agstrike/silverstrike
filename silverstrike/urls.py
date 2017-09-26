@@ -57,6 +57,7 @@ urlpatterns = [
 
     url(r'^categories/$', views.CategoryIndex.as_view(), name='categories'),
     url(r'^categories/create/$', views.CategoryCreateView.as_view(), name='category_create'),
+    url(r'^categories/(?P<pk>\d+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
     url(r'^charts$', views.ChartView.as_view(), name='charts'),
 
     url(r'^api/accounts/(?P<account_type>\w+)$', api.get_accounts, name='api_accounts'),

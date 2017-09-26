@@ -1,5 +1,5 @@
 from .account import AccountCreate, AccountDelete, AccountIndex, AccountUpdate, AccountView, ReconcileView
-from .categories import CategoryCreateView, CategoryIndex
+from .categories import CategoryCreateView, CategoryDetailView, CategoryIndex
 from .charts import ChartView
 from .imports import ImportConfigureView, ImportFireflyView, ImportProcessView, ImportUploadView, ImportView
 from .index import IndexView

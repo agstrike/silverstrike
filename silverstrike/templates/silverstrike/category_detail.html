@@ -1,0 +1,107 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>{{ category.name }}
+  <small>{{ month|date:'F Y'}}</small>
+</h1>
+<div class="breadcrumb">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="box">
+      <div class="box-body">
+        <table class="table">
+          <tr>
+            <th>{% trans 'Spent this month' %}</th>
+            <td>{{ spent_this_month }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="box">
+      <div class="box-body">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="box">
+  <div class="box-body">
+    <table class="table">
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Amount</th>
+      </tr>
+      {% for split in splits %}
+      <tr>
+        <td>{{ split.description }}</td>
+        <td>{{ split.date }}</td>
+        <td>{{ split.amount }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script type="text/javascript">
+  $('select').change(function() {
+    $( "select option:selected" ).each(function() {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  })
+  var colors =
+    ['#357ca5',
+     '#008d4c',
+     '#db8b0b',
+     '#ca195a',
+     '#555299',
+     '#4285f4',
+     '#db4437',
+     '#f4b400',
+     '#0f9d58',
+     '#ab47bc',
+     '#00acc1',
+     '#ff7043',
+     '#9e9d24',
+     '#5c6bc0',
+     '#f06292',
+     '#00796b',
+     '#c2185b'
+  ];
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    options: {
+      responsive: false
+    },
+    data: {
+        labels: [
+  {% for account, spent in account_spending.items %}
+  "{{ account.name }}",
+  {% endfor %}
+  ],
+        datasets: [{
+            label: 'Balance',
+            backgroundColor: colors,
+            data: [
+              {% for account, spent in account_spending.items %}
+              {{ spent }},
+              {% endfor %}
+    ],
+        }]
+    }
+});
+</script>
+{% endblock %}
+

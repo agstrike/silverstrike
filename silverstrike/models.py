@@ -220,7 +220,7 @@ class Category(models.Model):
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):
-        return '{}?category={}'.format(reverse('transactions'), self.id)
+        return reverse('category_detail', args=[self.id])
 
 
 class ImportFile(models.Model):
