@@ -33,7 +33,7 @@
       </tr>
       {% for category in categories %}
       <tr>
-        <td><a href="{% url 'transactions' %}?category={{ category.id }}" >{{ category.name }}</a></td>
+        <td><a href="{{ category.get_absolute_url }}" >{{ category.name }}</a></td>
         <td>{{ category.money_spent }}</td>
       </tr>
       {% endfor %}

@@ -15,12 +15,14 @@
   <div class="col-md-8">
     <div class="box">
       <div class="box-body">
+
         <table class="table">
           <tr>
             <th>{% trans 'Spent this month' %}</th>
             <td>{{ spent_this_month }}</td>
           </tr>
         </table>
+        <a class="btn btn-primary" href="{% url 'transactions' %}?category={{ category.id }}" >{% trans 'Show all transactions' %}</a>
       </div>
     </div>
   </div>
