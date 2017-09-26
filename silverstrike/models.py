@@ -177,7 +177,7 @@ class Split(models.Model):
     objects = SplitManager()
 
     class Meta:
-        ordering = ['-date', 'journal', 'description']
+        ordering = ['-date', 'description']
 
     def __str__(self):
         return self.description
