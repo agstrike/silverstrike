@@ -29,7 +29,6 @@
     <th class="hidden-xs">Source Account</th>
     <th class="hidden-xs">Destination Account</th>
     <th class="hidden-xs">Recurrance</th>
-    <th>Actions</th>
   </tr>
 {% for transaction in transactions %}
 <tr{% if transaction.is_due %} class="text-red"{% endif %}>
@@ -39,16 +38,6 @@
   <td class="hidden-xs">{{ transaction.src }}</td>
   <td class="hidden-xs">{{ transaction.dst }}</td>
   <td class="hidden-xs">{{ transaction.get_recurrence }}</td>
-  <form method="post" action="{% url 'recurrence_skip' transaction.pk %}?next={{ request.path }}">
-  {% csrf_token %}
-  <td class="btn-toolbar">
-    <a class="btn btn-xs btn-success" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
-    <input type="submit" class="btn btn-xs btn-warning" value="{% trans 'Skip this iteration' %}">
-    <a class="btn btn-xs btn-default" href="{% url 'recurrence_update' transaction.pk %}">{% trans 'Edit' %}</a>
-    <a class="btn btn-xs btn-danger" href="{% url 'recurrence_delete' transaction.pk %}">{% trans 'Delete' %}</a></td>
-  </tr>
-  </form>
-
 {% endfor %}
 </table>
 </div>
