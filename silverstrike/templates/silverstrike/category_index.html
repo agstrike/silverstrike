@@ -76,7 +76,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'pie',
     options: {
-      responsive: false
+      responsive: false,
+      legend: {
+        position: 'none',
+      },
     },
     data: {
         labels: [
@@ -85,7 +88,6 @@ var myChart = new Chart(ctx, {
   {% endfor %}
   ],
         datasets: [{
-            label: 'Balance',
             backgroundColor: colors,
             data: [
       {% for category in categories %}
