@@ -109,7 +109,12 @@
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
   <td class="btn-toolbar">
+    {% if transaction.recurrence %}
     <a class="btn btn-xs btn-primary" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
+    }
+    {% else %}
+    {% trans 'Planned transaction' %}
+    {% endif %}
   </td>
   </tr>
 {% endfor %}
@@ -143,7 +148,7 @@ You haven't set up recurring transactions yet. You can do so <a href="{{ recurre
   </tr>
 {% for transaction in transactions %}
 <tr>
-  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.description }}</a></td>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
   <td class="hidden-xs">{{ transaction.journal.get_transaction_type_str }}</td>
   <td>{{ transaction.date }}</td>
   <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>

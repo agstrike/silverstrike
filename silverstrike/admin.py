@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Account, Category, ImportConfiguration,
-                     Journal, RecurringTransaction, Split)
+                     RecurringTransaction, Split, Transaction)
 
 admin.site.register(Category)
 admin.site.register(ImportConfiguration)
@@ -24,8 +24,8 @@ class SplitInline(admin.TabularInline):
             return 4
 
 
-@admin.register(Journal)
-class JournalAdmin(admin.ModelAdmin):
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
     inlines = [SplitInline]
     date_hierarchy = 'date'
-    search_fields = ['title', 'notes', 'splits__description']
+    search_fields = ['title', 'notes', 'splits__title']

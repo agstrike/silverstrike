@@ -81,15 +81,15 @@ class Account(models.Model):
 
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
-        journal = Journal.objects.create(title=_('Initial Balance'),
-                                         transaction_type=Journal.SYSTEM)
+        journal = Transaction.objects.create(title=_('Initial Balance'),
+                                             transaction_type=Transaction.SYSTEM)
         Split.objects.create(journal=journal, amount=-amount,
                              account=system, opposing_account=self)
         Split.objects.create(journal=journal, amount=amount,
                              account=self, opposing_account=system)
 
 
-class Journal(models.Model):
+class Transaction(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
     TRANSFER = 3
@@ -157,41 +157,47 @@ class SplitQuerySet(models.QuerySet):
         return self.exclude(account__account_type=Account.PERSONAL,
                             opposing_account__account_type=Account.PERSONAL)
 
+    def upcoming(self):
+        return self.filter(date__gte=date.today())
+
+    def past(self):
+        return self.filter(date__lte=date.today())
+
 
 class Split(models.Model):
     account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
     opposing_account = models.ForeignKey(Account, models.CASCADE,
                                          related_name='outgoing_transactions')
-    description = models.CharField(max_length=64)
+    title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', blank=True, null=True, related_name='splits')
-    journal = models.ForeignKey(Journal, models.CASCADE, related_name='splits',
+    journal = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
                                 blank=True, null=True)
 
     objects = SplitQuerySet.as_manager()
 
     class Meta:
-        ordering = ['-date', 'description']
+        ordering = ['-date', 'title']
 
     def __str__(self):
-        return self.description
+        return self.title
 
     @property
     def is_transfer(self):
-        return self.journal.transaction_type == Journal.TRANSFER
+        return self.journal.transaction_type == Transaction.TRANSFER
 
     @property
     def is_withdraw(self):
-        return self.journal.transaction_type == Journal.WITHDRAW
+        return self.journal.transaction_type == Transaction.WITHDRAW
 
     @property
     def is_deposit(self):
-        return self.journal.transaction_type == Journal.DEPOSIT
+        return self.journal.transaction_type == Transaction.DEPOSIT
 
     @property
     def is_system(self):
-        return self.journal.transaction_type == Journal.SYSTEM
+        return self.journal.transaction_type == Transaction.SYSTEM
 
     def get_absolute_url(self):
         return self.journal.get_absolute_url()
@@ -211,7 +217,7 @@ class Category(models.Model):
     def money_spent(self):
         return abs(Split.objects.filter(
                 category=self, account__account_type=Account.PERSONAL,
-                journal__transaction_type=Journal.WITHDRAW).aggregate(
+                journal__transaction_type=Transaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):
@@ -283,7 +289,7 @@ class RecurringTransaction(models.Model):
     src = models.ForeignKey(Account)
     dst = models.ForeignKey(Account, related_name='opposing_recurring_transactions')
     recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
-    transaction_type = models.IntegerField(choices=Journal.TRANSACTION_TYPES[:3])
+    transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
     category = models.ForeignKey(Category, null=True, blank=True)
 
     def __str__(self):
@@ -317,10 +323,10 @@ class RecurringTransaction(models.Model):
         outstanding = 0
         dend = last_day_of_month(date.today())
         transactions = cls.objects.due_in_month().exclude(
-            transaction_type=Journal.TRANSFER)
+            transaction_type=Transaction.TRANSFER)
         for t in transactions:
             while t.date <= dend:
-                if t.transaction_type == Journal.WITHDRAW:
+                if t.transaction_type == Transaction.WITHDRAW:
                     outstanding -= t.amount
                 else:
                     outstanding += t.amount

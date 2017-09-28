@@ -8,7 +8,7 @@ from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, Journal, Split
+from silverstrike.models import Account, Split, Transaction
 
 
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -116,7 +116,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
 class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
     template_name = 'silverstrike/reconcile.html'
     form_class = ReconcilationForm
-    model = Journal
+    model = Transaction
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from silverstrike.models import Account, Category, Journal, Split
+from silverstrike.models import Account, Category, Split, Transaction
 
 
 class ModelTests(TestCase):
@@ -22,13 +22,13 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = Journal.objects.create(title="journal",
-                                         transaction_type=Journal.WITHDRAW)
+        journal = Transaction.objects.create(title="journal",
+                                             transaction_type=Transaction.WITHDRAW)
         self.assertEquals(str(journal), journal.title)
         transaction = Split.objects.create(
             account=account, opposing_account=expense,
-            journal=journal, amount=-25.02, description='meh')
-        self.assertEquals(str(transaction), transaction.description)
+            journal=journal, amount=-25.02, title='meh')
+        self.assertEquals(str(transaction), transaction.title)
 
     def test_category_str_method(self):
         category = Category.objects.create(name="cat 1")
@@ -41,8 +41,8 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = Journal.objects.create(title="journal",
-                                         transaction_type=Journal.WITHDRAW)
+        journal = Transaction.objects.create(title="journal",
+                                             transaction_type=Transaction.WITHDRAW)
         t = Split.objects.create(
             account=account, opposing_account=expense,
             journal=journal, amount=-25.02, category=category)

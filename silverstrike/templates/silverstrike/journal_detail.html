@@ -39,7 +39,7 @@
 <div class="box-body">
 <table class="table">
   <tr>
-  <th>Description</th>
+  <th>Title</th>
   <th>Account</th>
   <th>Opposing Account</th>
   <th>Amount</th>
@@ -48,7 +48,7 @@
   </tr>
   {% for split in journal.splits.transfers_once %}
   <tr>
-    <td>{{ split.description }}</td>
+    <td>{{ split.title }}</td>
     <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>
     <td><a href="{{ split.opposing_account.get_absolute_url }}">{{ split.opposing_account }}</a></td>
     <td>{{ split.amount }}</td>

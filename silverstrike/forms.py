@@ -5,8 +5,8 @@ from django import forms
 from django.forms.models import ModelChoiceField, ModelChoiceIterator, ModelMultipleChoiceField
 from django.utils.translation import ugettext as _
 
-from .models import (Account, Category, ImportConfiguration, ImportFile, Journal,
-                     RecurringTransaction, Split)
+from .models import (Account, Category, ImportConfiguration, ImportFile,
+                     RecurringTransaction, Split, Transaction)
 
 
 class ImportUploadForm(forms.ModelForm):
@@ -37,7 +37,7 @@ class CSVDefinitionForm(forms.Form):
 
 class TransferForm(forms.ModelForm):
     class Meta:
-        model = Journal
+        model = Transaction
         fields = ['title', 'source_account', 'destination_account',
                   'amount', 'date', 'category', 'notes']
 
@@ -56,24 +56,22 @@ class TransferForm(forms.ModelForm):
         Split.objects.update_or_create(journal=journal, amount__lt=0,
                                        defaults={'amount': -amount, 'account': src,
                                                  'opposing_account': dst, 'date': journal.date,
-                                                 'description': journal.title,
+                                                 'title': journal.title,
                                                  'category': self.cleaned_data['category']})
         Split.objects.update_or_create(journal=journal, amount__gt=0,
                                        defaults={'amount': amount, 'account': dst,
                                                  'opposing_account': src, 'date': journal.date,
-                                                 'description': journal.title,
+                                                 'title': journal.title,
                                                  'category': self.cleaned_data['category']})
         return journal
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Journal.TRANSFER
+        self.instance.transaction_type = Transaction.TRANSFER
         if self.cleaned_data['source_account'] == self.cleaned_data['destination_account']:
             error = 'source and destination account have to be different'
             self.add_error('destination_account', error)
             self.add_error('source_account', error)
-        if self.cleaned_data['date'] > date.today():
-            self.add_error('date', _("You can't create future Transactions"))
 
 
 class WithdrawForm(TransferForm):
@@ -88,7 +86,7 @@ class WithdrawForm(TransferForm):
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Journal.WITHDRAW
+        self.instance.transaction_type = Transaction.WITHDRAW
 
 
 class DepositForm(TransferForm):
@@ -103,7 +101,7 @@ class DepositForm(TransferForm):
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Journal.DEPOSIT
+        self.instance.transaction_type = Transaction.DEPOSIT
 
 
 class RecurringTransactionForm(forms.ModelForm):
@@ -130,9 +128,9 @@ class RecurringTransactionForm(forms.ModelForm):
         return recurrence_date
 
     def clean(self):
-        if self.cleaned_data['transaction_type'] == Journal.TRANSFER:
+        if self.cleaned_data['transaction_type'] == Transaction.TRANSFER:
             src_type = dst_type = Account.PERSONAL
-        elif self.cleaned_data['transaction_type'] == Journal.WITHDRAW:
+        elif self.cleaned_data['transaction_type'] == Transaction.WITHDRAW:
             src_type = Account.PERSONAL
             dst_type = Account.EXPENSE
         else:
@@ -148,7 +146,7 @@ class RecurringTransactionForm(forms.ModelForm):
 
 class ReconcilationForm(forms.ModelForm):
     class Meta:
-        model = Journal
+        model = Transaction
         fields = ['title', 'current_balance', 'date', 'notes']
 
     current_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
@@ -235,5 +233,5 @@ class SplitForm(forms.ModelForm):
 
 
 TransactionFormSet = forms.models.inlineformset_factory(
-    Journal, Split, form=SplitForm, extra=1
+    Transaction, Split, form=SplitForm, extra=1
     )

@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
-from silverstrike.models import Account, Journal
+from silverstrike.models import Account, Transaction
 
 
 class ViewTests(TestCase):
@@ -61,7 +61,7 @@ class ViewTests(TestCase):
             'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2017-01-01',
-            'transaction_type': Journal.TRANSFER
+            'transaction_type': Transaction.TRANSFER
             })
 
         self.assertTrue(form.is_valid())
@@ -91,7 +91,7 @@ class ViewTests(TestCase):
             'destination_account': self.expense,
             'amount': 123,
             'date': '2017-01-01',
-            'transaction_type': Journal.WITHDRAW
+            'transaction_type': Transaction.WITHDRAW
             })
 
         self.assertTrue(form.is_valid())
@@ -121,7 +121,7 @@ class ViewTests(TestCase):
             'destination_account': 2,
             'amount': 123,
             'date': '2017-01-01',
-            'transaction_type': Journal.DEPOSIT
+            'transaction_type': Transaction.DEPOSIT
             })
 
         self.assertTrue(form.is_valid())

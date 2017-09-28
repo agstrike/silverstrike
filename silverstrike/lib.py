@@ -1,7 +1,7 @@
 import csv
 import datetime
 
-from .models import Account, Category, ImportConfiguration, Journal, Split
+from .models import Account, Category, ImportConfiguration, Split, Transaction
 
 
 def last_day_of_month(any_day):
@@ -48,7 +48,7 @@ def import_csv(path, config):
         else:
             e['dst'] = Account.objects.create(name=e['src']).id
 
-        j = Journal.objects.create(title=e['title'], date=e['date'], notes=e['notes'])
+        j = Transaction.objects.create(title=e['title'], date=e['date'], notes=e['notes'])
         Split.objects.create(account=e['src'], opposing_account=e['dst'],
                              journal=j, amount=e['amount'], date=e['date'])
         Split.objects.create(account=e['dst'], opposing_account=e['src'],
@@ -104,7 +104,7 @@ def import_firefly(csv_file):
         line[amount] = float(line[amount])
 
         if line[transaction_type] == 'Withdrawal':
-            t_type = Journal.WITHDRAW
+            t_type = Transaction.WITHDRAW
             if line[destination_account_name] in expense_accounts:
                 line[destination_account_name] = expense_accounts[line[destination_account_name]]
             else:
@@ -117,7 +117,7 @@ def import_firefly(csv_file):
             # positive transfers are wrong
             if line[amount] > 0:
                 continue
-            t_type = Journal.TRANSFER
+            t_type = Transaction.TRANSFER
             if line[destination_account_name] in personal_accounts:
                 line[destination_account_name] = personal_accounts[line[destination_account_name]]
             else:
@@ -127,7 +127,7 @@ def import_firefly(csv_file):
                 line[destination_account_name] = a.id
 
         elif line[transaction_type] == 'Deposit':
-            t_type = Journal.DEPOSIT
+            t_type = Transaction.DEPOSIT
             if line[destination_account_name] in revenue_accounts:
                 line[destination_account_name] = revenue_accounts[line[destination_account_name]]
             else:
@@ -148,7 +148,7 @@ def import_firefly(csv_file):
             line[category_name] = None
         line[date] = datetime.datetime.strptime(line[date], '%Y-%m-%d')
 
-        journal = Journal.objects.create(
+        journal = Transaction.objects.create(
             title=line[description], date=line[date],
             transaction_type=t_type)
         Split.objects.bulk_create(

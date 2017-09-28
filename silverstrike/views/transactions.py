@@ -4,16 +4,16 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import DepositForm, TransactionFormSet, TransferForm, WithdrawForm
-from silverstrike.models import Account, Journal, Split
+from silverstrike.models import Account, Split, Transaction
 
 
 class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Journal
+    model = Transaction
     context_object_name = 'journal'
 
 
 class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
-    model = Journal
+    model = Transaction
     success_url = reverse_lazy('accounts')
 
 
@@ -31,7 +31,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
         if 'account' in self.request.GET:
             queryset = queryset.filter(account_id=self.request.GET['account'])
         else:
-            queryset = queryset.exclude(journal__transaction_type=Journal.TRANSFER,
+            queryset = queryset.exclude(journal__transaction_type=Transaction.TRANSFER,
                                         amount__gt=0)
         return queryset
 
@@ -43,7 +43,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
 
 
 class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
-    model = Journal
+    model = Transaction
     form_class = TransferForm
     template_name = 'silverstrike/transaction_edit.html'
 
@@ -56,25 +56,25 @@ class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
 
 class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'silverstrike/transaction_edit.html'
-    model = Journal
+    model = Transaction
 
     def get_initial(self):
         initial = super().get_initial()
         self.transaction = Split.objects.get(journal_id=self.kwargs.get('pk'), amount__gt=0)
         initial['source_account'] = self.transaction.opposing_account.pk
         initial['destination_account'] = self.transaction.account.pk
-        if self.object.transaction_type == Journal.WITHDRAW:
+        if self.object.transaction_type == Transaction.WITHDRAW:
             initial['destination_account'] = self.transaction.account
-        elif self.object.transaction_type == Journal.DEPOSIT:
+        elif self.object.transaction_type == Transaction.DEPOSIT:
             initial['source_account'] = self.transaction.opposing_account
         initial['amount'] = self.transaction.amount
         initial['category'] = self.transaction.category
         return initial
 
     def get_form_class(self):
-        if self.object.transaction_type == Journal.WITHDRAW:
+        if self.object.transaction_type == Transaction.WITHDRAW:
             return WithdrawForm
-        elif self.object.transaction_type == Journal.DEPOSIT:
+        elif self.object.transaction_type == Transaction.DEPOSIT:
             return DepositForm
         else:
             return TransferForm
@@ -104,7 +104,7 @@ class DepositCreate(TransferCreate):
 
 
 class SplitCreate(generic.edit.CreateView):
-    model = Journal
+    model = Transaction
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
     fields = '__all__'
@@ -128,7 +128,7 @@ class SplitCreate(generic.edit.CreateView):
 
 
 class SplitUpdate(generic.edit.UpdateView):
-    model = Journal
+    model = Transaction
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
     fields = '__all__'
