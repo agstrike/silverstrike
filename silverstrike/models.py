@@ -158,7 +158,7 @@ class SplitQuerySet(models.QuerySet):
                             opposing_account__account_type=Account.PERSONAL)
 
     def upcoming(self):
-        return self.filter(date__gte=date.today())
+        return self.filter(date__gt=date.today())
 
     def past(self):
         return self.filter(date__lte=date.today())
