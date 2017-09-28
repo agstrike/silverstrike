@@ -10,8 +10,8 @@ class ViewTests(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='admin', email='email@example.com', password='pass')
         self.client.login(username='admin', password='pass')
-        self.account = Account.objects.create(name="first account")
-        self.personal = Account.objects.create(name="personal account")
+        self.account = Account.objects.create(name='first account', show_on_dashboard=True)
+        self.personal = Account.objects.create(name='personal account', show_on_dashboard=True)
         self.expense = Account.objects.create(
             name="expense account", account_type=Account.EXPENSE)
         self.revenue = Account.objects.create(
@@ -22,11 +22,11 @@ class ViewTests(TestCase):
         self.assertEquals(context['menu'], 'accounts')
         self.assertEquals(context['submenu'], 'new')
 
-    def test_context_PersonalAccountIndex(self):
+    def test_context_AccountIndex(self):
         context = self.client.get(reverse('accounts')).context
         self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(len(context['accounts']), 2)
-        self.assertIn(self.personal, context['accounts'])
+        print(context)
+        self.assertEquals(len(context['accounts']), 1)
         self.assertIn(self.account, context['accounts'])
 
     def test_context_TransactionIndex(self):

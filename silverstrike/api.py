@@ -33,7 +33,6 @@ def get_accounts_balance(request, dstart, dend):
 def get_balances(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
-    dataset = []
     balance = Split.objects.filter(account__account_type=Account.PERSONAL,
                                    date__lte=dstart).aggregate(
             models.Sum('amount'))['amount__sum'] or 0

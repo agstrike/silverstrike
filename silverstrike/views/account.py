@@ -1,10 +1,10 @@
 from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.views import generic
-from django.db.models import Sum
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.lib import last_day_of_month
@@ -19,7 +19,6 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        context['submenu'] = 'new'
         return context
 
 
@@ -61,7 +60,6 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        context['submenu'] = 'personal'
         return context
 
 
@@ -74,15 +72,14 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
-            'category', 'account')
+            'category', 'account', 'journal', 'opposing_account')
         if 'month' in self.kwargs:
             self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
         else:
             self.month = datetime.combine(date.today().replace(day=1), datetime.min.time())
 
-        queryset = queryset.filter(date__gte=self.month)
         self.dend = last_day_of_month(self.month)
-        queryset = queryset.filter(date__lte=self.dend)
+        queryset = queryset.date_range(self.month, self.dend)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -97,8 +94,15 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)
         context['next_month'] = self.dend + timedelta(days=1)
 
-        context['income'] = Split.objects.income(month=self.month, account=account)
-        context['expenses'] = Split.objects.expenses(month=self.month, account=account)
+        income = 0
+        expenses = 0
+        for s in context['transactions']:
+            if s.opposing_account.account_type == Account.EXPENSE:
+                expenses += s.amount
+            elif s.opposing_account.account_type == Account.REVENUE:
+                income += s.amount
+        context['income'] = income
+        context['expenses'] = expenses
         context['difference'] = context['income'] - context['expenses']
 
         delta = timedelta(days=3)

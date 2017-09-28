@@ -89,36 +89,6 @@ class Account(models.Model):
                              account=self, opposing_account=system)
 
 
-class SplitManager(models.Manager):
-    def transactions(self):
-        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL)
-        return queryset.exclude(journal__transaction_type=Journal.TRANSFER, amount__gt=0)
-
-    def income(self, month=date.today(), account=None):
-        from .lib import last_day_of_month
-
-        first = month.replace(day=1)
-        last = last_day_of_month(first)
-        queryset = self.get_queryset().filter(account__account_type=Account.PERSONAL,
-                                              opposing_account__account_type=Account.REVENUE)
-        queryset = queryset.filter(date__gte=first, date__lte=last)
-        if account:
-            queryset = queryset.filter(account=account)
-        return queryset.aggregate(models.Sum('amount'))['amount__sum'] or 0
-
-    def expenses(self, month=date.today(), account=None):
-        from .lib import last_day_of_month
-
-        first = month.replace(day=1)
-        last = last_day_of_month(first)
-        queryset = self.get_queryset().filter(account__account_type=Account.EXPENSE,
-                                              opposing_account__account_type=Account.PERSONAL)
-        queryset = queryset.filter(date__gte=first, date__lte=last)
-        if account:
-            queryset = queryset.filter(opposing_account=account)
-        return queryset.aggregate(models.Sum('amount'))['amount__sum'] or 0
-
-
 class Journal(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
@@ -163,6 +133,27 @@ class Journal(models.Model):
         return len(self.splits.all()) > 2
 
 
+class SplitQuerySet(models.QuerySet):
+    def personal(self):
+        return self.filter(account__account_type=Account.PERSONAL)
+
+    def income(self):
+        return self.filter(opposing_account__account_type=Account.REVENUE)
+
+    def expense(self):
+        return self.filter(opposing_account__account_type=Account.EXPENSE)
+
+    def date_range(self, dstart, dend):
+        return self.filter(date__gte=dstart, date__lte=dend)
+
+    def category(self, category):
+        return self.filter(category=category)
+
+    def exclude_transfers(self):
+        return self.exclude(account__account_type=Account.PERSONAL,
+                            opposing_account__account_type=Account.PERSONAL)
+
+
 class Split(models.Model):
     account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
     opposing_account = models.ForeignKey(Account, models.CASCADE,
@@ -174,7 +165,7 @@ class Split(models.Model):
     journal = models.ForeignKey(Journal, models.CASCADE, related_name='splits',
                                 blank=True, null=True)
 
-    objects = SplitManager()
+    objects = SplitQuerySet.as_manager()
 
     class Meta:
         ordering = ['-date', 'description']

@@ -5,17 +5,25 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from silverstrike.models import Account, Category
+from silverstrike.lib import last_day_of_month
+from silverstrike.models import Account, Category, Split
 
 
-class CategoryIndex(LoginRequiredMixin, generic.ListView):
+class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
     template_name = 'silverstrike/category_index.html'
-    context_object_name = 'categories'
-    model = Category
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'categories'
+        dstart = date.today().replace(day=1)
+        dend = last_day_of_month(dstart)
+        splits = Split.objects.personal().date_range(dstart, dend).select_related('category')
+        categories = defaultdict(int)
+        for s in splits:
+            categories[s.category] += s.amount
+        for c in categories.keys():
+            categories[c] = abs(categories[c])
+        context['categories'] = dict(categories)
         return context
 
 
