@@ -31,9 +31,9 @@
   </tr>
 {% for transaction in transactions %}
 <tr>
-  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.journal.title }}</a></td>
-  <td class="hidden-xs">{{ transaction.journal.get_transaction_type_str }}</td>
-  <td>{{ transaction.journal.date }}</td>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.transaction.title }}</a></td>
+  <td class="hidden-xs">{{ transaction.transaction.get_transaction_type_str }}</td>
+  <td>{{ transaction.transaction.date }}</td>
   <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{{ transaction.amount }}</td>
   <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
   <td class="hidden-xs">{% if transaction.is_system %}None{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>

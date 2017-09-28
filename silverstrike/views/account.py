@@ -44,22 +44,18 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
         return super(AccountDelete, self).get_context_data(**kwargs)
 
 
-class AccountIndex(LoginRequiredMixin, generic.ListView):
+class AccountIndex(LoginRequiredMixin, generic.TemplateView):
     template_name = 'silverstrike/accounts.html'
-    context_object_name = 'accounts'
-    account_type = ''
-
-    def get_queryset(self):
-        queryset = Split.objects.filter(account__account_type=Account.PERSONAL)
-        queryset = queryset.order_by('account_id')
-        queryset = queryset.values('account_id')
-        queryset = queryset.annotate(balance=Sum('amount'))
-        queryset = queryset.values('account__name', 'account_id', 'account__active', 'balance')
-        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
+        balances = Split.objects.personal().order_by('account_id').values('account_id').annotate(Sum('amount'))
+        context['accounts'] = list(Account.objects.filter(account_type=Account.PERSONAL).values('id', 'name', 'active'))
+        for b in balances:
+            for a in context['accounts']:
+                if a['id'] == b['account_id']:
+                    a['balance'] = b['amount__sum']
         return context
 
 
@@ -72,7 +68,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
-            'category', 'account', 'journal', 'opposing_account')
+            'category', 'account', 'transaction', 'opposing_account')
         if 'month' in self.kwargs:
             self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
         else:

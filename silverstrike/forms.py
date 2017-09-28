@@ -49,21 +49,21 @@ class TransferForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
     def save(self, commit=True):
-        journal = super().save(commit)
+        transaction = super().save(commit)
         src = self.cleaned_data['source_account']
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
-        Split.objects.update_or_create(journal=journal, amount__lt=0,
+        Split.objects.update_or_create(transaction=transaction, amount__lt=0,
                                        defaults={'amount': -amount, 'account': src,
-                                                 'opposing_account': dst, 'date': journal.date,
-                                                 'title': journal.title,
+                                                 'opposing_account': dst, 'date': transaction.date,
+                                                 'title': transaction.title,
                                                  'category': self.cleaned_data['category']})
-        Split.objects.update_or_create(journal=journal, amount__gt=0,
+        Split.objects.update_or_create(transaction=transaction, amount__gt=0,
                                        defaults={'amount': amount, 'account': dst,
-                                                 'opposing_account': src, 'date': journal.date,
-                                                 'title': journal.title,
+                                                 'opposing_account': src, 'date': transaction.date,
+                                                 'title': transaction.title,
                                                  'category': self.cleaned_data['category']})
-        return journal
+        return transaction
 
     def clean(self):
         super().clean()
@@ -156,16 +156,16 @@ class ReconcilationForm(forms.ModelForm):
         super(ReconcilationForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        journal = super().save(commit)
+        transaction = super().save(commit)
         src = Account.objects.get(account_type=Account.SYSTEM).pk
         dst = Account.objects.get(pk=self.account)
         balance = self.cleaned_data['current_balance']
         amount = balance - dst.balance
-        Split.objects.create(journal=journal, amount=-amount,
+        Split.objects.create(transaction=transaction, amount=-amount,
                              account_id=src, opposing_account=dst)
-        Split.objects.create(journal=journal, amount=amount,
+        Split.objects.create(transaction=transaction, amount=amount,
                              account=dst, opposing_account_id=src)
-        return journal
+        return transaction
 
     def clean(self):
         super().clean()
@@ -222,7 +222,7 @@ class GroupedModelMultiChoiceField(Grouped, ModelMultipleChoiceField):
 class SplitForm(forms.ModelForm):
     class Meta:
         model = Split
-        exclude = ['journal', 'id']
+        exclude = ['transaction', 'id']
     account = GroupedModelChoiceField(queryset=Account.objects.exclude(account_type=Account.SYSTEM),
                                       group_by_field='account_type',
                                       group_label=lambda type: Account.ACCOUNT_TYPES[type - 1][1])

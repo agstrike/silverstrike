@@ -50,13 +50,13 @@ def import_csv(path, config):
 
         j = Transaction.objects.create(title=e['title'], date=e['date'], notes=e['notes'])
         Split.objects.create(account=e['src'], opposing_account=e['dst'],
-                             journal=j, amount=e['amount'], date=e['date'])
+                             transaction=j, amount=e['amount'], date=e['date'])
         Split.objects.create(account=e['dst'], opposing_account=e['src'],
-                             journal=j, amount=-float(e['amount']), date=e['date'])
+                             transaction=j, amount=-float(e['amount']), date=e['date'])
 
 
 def import_firefly(csv_file):
-    # journal_id = 0
+    # transaction_id = 0
     date = 1
     description = 2
     # currency_code = 3
@@ -148,13 +148,13 @@ def import_firefly(csv_file):
             line[category_name] = None
         line[date] = datetime.datetime.strptime(line[date], '%Y-%m-%d')
 
-        journal = Transaction.objects.create(
+        transaction = Transaction.objects.create(
             title=line[description], date=line[date],
             transaction_type=t_type)
         Split.objects.bulk_create(
             [Split(account_id=line[source_account_name],
-                   opposing_account_id=line[destination_account_name],
-                   amount=line[amount], journal_id=journal.id, category_id=line[category_name]),
+                   opposing_account_id=line[destination_account_name], amount=line[amount],
+                   transaction_id=transaction.id, category_id=line[category_name]),
              Split(account_id=line[destination_account_name],
-                   opposing_account_id=line[source_account_name],
-                   amount=-line[amount], journal_id=journal.id, category_id=line[category_name])])
+                   opposing_account_id=line[source_account_name], amount=-line[amount],
+                   transaction_id=transaction.id, category_id=line[category_name])])

@@ -47,11 +47,11 @@
   <th>Amount</th>
   <th>Date</th>
   </tr>
-  {% for journal in recurrence.recurrences.all %}
+  {% for transaction in recurrence.recurrences.all %}
   <tr>
-    <td><a href="{{ journal.get_absolute_url}} ">{{ journal.title }}</a></td>
-    <td>{{ journal.amount }}</td>
-    <td>{{ journal.date }}</td>
+    <td><a href="{{ transaction.get_absolute_url}} ">{{ transaction.title }}</a></td>
+    <td>{{ transaction.amount }}</td>
+    <td>{{ transaction.date }}</td>
   </tr>
   {% endfor %}
 </table>

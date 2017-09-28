@@ -43,8 +43,8 @@ class FormTests(TestCase):
         for i in range(1, 3):
             form = DepositForm(data)
             self.assertTrue(form.is_valid())
-            journal = form.save()
-            self.assertIsInstance(journal, Transaction)
+            transaction = form.save()
+            self.assertIsInstance(transaction, Transaction)
             self.assertEquals(len(Transaction.objects.all()), i)
             self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
@@ -56,10 +56,10 @@ class FormTests(TestCase):
                 models.Sum('amount'))['amount__sum'], 0)
             self.assertTrue(
                 Split.objects.get(account=new_account, opposing_account_id=self.account.pk,
-                                  amount=-123, journal=journal).is_deposit)
+                                  amount=-123, transaction=transaction).is_deposit)
             self.assertTrue(
                 Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
-                                  amount=123, journal=journal).is_deposit)
+                                  amount=123, transaction=transaction).is_deposit)
 
     def test_WithdrawForm(self):
         data = {
@@ -72,8 +72,8 @@ class FormTests(TestCase):
         for i in range(1, 3):
             form = WithdrawForm(data)
             self.assertTrue(form.is_valid())
-            journal = form.save()
-            self.assertIsInstance(journal, Transaction)
+            transaction = form.save()
+            self.assertIsInstance(transaction, Transaction)
             self.assertEquals(len(Transaction.objects.all()), i)
             self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
@@ -83,10 +83,10 @@ class FormTests(TestCase):
                 account_type=Account.EXPENSE)
             self.assertTrue(
                 Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
-                                  amount=-123, journal=journal).is_withdraw)
+                                  amount=-123, transaction=transaction).is_withdraw)
             self.assertTrue(
                 Split.objects.get(account=new_account, opposing_account_id=self.account.pk,
-                                  amount=123, journal=journal).is_withdraw)
+                                  amount=123, transaction=transaction).is_withdraw)
             self.assertEquals(Split.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
 
@@ -141,20 +141,6 @@ class FormTests(TestCase):
         self.assertEquals(len(form.errors), 2)
         self.assertEquals(len(form.errors['source_account']), 1)
         self.assertEquals(len(form.errors['destination_account']), 1)
-
-    def test_future_transfer(self):
-        data = {
-            'title': 'transfer',
-            'source_account': self.account.pk,
-            'destination_account': self.personal.pk,
-            'amount': 123,
-            'date': '2117-01-01',
-            'transaction_type': Transaction.TRANSFER
-            }
-        form = TransferForm(data)
-        self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
-        self.assertEquals(len(form.errors['date']), 1)
 
     def test_transfer_form_only_shows_personal_accounts(self):
         pass

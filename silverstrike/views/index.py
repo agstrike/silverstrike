@@ -30,7 +30,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                                                      show_on_dashboard=True)
         context['due_transactions'] = Split.objects.personal().upcoming()
         context['transactions'] = Split.objects.personal().past().select_related(
-            'account', 'opposing_account', 'category', 'journal')[:10]
+            'account', 'opposing_account', 'category', 'transaction')[:10]
         context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
         context['expected_balance'] = context['balance'] + context['outstanding']
 

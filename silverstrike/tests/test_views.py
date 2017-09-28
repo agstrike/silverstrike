@@ -20,12 +20,10 @@ class ViewTests(TestCase):
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context
         self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['submenu'], 'new')
 
     def test_context_AccountIndex(self):
         context = self.client.get(reverse('accounts')).context
         self.assertEquals(context['menu'], 'accounts')
-        print(context)
         self.assertEquals(len(context['accounts']), 1)
         self.assertIn(self.account, context['accounts'])
 
@@ -65,8 +63,8 @@ class ViewTests(TestCase):
             })
 
         self.assertTrue(form.is_valid())
-        journal = form.save()
-        url = reverse('transaction_update', args=[journal.pk])
+        transaction = form.save()
+        url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
@@ -74,7 +72,7 @@ class ViewTests(TestCase):
                     'destination_account': self.personal.pk,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
+                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -95,8 +93,8 @@ class ViewTests(TestCase):
             })
 
         self.assertTrue(form.is_valid())
-        journal = form.save()
-        url = reverse('transaction_update', args=[journal.pk])
+        transaction = form.save()
+        url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
@@ -104,7 +102,7 @@ class ViewTests(TestCase):
                     'destination_account': self.expense,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
+                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -125,8 +123,8 @@ class ViewTests(TestCase):
             })
 
         self.assertTrue(form.is_valid())
-        journal = form.save()
-        url = reverse('transaction_update', args=[journal.pk])
+        transaction = form.save()
+        url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
                     'title': 'transaction_title',
@@ -134,7 +132,7 @@ class ViewTests(TestCase):
                     'destination_account': self.account.pk,
                     'amount': 123,
                     'date': '2017-01-01'},
-                    args=[journal.pk]), reverse('transaction_detail', args=[journal.pk]))
+                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEquals(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 

@@ -4,13 +4,13 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>{{ journal.title }}</h1>
+<h1>{{ transaction.title }}</h1>
 <div class="breadcrumb">
-{% if not journal.is_split %}
-<a href="{% url 'transaction_update' journal.id %}" class="btn btn-default btn-xs">{% trans 'Edit' %}</a>
+{% if not transaction.is_split %}
+<a href="{% url 'transaction_update' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Edit' %}</a>
 {% endif %}
-<a href="{% url 'split_update' journal.id %}" class="btn btn-default btn-xs">{% trans 'Edit as Split transaction' %}</a>
-<a href="{% url 'transaction_delete' journal.id %}" class="btn btn-default btn-xs">{% trans 'Delete' %}</a>
+<a href="{% url 'split_update' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Edit as Split transaction' %}</a>
+<a href="{% url 'transaction_delete' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Delete' %}</a>
 </div>
 {% endblock %}
 
@@ -21,13 +21,13 @@
 </div>
 <div class="box-body">
 <table class="table">
-  <tr><th>{% trans 'Transaction Type' %}</th><td>{{ journal.get_transaction_type_str }}</td></tr>
+  <tr><th>{% trans 'Transaction Type' %}</th><td>{{ transaction.get_transaction_type_str }}</td></tr>
   <tr>
-    <th>Date</th><td>{{ journal.date }}</td>
+    <th>Date</th><td>{{ transaction.date }}</td>
   </tr>
-  <tr><th>{% trans 'Notes' %}</th><td>{{ journal.notes }}</td></tr>
-  {% if journal.recurrence %}
-  <tr><th>{% trans 'Recurrence' %}</th><td><a href="{{ journal.recurrence.get_absolute_url }}">{{ journal.recurrence }}</a></td></tr>
+  <tr><th>{% trans 'Notes' %}</th><td>{{ transaction.notes }}</td></tr>
+  {% if transaction.recurrence %}
+  <tr><th>{% trans 'Recurrence' %}</th><td><a href="{{ transaction.recurrence.get_absolute_url }}">{{ transaction.recurrence }}</a></td></tr>
   {% endif %}
 </table>
 </div>
@@ -46,7 +46,7 @@
   <th>Date</th>
   <th>Category</th>
   </tr>
-  {% for split in journal.splits.transfers_once %}
+  {% for split in transaction.splits.transfers_once %}
   <tr>
     <td>{{ split.title }}</td>
     <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>

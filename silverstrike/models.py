@@ -50,7 +50,7 @@ class Account(models.Model):
             models.Sum('amount'))['amount__sum'] or 0
 
     def balance_on(self, date):
-        return Split.objects.filter(account=self, journal__date__lte=date).aggregate(
+        return Split.objects.filter(account=self, transaction__date__lte=date).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
@@ -65,11 +65,11 @@ class Account(models.Model):
             steps = int((dend - dstart) / step)
         data_points = []
         balance = self.balance_on(dstart)
-        transactions = list(Split.objects.prefetch_related('journal').filter(
-            account_id=self.pk, journal__date__gt=dstart,
-            journal__date__lte=dend).order_by('-journal__date'))
+        transactions = list(Split.objects.prefetch_related('transaction').filter(
+            account_id=self.pk, transaction__date__gt=dstart,
+            transaction__date__lte=dend).order_by('-transaction__date'))
         for i in range(steps):
-            while len(transactions) > 0 and transactions[-1].journal.date <= dstart.date():
+            while len(transactions) > 0 and transactions[-1].transaction.date <= dstart.date():
                 t = transactions.pop()
                 balance += t.amount
             data_points.append((dstart, balance))
@@ -81,11 +81,11 @@ class Account(models.Model):
 
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
-        journal = Transaction.objects.create(title=_('Initial Balance'),
-                                             transaction_type=Transaction.SYSTEM)
-        Split.objects.create(journal=journal, amount=-amount,
+        transaction = Transaction.objects.create(title=_('Initial Balance'),
+                                                 transaction_type=Transaction.SYSTEM)
+        Split.objects.create(transaction=transaction, amount=-amount,
                              account=system, opposing_account=self)
-        Split.objects.create(journal=journal, amount=amount,
+        Split.objects.create(transaction=transaction, amount=amount,
                              account=self, opposing_account=system)
 
 
@@ -172,8 +172,8 @@ class Split(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', blank=True, null=True, related_name='splits')
-    journal = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
-                                blank=True, null=True)
+    transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
+                                    blank=True, null=True)
 
     objects = SplitQuerySet.as_manager()
 
@@ -185,22 +185,22 @@ class Split(models.Model):
 
     @property
     def is_transfer(self):
-        return self.journal.transaction_type == Transaction.TRANSFER
+        return self.transaction.transaction_type == Transaction.TRANSFER
 
     @property
     def is_withdraw(self):
-        return self.journal.transaction_type == Transaction.WITHDRAW
+        return self.transaction.transaction_type == Transaction.WITHDRAW
 
     @property
     def is_deposit(self):
-        return self.journal.transaction_type == Transaction.DEPOSIT
+        return self.transaction.transaction_type == Transaction.DEPOSIT
 
     @property
     def is_system(self):
-        return self.journal.transaction_type == Transaction.SYSTEM
+        return self.transaction.transaction_type == Transaction.SYSTEM
 
     def get_absolute_url(self):
-        return self.journal.get_absolute_url()
+        return self.transaction.get_absolute_url()
 
 
 class Category(models.Model):
@@ -217,7 +217,7 @@ class Category(models.Model):
     def money_spent(self):
         return abs(Split.objects.filter(
                 category=self, account__account_type=Account.PERSONAL,
-                journal__transaction_type=Transaction.WITHDRAW).aggregate(
+                transaction__transaction_type=Transaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):

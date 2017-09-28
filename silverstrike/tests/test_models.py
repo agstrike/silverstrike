@@ -22,12 +22,12 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = Transaction.objects.create(title="journal",
-                                             transaction_type=Transaction.WITHDRAW)
-        self.assertEquals(str(journal), journal.title)
+        transaction = Transaction.objects.create(title="transaction",
+                                                 transaction_type=Transaction.WITHDRAW)
+        self.assertEquals(str(transaction), transaction.title)
         transaction = Split.objects.create(
             account=account, opposing_account=expense,
-            journal=journal, amount=-25.02, title='meh')
+            transaction=transaction, amount=-25.02, title='meh')
         self.assertEquals(str(transaction), transaction.title)
 
     def test_category_str_method(self):
@@ -41,13 +41,13 @@ class ModelTests(TestCase):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
             name="some_account", account_type=Account.EXPENSE)
-        journal = Transaction.objects.create(title="journal",
-                                             transaction_type=Transaction.WITHDRAW)
+        transaction = Transaction.objects.create(title="transaction",
+                                                 transaction_type=Transaction.WITHDRAW)
         t = Split.objects.create(
             account=account, opposing_account=expense,
-            journal=journal, amount=-25.02, category=category)
+            transaction=transaction, amount=-25.02, category=category)
         Split.objects.create(
             account=expense, opposing_account=account,
-            journal=journal, amount=25.02, category=category)
+            transaction=transaction, amount=25.02, category=category)
 
         self.assertEquals(float(category.money_spent), -t.amount)

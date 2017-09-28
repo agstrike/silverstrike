@@ -9,7 +9,7 @@ from silverstrike.models import Account, Split, Transaction
 
 class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Transaction
-    context_object_name = 'journal'
+    context_object_name = 'transaction'
 
 
 class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
@@ -31,7 +31,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
         if 'account' in self.request.GET:
             queryset = queryset.filter(account_id=self.request.GET['account'])
         else:
-            queryset = queryset.exclude(journal__transaction_type=Transaction.TRANSFER,
+            queryset = queryset.exclude(transaction__transaction_type=Transaction.TRANSFER,
                                         amount__gt=0)
         return queryset
 
@@ -60,7 +60,7 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        self.transaction = Split.objects.get(journal_id=self.kwargs.get('pk'), amount__gt=0)
+        self.transaction = Split.objects.get(transaction_id=self.kwargs.get('pk'), amount__gt=0)
         initial['source_account'] = self.transaction.opposing_account.pk
         initial['destination_account'] = self.transaction.account.pk
         if self.object.transaction_type == Transaction.WITHDRAW:
@@ -118,10 +118,10 @@ class SplitCreate(generic.edit.CreateView):
         form = self.get_form(self.get_form_class())
 
         if form.is_valid():
-            journal = form.save(commit=False)
-            formset = self.formset_class(self.request.POST, instance=journal)
+            transaction = form.save(commit=False)
+            formset = self.formset_class(self.request.POST, instance=transaction)
             if formset.is_valid():
-                journal.save()
+                transaction.save()
                 formset.save()
                 return HttpResponseRedirect('/')
         return self.render_to_response(self.get_context_data(form=form))
@@ -143,13 +143,13 @@ class SplitUpdate(generic.edit.UpdateView):
         form = self.get_form(self.get_form_class())
 
         if form.is_valid():
-            journal = form.save(commit=False)
-            formset = self.formset_class(self.request.POST, instance=journal)
+            transaction = form.save(commit=False)
+            formset = self.formset_class(self.request.POST, instance=transaction)
             if formset.is_valid():
                 fields = [form.cleaned_data.get('amount') for form in formset]
                 split_sums = sum([x for x in fields if x is not None])
                 if split_sums == 0:
-                    journal.save()
+                    transaction.save()
                     formset.save()
                     return HttpResponseRedirect('/')
                 else:
