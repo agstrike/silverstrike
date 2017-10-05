@@ -28,11 +28,20 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 
         context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
-        context['due_transactions'] = Split.objects.personal().upcoming()
+        upcoming = Split.objects.personal().upcoming()
+        recurrences = RecurringTransaction.objects.due_in_month()
+
+        context['upcoming_transactions'] = upcoming
+        context['upcoming_recurrences'] = recurrences
         context['transactions'] = Split.objects.personal().past().select_related(
             'account', 'opposing_account', 'category', 'transaction')[:10]
-        context['outstanding'] = RecurringTransaction.outstanding_transaction_sum()
-        context['expected_balance'] = context['balance'] + context['outstanding']
+        outstanding = 0
+        for t in upcoming:
+            outstanding += t.amount
+        for r in recurrences:
+            outstanding += r.amount
+        context['outstanding'] = outstanding
+        context['expected_balance'] = context['balance'] + outstanding
 
         # last month
         previous_last = dstart - timedelta(days=1)

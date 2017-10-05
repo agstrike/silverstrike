@@ -59,12 +59,3 @@ def get_balances(request, dstart, dend):
         labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
     data_points.append(balance)
     return JsonResponse({'labels': labels, 'data': data_points})
-
-
-def skip_recurrence(request, pk):
-    if request.method == 'GET':
-        return HttpResponseNotAllowed(['POST'])
-    recurrence = get_object_or_404(RecurringTransaction, pk=pk)
-    recurrence.update_date()
-    recurrence.save()
-    return HttpResponseRedirect(request.GET['next'])

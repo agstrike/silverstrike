@@ -63,7 +63,7 @@
 </div>
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"><a href="{% url 'accounts' %}">Accounts</a></h3>
+    <h3 class="box-title">Accounts</h3>
   </div>
   <div class="box-body">
   <table class="table">
@@ -92,10 +92,39 @@
 </div>
 <div class="box">
 <div class="box-header with-border">
-  <h3 class="box-title"><a href="{% url 'recurrences' %}">{% trans 'Upcoming Transactions' %}</a></h3>
+  <h3 class="box-title">{% trans 'Upcoming Transactions' %}</h3>
 </div>
 <div class="box-body">
-{% if due_transactions %}
+{% if upcoming_transactions %}
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Account</th>
+    <th>Amount</th>
+  </tr>
+  {% for transaction in upcoming_transactions %}
+  <tr>
+    <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
+    <td>{{ transaction.date }}</td>
+    <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
+    <td>{{ transaction.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>
+{% trans 'No upcoming transactions' %}
+</p>
+{% endif %}
+</div>
+</div>
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Upcoming Recurrences' %}</h3>
+</div>
+<div class="box-body">
+{% if upcoming_recurrences %}
 <table class="table table-striped">
   <tr>
     <th>Title</th>
@@ -103,28 +132,20 @@
     <th>Amount</th>
     <th>Actions</th>
   </tr>
-{% for transaction in due_transactions %}
+{% for transaction in upcoming_recurrences %}
 <tr {% if transaction.is_due %}class="text-red"{% endif %}>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
   <td>{{ transaction.date }}</td>
   <td>{{ transaction.amount }}</td>
-  <td class="btn-toolbar">
-    {% if transaction.recurrence %}
+  <td>
     <a class="btn btn-xs btn-primary" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
-    }
-    {% else %}
-    {% trans 'Planned transaction' %}
-    {% endif %}
   </td>
   </tr>
 {% endfor %}
 </table>
 {% else %}
 <p>
-{% url 'recurrences' as recurrence_url %}
-{% blocktrans %}
-You haven't set up recurring transactions yet. You can do so <a href="{{ recurrence_url}}">here</a>.
-{% endblocktrans %}
+{% trans 'No upcoming recurrences' %}
 </p>
 {% endif %}
 </div>
@@ -133,7 +154,7 @@ You haven't set up recurring transactions yet. You can do so <a href="{{ recurre
 </div>
 <div class="box">
 <div class="box-header with-border">
-  <h3 class="box-title"><a href="{% url 'transactions' %}">{% trans 'Recent Transactions' %}</a></h3>
+  <h3 class="box-title">{% trans 'Recent Transactions' %}</h3>
 </div>
 <div class="box-body">
 <table class="table table-striped">
