@@ -147,7 +147,7 @@ class RecurringTransactionForm(forms.ModelForm):
 class ReconcilationForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['title', 'current_balance', 'date', 'notes']
+        fields = ['title', 'current_balance', 'notes']
 
     current_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
 
@@ -156,21 +156,23 @@ class ReconcilationForm(forms.ModelForm):
         super(ReconcilationForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        transaction = super().save(commit)
+        transaction = super().save(False)
+        transaction.transaction_type = Transaction.SYSTEM
+        transaction.save()
         src = Account.objects.get(account_type=Account.SYSTEM).pk
         dst = Account.objects.get(pk=self.account)
         balance = self.cleaned_data['current_balance']
         amount = balance - dst.balance
         Split.objects.create(transaction=transaction, amount=-amount,
-                             account_id=src, opposing_account=dst)
+                             account_id=src, opposing_account=dst, title=transaction.title)
         Split.objects.create(transaction=transaction, amount=amount,
-                             account=dst, opposing_account_id=src)
+                             account=dst, opposing_account_id=src, title=transaction.title)
         return transaction
 
     def clean(self):
         super().clean()
-        if self.cleaned_data['date'] > date.today():
-            self.add_error('date', _("You can't create future Transactions"))
+        if self.cleaned_data['current_balance'] == Account.objects.get(pk=self.account).balance:
+            self.add_error('current_balance', 'You provided the same balance!')
 
 
 class Grouped(object):
