@@ -13,7 +13,12 @@
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
   <li><a href="#">Accounts</a></li>
-  <li class="active">{% if object %}{% trans 'Update' %}{% else %}{% trans 'New' %}{% endif %}</li>
+  {% if object %}
+  <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  <li class="active">{% trans 'Update' %}</li>
+  {% else %}
+  <li class="active">{% trans 'New' %}</li>
+  {% endif %}
 </ol>
 {% endblock %}
 

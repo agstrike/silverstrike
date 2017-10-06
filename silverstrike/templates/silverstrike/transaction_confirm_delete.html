@@ -5,6 +5,12 @@
 {% block content_header %}
 <h1>Delete '{{ object.title }}' transaction
 </h1>
+<ol class="breadcrumb">
+<li><a href="/">Home</a></li>
+<li><a href="{% url 'transactions' %}">Transactions</a></li>
+<li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+<li class="active">Edit</li>
+</ol>
 {% endblock %}
 
 {% block content %}

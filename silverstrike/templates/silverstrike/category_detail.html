@@ -6,8 +6,11 @@
 <h1>{{ category.name }}
   <small>{{ month|date:'F Y'}}</small>
 </h1>
-<div class="breadcrumb">
-</div>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="{% url 'categories' %}">Categories</a></li>
+  <li class="active">{{ category }}</li>
+</ol>
 {% endblock %}
 
 {% block content %}

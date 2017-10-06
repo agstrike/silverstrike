@@ -5,13 +5,11 @@
 
 {% block content_header %}
 <h1>{{ transaction.title }}</h1>
-<div class="breadcrumb">
-{% if not transaction.is_split %}
-<a href="{% url 'transaction_update' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Edit' %}</a>
-{% endif %}
-<a href="{% url 'split_update' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Edit as Split transaction' %}</a>
-<a href="{% url 'transaction_delete' transaction.id %}" class="btn btn-default btn-xs">{% trans 'Delete' %}</a>
-</div>
+<ol class="breadcrumb">
+<li><a href="/">Home</a></li>
+<li><a href="{% url 'transactions' %}">Transactions</a></li>
+<li class="active">{{ transaction }}</li>
+</ol>
 {% endblock %}
 
 {% block content %}
@@ -31,12 +29,19 @@
   {% endif %}
 </table>
 </div>
+<div class="box-footer">
+  {% if not transaction.is_split %}
+<a href="{% url 'transaction_update' transaction.id %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+{% endif %}
+<a href="{% url 'transaction_delete' transaction.id %}" class="btn btn-danger">{% trans 'Delete' %}</a>
+<a href="{% url 'split_update' transaction.id %}" class="btn btn-default">{% trans 'Edit as Split transaction' %}</a>
+</div>
 </div>
 <div class="box">
   <div class="box-header">
   <h3 class="box-title">{% trans 'Splits' %}</h3>
 </div>
-<div class="box-body">
+<div class="box-body table-responsive">
 <table class="table">
   <tr>
   <th>Title</th>
