@@ -24,6 +24,22 @@ class ModelTests(TestCase):
         account.account_type = Account.SYSTEM
         self.assertEquals(account.account_type_str, 'System')
 
+
+    def test_account_transaction_number(self):
+        account = Account.objects.create(name="foo")
+        self.assertEquals(account.transaction_num, 0)
+        account.set_initial_balance(50)
+        self.assertEquals(account.transaction_num, 1)
+
+    def test_set_initial_balance(self):
+        account = Account.objects.create(name="foo")
+        self.assertEquals(account.balance, 0)
+        account.set_initial_balance(50)
+        self.assertEquals(account.balance, 50)
+        # repeated calls to set initial balance keep adding to it
+        account.set_initial_balance(50)
+        self.assertEquals(account.balance, 100)
+
     def test_account_balance_with_no_transactions(self):
         account = Account.objects.create(name="some_account")
         self.assertEquals(account.balance, 0)

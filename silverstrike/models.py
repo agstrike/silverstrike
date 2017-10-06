@@ -43,6 +43,9 @@ class Account(models.Model):
 
     @property
     def transaction_num(self):
+        """
+        TODO do we really want the number of splits?
+        """
         return Split.objects.filter(account=self).count()
 
     @property
