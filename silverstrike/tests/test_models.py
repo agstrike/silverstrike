@@ -24,7 +24,6 @@ class ModelTests(TestCase):
         account.account_type = Account.SYSTEM
         self.assertEquals(account.account_type_str, 'System')
 
-
     def test_account_transaction_number(self):
         account = Account.objects.create(name="foo")
         self.assertEquals(account.transaction_num, 0)
@@ -77,3 +76,9 @@ class ModelTests(TestCase):
             transaction=transaction, amount=25.02, category=category)
 
         self.assertEquals(float(category.money_spent), -t.amount)
+
+    def test_transaction_amount(self):
+        account = Account.objects.create(name="foo")
+        account.set_initial_balance(10)
+        transaction = Transaction.objects.first()
+        self.assertEquals(transaction.amount, 10)

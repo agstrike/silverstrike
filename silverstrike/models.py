@@ -129,6 +129,9 @@ class Transaction(models.Model):
 
     @property
     def amount(self):
+        """
+        TODO that means that transfers dont have an amount?
+        """
         return self.splits.filter(account__account_type=Account.PERSONAL).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
