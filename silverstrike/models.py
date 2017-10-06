@@ -125,7 +125,6 @@ class Transaction(models.Model):
         for i, name in self.TRANSACTION_TYPES:
             if i == self.transaction_type:
                 return name
-        return ''
 
     @property
     def amount(self):

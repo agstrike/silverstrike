@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.urls import reverse
 
 from silverstrike.models import Account, Category, Split, Transaction
 
@@ -82,3 +83,21 @@ class ModelTests(TestCase):
         account.set_initial_balance(10)
         transaction = Transaction.objects.first()
         self.assertEquals(transaction.amount, 10)
+
+    def test_split_is_system(self):
+        account = Account.objects.create(name="foo")
+        account.set_initial_balance(10)
+        split = Split.objects.first()
+        self.assertTrue(split.is_system)
+
+    def test_split_absolute_url(self):
+        account = Account.objects.create(name="foo")
+        account.set_initial_balance(10)
+        split = Split.objects.first()
+        self.assertEquals(split.get_absolute_url(), reverse('transaction_detail',
+                                                            args=[split.transaction.id]))
+
+    def test_category_absolute_url(self):
+        category = Category.objects.create(name="foo")
+        self.assertEquals(category.get_absolute_url(), reverse('category_detail',
+                                                               args=[category.id]))
