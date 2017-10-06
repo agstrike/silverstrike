@@ -1,10 +1,9 @@
 import datetime
 
 from django.db import models
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
-from .models import Account, RecurringTransaction, Split
+from .models import Account, Split
 
 
 def get_accounts(request, account_type):

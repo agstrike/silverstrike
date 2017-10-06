@@ -50,8 +50,10 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        balances = Split.objects.personal().order_by('account_id').values('account_id').annotate(Sum('amount'))
-        context['accounts'] = list(Account.objects.filter(account_type=Account.PERSONAL).values('id', 'name', 'active'))
+        balances = Split.objects.personal().order_by('account_id').values('account_id').annotate(
+            Sum('amount'))
+        context['accounts'] = list(Account.objects.filter(account_type=Account.PERSONAL).values(
+            'id', 'name', 'active'))
         for b in balances:
             for a in context['accounts']:
                 if a['id'] == b['account_id']:

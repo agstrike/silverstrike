@@ -33,6 +33,7 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
+    @property
     def account_type_str(self):
         return Account.ACCOUNT_TYPES[self.account_type - 1][1]
 

@@ -14,6 +14,16 @@ class ModelTests(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.context['account'], account)
 
+    def test_account_type_str_method(self):
+        account = Account.objects.create(name="first", account_type=Account.PERSONAL)
+        self.assertEquals(account.account_type_str, 'Personal')
+        account.account_type = Account.EXPENSE
+        self.assertEquals(account.account_type_str, 'Expense')
+        account.account_type = Account.REVENUE
+        self.assertEquals(account.account_type_str, 'Revenue')
+        account.account_type = Account.SYSTEM
+        self.assertEquals(account.account_type_str, 'System')
+
     def test_account_balance_with_no_transactions(self):
         account = Account.objects.create(name="some_account")
         self.assertEquals(account.balance, 0)
