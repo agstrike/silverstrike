@@ -104,7 +104,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
                 income += s.amount
         context['income'] = income
         context['expenses'] = expenses
-        context['difference'] = context['income'] - context['expenses']
+        context['difference'] = context['income'] + context['expenses']
 
         delta = timedelta(days=3)
         if account.account_type == Account.PERSONAL:
