@@ -17,7 +17,7 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     success_url = reverse_lazy('accounts')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(AccountCreate, self).get_context_data(**kwargs)
         context['menu'] = 'accounts'
         return context
 
@@ -52,12 +52,15 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
         context['menu'] = 'accounts'
         balances = Split.objects.personal().order_by('account_id').values('account_id').annotate(
             Sum('amount'))
-        context['accounts'] = list(Account.objects.filter(account_type=Account.PERSONAL).values(
+        accounts = list(Account.objects.filter(account_type=Account.PERSONAL).values(
             'id', 'name', 'active'))
+        for a in accounts:
+            a['balance'] = 0
         for b in balances:
-            for a in context['accounts']:
+            for a in accounts:
                 if a['id'] == b['account_id']:
                     a['balance'] = b['amount__sum']
+        context['accounts'] = accounts
         return context
 
 

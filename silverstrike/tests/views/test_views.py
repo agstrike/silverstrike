@@ -17,18 +17,6 @@ class ViewTests(TestCase):
         self.revenue = Account.objects.create(
             name="revenue account", account_type=Account.REVENUE)
 
-    def test_context_AccountCreate(self):
-        context = self.client.get(reverse('account_new')).context
-        self.assertEquals(context['menu'], 'accounts')
-
-    def test_context_AccountIndex(self):
-        context = self.client.get(reverse('accounts')).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(len(context['accounts']), 2)
-        self.assertEquals(self.account.id, context['accounts'][0]['id'])
-        self.assertEquals(self.account.name, context['accounts'][0]['name'])
-        self.assertEquals(self.account.active, context['accounts'][0]['active'])
-
     def test_context_TransactionIndex(self):
         context = self.client.get(reverse('transactions')).context
         self.assertEquals(context['menu'], 'transactions')
@@ -152,39 +140,3 @@ class ViewTests(TestCase):
     def test_context_IndexView(self):
         context = self.client.get(reverse('index')).context
         self.assertEquals(context['menu'], 'home')
-
-    def test_get_account_info(self):
-        # TODO
-        pass
-
-    def test_ChartView(self):
-        # TODO
-        self.client.get(reverse('charts'))
-
-    def test_api_accounts_balance(self):
-        # TODO
-        self.client.get(reverse('api_accounts_balance', args=['2017-01-01', '2017-06-01']))
-
-
-    def test_personal_AccountUpdateView(self):
-        context = self.client.get(reverse('account_update', args=[self.account.id])).context
-        self.assertIn('name', context['form'].fields)
-        self.assertIn('show_on_dashboard', context['form'].fields)
-        self.assertIn('active', context['form'].fields)
-
-    def test_revenue_AccountUpdateView(self):
-        context = self.client.get(reverse('account_update', args=[self.revenue.id])).context
-        self.assertIn('name', context['form'].fields)
-        self.assertNotIn('show_on_dashboard', context['form'].fields)
-        self.assertNotIn('active', context['form'].fields)
-
-    def test_expense_AccountUpdateView(self):
-        context = self.client.get(reverse('account_update', args=[self.expense.id])).context
-        self.assertIn('name', context['form'].fields)
-        self.assertNotIn('show_on_dashboard', context['form'].fields)
-        self.assertNotIn('active', context['form'].fields)
-
-    def test_system_AccountUpdateView(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
-        response = self.client.get(reverse('account_update', args=[system.id]))
-        self.assertEquals(response.status_code, 404)
