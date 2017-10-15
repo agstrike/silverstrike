@@ -5,7 +5,7 @@ from django.db import models
 from django.views import generic
 
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, RecurringTransaction, Split
+from silverstrike.models import Account, RecurringTransaction, Split, Transaction
 
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
@@ -39,7 +39,11 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         for t in upcoming:
             outstanding += t.amount
         for r in recurrences:
-            outstanding += r.amount
+            if r.transaction_type == Transaction.WITHDRAW:
+                outstanding -= r.amount
+            elif r.transaction_type == Transaction.DEPOSIT:
+                outstanding += r.amount
+
         context['outstanding'] = outstanding
         context['expected_balance'] = context['balance'] + outstanding
 
