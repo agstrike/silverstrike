@@ -31,10 +31,10 @@
 </div>
 <div class="box-footer">
   {% if not transaction.is_split %}
-<a href="{% url 'transaction_update' transaction.id %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-{% endif %}
-<a href="{% url 'transaction_delete' transaction.id %}" class="btn btn-danger">{% trans 'Delete' %}</a>
-<a href="{% url 'split_update' transaction.id %}" class="btn btn-default">{% trans 'Edit as Split transaction' %}</a>
+  <a href="{% url 'transaction_update' transaction.id %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+  {% endif %}
+  <a href="{% url 'split_update' transaction.id %}" class="btn btn-default">{% trans 'Edit as Split transaction' %}</a>
+  <a href="{% url 'transaction_delete' transaction.id %}" class="btn btn-danger">{% trans 'Delete' %}</a>
 </div>
 </div>
 <div class="box">

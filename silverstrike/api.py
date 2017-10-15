@@ -1,11 +1,13 @@
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.http import JsonResponse
 
 from .models import Account, Split
 
 
+@login_required
 def get_accounts(request, account_type):
     accounts = Account.objects.exclude(account_type=Account.SYSTEM)
     if account_type != 'all':
@@ -15,6 +17,7 @@ def get_accounts(request, account_type):
     return JsonResponse(list(accounts.values_list('name', flat=True)), safe=False)
 
 
+@login_required
 def get_accounts_balance(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
@@ -29,6 +32,7 @@ def get_accounts_balance(request, dstart, dend):
     return JsonResponse({'labels': labels, 'dataset': dataset})
 
 
+@login_required
 def get_balances(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')

@@ -103,7 +103,7 @@ class DepositCreate(TransferCreate):
         return context
 
 
-class SplitCreate(generic.edit.CreateView):
+class SplitCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Transaction
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
@@ -127,7 +127,7 @@ class SplitCreate(generic.edit.CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class SplitUpdate(generic.edit.UpdateView):
+class SplitUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Transaction
     template_name = 'silverstrike/newform.html'
     formset_class = TransactionFormSet
