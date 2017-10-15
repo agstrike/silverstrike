@@ -9,7 +9,7 @@ from silverstrike.models import Account
 
 class ApiTests(TestCase):
     def setUp(self):
-        User.objects.create(username='admin', password='pass')
+        User.objects.create_superuser(username='admin', email='email@example.com', password='pass')
         self.client.login(username='admin', password='pass')
         Account.objects.bulk_create(
             [Account(name=t[1], account_type=t[0],
