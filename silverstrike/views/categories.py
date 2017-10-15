@@ -1,6 +1,7 @@
 from collections import defaultdict
 from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
@@ -52,8 +53,24 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
+        first_day_of_month = date.today().replace(day=1)
+        two_months_ago = first_day_of_month - relativedelta(months=2)
+        last_month = first_day_of_month - relativedelta(months=1)
         splits = context['category'].splits.filter(account__account_type=Account.PERSONAL,
-                                                   date__gte=date.today().replace(day=1))
+                                                   date__gte=first_day_of_month)
+        last_two_months_splits = context['category'].splits.filter(
+            account__account_type=Account.PERSONAL,
+            date__gte=two_months_ago, date__lt=first_day_of_month)
+        sum_last_month = 0
+        sum_two_months_ago = 0
+        for s in last_two_months_splits:
+            if s.date < last_month:
+                sum_two_months_ago += s.amount
+            else:
+                sum_last_month += s.amount
+        context['sum_two_months_ago'] = sum_two_months_ago
+        context['sum_last_month'] = sum_last_month
+        context['average'] = (sum_last_month + sum_two_months_ago) / 2
         splits = splits.select_related('account')
         spent_this_month = 0
         account_spending = defaultdict(int)
@@ -61,7 +78,7 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
             spent_this_month += s.amount
             account_spending[s.account] += s.amount
 
-        context['spent_this_month'] = abs(spent_this_month)
+        context['sum_this_month'] = spent_this_month
         context['splits'] = splits
         for account in account_spending.keys():
             account_spending[account] = abs(account_spending[account])

@@ -3,13 +3,13 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1>{{ category.name }}
+<h1>{{ category.name|title }}
   <small>{{ month|date:'F Y'}}</small>
 </h1>
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
   <li><a href="{% url 'categories' %}">Categories</a></li>
-  <li class="active">{{ category }}</li>
+  <li class="active">{{ category.name|title }}</li>
 </ol>
 {% endblock %}
 
@@ -17,13 +17,30 @@
 <div class="row">
   <div class="col-md-8">
     <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Overview</h3>
+      </div>
       <div class="box-body">
         <table class="table">
           <tr>
-            <th>{% trans 'Spent this month' %}</th>
-            <td>{{ spent_this_month }}</td>
+            <th>{% trans 'Sum this month' %}</th>
+            <td>{{ sum_this_month }}</td>
+          </tr>
+          <tr>
+            <th>{% trans 'Sum last month' %}</th>
+            <td>{{ sum_last_month }}</td>
+          </tr>
+          <tr>
+            <th>{% trans 'Sum two months ago' %}</th>
+            <td>{{ sum_two_months_ago }}</td>
+          </tr>
+          <tr>
+            <th>{% trans 'Average spent' %}</th>
+            <td>{{ average }}</td>
           </tr>
         </table>
+      </div>
+      <div class="box-footer">
         <a class="btn btn-primary" href="{% url 'transactions' %}?category={{ category.id }}" >{% trans 'Show all transactions' %}</a>
         <a class="btn btn-warning" href="{% url 'category_update' category.id %}">{% trans 'Edit' %}</a>
         <a class="btn btn-danger" href="{% url 'category_delete' category.id %}">{% trans 'Delete' %}</a>
@@ -32,6 +49,9 @@
   </div>
   <div class="col-md-4">
     <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Distribution by Account</h3>
+      </div>
       <div class="box-body">
         <canvas id="myChart"></canvas>
       </div>
@@ -39,6 +59,9 @@
   </div>
 </div>
 <div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Transactions</h3>
+  </div>
   <div class="box-body">
     <table class="table">
       <tr>
