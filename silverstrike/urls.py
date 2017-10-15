@@ -56,8 +56,10 @@ urlpatterns = [
     url(r'^categories/$', views.CategoryIndex.as_view(), name='categories'),
     url(r'^categories/create/$', views.CategoryCreateView.as_view(), name='category_create'),
     url(r'^categories/(?P<pk>\d+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
-    url(r'^categories/(?P<pk>\d+)/delete$', views.CategoryDeleteView.as_view(), name='category_delete'),
-    url(r'^categories/(?P<pk>\d+)/update$', views.CategoryUpdateView.as_view(), name='category_update'),
+    url(r'^categories/(?P<pk>\d+)/delete$', views.CategoryDeleteView.as_view(),
+        name='category_delete'),
+    url(r'^categories/(?P<pk>\d+)/update$', views.CategoryUpdateView.as_view(),
+        name='category_update'),
 
     url(r'^charts$', views.ChartView.as_view(), name='charts'),
 
