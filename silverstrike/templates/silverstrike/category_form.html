@@ -13,7 +13,12 @@
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
   <li><a href="{% url 'categories' %}">Categories</a></li>
-  <li class="active">{% if object %}{% trans 'Update' %}{% else %}{% trans 'New' %}{% endif %}</li>
+  {% if object %}
+  <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  <li class="active">{% trans 'Update' %}</li>
+  {% else %}
+  <li class="active">{% trans 'New' %}</li>
+  {% endif %}
 </ol>
 {% endblock %}
 
@@ -50,7 +55,11 @@
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
-        <a href="{{ account.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
+        {% if object %}
+        <a href="{{ category.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
+        {% else %}
+        <a href="{% url 'categories' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+        {% endif %}
         <button type="submit" class="btn btn-primary">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
       </div>
     </div>

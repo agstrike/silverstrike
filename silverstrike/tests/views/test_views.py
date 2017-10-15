@@ -136,7 +136,3 @@ class ViewTests(TestCase):
         context = self.client.get(reverse('categories')).context
         self.assertEquals(context['menu'], 'categories')
         self.assertFalse('submenu' in context)
-
-    def test_context_IndexView(self):
-        context = self.client.get(reverse('index')).context
-        self.assertEquals(context['menu'], 'home')

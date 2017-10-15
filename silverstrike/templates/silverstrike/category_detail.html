@@ -18,7 +18,6 @@
   <div class="col-md-8">
     <div class="box">
       <div class="box-body">
-
         <table class="table">
           <tr>
             <th>{% trans 'Spent this month' %}</th>
@@ -26,6 +25,8 @@
           </tr>
         </table>
         <a class="btn btn-primary" href="{% url 'transactions' %}?category={{ category.id }}" >{% trans 'Show all transactions' %}</a>
+        <a class="btn btn-warning" href="{% url 'category_update' category.id %}">{% trans 'Edit' %}</a>
+        <a class="btn btn-danger" href="{% url 'category_delete' category.id %}">{% trans 'Delete' %}</a>
       </div>
     </div>
   </div>

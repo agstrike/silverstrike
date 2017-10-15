@@ -34,11 +34,16 @@ class CategoryCreateView(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class CategoryUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
-    pass
+    model = Category
+    fields = ['name']
+
+    def get_success_url(self):
+        return reverse('category_detail', args=[self.object.id])
 
 
-class CategroyDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
-    pass
+class CategoryDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
+    model = Category
+    success_url = reverse_lazy('categories')
 
 
 class CategoryDetailView(LoginRequiredMixin, generic.DetailView):

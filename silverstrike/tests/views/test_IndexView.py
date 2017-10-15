@@ -14,3 +14,28 @@ class IndexViewTestCase(TestCase):
             name="expense account", account_type=Account.EXPENSE)
         self.revenue = Account.objects.create(
             name="revenue account", account_type=Account.REVENUE)
+
+    def test_menu_entry_IndexView(self):
+        context = self.client.get(reverse('index')).context
+        self.assertEquals(context['menu'], 'home')
+
+    def test_income(self):
+        pass
+
+    def test_expenses(self):
+        pass
+
+    def test_previous_income(self):
+        pass
+
+    def test_previous_expenses(self):
+        pass
+
+    def test_upcoming_transactions(self):
+        pass
+
+    def test_upcoming_recurrences(self):
+        pass
+
+    def test_outstanding_balance(self):
+        pass
