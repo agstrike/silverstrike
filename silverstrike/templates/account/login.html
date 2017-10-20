@@ -40,6 +40,11 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
       {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
+      {% if form.errors %}
+      <p class="text-red">
+        {{ form.non_field_errors.0 }}
+      </p>
+      {% endif %}
       <div class="form-group has-feedback">
         {{ form.login|add_class:"form-control" }}
         <span class="fa fa-envelope form-control-feedback"></span>

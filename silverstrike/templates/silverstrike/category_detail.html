@@ -45,19 +45,7 @@
         <a class="btn btn-danger" href="{% url 'category_delete' category.id %}">{% trans 'Delete' %}</a>
       </div>
     </div>
-  </div>
-  <div class="col-md-4">
     <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">Distribution by Account</h3>
-      </div>
-      <div class="box-body">
-        <canvas id="myChart"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="box">
   <div class="box-header">
     <h3 class="box-title">Transactions</h3>
   </div>
@@ -79,6 +67,26 @@
   </div>
   <div class="box-footer">
     <a class="btn btn-primary" href="{% url 'transactions' %}?category={{ category.id }}" >{% trans 'Show all transactions' %}</a>
+  </div>
+</div>
+  </div>
+  <div class="col-md-4">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Distribution by Source</h3>
+      </div>
+      <div class="box-body">
+        <center><canvas id="myChart"></canvas></center>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Distribution by Destination</h3>
+      </div>
+      <div class="box-body">
+        <center><canvas id="destinationChart"></canvas></center>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
@@ -110,31 +118,56 @@
      '#00796b',
      '#c2185b'
   ];
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'pie',
-    options: {
-      responsive: false,
-      legend: {
-        position: 'none',
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      options: {
+        responsive: false,
+        legend: {
+          position: 'none',
+        },
       },
-    },
-    data: {
-        labels: [
-  {% for account, spent in account_spending.items %}
-  "{{ account.name }}",
-  {% endfor %}
-  ],
-        datasets: [{
-            backgroundColor: colors,
-            data: [
-              {% for account, spent in account_spending.items %}
-              {{ spent }},
-              {% endfor %}
+      data: {
+          labels: [
+    {% for account, spent in account_spending.items %}
+    "{{ account.name }}",
+    {% endfor %}
     ],
-        }]
-    }
-});
+          datasets: [{
+              backgroundColor: colors,
+              data: [
+                {% for account, spent in account_spending.items %}
+                {{ spent }},
+                {% endfor %}
+      ],
+          }]
+      }
+  });
+  var destinationtx = document.getElementById("destinationChart").getContext('2d');
+  var destinationChart = new Chart(destinationtx, {
+      type: 'pie',
+      options: {
+        responsive: false,
+        legend: {
+          position: 'none',
+        },
+      },
+      data: {
+          labels: [
+    {% for account, spent in destination_spending.items %}
+    "{{ account.name }}",
+    {% endfor %}
+    ],
+          datasets: [{
+              backgroundColor: colors,
+              data: [
+                {% for account, spent in destination_spending.items %}
+                {{ spent }},
+                {% endfor %}
+      ],
+          }]
+      }
+  });
 </script>
 {% endblock %}
 

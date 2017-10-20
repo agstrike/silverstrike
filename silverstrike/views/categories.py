@@ -71,17 +71,23 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
         context['sum_two_months_ago'] = sum_two_months_ago
         context['sum_last_month'] = sum_last_month
         context['average'] = (sum_last_month + sum_two_months_ago) / 2
-        splits = splits.select_related('account')
+        splits = splits.select_related('account', 'opposing_account')
         spent_this_month = 0
         account_spending = defaultdict(int)
+        destination_spending = defaultdict(int)
         for s in splits:
             spent_this_month += s.amount
             account_spending[s.account] += s.amount
+            destination_spending[s.opposing_account] += s.amount
 
         context['sum_this_month'] = spent_this_month
         context['splits'] = splits
         for account in account_spending.keys():
             account_spending[account] = abs(account_spending[account])
+
+        for account in destination_spending.keys():
+            destination_spending[account] = abs(destination_spending[account])
         context['account_spending'] = dict(account_spending)
+        context['destination_spending'] = dict(destination_spending)
 
         return context

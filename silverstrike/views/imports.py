@@ -45,7 +45,7 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
 class ImportConfigureView(LoginRequiredMixin, generic.CreateView):
     model = ImportConfiguration
     template_name = 'silverstrike/import_configure.html.j2'
-    fields = ['name', 'headers', 'default_account']
+    fields = ['name', 'headers', 'default_account', 'dateformat']
 
     def get_success_url(self):
         return reverse('import_process', args=[self.kwargs['uuid'], self.object.pk])

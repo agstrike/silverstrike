@@ -253,6 +253,7 @@ class ImportConfiguration(models.Model):
         (DATE, _('Date')),
         (NOTES, _('Notes')),
         (CATEGORY, _('Category')),
+        (TITLE, _('Title')),
         )
 
     name = models.CharField(max_length=64)
@@ -260,6 +261,7 @@ class ImportConfiguration(models.Model):
     default_account = models.ForeignKey(Account,
                                         limit_choices_to={'account_type': Account.PERSONAL},
                                         null=True, blank=True)
+    dateformat = models.CharField(max_length=32)
     config = models.TextField()
 
     def __str__(self):
