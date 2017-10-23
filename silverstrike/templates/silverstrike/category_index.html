@@ -26,7 +26,6 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{% trans 'Categories' %}</h3>
-    <a class="btn btn-xs btn-primary pull-right" href="{% url 'category_create' %}">{% trans 'Create' %}</a>
   </div>
   <div class="box-body no-padding">
     <table class="table table-striped">
@@ -47,6 +46,9 @@
       </tr>
       {% endfor %}
     </table>
+  </div>
+  <div class="box-footer">
+    <a class="btn btn-primary" href="{% url 'category_create' %}">{% trans 'Create' %}</a>
   </div>
 </div>
 </div>

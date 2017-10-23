@@ -16,7 +16,6 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{% trans 'Accounts' %}</h3>
-    <a class="btn btn-xs btn-primary pull-right" href="{% url 'account_new' %}">{% trans 'New' %}</a>
   </div>
   <div class="box-body no-padding">
     <table class="table table-striped">
@@ -33,6 +32,9 @@
       </tr>
       {% endfor %}
     </table>
+  </div>
+  <div class="box-footer">
+    <a class="btn btn-primary pull-right" href="{% url 'account_new' %}">{% trans 'New' %}</a>
   </div>
 </div>
 {% endblock %}
