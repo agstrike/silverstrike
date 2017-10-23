@@ -43,9 +43,9 @@ class TransferForm(forms.ModelForm):
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2)
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL))
+        account_type=Account.PERSONAL, active=True))
     destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL))
+        account_type=Account.PERSONAL, active=True))
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
     def save(self, commit=True):
