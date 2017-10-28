@@ -42,22 +42,6 @@
             {% endfor %}
       </div>
       {% endfor %}
-      <div class="table-responsive">
-      <table class="table">
-      <tr>
-        {% for form in formset %}
-        <th>{{ form.field_type }}</th>
-        {% endfor %}
-      </tr>
-      {% for datum in data %}
-      <tr>
-        {% for entry in datum %}
-        <td>{{ entry }}</td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
-    </div>
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
