@@ -1,0 +1,1 @@
+./demo/env/bin/python demo/manage.py test silverstrike
