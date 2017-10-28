@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./demo/env/bin/python ./demo/manage.py runserver
