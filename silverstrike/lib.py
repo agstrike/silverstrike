@@ -56,20 +56,35 @@ def import_csv(path, config):
 
 
 def import_firefly(csv_file):
-    # transaction_id = 0
-    date = 1
-    description = 2
-    # currency_code = 3
-    amount = 4
-    transaction_type = 5
-    # source_account_id = 6
-    source_account_name = 7
-    # destination_account_id = 8
-    destination_account_name = 9
-    # budget_id = 10
-    # budget_name = 11
-    # category_id = 12
-    category_name = 13
+    # journal_id = 0
+    # transaction_id = 1
+    date = 2
+    description = 3
+    # currency_code = 4
+    amount = 5
+    # foreign_currency = 6
+    # foreign_amount = 7
+    transaction_type = 8
+    # source_account_id = 9
+    source_account_name = 10
+    # source_account_iban = 11
+    # source_account_bic = 12
+    # source_account_number = 13
+    # source_account_currency = 14
+    # destination_account_id = 15
+    destination_account_name = 16
+    # destination_account_iban = 17
+    # destination_account_bic = 18
+    # destination_account_number = 19
+    # destination_account_currency = 20
+    # budget_id = 21
+    # budget_name = 22
+    # category_id = 23
+    category_name = 24
+    # bill_id = 25
+    # bill_name = 26
+    notes = 27
+    # tags = 28
 
     system_account, _ = Account.objects.get_or_create(name='system', account_type=Account.SYSTEM)
 
@@ -146,15 +161,17 @@ def import_firefly(csv_file):
             line[category_name] = c.id
         else:
             line[category_name] = None
-        line[date] = datetime.datetime.strptime(line[date], '%Y-%m-%d')
+        line[date] = datetime.datetime.strptime(line[date], '%Y%m%d')
 
         transaction = Transaction.objects.create(
             title=line[description], date=line[date],
             transaction_type=t_type)
         Split.objects.bulk_create(
-            [Split(account_id=line[source_account_name],
+            [Split(account_id=line[source_account_name], title=line[description],
+                   date=line[date],
                    opposing_account_id=line[destination_account_name], amount=line[amount],
                    transaction_id=transaction.id, category_id=line[category_name]),
-             Split(account_id=line[destination_account_name],
+             Split(account_id=line[destination_account_name], title=line[description],
+                   date=line[date],
                    opposing_account_id=line[source_account_name], amount=-line[amount],
                    transaction_id=transaction.id, category_id=line[category_name])])
