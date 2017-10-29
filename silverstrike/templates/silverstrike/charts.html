@@ -19,7 +19,7 @@
     <button id="6month" class="btn btn-s btn-default range-chooser">Last 6 Months</button>
     <button id="3month" class="btn btn-s btn-default range-chooser">Last 3 Months</button>
     <button id="currentMonth" class="btn btn-s btn-default range-chooser">Current Month</button>
-    <button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button>
+    <!--button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button-->
   </div>
 </div>
 </div>
@@ -27,11 +27,19 @@
 <div class="col-md-10">
 <div class="box">
   <div class="box-header">
+    <h3 class="box-title">Balance</h3>
+  </div>
+  <div class="box-body">
+    <canvas id="balanceChart" width="400" height="200"></canvas>
+  </div>
+</div>
+<div class="box">
+  <div class="box-header">
     <h3 class="box-title">Personal Accounts</h3>
   </div>
   <div class="box-body">
-  <canvas id="myChart" width="400" height="200"></canvas>
-</div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </div>
 </div>
 </div>
 </div>
@@ -87,27 +95,75 @@ var drawChart = function(res) {
       }
   });
 }
+var drawBalances = function(res) {
+  var ctx = document.getElementById("balanceChart").getContext('2d');
+  data = {
+      labels: res.labels,
+      datasets: []
+  }
+  dataset = {
+    label: 'Balance',
+    fill: false,
+    pointRadius: 2,
+    backgroundColor: '#357ca5',
+    borderColor: '#357ca5',
+    data: res.data,
+  }
+  data.datasets.push(dataset);
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+          tooltips: {
+              mode: 'index',
+              position: 'nearest',
+              intersect: false,
+              caretSize: 0,
+              caretPadding: 5,
+          },
+          legend: {
+            position: 'none',
+          }
+
+      }
+  });
+}
 $.getJSON("{% url 'api_accounts_balance' '2017-05-01' '2017-08-01' %}", {}, function(res, status) {
   drawChart(res);
+});
+$.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
+  drawBalances(res);
 });
 $('#12month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
     drawChart(res);
+  });
+  $.getJSON("{% url 'api_balance' minus_12_months today %}", {}, function(res, status) {
+    drawBalances(res);
   });
 });
 $('#6month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
     drawChart(res);
   });
+  $.getJSON("{% url 'api_balance' minus_6_months today %}", {}, function(res, status) {
+    drawBalances(res);
+  });
 });
 $('#3month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
     drawChart(res);
   });
+  $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
+    drawBalances(res);
+  });
 });
 $('#currentMonth').click(function() {
   $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
     drawChart(res);
+  });
+  $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+    drawBalances(res);
   });
 });
 </script>
