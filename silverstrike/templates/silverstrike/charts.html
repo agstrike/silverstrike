@@ -68,6 +68,8 @@ var colors =
    '#00796b',
    '#c2185b'
 ];
+var balanceChart = null;
+var accountChart = null;
 var drawChart = function(res) {
   var ctx = document.getElementById("myChart").getContext('2d');
   data = {
@@ -85,7 +87,7 @@ var drawChart = function(res) {
     }
     data.datasets.push(dataset);
   }
-  var myChart = new Chart(ctx, {
+  accountChart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
@@ -110,7 +112,7 @@ var drawBalances = function(res) {
     data: res.data,
   }
   data.datasets.push(dataset);
-  var myChart = new Chart(ctx, {
+  balanceChart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
@@ -128,6 +130,21 @@ var drawBalances = function(res) {
       }
   });
 }
+var updateBalanceChart = function(chartData) {
+  balanceChart.data.labels = chartData.labels;
+  balanceChart.data.datasets[0].data = chartData.data;
+  balanceChart.update();
+}
+
+var updateAccountChart = function(chartData) {
+  accountChart.data.labels = chartData.labels;
+  for (i = 0; i < chartData.dataset.length; i++) {
+    accountChart.data.datasets[i].data = chartData.dataset[i].data;
+
+  }
+  accountChart.update();
+}
+
 $.getJSON("{% url 'api_accounts_balance' '2017-05-01' '2017-08-01' %}", {}, function(res, status) {
   drawChart(res);
 });
@@ -136,34 +153,34 @@ $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, stat
 });
 $('#12month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
-    drawChart(res);
+    updateAccountChart(res);
   });
   $.getJSON("{% url 'api_balance' minus_12_months today %}", {}, function(res, status) {
-    drawBalances(res);
+    updateBalanceChart(res);
   });
 });
 $('#6month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
-    drawChart(res);
+    updateAccountChart(res);
   });
   $.getJSON("{% url 'api_balance' minus_6_months today %}", {}, function(res, status) {
-    drawBalances(res);
+    updateBalanceChart(res);
   });
 });
 $('#3month').click(function() {
   $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
-    drawChart(res);
+    updateAccountChart(res);
   });
   $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
-    drawBalances(res);
+    updateBalanceChart(res);
   });
 });
 $('#currentMonth').click(function() {
   $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
-    drawChart(res);
+    updateAccountChart(res);
   });
   $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
-    drawBalances(res);
+    updateBalanceChart(res);
   });
 });
 </script>
