@@ -83,7 +83,7 @@ def import_firefly(csv_file):
     category_name = 24
     # bill_id = 25
     # bill_name = 26
-    notes = 27
+    # notes = 27
     # tags = 28
 
     system_account, _ = Account.objects.get_or_create(name='system', account_type=Account.SYSTEM)
