@@ -138,6 +138,10 @@ class Transaction(models.Model):
     def is_split(self):
         return len(self.splits.all()) > 2
 
+    @property
+    def is_system(self):
+        return self.transaction_type == self.SYSTEM
+
 
 class SplitQuerySet(models.QuerySet):
     def personal(self):

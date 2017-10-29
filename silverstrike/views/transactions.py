@@ -71,6 +71,10 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         initial['category'] = self.transaction.category
         return initial
 
+    def get_queryset(self):
+        queryset = super(TransactionUpdateView, self).get_queryset()
+        return queryset.exclude(transaction_type=Transaction.SYSTEM)
+
     def get_form_class(self):
         if self.object.transaction_type == Transaction.WITHDRAW:
             return WithdrawForm
