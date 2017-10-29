@@ -145,43 +145,89 @@ var updateAccountChart = function(chartData) {
   accountChart.update();
 }
 
-$.getJSON("{% url 'api_accounts_balance' '2017-05-01' '2017-08-01' %}", {}, function(res, status) {
+var one_month = 0;
+var three_months = 1;
+var six_months = 2;
+var twelve_months = 3;
+var accountChartData = new Array(4);
+var balanceChartData = new Array(4);
+
+
+// initialize
+$.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
   drawChart(res);
+  accountChartData[three_months] = res;
 });
 $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
   drawBalances(res);
+  balanceChartData[three_months] = res;
 });
+
+// update charts
 $('#12month').click(function() {
-  $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
-    updateAccountChart(res);
-  });
-  $.getJSON("{% url 'api_balance' minus_12_months today %}", {}, function(res, status) {
-    updateBalanceChart(res);
-  });
+  if (accountChartData[twelve_months] == null) {
+    $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
+      updateAccountChart(res);
+      accountChartData[twelve_months] = res;
+    });
+  } else {
+      updateAccountChart(accountChartData[twelve_months]);
+  }
+  if (balanceChartData[twelve_months] == null) {
+    $.getJSON("{% url 'api_balance' minus_12_months today %}", {}, function(res, status) {
+      updateBalanceChart(res);
+      balanceChartData[twelve_months] = res;
+    });
+  } else {
+    updateBalanceChart(balanceChartData[twelve_months]);
+  }
 });
+
+
 $('#6month').click(function() {
-  $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
-    updateAccountChart(res);
-  });
-  $.getJSON("{% url 'api_balance' minus_6_months today %}", {}, function(res, status) {
-    updateBalanceChart(res);
-  });
+  if (accountChartData[six_months] == null) {
+    $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
+      updateAccountChart(res);
+      accountChartData[six_months] = res;
+    });
+  } else {
+    updateAccountChart(accountChartData[six_months]);
+  }
+
+  if (balanceChartData[six_months] == null) {
+    $.getJSON("{% url 'api_balance' minus_6_months today %}", {}, function(res, status) {
+      updateBalanceChart(res);
+      balanceChartData[six_months] = res;
+    });
+  } else {
+    updateBalanceChart(balanceChartData[six_months]);
+  }
 });
+
 $('#3month').click(function() {
-  $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
-    updateAccountChart(res);
-  });
-  $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
-    updateBalanceChart(res);
-  });
+  updateAccountChart(accountChartData[three_months]);
+  updateBalanceChart(balanceChartData[three_months]);
 });
+
+
 $('#currentMonth').click(function() {
-  $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
-    updateAccountChart(res);
-  });
-  $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
-    updateBalanceChart(res);
-  });
+  if (accountChartData[one_month] == null) {
+    $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+      updateAccountChart(res);
+      accountChartData[one_month] = res;
+    });
+  } else {
+    updateAccountChart(accountChartData[one_month]);
+  }
+  
+  if (balanceChartData[one_month] == null) {
+    $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+      updateBalanceChart(res);
+      balanceChartData[one_month] = res;
+    });
+  } else {
+    updateBalanceChart(balanceChartData[one_month]);
+  }
 });
 </script>
 {% endblock %}
