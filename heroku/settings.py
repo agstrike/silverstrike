@@ -141,6 +141,10 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+if 'DISABLE_SIGNUP' in os.environ:
+    ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
+
 if 'ACCOUNT_EMAIL_VERIFICATION' in os.environ:
     ACCOUNT_EMAIL_VERIFICATION = os.environ['ACCOUNT_EMAIL_VERIFICATION']
 else:

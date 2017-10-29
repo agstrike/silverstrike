@@ -138,6 +138,10 @@ LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
+# Uncomment to prevent signup
+# ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
+
+
 """
 LOGGING = {
     'version': 1,

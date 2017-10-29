@@ -1,11 +1,20 @@
-{% extends "account/base.html" %}
+{% extends "_plain.html" %}
 
 {% load i18n %}
 
 {% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
 
 {% block content %}
+<div class="login-box">
+  <div class="login-logo">
+    <b>SilverStrike</b>
+  </div>
+  <!-- /.login-logo -->
+<div class="callout callout-danger">
 <h1>{% trans "Sign Up Closed" %}</h1>
 
 <p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+</div>
+</div>
+
 {% endblock %}
