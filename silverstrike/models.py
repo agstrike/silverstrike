@@ -58,8 +58,7 @@ class Account(models.Model):
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
-        return reverse('account_detail',
-                       kwargs={'pk': self.pk, 'month': datetime.strftime(date.today(), '%Y%m')})
+        return reverse('account_view', args=[self.pk])
 
     def get_data_points(self, dstart=date.today() - timedelta(days=365),
                         dend=date.today(), steps=30):
