@@ -23,7 +23,9 @@
   <tr>
     <th>Date</th><td>{{ transaction.date }}</td>
   </tr>
+  {% if transaction.notes %}
   <tr><th>{% trans 'Notes' %}</th><td>{{ transaction.notes }}</td></tr>
+  {% endif %}
   {% if transaction.recurrence %}
   <tr><th>{% trans 'Recurrence' %}</th><td><a href="{{ transaction.recurrence.get_absolute_url }}">{{ transaction.recurrence }}</a></td></tr>
   {% endif %}
