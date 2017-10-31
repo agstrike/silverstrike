@@ -55,8 +55,7 @@ class TransactionForm(forms.ModelForm):
         src = self.cleaned_data['source_account']
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
-        value_date = self.cleaned_data.get('value_date', transaction.date)
-
+        value_date = self.cleaned_data.get('value_date') or transaction.date
         Split.objects.update_or_create(transaction=transaction, amount__lt=0,
                                        defaults={'amount': -amount, 'account': src,
                                                  'opposing_account': dst, 'date': value_date,
