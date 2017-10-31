@@ -15,7 +15,7 @@ jobs:
     - stage: test
       script: tox -e django_111
     - script: tox -e django_110
-    - script: tox -e flake8
+    - script: tox -e flake
     - script: tox -e codecov
     - stage: test
       python: 3.5
