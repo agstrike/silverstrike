@@ -2,13 +2,13 @@ import csv
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import formset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
 from silverstrike.forms import CSVDefinitionForm, ExportForm, ImportUploadForm
 from silverstrike.lib import import_csv, import_firefly
-from silverstrike.models import ImportConfiguration, ImportFile
+from silverstrike.models import ImportConfiguration, ImportFile, Split
 
 
 class ImportView(LoginRequiredMixin, generic.TemplateView):
@@ -95,7 +95,24 @@ class ExportView(LoginRequiredMixin, generic.edit.FormView):
     form_class = ExportForm
 
     def form_valid(self, form):
-        # accounts = form.cleaned_data['accounts']
-        # start = form.cleaned_data['start']
-        # end = form.cleaned_data['end']
-        return HttpResponseRedirect(reverse('index'))
+        response = HttpResponse(content_type='text/csv')
+
+        splits = Split.objects.date_range(
+            form.cleaned_data['start'], form.cleaned_data['end']).transfers_once()
+        splits = splits.filter(account__in=form.cleaned_data['accounts'])
+
+        csv_writer = csv.writer(response, delimiter=';')
+        headers = [
+            'account',
+            'opposing_account',
+            'date',
+            'amount',
+            'category'
+            ]
+        csv_writer.writerow(headers)
+        for split in splits.values_list('account__name', 'opposing_account__name',
+                                        'date', 'amount', 'category'):
+            csv_writer.writerow(split)
+
+        response['Content-Disposition'] = 'attachment; filename=export.csv'
+        return response
