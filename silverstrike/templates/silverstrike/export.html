@@ -1,0 +1,59 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>Export</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="#">Settings</a></li>
+  <li class="active">Export</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Export</h3>
+  </div>
+  <form method="post" class="form-horizontal" enctype="multipart/form-data">
+    <div class="box-body">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.start.id_for_label }}">{{ form.start.label }}</label>
+        <div class="col-sm-8">{{ form.start|add_class:"form-control date-input" }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.end.id_for_label }}">{{ form.end.label }}</label>
+        <div class="col-sm-8">{{ form.end|add_class:"form-control date-input" }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.accounts.id_for_label }}">{{ form.accounts.label }}</label>
+        <div class="col-sm-8">{{ form.accounts|add_class:"form-control" }}</div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <div class="col-sm-offset-2">
+        <button type="submit" class="btn btn-primary">Export</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
+
+<script>
+$(function() {
+  $('.date-input').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd',
+  orientation: 'bottom',
+
+  })
+  $('.date-input').attr('autocomplete', 'off');
+})
+</script>
+{% endblock %}

@@ -259,3 +259,10 @@ class SplitForm(forms.ModelForm):
 TransactionFormSet = forms.models.inlineformset_factory(
     Transaction, Split, form=SplitForm, extra=1
     )
+
+
+class ExportForm(forms.Form):
+    start = forms.DateField()
+    end = forms.DateField()
+    accounts = forms.ModelMultipleChoiceField(
+        queryset=Account.objects.filter(account_type=Account.PERSONAL))

@@ -94,4 +94,6 @@ urlpatterns = [
         name='import_configure'),
     url(r'^import/generic/(?P<uuid>[0-9a-f-]+)/process/(?P<config_pk>\d+)/$',
         import_views.ImportProcessView.as_view(), name='import_process'),
+
+    url(r'^export/$', import_views.ExportView.as_view(), name='export'),
 ]

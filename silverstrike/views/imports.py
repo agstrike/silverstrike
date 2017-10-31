@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
-from silverstrike.forms import CSVDefinitionForm, ImportUploadForm
+from silverstrike.forms import CSVDefinitionForm, ExportForm, ImportUploadForm
 from silverstrike.lib import import_csv, import_firefly
 from silverstrike.models import ImportConfiguration, ImportFile
 
@@ -88,3 +88,14 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             data.append(line)
         context['data'] = data
         return context
+
+
+class ExportView(LoginRequiredMixin, generic.edit.FormView):
+    template_name = 'silverstrike/export.html'
+    form_class = ExportForm
+
+    def form_valid(self, form):
+        # accounts = form.cleaned_data['accounts']
+        # start = form.cleaned_data['start']
+        # end = form.cleaned_data['end']
+        return HttpResponseRedirect(reverse('index'))
