@@ -41,7 +41,7 @@ class TransactionForm(forms.ModelForm):
         fields = ['title', 'source_account', 'destination_account',
                   'amount', 'date', 'value_date', 'category', 'notes']
 
-    amount = forms.DecimalField(max_digits=10, decimal_places=2)
+    amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
     value_date = forms.DateField(required=False)
 
