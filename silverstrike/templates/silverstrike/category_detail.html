@@ -14,6 +14,15 @@
 {% endblock %}
 
 {% block content %}
+<div class="box">
+  <div class="box-body">
+    <div class="text-center">
+      <a href="{% url 'category_month' 1 previous_month|date:'Ym' %}" class="btn btn-xs btn-default">Previous</a>
+      <span>{{ current_month|date:'F Y'}}</span>
+      <a href="{% url 'category_month' 1 next_month|date:'Ym' %}" class="btn btn-xs btn-default">Next</a>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-8">
     <div class="box">
@@ -21,24 +30,7 @@
         <h3 class="box-title">Overview</h3>
       </div>
       <div class="box-body">
-        <table class="table">
-          <tr>
-            <th>{% trans 'Sum this month' %}</th>
-            <td>{{ sum_this_month }}</td>
-          </tr>
-          <tr>
-            <th>{% trans 'Sum last month' %}</th>
-            <td>{{ sum_last_month }}</td>
-          </tr>
-          <tr>
-            <th>{% trans 'Sum two months ago' %}</th>
-            <td>{{ sum_two_months_ago }}</td>
-          </tr>
-          <tr>
-            <th>{% trans 'Average spent' %}</th>
-            <td>{{ average }}</td>
-          </tr>
-        </table>
+        <center><canvas id="historyChart"></canvas></center>
       </div>
       <div class="box-footer">
         <a class="btn btn-warning" href="{% url 'category_update' category.id %}">{% trans 'Edit' %}</a>
@@ -143,6 +135,7 @@
           }]
       }
   });
+
   var destinationtx = document.getElementById("destinationChart").getContext('2d');
   var destinationChart = new Chart(destinationtx, {
       type: 'pie',
@@ -168,6 +161,23 @@
           }]
       }
   });
+  var historytx = document.getElementById("historyChart").getContext('2d');
+  var historyChart = new Chart(historytx, {
+      type: 'bar',
+      options: {
+        responsive: true,
+        legend: {
+          position: 'none',
+        }
+      },
+      data: {
+          labels: ["{{ month_before|date:'F Y'}}", "{{ previous_month|date:'F Y'}}", "{{ current_month|date:'F Y'}}"],
+
+          datasets: [{
+              backgroundColor: colors[0],
+              data: [{{ sum_two_months_ago }}, {{ sum_last_month }}, {{ sum_this_month }}],
+          }]
+      }
+  });
 </script>
 {% endblock %}
-

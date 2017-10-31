@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime
 
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -53,14 +53,20 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
-        first_day_of_month = date.today().replace(day=1)
-        two_months_ago = first_day_of_month - relativedelta(months=2)
-        last_month = first_day_of_month - relativedelta(months=1)
+
+        if 'month' in self.kwargs:
+            current_month = datetime.strptime(self.kwargs.get('month'), '%Y%m').date()
+        else:
+            current_month = date.today().replace(day=1)
+
+        next_month = current_month + relativedelta(months=1)
+        two_months_ago = current_month - relativedelta(months=2)
+        last_month = current_month - relativedelta(months=1)
         splits = context['category'].splits.filter(account__account_type=Account.PERSONAL,
-                                                   date__gte=first_day_of_month)
+                                                   date__gte=current_month, date__lt=next_month)
         last_two_months_splits = context['category'].splits.filter(
             account__account_type=Account.PERSONAL,
-            date__gte=two_months_ago, date__lt=first_day_of_month)
+            date__gte=two_months_ago, date__lt=current_month)
         sum_last_month = 0
         sum_two_months_ago = 0
         for s in last_two_months_splits:
@@ -89,5 +95,10 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
             destination_spending[account] = abs(destination_spending[account])
         context['account_spending'] = dict(account_spending)
         context['destination_spending'] = dict(destination_spending)
+
+        context['current_month'] = current_month
+        context['previous_month'] = last_month
+        context['next_month'] = current_month + relativedelta(months=1)
+        context['month_before'] = two_months_ago
 
         return context

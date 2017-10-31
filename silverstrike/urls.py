@@ -69,6 +69,8 @@ urlpatterns = [
         category_views.CategoryCreateView.as_view(), name='category_create'),
     url(r'^categories/(?P<pk>\d+)/$',
         category_views.CategoryDetailView.as_view(), name='category_detail'),
+    url(r'^categories/(?P<pk>\d+)/(?P<month>\S+)/$',
+        category_views.CategoryDetailView.as_view(), name='category_month'),
     url(r'^categories/(?P<pk>\d+)/delete$', category_views.CategoryDeleteView.as_view(),
         name='category_delete'),
     url(r'^categories/(?P<pk>\d+)/update$', category_views.CategoryUpdateView.as_view(),

@@ -1,6 +1,6 @@
 import uuid
 
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from allauth.account.adapter import DefaultAccountAdapter
 from dateutil.relativedelta import relativedelta
