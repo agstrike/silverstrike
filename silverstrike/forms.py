@@ -35,19 +35,42 @@ class CSVDefinitionForm(forms.Form):
     field_type = forms.ChoiceField(choices=ImportConfiguration.FIELD_TYPES)
 
 
-class TransferForm(forms.ModelForm):
+class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['title', 'source_account', 'destination_account',
-                  'amount', 'date', 'category', 'notes']
+                  'amount', 'date', 'value_date', 'category', 'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    value_date = forms.DateField(required=False)
+
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
         account_type=Account.PERSONAL, active=True))
     destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
         account_type=Account.PERSONAL, active=True))
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
+    def save(self, commit=True):
+        transaction = super().save(commit)
+        src = self.cleaned_data['source_account']
+        dst = self.cleaned_data['destination_account']
+        amount = self.cleaned_data['amount']
+        value_date = self.cleaned_data.get('value_date', transaction.date)
+
+        Split.objects.update_or_create(transaction=transaction, amount__lt=0,
+                                       defaults={'amount': -amount, 'account': src,
+                                                 'opposing_account': dst, 'date': value_date,
+                                                 'title': transaction.title,
+                                                 'category': self.cleaned_data['category']})
+        Split.objects.update_or_create(transaction=transaction, amount__gt=0,
+                                       defaults={'amount': amount, 'account': dst,
+                                                 'opposing_account': src, 'date': value_date,
+                                                 'title': transaction.title,
+                                                 'category': self.cleaned_data['category']})
+        return transaction
+
+
+class TransferForm(TransactionForm):
     def save(self, commit=True):
         transaction = super().save(commit)
         src = self.cleaned_data['source_account']
@@ -74,7 +97,7 @@ class TransferForm(forms.ModelForm):
             self.add_error('source_account', error)
 
 
-class WithdrawForm(TransferForm):
+class WithdrawForm(TransactionForm):
     destination_account = forms.CharField(max_length=64, label=_('Debitor'),
                                           widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
@@ -89,7 +112,7 @@ class WithdrawForm(TransferForm):
         self.instance.transaction_type = Transaction.WITHDRAW
 
 
-class DepositForm(TransferForm):
+class DepositForm(TransactionForm):
     source_account = forms.CharField(max_length=64, label=_('Creditor'),
                                      widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 

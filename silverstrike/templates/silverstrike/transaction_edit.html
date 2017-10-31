@@ -33,18 +33,78 @@
 <div class="box-body">
     <form method="post" class="form-horizontal">
       {% csrf_token %}
-      {% for field in form %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
-          </label>
-          <div class="col-sm-8">
-          {{ field|add_class:"form-control" }}
-          {% for error in field.errors %}
+      <div class="form-group{% if form.title.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        <div class="col-sm-8">
+          {{ form.title|add_class:"form-control" }}
+          {% for error in form.title.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
         </div>
+      </div>
+      <div class="form-group{% if form.source_account.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.source_account.id_for_label }}">{{ form.source_account.label }}</label>
+        <div class="col-sm-8">
+          {{ form.source_account|add_class:"form-control" }}
+          {% for error in form.source_account.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </div>
+      <div class="form-group{% if form.destination_account.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.destination_account.id_for_label }}">{{ form.destination_account.label }}</label>
+        <div class="col-sm-8">
+          {{ form.destination_account|add_class:"form-control" }}
+          {% for error in form.destination_account.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group{% if form.amount.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.amount.id_for_label }}">{{ form.amount.label }}</label>
+        <div class="col-sm-8">
+          {{ form.amount|add_class:"form-control" }}
+          {% for error in form.amount.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group{% if form.date.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+        <div class="col-sm-8">
+          {{ form.date|add_class:"form-control date-input" }}
+          {% for error in form.date.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group{% if form.value_date.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.value_date.id_for_label }}">{{ form.value_date.label }}</label>
+        <div class="col-sm-8">
+          {{ form.value_date|add_class:"form-control date-input" }}
+          {% for error in form.value_date.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group{% if form.category.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+        <div class="col-sm-8">
+          {{ form.category|add_class:"form-control" }}
+          {% for error in form.category.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group{% if form.notes.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+        <div class="col-sm-8">
+          {{ form.notes|add_class:"form-control" }}
+          {% for error in form.notes.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
     </form>
 </div>
@@ -61,7 +121,7 @@
 
 <script>
 $(function() {
-  $('#id_date').datepicker({
+  $('.date-input').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
   orientation: 'bottom',
@@ -77,7 +137,7 @@ $(function() {
           $('#id_destination_account').typeahead({source: data});
       });
   }
-  $('#id_date').attr('autocomplete', 'off');
+  $('.date-input').attr('autocomplete', 'off');
 })
 </script>
 {% endblock %}

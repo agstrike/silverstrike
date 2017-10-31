@@ -69,6 +69,7 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
             initial['source_account'] = self.transaction.opposing_account
         initial['amount'] = self.transaction.amount
         initial['category'] = self.transaction.category
+        initial['value_date'] = self.transaction.date
         return initial
 
     def get_queryset(self):
