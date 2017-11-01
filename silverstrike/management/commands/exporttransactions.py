@@ -1,12 +1,9 @@
 import csv
 import sys
-from datetime import date
-from random import randrange
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand, CommandError
 
-from silverstrike.models import Account, Split, Transaction
+from silverstrike.models import Split
 
 
 class Command(BaseCommand):
@@ -16,6 +13,7 @@ class Command(BaseCommand):
             dest='file',
             type=str,
             help='File to write to')
+
     def handle(self, *args, **options):
         output = sys.stdout
         if options['file']:
@@ -40,5 +38,3 @@ class Command(BaseCommand):
         if options['file']:
             output.close()
             print('Exported transactions to {}'.format(options['file']))
-
-    
