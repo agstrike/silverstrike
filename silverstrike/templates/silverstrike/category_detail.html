@@ -166,6 +166,13 @@
       type: 'bar',
       options: {
         responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                }
+            }]
+        },
         legend: {
           position: 'none',
         }
