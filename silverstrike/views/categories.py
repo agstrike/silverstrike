@@ -18,8 +18,9 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         context['menu'] = 'categories'
         dstart = date.today().replace(day=1)
         dend = last_day_of_month(dstart)
+
         splits = Split.objects.personal().date_range(dstart, dend).select_related('category')
-        categories = defaultdict(int)
+        categories = {c: 0 for c in Category.objects.all()}
         for s in splits:
             categories[s.category] += s.amount
         for c in categories.keys():
