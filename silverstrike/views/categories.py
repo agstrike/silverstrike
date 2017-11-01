@@ -25,7 +25,7 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
             categories[s.category] += s.amount
         for c in categories.keys():
             categories[c] = abs(categories[c])
-        context['categories'] = dict(categories)
+        context['categories'] = categories
         return context
 
 
