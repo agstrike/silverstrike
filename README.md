@@ -2,7 +2,7 @@
 Personal Accounting webapp based on Django
 
 
-[![Build Status](https://travis-ci.com/simhnna/silverstrike.svg?branch=master)](https://travis-ci.com/simhnna/silverstrike)
+[![Build Status](https://travis-ci.org/simhnna/silverstrike.svg?branch=master)](https://travis-ci.org/simhnna/silverstrike)
 [![codecov](https://codecov.io/gh/simhnna/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/simhnna/silverstrike)
 
 
