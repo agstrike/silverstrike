@@ -1,10 +1,8 @@
 # SilverStrike
-Webapp based on Django to manage personal finances
-
-
 [![Build Status](https://travis-ci.org/simhnna/silverstrike.svg?branch=master)](https://travis-ci.org/simhnna/silverstrike)
 [![codecov](https://codecov.io/gh/simhnna/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/simhnna/silverstrike)
 
+Webapp based on Django to manage personal finances
 
 ## Demo
 There is a [demo](https://silverstrike.herokuapp.com/) available.
