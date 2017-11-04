@@ -1,6 +1,6 @@
 # SilverStrike
-[![Build Status](https://travis-ci.org/simhnna/silverstrike.svg?branch=master)](https://travis-ci.org/simhnna/silverstrike)
-[![codecov](https://codecov.io/gh/simhnna/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/simhnna/silverstrike)
+[![Build Status](https://travis-ci.org/agstrike/silverstrike.svg?branch=master)](https://travis-ci.org/agstrike/silverstrike)
+[![codecov](https://codecov.io/gh/agstrike/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/agstrike/silverstrike)
 
 Webapp based on Django to manage personal finances
 
@@ -11,7 +11,7 @@ It is hosted on heruko and is auto deployed from the master branch. Since it is 
 You will need to sign up to access it. You can provide a fake email address (no mail will be delivered) and the account will be activated automatically.
 
 ## Get your own instance
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/simhnna/silverstrike/tree/heroku)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/agstrike/silverstrike/tree/heroku)
 
 If you want your very own Production setup, you can create a very own instance for free using the above button. It will 
 
