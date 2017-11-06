@@ -20,9 +20,9 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         queryset = queryset.date_range(dstart, dend)
-        context['income'] = abs(queryset.income().aggregate(
+        context['income'] = abs(queryset.income().past().aggregate(
                 models.Sum('amount'))['amount__sum'] or 0)
-        context['expenses'] = abs(queryset.expense().aggregate(
+        context['expenses'] = abs(queryset.expense().past().aggregate(
                 models.Sum('amount'))['amount__sum'] or 0)
         context['difference'] = context['income'] - context['expenses']
 
