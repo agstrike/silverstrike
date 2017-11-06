@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'heroku.authentication_middleware.AlwaysAuthenticatedMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -149,3 +150,6 @@ if 'ACCOUNT_EMAIL_VERIFICATION' in os.environ:
     ACCOUNT_EMAIL_VERIFICATION = os.environ['ACCOUNT_EMAIL_VERIFICATION']
 else:
     ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ALWAYS_AUTHENTICATED_USERNAME = 'demo'
+ALWAYS_AUTHENTICATED_DEBUG_ONLY = False
