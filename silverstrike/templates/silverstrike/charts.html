@@ -103,7 +103,10 @@ var drawChart = function(res) {
       data: data,
       options: {
           tooltips: {
-              mode: 'x'
+            mode: 'index',
+            position: 'nearest',
+            intersect: false,
+            caretPadding: 5,
           }
       }
   });
@@ -131,7 +134,6 @@ var drawBalances = function(res) {
               mode: 'index',
               position: 'nearest',
               intersect: false,
-              caretSize: 0,
               caretPadding: 5,
           },
           legend: {
