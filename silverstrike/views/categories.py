@@ -4,6 +4,7 @@ from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
@@ -20,12 +21,17 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         dstart = date.today().replace(day=1)
         dend = last_day_of_month(dstart)
 
-        splits = Split.objects.personal().date_range(dstart, dend).select_related('category')
-        categories = {c: 0 for c in Category.objects.all()}
-        for s in splits:
-            categories[s.category] += s.amount
-        for c in categories.keys():
-            categories[c] = abs(categories[c])
+        categories = Split.objects.personal().past().date_range(dstart, dend).values(
+            'category', 'category__name').annotate(spent=Sum('amount'))
+
+        categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
+
+        all_categories = list(Category.objects.values_list('id', 'name'))
+        for id, name, spent in categories:
+            if id:
+                all_categories.remove((id, name))
+        for id, name in all_categories:
+            categories.append((id, name, 0))
         context['categories'] = categories
         return context
 

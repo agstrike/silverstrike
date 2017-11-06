@@ -33,16 +33,16 @@
         <th>Name</th>
         <th>Money spent</th>
       </tr>
-      {% for category, spent in categories.items %}
+      {% for category in categories %}
       <tr>
         <td>
-          {% if category %}
-          <a href="{{ category.get_absolute_url }}" >{{ category.name }}</a>
+          {% if category.0 %}
+          <a href="{% url 'category_detail' category.0 %}" >{{ category.1 }}</a>
           {% else %}
           {% trans 'Without category' %}
           {% endif %}
         </td>
-        <td>{{ spent }}</td>
+        <td>{{ category.2 }}</td>
       </tr>
       {% endfor %}
     </table>
@@ -95,17 +95,17 @@ var myChart = new Chart(ctx, {
     data: {
         labels: [
   {% for category in categories %}
-  {% if category %}
-  "{{ category.name }}",
+  {% if category.0 %}
+  "{{ category.1 }}",
   {% endif %}
   {% endfor %}
   ],
         datasets: [{
             backgroundColor: colors,
             data: [
-      {% for category, spent in categories.items %}
-      {% if category %}
-      {{ spent }},
+      {% for category in categories %}
+      {% if category.0 %}
+      {{ category.2 }},
       {% endif %}
       {% endfor %}
     ],
