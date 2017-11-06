@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +139,22 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+# Uncomment to prevent signup
+# ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 50,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+
+
+}
 
 LOGGING = {
     'version': 1,
