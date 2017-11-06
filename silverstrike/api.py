@@ -22,7 +22,7 @@ def get_accounts_balance(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
     dataset = []
-    for account in Account.objects.filter(account_type=Account.PERSONAL, show_on_dashboard=True):
+    for account in Account.objects.filter(account_type=Account.PERSONAL):
         data = list(zip(*account.get_data_points(dstart, dend)))
         dataset.append({'name': account.name, 'data': data[1]})
     if dataset:
