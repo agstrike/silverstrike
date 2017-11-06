@@ -83,6 +83,8 @@ urlpatterns = [
         api.get_balances, name='api_balance'),
     url(r'^api/accounts_balance/(?P<dstart>\S+)/(?P<dend>\S+)/$',
         api.get_accounts_balance, name='api_accounts_balance'),
+    url(r'^api/category_spending/(?P<dstart>\S+)/(?P<dend>\S+)/$',
+        api.category_spending, name='category_spending'),
 
     url(r'^manifest.json$', TemplateView.as_view(template_name='silverstrike/manifest.json'),
         name='manifest'),

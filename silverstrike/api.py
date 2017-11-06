@@ -62,3 +62,14 @@ def get_balances(request, dstart, dend):
         labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
     data_points.append(balance)
     return JsonResponse({'labels': labels, 'data': data_points})
+
+
+@login_required
+def category_spending(request, dstart, dend):
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
+    res = Split.objects.expense().past().date_range(dstart, dend).order_by('category').values(
+        'category__name').annotate(spent=models.Sum('amount'))
+    res = [(e['category__name'] or 'No category', abs(e['spent'])) for e in res if e['spent']]
+    categories, spent = zip(*res)
+    return JsonResponse({'categories': categories, 'spent': spent})

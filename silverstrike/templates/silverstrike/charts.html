@@ -24,7 +24,7 @@
 </div>
 </div>
 <div class="row">
-<div class="col-md-10">
+<div class="col-md-8">
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Balance</h3>
@@ -41,6 +41,16 @@
     <canvas id="myChart" width="400" height="200"></canvas>
   </div>
 </div>
+</div>
+<div class="col-md-4">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">{% trans 'Spending by category' %}</h3>
+    </div>
+    <div class="box-body">
+      <center><canvas id="categoryChart"></canvas></center>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -70,6 +80,7 @@ var colors =
 ];
 var balanceChart = null;
 var accountChart = null;
+var categoryChart = null;
 var drawChart = function(res) {
   var ctx = document.getElementById("myChart").getContext('2d');
   data = {
@@ -130,6 +141,27 @@ var drawBalances = function(res) {
       }
   });
 }
+
+var drawCategorieChart = function (res) {
+  var ctx = document.getElementById("categoryChart").getContext('2d');
+  categoryChart = new Chart(ctx, {
+      type: 'pie',
+      options: {
+        responsive: false,
+        legend: {
+          position: 'none',
+        },
+      },
+      data: {
+          labels: res.categories,
+          datasets: [{
+              backgroundColor: colors,
+              data: res.spent,
+          }]
+      }
+  });
+}
+
 var updateBalanceChart = function(chartData) {
   balanceChart.data.labels = chartData.labels;
   balanceChart.data.datasets[0].data = chartData.data;
@@ -145,12 +177,19 @@ var updateAccountChart = function(chartData) {
   accountChart.update();
 }
 
+var updateCategoryChart = function(chartData) {
+  categoryChart.data.labels = chartData.categories;
+  categoryChart.data.datasets[0].data = chartData.spent;
+  categoryChart.update();
+}
+
 var one_month = 0;
 var three_months = 1;
 var six_months = 2;
 var twelve_months = 3;
 var accountChartData = new Array(4);
 var balanceChartData = new Array(4);
+var categoryChartData = new Array(4);
 
 
 // initialize
@@ -161,6 +200,11 @@ $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(
 $.getJSON("{% url 'api_balance' minus_3_months today %}", {}, function(res, status) {
   drawBalances(res);
   balanceChartData[three_months] = res;
+});
+
+$.getJSON("{% url 'category_spending' minus_3_months today %}", {}, function(res, status) {
+  drawCategorieChart(res);
+  categoryChartData[three_months] = res;
 });
 
 // update charts
@@ -180,6 +224,14 @@ $('#12month').click(function() {
     });
   } else {
     updateBalanceChart(balanceChartData[twelve_months]);
+  }
+  if (categoryChartData[twelve_months] == null) {
+    $.getJSON("{% url 'category_spending' minus_12_months today %}", {}, function(res, status) {
+      updateCategoryChart(res);
+      categoryChartData[twelve_months] = res;
+    });
+  } else {
+    updateCategoryChart(categoryChartData[twelve_months]);
   }
 });
 
@@ -202,11 +254,21 @@ $('#6month').click(function() {
   } else {
     updateBalanceChart(balanceChartData[six_months]);
   }
+
+  if (categoryChartData[six_months] == null) {
+    $.getJSON("{% url 'category_spending' minus_6_months today %}", {}, function(res, status) {
+      updateCategoryChart(res);
+      categoryChartData[six_months] = res;
+    });
+  } else {
+    updateCategoryChart(categoryChartData[six_months]);
+  }
 });
 
 $('#3month').click(function() {
   updateAccountChart(accountChartData[three_months]);
   updateBalanceChart(balanceChartData[three_months]);
+  updateCategoryChart(categoryChartData[three_months]);
 });
 
 
@@ -219,7 +281,7 @@ $('#currentMonth').click(function() {
   } else {
     updateAccountChart(accountChartData[one_month]);
   }
-  
+
   if (balanceChartData[one_month] == null) {
     $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
       updateBalanceChart(res);
@@ -227,6 +289,15 @@ $('#currentMonth').click(function() {
     });
   } else {
     updateBalanceChart(balanceChartData[one_month]);
+  }
+
+  if (categoryChartData[one_month] == null) {
+    $.getJSON("{% url 'category_spending' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+      updateCategoryChart(res);
+      categoryChartData[one_month] = res;
+    });
+  } else {
+    updateCategoryChart(categoryChartData[one_month]);
   }
 });
 </script>
