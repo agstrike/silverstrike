@@ -1,9 +1,10 @@
 import uuid
-
 from datetime import date, timedelta
 
 from allauth.account.adapter import DefaultAccountAdapter
+
 from dateutil.relativedelta import relativedelta
+
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
@@ -277,14 +278,17 @@ class RecurringTransactionManager(models.Manager):
         if not month:
             month = date.today()
         month = last_day_of_month(month)
-        return self.get_queryset().filter(date__lte=month)
+        queryset = self.get_queryset().filter(date__lte=month)
+        return queryset.exclude(recurrence=RecurringTransaction.DISABLED)
 
 
 class RecurringTransaction(models.Model):
+    DISABLED = 0
     WEEKLY = 1
     MONTHLY = 2
     YEARLY = 3
     RECCURENCE_OPTIONS = (
+        (DISABLED, _('Disabled')),
         (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
         (YEARLY, _('Yearly')))
@@ -320,6 +324,10 @@ class RecurringTransaction(models.Model):
             self.date += relativedelta(months=+1)
         else:
             self.date += relativedelta(years=+1)
+
+    @property
+    def is_disabled(self):
+        return self.recurrence == self.DISABLED
 
     @property
     def get_recurrence(self):
