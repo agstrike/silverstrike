@@ -51,8 +51,7 @@ class Account(models.Model):
 
     @property
     def balance(self):
-        return Split.objects.filter(account=self).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0
+        return self.balance_on(date.today())
 
     def balance_on(self, date):
         return Split.objects.filter(account=self, transaction__date__lte=date).aggregate(
