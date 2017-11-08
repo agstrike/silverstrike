@@ -5,7 +5,7 @@ from django import forms
 from django.forms.models import ModelChoiceField, ModelChoiceIterator, ModelMultipleChoiceField
 from django.utils.translation import ugettext as _
 
-from .models import (Account, Category, ImportConfiguration, ImportFile,
+from .models import (Account, Budget, Category, ImportConfiguration, ImportFile,
                      RecurringTransaction, Split, Transaction)
 
 
@@ -29,6 +29,34 @@ class AccountCreateForm(forms.ModelForm):
         if self.cleaned_data['initial_balance']:
             account.set_initial_balance(self.cleaned_data['initial_balance'])
         return account
+
+
+class BudgetForm(forms.Form):
+    budget_id = forms.IntegerField()
+    category_id = forms.IntegerField()
+    category_name = forms.CharField(max_length=64)
+    spent = forms.CharField(max_length=32)
+    amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+    left = forms.CharField(max_length=32)
+    month = forms.DateField()
+
+    def save(self):
+        if self.cleaned_data['budget_id'] == -1:
+            if self.cleaned_data['amount'] != 0:
+                # new budget
+                Budget.objects.create(
+                    category_id=self.cleaned_data['category_id'],
+                    month=self.cleaned_data['month'],
+                    amount=self.cleaned_data['amount'])
+        elif self.cleaned_data['amount'] != 0:
+            Budget.objects.update_or_create(id=self.cleaned_data['budget_id'], defaults={
+                'amount': self.cleaned_data['amount']
+            })
+        else:
+            Budget.objects.get(id=self.cleaned_data['budget_id']).delete()
+
+
+BudgetFormSet = forms.formset_factory(BudgetForm, extra=0)
 
 
 class CSVDefinitionForm(forms.Form):
