@@ -348,6 +348,21 @@ class RecurringTransaction(models.Model):
                 return name
         return ''
 
+    @property
+    def signed_amount(self):
+        if self.transaction_type == Transaction.WITHDRAW:
+            return -self.amount
+        else:
+            return self.amount
+
+    @property
+    def is_withdraw(self):
+        return self.transaction_type == Transaction.WITHDRAW
+
+    @property
+    def is_deposit(self):
+        return self.transaction_type == Transaction.DEPOSIT
+
     @classmethod
     def outstanding_transaction_sum(cls):
         from .lib import last_day_of_month

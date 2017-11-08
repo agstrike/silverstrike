@@ -108,7 +108,7 @@
     <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
     <td>{{ transaction.date }}</td>
     <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
-    <td>{{ transaction.amount }}</td>
+    <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.amount }}</td>
   </tr>
   {% endfor %}
 </table>
@@ -133,10 +133,10 @@
     <th>Actions</th>
   </tr>
 {% for transaction in upcoming_recurrences %}
-<tr {% if transaction.is_due %}class="text-red"{% endif %}>
+<tr>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
-  <td>{{ transaction.date }}</td>
-  <td>{{ transaction.amount }}</td>
+  <td{% if transaction.is_due %} class="text-red"{% endif %}>{{ transaction.date }}</td>
+  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
   <td>
     <a class="btn btn-xs btn-primary" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
   </td>

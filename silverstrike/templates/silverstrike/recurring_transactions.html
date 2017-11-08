@@ -34,7 +34,7 @@
 <tr{% if transaction.is_due %} class="text-red"{% endif %}>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
   <td>{{ transaction.date }}</td>
-  <td>{{ transaction.amount }}</td>
+  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
   <td class="hidden-xs">{{ transaction.src }}</td>
   <td class="hidden-xs">{{ transaction.dst }}</td>
   <td class="hidden-xs">{{ transaction.get_recurrence }}</td>
