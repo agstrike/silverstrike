@@ -98,7 +98,7 @@
             </li>
             <li{% if menu == "accounts" %} class="active"{% endif %}>
                 <a href="{% url 'accounts' %}">
-                  <i class="fa fa-book fa-fw"></i>
+                  <i class="fa fa-bank fa-fw"></i>
                   <span>{% trans 'Accounts' %}</span>
                 </a>
             </li>
@@ -114,6 +114,12 @@
               <a href="{% url 'categories' %}">
               <i class="fa fa-tags" aria-hidden="true"></i>
               <span>{% trans 'Categories' %}</span>
+              </a>
+            </li>
+            <li{% if menu == "budgets" %} class="active"{% endif%}>
+              <a href="{% url 'budgets' %}">
+              <i class="fa fa-book" aria-hidden="true"></i>
+              <span>{% trans 'Budgets' %}</span>
               </a>
             </li>
             <li{% if menu == "charts" %} class="active"{% endif %}>

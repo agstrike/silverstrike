@@ -233,6 +233,19 @@ class Category(models.Model):
         return reverse('category_detail', args=[self.id])
 
 
+class BudgetQuerySet(models.QuerySet):
+    def for_month(self, month):
+        return self.filter(month=month)
+
+
+class Budget(models.Model):
+    category = models.ForeignKey(Category)
+    month = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    objects = BudgetQuerySet.as_manager()
+
+
 class ImportFile(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(upload_to='imports')

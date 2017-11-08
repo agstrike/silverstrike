@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 from silverstrike import api
 from silverstrike.views import account as account_views
+from silverstrike.views import budgets as budget_views
 from silverstrike.views import categories as category_views
 from silverstrike.views import charts as chart_views
 from silverstrike.views import imports as import_views
@@ -75,6 +76,9 @@ urlpatterns = [
         name='category_delete'),
     url(r'^categories/(?P<pk>\d+)/update$', category_views.CategoryUpdateView.as_view(),
         name='category_update'),
+
+    url(r'^budgets/$', budget_views.BudgetIndex.as_view(), name='budgets'),
+    url(r'^budgets/(?P<month>\S+)/$', budget_views.BudgetIndex.as_view(), name='budget_month'),
 
     url(r'^charts$', chart_views.ChartView.as_view(), name='charts'),
 
