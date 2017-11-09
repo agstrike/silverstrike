@@ -32,7 +32,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     filter_fields = ('date', 'transaction_type')
 
 
-class SplitViewSet(viewsets.ModelViewSet):
+class SplitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Split.objects.all()
     serializer_class = SplitSerializer
     filter_fields = ('date', 'account', 'opposing_account', 'category',
