@@ -1,9 +1,6 @@
-from rest_framework import generics, serializers, viewsets, permissions
-from rest_framework.decorators import detail_route
-from rest_framework.response import Response
+from rest_framework import serializers
 
-from silverstrike.models import Account, Category, Transaction, Split
-
+from silverstrike.models import Account, Category, Split, Transaction
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -25,8 +22,6 @@ class SplitSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    #splits = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
     class Meta:
         model = Transaction
         fields = ('id', 'title', 'date', 'transaction_type', 'splits')

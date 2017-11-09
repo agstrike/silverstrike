@@ -1,10 +1,11 @@
-from rest_framework import generics, serializers, viewsets, permissions
+from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from silverstrike.models import Account, Category, Transaction, Split
-from silverstrike.rest.serializers import AccountSerializer, CategorySerializer, SplitSerializer, TransactionSerializer
+from silverstrike.models import Account, Category, Split, Transaction
 from silverstrike.rest.permissions import ProtectSystemAccount
+from silverstrike.rest.serializers import (AccountSerializer, CategorySerializer,
+                                           SplitSerializer, TransactionSerializer)
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -24,6 +25,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = SplitSerializer(transactions, many=True, context={'request': request})
         return Response(serializer.data)
 
+
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -33,7 +35,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
 class SplitViewSet(viewsets.ModelViewSet):
     queryset = Split.objects.all()
     serializer_class = SplitSerializer
-    filter_fields = ('date', 'account', 'opposing_account', 'category', 'transaction__date', 'amount')
+    filter_fields = ('date', 'account', 'opposing_account', 'category',
+                     'transaction__date', 'amount')
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
