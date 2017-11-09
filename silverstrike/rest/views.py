@@ -12,7 +12,6 @@ class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     permission_classes = (ProtectSystemAccount,)
-    filter_fields = ('account_type',)
 
     @detail_route()
     def transactions(self, request, pk=None):
@@ -29,14 +28,11 @@ class AccountViewSet(viewsets.ModelViewSet):
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    filter_fields = ('date', 'transaction_type')
 
 
 class SplitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Split.objects.all()
     serializer_class = SplitSerializer
-    filter_fields = ('date', 'account', 'opposing_account', 'category',
-                     'transaction__date', 'amount')
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
