@@ -37,7 +37,12 @@
   <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{{ transaction.amount }}</td>
   <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
   <td class="hidden-xs">{% if transaction.is_system %}None{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
-  <td class="hidden-xs">{{ transaction.category }}</td>
+  <td class="hidden-xs">
+    {% if transaction.category %}
+    <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a></td>
+    {% else %}
+    None
+    {% endif %}
   </tr>
 {% endfor %}
 </table>
