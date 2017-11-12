@@ -4,9 +4,9 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>{{ account|title }}
+<h1>Reconcile
   <small>
-  Reconcile
+    {{ account|title }}
   </small>
 </h1>
 <ol class="breadcrumb">
@@ -20,23 +20,42 @@
 {% block content %}
 <div class="box">
   <div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Current Balance:' %} {{ account.balance }}</h3>
+  <h3 class="box-title">{% trans 'Create reconcile transaction' %}</h3>
 </div>
 <div class="box-body">
     <form method="post" class="form-horizontal">
       {% csrf_token %}
-      {% for field in form %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
-          </label>
-          <div class="col-sm-8">
-          {{ field|add_class:"form-control" }}
-          {% for error in field.errors %}
+      <div class="form-group{% if form.title.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}
+        </label>
+        <div class="col-sm-8">
+          {{ form.title|add_class:"form-control" }}
+          {% for error in form.title.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
         </div>
+      </div>
+      <div class="form-group{% if form.balance.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.balance.id_for_label }}">{{ form.balance.label }}
+        </label>
+        <div class="col-sm-8">
+          {{ form.balance|add_class:"form-control" }}
+          <span class="help-block">Current balance: {{ account.balance }}</span>
+          {% for error in form.balance.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </div>
+      <div class="form-group{% if form.notes.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.notes.id_for_label }}">{{ form.notes.label }}
+        </label>
+        <div class="col-sm-8">
+          {{ form.notes|add_class:"form-control" }}
+          {% for error in form.notes.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
     </form>
 </div>

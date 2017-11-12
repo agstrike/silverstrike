@@ -197,9 +197,9 @@ class RecurringTransactionForm(forms.ModelForm):
 class ReconcilationForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['title', 'current_balance', 'notes']
+        fields = ['title', 'balance', 'notes']
 
-    current_balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True)
+    balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True, label=_('Actual balance'))
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
@@ -211,7 +211,7 @@ class ReconcilationForm(forms.ModelForm):
         transaction.save()
         src = Account.objects.get(account_type=Account.SYSTEM).pk
         dst = Account.objects.get(pk=self.account)
-        balance = self.cleaned_data['current_balance']
+        balance = self.cleaned_data['balance']
         amount = balance - dst.balance
         Split.objects.create(transaction=transaction, amount=-amount,
                              account_id=src, opposing_account=dst, title=transaction.title)
