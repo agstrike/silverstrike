@@ -199,7 +199,8 @@ class ReconcilationForm(forms.ModelForm):
         model = Transaction
         fields = ['title', 'balance', 'notes']
 
-    balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True, label=_('Actual balance'))
+    balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True,
+                                 label=_('Actual balance'))
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
