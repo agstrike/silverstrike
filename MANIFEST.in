@@ -1,0 +1,4 @@
+include *.md
+recursive-include silverstrike *.py *.html
+graft silverstrike/static
+prune silverstrike/tests
