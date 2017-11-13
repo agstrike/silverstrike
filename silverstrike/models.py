@@ -376,4 +376,3 @@ class RecurringTransaction(models.Model):
                     outstanding += t.amount
                 t.update_date()
         return outstanding
-
