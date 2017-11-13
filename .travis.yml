@@ -13,16 +13,16 @@ before_script:
 jobs:
   include:
     - stage: test
-      script: tox -e django_111
-    - script: tox -e django_110
+      script: tox -e django111
+    - script: tox -e django110
     - script: tox -e flake
     - script: tox -e codecov
     - stage: test
       python: 3.5
-      script: tox -e django_111
+      script: tox -e django111
     - stage: test
       python: 3.5
-      script: tox -e django_110
+      script: tox -e django110
     - stage: deploy
       python: 2.7
       before_script: skip
