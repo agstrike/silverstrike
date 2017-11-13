@@ -27,7 +27,7 @@ class Account(models.Model):
     show_on_dashboard = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-show_on_dashboard', 'name']
+        ordering = ['-active', 'name']
 
     def __str__(self):
         return self.name
