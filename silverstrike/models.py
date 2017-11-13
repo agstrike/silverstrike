@@ -1,8 +1,6 @@
 import uuid
 from datetime import date, timedelta
 
-from allauth.account.adapter import DefaultAccountAdapter
-
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
@@ -379,7 +377,3 @@ class RecurringTransaction(models.Model):
                 t.update_date()
         return outstanding
 
-
-class SignupDisabledAdapter(DefaultAccountAdapter):
-    def is_open_for_signup(self, request):
-        return False

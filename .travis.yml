@@ -23,21 +23,3 @@ jobs:
     - stage: test
       python: 3.5
       script: tox -e django110
-    - stage: deploy
-      python: 2.7
-      before_script: skip
-      script: skip
-      before_deploy:
-      - rm demo -rf
-      - mv heroku/requirements.txt .
-      - mv heroku/Procfile .
-      deploy:
-        provider: heroku
-        app: silverstrike 
-        on: master
-        run:
-        - python heroku/manage.py migrate --noinput
-        skip_cleanup: true
-        api_key:
-          secure: qLHqfgmph4dSC0L90WrXOs/F4R9HKM6Jm8kuAAe/QXnpQosYxigVYsyBVrtz+6VSVPUm9s5vyc93jQbLX0zfdNc7Gmj6EfgtT1t+IEOL/5cM9yhjXPGNpEYwEIGxW4e8N2aESiyfjiq9UEzcCElIpIi1l/wXn3wLd1VNdCL2tYAdKxhPMOiJcn2JhuKXdrEpjfLgckoVT19muO1rycvbIk+UrpJ+6IdxT3eAXRw4BACprUy9brvQfEAKTNxiGYFnuNOzt9LgjkaMam6WI6esSVuFv8oao3BYnsJ0XSoVm3IE1zbCDYrmb2t20rUB0F5py+iRxVLinFrIraZ7u26fCD5BZaZ4EHbzcaeSEobLFJG3owVxHmcGYzEotj4A7Je/vg0EqmgbJea/VNVAM9agj3Tezh+cAkbDg+ewhyS71A0csmprXaQgDOmhlORatfArelBhHJMfoD1oAdYF+J+sUTTjxe1NNSvKSVXeJrfRc05LxElfaonLtwVkIgnmfzJSLJ2YW42EMIlxBEQzWMTIZZ76QSixC2U9+sjTgo5hSkkbgP7wgC3z1T/do4ewKRa0hLXLDssj9cCo1J2OrI0PK0zbzMTVErSkhQjreDGxZDITvG/iCqwz/uwNJYpgyG1MGg9C28FR1HCJTT4Hu2+uZJTfiUqb6BvvR76y+TKSgv4=
-
