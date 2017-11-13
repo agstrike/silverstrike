@@ -1,25 +1,19 @@
 sudo: false
 language: python
-python:
-  - 3.6
+python: "3.6"
 notifications:
   on_success: never
   on_failure: never
-branches:
-  except:
-  - heroku
 before_script:
 - pip install tox
-jobs:
+
+matrix:
   include:
-    - stage: test
-      script: tox -e django111
-    - script: tox -e django110
-    - script: tox -e flake
-    - script: tox -e codecov
-    - stage: test
-      python: 3.5
-      script: tox -e django111
-    - stage: test
-      python: 3.5
-      script: tox -e django110
+  - env: TOXENV=django110,django111,flake,codecov
+  - env: TOXENV=djangolatest
+  - python: "3.5"
+    env: TOXENV=django110,django111
+  allow_failures:
+  - env: TOXENV=djangolatest 
+
+script: tox -e $TOXENV
