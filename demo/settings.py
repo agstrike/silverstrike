@@ -142,7 +142,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 # ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
 
 
-"""
+
 LOGGING = {
     'version': 1,
     'filters': {
@@ -156,12 +156,6 @@ LOGGING = {
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
         }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        }
     }
 }
-"""
+
