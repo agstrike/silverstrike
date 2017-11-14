@@ -21,8 +21,8 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         dstart = date.today().replace(day=1)
         dend = last_day_of_month(dstart)
 
-        categories = Split.objects.personal().past().date_range(dstart, dend).values(
-            'category', 'category__name').annotate(spent=Sum('amount'))
+        categories = Split.objects.personal().past().date_range(dstart, dend).order_by(
+            'category').values('category', 'category__name').annotate(spent=Sum('amount'))
 
         categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
 
