@@ -33,7 +33,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 
         context['upcoming_transactions'] = upcoming
         context['upcoming_recurrences'] = recurrences
-        context['transactions'] = Split.objects.personal().past().select_related(
+        context['transactions'] = Split.objects.personal().transfers_once().past().select_related(
             'account', 'opposing_account', 'category', 'transaction')[:10]
         outstanding = 0
         for t in upcoming:
