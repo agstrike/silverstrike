@@ -50,7 +50,7 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_withdraw_with_existing_accounts(self):
         personal = Account.objects.create(name='foo')
-        other = Account.objects.create(name='bar', account_type=Account.EXPENSE)
+        other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
         form = RecurringTransactionForm({
             'amount': 100, 'transaction_type': Transaction.WITHDRAW, 'date': '2100-01-01',
             'src': personal, 'dst': other, 'recurrence': RecurringTransaction.MONTHLY,
@@ -63,7 +63,7 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_deposit_with_existing_accounts(self):
         personal = Account.objects.create(name='foo')
-        other = Account.objects.create(name='bar', account_type=Account.REVENUE)
+        other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
         form = RecurringTransactionForm({
             'amount': 100, 'transaction_type': Transaction.DEPOSIT, 'date': '2100-01-01',
             'src': other, 'dst': personal, 'recurrence': RecurringTransaction.MONTHLY,

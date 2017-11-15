@@ -130,7 +130,7 @@ class WithdrawForm(TransactionForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['destination_account'],
-                                                   account_type=Account.EXPENSE)
+                                                   account_type=Account.FOREIGN)
         self.cleaned_data['destination_account'] = account
         return super().save(commit)
 
@@ -145,7 +145,7 @@ class DepositForm(TransactionForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['source_account'],
-                                                   account_type=Account.REVENUE)
+                                                   account_type=Account.FOREIGN)
         self.cleaned_data['source_account'] = account
         return super().save(commit)
 
@@ -182,9 +182,9 @@ class RecurringTransactionForm(forms.ModelForm):
             src_type = dst_type = Account.PERSONAL
         elif self.cleaned_data['transaction_type'] == Transaction.WITHDRAW:
             src_type = Account.PERSONAL
-            dst_type = Account.EXPENSE
+            dst_type = Account.FOREIGN
         else:
-            src_type = Account.REVENUE
+            src_type = Account.FOREIGN
             dst_type = Account.PERSONAL
         src, _ = Account.objects.get_or_create(name=self.cleaned_data['src'],
                                                account_type=src_type)

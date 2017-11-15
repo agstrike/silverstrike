@@ -49,9 +49,9 @@ class FormTests(TestCase):
             self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
-                account_type=Account.REVENUE)), 1)
+                account_type=Account.FOREIGN)), 1)
             new_account = Account.objects.get(
-                account_type=Account.REVENUE)
+                account_type=Account.FOREIGN)
             self.assertEquals(Split.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
             self.assertTrue(
@@ -78,9 +78,9 @@ class FormTests(TestCase):
             self.assertEquals(len(Split.objects.all()), 2 * i)
             self.assertEquals(len(Account.objects.all()), 4)  # System account is also present
             self.assertEquals(len(Account.objects.filter(
-                account_type=Account.EXPENSE)), 1)
+                account_type=Account.FOREIGN)), 1)
             new_account = Account.objects.get(
-                account_type=Account.EXPENSE)
+                account_type=Account.FOREIGN)
             self.assertTrue(
                 Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
                                   amount=-123, transaction=transaction).is_withdraw)
@@ -107,7 +107,7 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEquals(len(Account.objects.filter(
-            account_type=Account.REVENUE)), 2)
+            account_type=Account.FOREIGN)), 2)
 
     def test_different_expense_accounts(self):
         data = {
@@ -125,7 +125,7 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEquals(len(Account.objects.filter(
-            account_type=Account.EXPENSE)), 2)
+            account_type=Account.FOREIGN)), 2)
 
     def test_transfer_to_same_account(self):
         data = {

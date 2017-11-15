@@ -101,13 +101,13 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         for s in context['transactions']:
             if s.date > today:
                 continue
-            if s.opposing_account.account_type == Account.EXPENSE:
+            if s.amount < 0:
                 expenses += s.amount
-            elif s.opposing_account.account_type == Account.REVENUE:
+            elif s.amount > 0:
                 income += s.amount
-        context['income'] = income
-        context['expenses'] = expenses
-        context['difference'] = context['income'] + context['expenses']
+        context['in'] = income
+        context['out'] = expenses
+        context['difference'] = context['in'] + context['out']
 
         delta = timedelta(days=3)
         if account.account_type == Account.PERSONAL:

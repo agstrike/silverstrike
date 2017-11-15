@@ -44,18 +44,18 @@ class Command(BaseCommand):
         D = Transaction.DEPOSIT
         W = Transaction.WITHDRAW
         T = Transaction.TRANSFER
-        self.work, _ = Account.objects.get_or_create(name='work', account_type=Account.REVENUE)
+        self.work, _ = Account.objects.get_or_create(name='work', account_type=Account.FOREIGN)
 
         self.checking, _ = Account.objects.get_or_create(name='checking', show_on_dashboard=True)
         self.savings, _ = Account.objects.get_or_create(name='savings', show_on_dashboard=True)
 
         self.landlord, _ = Account.objects.get_or_create(
-            name='landlord', account_type=Account.EXPENSE)
+            name='landlord', account_type=Account.FOREIGN)
         self.supermarket, _ = Account.objects.get_or_create(
-            name='supermarket', account_type=Account.EXPENSE)
+            name='supermarket', account_type=Account.FOREIGN)
         self.insurer, _ = Account.objects.get_or_create(
-            name='insurnace', account_type=Account.EXPENSE)
-        self.club, _ = Account.objects.get_or_create(name='club', account_type=Account.EXPENSE)
+            name='insurnace', account_type=Account.FOREIGN)
+        self.club, _ = Account.objects.get_or_create(name='club', account_type=Account.FOREIGN)
 
         self.home, _ = Category.objects.get_or_create(name='home')
         self.groceries, _ = Category.objects.get_or_create(name='groceries')

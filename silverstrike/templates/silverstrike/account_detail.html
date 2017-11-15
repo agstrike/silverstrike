@@ -36,10 +36,10 @@
           <th>Current Balance</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
         </tr>
         <tr>
-          <th>Income</th><td>{{ income }}</td>
+          <th>In</th><td>{{ in }}</td>
         </tr>
         <tr>
-          <th>Expenses</th><td class="text-red">{{ expenses }}</td>
+          <th>Out</th><td class="text-red">{{ out }}</td>
         </tr>
         <tr>
           <th>Difference</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>

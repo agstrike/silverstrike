@@ -68,15 +68,12 @@ def import_firefly(csv_file):
     system_account, _ = Account.objects.get_or_create(name='system', account_type=Account.SYSTEM)
 
     personal_accounts = dict()
-    expense_accounts = dict()
-    revenue_accounts = dict()
+    foreign_accounts = dict()
     for name, id, t in Account.objects.all().values_list('name', 'id', 'account_type'):
         if t == Account.PERSONAL:
             personal_accounts[name] = id
-        elif t == Account.EXPENSE:
-            expense_accounts[name] = id
-        elif t == Account.REVENUE:
-            revenue_accounts[name] = id
+        elif t == Account.FOREIGN:
+            foreign_accounts[name] = id
 
     categories = dict()
     for name, id in Category.objects.all().values_list('name', 'id'):
@@ -108,12 +105,12 @@ def import_firefly(csv_file):
 
         if line[transaction_type] == 'Withdrawal':
             t_type = Transaction.WITHDRAW
-            if line[destination] in expense_accounts:
-                line[destination] = expense_accounts[line[destination]]
+            if line[destination] in foreign_accounts:
+                line[destination] = foreign_accounts[line[destination]]
             else:
                 a = Account.objects.create(name=line[destination],
-                                           account_type=Account.EXPENSE)
-                expense_accounts[a.name] = a.id
+                                           account_type=Account.FOREIGN)
+                foreign_accounts[a.name] = a.id
                 line[destination] = a.id
 
         elif line[transaction_type] == 'Transfer':
@@ -131,12 +128,12 @@ def import_firefly(csv_file):
 
         elif line[transaction_type] == 'Deposit':
             t_type = Transaction.DEPOSIT
-            if line[destination] in revenue_accounts:
-                line[destination] = revenue_accounts[line[destination]]
+            if line[destination] in foreign_accounts:
+                line[destination] = foreign_accounts[line[destination]]
             else:
                 a = Account.objects.create(name=line[destination],
-                                           account_type=Account.REVENUE)
-                revenue_accounts[a.name] = a.id
+                                           account_type=Account.FOREIGN)
+                foreign_accounts[a.name] = a.id
                 line[destination] = a.id
         elif line[transaction_type] == 'Opening balance':
             line[destination] = system_account.id

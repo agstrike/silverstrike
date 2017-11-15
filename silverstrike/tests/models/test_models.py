@@ -16,12 +16,10 @@ class ModelTests(TestCase):
         self.assertEquals(response.context['account'], account)
 
     def test_account_type_str_method(self):
-        account = Account.objects.create(name="first", account_type=Account.PERSONAL)
+        account = Account.objects.create(name='first')
         self.assertEquals(account.account_type_str, 'Personal')
-        account.account_type = Account.EXPENSE
-        self.assertEquals(account.account_type_str, 'Expense')
-        account.account_type = Account.REVENUE
-        self.assertEquals(account.account_type_str, 'Revenue')
+        account.account_type = Account.FOREIGN
+        self.assertEquals(account.account_type_str, 'Foreign')
         account.account_type = Account.SYSTEM
         self.assertEquals(account.account_type_str, 'System')
 
@@ -47,7 +45,7 @@ class ModelTests(TestCase):
     def test_transaction_str_method(self):
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", account_type=Account.EXPENSE)
+            name="some_account", account_type=Account.FOREIGN)
         transaction = Transaction.objects.create(title="transaction",
                                                  transaction_type=Transaction.WITHDRAW)
         self.assertEquals(str(transaction), transaction.title)
@@ -66,7 +64,7 @@ class ModelTests(TestCase):
 
         account = Account.objects.create(name="some_account")
         expense = Account.objects.create(
-            name="some_account", account_type=Account.EXPENSE)
+            name="some_account", account_type=Account.FOREIGN)
         transaction = Transaction.objects.create(title="transaction",
                                                  transaction_type=Transaction.WITHDRAW)
         t = Split.objects.create(

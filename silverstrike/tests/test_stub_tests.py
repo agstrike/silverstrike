@@ -12,9 +12,9 @@ class AccountIndexViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.EXPENSE)
+            name="expense account", account_type=Account.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.REVENUE)
+            name="revenue account", account_type=Account.FOREIGN)
 
     def test_ChartView(self):
         # TODO

@@ -17,9 +17,9 @@ class AbstractAccountViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.EXPENSE)
+            name="expense account", account_type=Account.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.REVENUE)
+            name="revenue account", account_type=Account.FOREIGN)
 
 
 class AccountDetailViewTests(AbstractAccountViewTests):
@@ -38,16 +38,16 @@ class AccountDetailViewTests(AbstractAccountViewTests):
     def test_correct_income(self):
         create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['expenses'], 0)
-        self.assertEquals(context['income'], 100)
+        self.assertEquals(context['out'], 0)
+        self.assertEquals(context['in'], 100)
         self.assertEquals(context['difference'], 100)
         self.assertEquals(context['balance'], 100)
 
     def test_correct_expenses(self):
         create_transaction('meh', self.account, self.expense, 100, Transaction.WITHDRAW)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['expenses'], -100)
-        self.assertEquals(context['income'], 0)
+        self.assertEquals(context['out'], -100)
+        self.assertEquals(context['in'], 0)
         self.assertEquals(context['difference'], -100)
         self.assertEquals(context['balance'], -100)
 
@@ -55,8 +55,8 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
         create_transaction('meh', self.account, self.expense, 50, Transaction.WITHDRAW)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['expenses'], -50)
-        self.assertEquals(context['income'], 100)
+        self.assertEquals(context['out'], -50)
+        self.assertEquals(context['in'], 100)
         self.assertEquals(context['difference'], 50)
         self.assertEquals(context['balance'], 50)
 

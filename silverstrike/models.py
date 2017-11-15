@@ -13,11 +13,13 @@ class Account(models.Model):
     REVENUE = 2
     EXPENSE = 3
     SYSTEM = 4
+    FOREIGN = 5
     ACCOUNT_TYPES = (
         (PERSONAL, _('Personal')),
         (REVENUE, _('Revenue')),
         (EXPENSE, _('Expense')),
         (SYSTEM, _('System')),
+        (FOREIGN, _('Foreign')),
     )
 
     name = models.CharField(max_length=64)
@@ -145,10 +147,10 @@ class SplitQuerySet(models.QuerySet):
         return self.filter(account__account_type=Account.PERSONAL)
 
     def income(self):
-        return self.filter(opposing_account__account_type=Account.REVENUE)
+        return self.filter(opposing_account__account_type=Account.FOREIGN, amount__gt=0)
 
     def expense(self):
-        return self.filter(opposing_account__account_type=Account.EXPENSE)
+        return self.filter(opposing_account__account_type=Account.FOREIGN, amount__lt=0)
 
     def date_range(self, dstart, dend):
         return self.filter(date__gte=dstart, date__lte=dend)
