@@ -109,6 +109,7 @@
               ticks: {
                 autoSkip: false,
               },
+              maxBarThickness: 80,
             }]
         },
         legend: {
@@ -118,20 +119,19 @@
       data: {
           labels: [
           {% for f in form %}
-          "{{ f.category_name.value }}",
+          {% if f.left.value != 0 %}"{{ f.category_name.value }}",{% endif %}
           {% endfor %}
-
           ],
 
           datasets: [{
               backgroundColor: [
                 {% for f in form %}
-                  {% if f.left.value < 0 %}colors[6]{% else %}colors[0]{% endif %},
+                  {% if f.left.value < 0 %}colors[6],{% elif f.left.value > 0 %}colors[0],{% endif %}
                 {% endfor %}
               ],
               data: [
                 {% for f in form %}
-                {{ f.left.value }},
+                {% if f.left.value != 0 %}{{ f.left.value }},{% endif %}
                 {% endfor %}
               ],
           }]
