@@ -1,8 +1,6 @@
 from datetime import date
-from itertools import groupby
 
 from django import forms
-from django.forms.models import ModelChoiceField, ModelChoiceIterator, ModelMultipleChoiceField
 from django.utils.translation import ugettext as _
 
 from .models import (Account, Budget, Category, ImportConfiguration, ImportFile,
