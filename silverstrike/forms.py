@@ -226,63 +226,14 @@ class ReconcilationForm(forms.ModelForm):
             self.add_error('current_balance', 'You provided the same balance!')
 
 
-class Grouped(object):
-    def __init__(self, queryset, group_by_field,
-                 group_label=None, *args, **kwargs):
-        """
-        ``group_by_field`` is the name of a field on the model to use as
-                           an optgroup.
-        ``group_label`` is a function to return a label for each optgroup.
-        """
-        queryset = queryset.order_by(group_by_field)
-        super(Grouped, self).__init__(queryset, *args, **kwargs)
-        self.group_by_field = group_by_field
-        if group_label is None:
-            self.group_label = lambda group: group
-        else:
-            self.group_label = group_label
-
-    def _get_choices(self):
-        if hasattr(self, '_choices'):
-            return self._choices
-        return GroupedModelChoiceIterator(self)
-
-
-class GroupedModelChoiceIterator(ModelChoiceIterator):
-    def __iter__(self):
-        if self.field.empty_label is not None:
-            yield ("", self.field.empty_label)
-        queryset = self.queryset.all()
-        if not queryset._prefetch_related_lookups:
-            queryset = queryset.iterator()
-        for group, choices in groupby(self.queryset.all(),
-                                      key=lambda row: getattr(row, self.field.group_by_field)):
-            if self.field.group_label(group):
-                yield (
-                    self.field.group_label(group),
-                    [self.choice(ch) for ch in choices]
-                )
-
-
-class GroupedModelChoiceField(Grouped, ModelChoiceField):
-    choices = property(Grouped._get_choices, ModelChoiceField._set_choices)
-
-
-class GroupedModelMultiChoiceField(Grouped, ModelMultipleChoiceField):
-    choices = property(Grouped._get_choices, ModelMultipleChoiceField._set_choices)
-
-
 class SplitForm(forms.ModelForm):
     class Meta:
         model = Split
         exclude = ['transaction', 'id']
-    account = GroupedModelChoiceField(queryset=Account.objects.exclude(account_type=Account.SYSTEM),
-                                      group_by_field='account_type',
-                                      group_label=lambda type: Account.ACCOUNT_TYPES[type - 1][1])
-    opposing_account = GroupedModelChoiceField(
-        queryset=Account.objects.exclude(account_type=Account.SYSTEM),
-        group_by_field='account_type',
-        group_label=lambda type: Account.ACCOUNT_TYPES[type - 1][1])
+    source_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
+        account_type=Account.SYSTEM))
+    destination_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
+        account_type=Account.SYSTEM))
 
 
 TransactionFormSet = forms.models.inlineformset_factory(
