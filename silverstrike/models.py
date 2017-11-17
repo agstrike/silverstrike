@@ -111,8 +111,8 @@ class Transaction(models.Model):
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
-    recurrence = models.ForeignKey('RecurringTransaction', related_name='recurrences',
-                                   blank=True, null=True)
+    recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
+                                   related_name='recurrences', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -180,7 +180,8 @@ class Split(models.Model):
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
-    category = models.ForeignKey('Category', blank=True, null=True, related_name='splits')
+    category = models.ForeignKey('Category', models.SET_NULL, blank=True, null=True,
+                                 related_name='splits')
     transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
                                     blank=True, null=True)
 
@@ -239,7 +240,7 @@ class BudgetQuerySet(models.QuerySet):
 
 
 class Budget(models.Model):
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, models.CASCADE)
     month = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
@@ -274,7 +275,7 @@ class ImportConfiguration(models.Model):
 
     name = models.CharField(max_length=64)
     headers = models.BooleanField(help_text=_('First line contains headers'))
-    default_account = models.ForeignKey(Account,
+    default_account = models.ForeignKey(Account, models.SET_NULL,
                                         limit_choices_to={'account_type': Account.PERSONAL},
                                         null=True, blank=True)
     dateformat = models.CharField(max_length=32)
@@ -313,11 +314,12 @@ class RecurringTransaction(models.Model):
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    src = models.ForeignKey(Account)
-    dst = models.ForeignKey(Account, related_name='opposing_recurring_transactions')
+    src = models.ForeignKey(Account, models.CASCADE)
+    dst = models.ForeignKey(Account, models.CASCADE,
+                            related_name='opposing_recurring_transactions')
     recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
     transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
-    category = models.ForeignKey(Category, null=True, blank=True)
+    category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.title
