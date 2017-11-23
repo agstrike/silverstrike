@@ -22,14 +22,6 @@
   </div>
 </div>
 <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Overview</h3>
-  </div>
-  <div class="box-body">
-    <center><canvas id="budgetChart"></canvas></center>
-  </div>
-</div>
-<div class="box">
   <form method="post">
     {% csrf_token %}
     {{ form.management_form }}
@@ -70,72 +62,4 @@
   </div>
   </form>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
-<script type="text/javascript">
-  var colors =
-    ['#357ca5',
-     '#008d4c',
-     '#db8b0b',
-     '#ca195a',
-     '#555299',
-     '#4285f4',
-     '#db4437',
-     '#f4b400',
-     '#0f9d58',
-     '#ab47bc',
-     '#00acc1',
-     '#ff7043',
-     '#9e9d24',
-     '#5c6bc0',
-     '#f06292',
-     '#00796b',
-     '#c2185b'
-  ];
-  var ctx = document.getElementById("budgetChart").getContext('2d');
-  var historyChart = new Chart(ctx, {
-      type: 'bar',
-      options: {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                }
-            }],
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-              },
-              maxBarThickness: 80,
-            }]
-        },
-        legend: {
-          position: 'none',
-        }
-      },
-      data: {
-          labels: [
-          {% for f in form %}
-          {% if f.left.value != 0 %}"{{ f.category_name.value }}",{% endif %}
-          {% endfor %}
-          ],
-
-          datasets: [{
-              backgroundColor: [
-                {% for f in form %}
-                  {% if f.left.value < 0 %}colors[6],{% elif f.left.value > 0 %}colors[0],{% endif %}
-                {% endfor %}
-              ],
-              data: [
-                {% for f in form %}
-                {% if f.left.value != 0 %}{{ f.left.value }},{% endif %}
-                {% endfor %}
-              ],
-          }]
-      }
-  });
-</script>
 {% endblock %}
