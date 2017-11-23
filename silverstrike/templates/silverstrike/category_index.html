@@ -34,16 +34,14 @@
         <th>Money spent</th>
       </tr>
       {% for category in categories %}
+      {% if category.0 %}
       <tr>
         <td>
-          {% if category.0 %}
           <a href="{% url 'category_detail' category.0 %}" >{{ category.1 }}</a>
-          {% else %}
-          {% trans 'Without category' %}
-          {% endif %}
         </td>
         <td>{{ category.2 }}</td>
       </tr>
+      {% endif %}
       {% endfor %}
     </table>
   </div>
