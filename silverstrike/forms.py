@@ -227,10 +227,10 @@ class ReconcilationForm(forms.ModelForm):
 class SplitForm(forms.ModelForm):
     class Meta:
         model = Split
-        exclude = ['transaction', 'id']
-    source_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
+        fields = ['title', 'account', 'opposing_account', 'date', 'amount', 'category']
+    account = forms.ModelChoiceField(queryset=Account.objects.exclude(
         account_type=Account.SYSTEM))
-    destination_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
+    opposing_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
         account_type=Account.SYSTEM))
 
 
