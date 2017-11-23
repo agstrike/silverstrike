@@ -15,10 +15,17 @@ from silverstrike.models import Account, Category, Split
 class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
     template_name = 'silverstrike/category_index.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if 'month' in kwargs:
+            self.month = datetime.strptime(kwargs.get('month'), '%Y%m').date()
+        else:
+            self.month = date.today().replace(day=1)
+        return super(CategoryIndex, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'categories'
-        dstart = date.today().replace(day=1)
+        dstart = self.month
         dend = last_day_of_month(dstart)
 
         categories = Split.objects.personal().past().date_range(dstart, dend).order_by(
@@ -33,6 +40,9 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         for id, name in all_categories:
             categories.append((id, name, 0))
         context['categories'] = categories
+        context['month'] = self.month
+        context['next_month'] = self.month + relativedelta(months=1)
+        context['previous_month'] = self.month - relativedelta(months=1)
         return context
 
 
@@ -59,22 +69,24 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
     model = Category
     context_object_name = 'category'
 
+    def dispatch(self, request, *args, **kwargs):
+        if 'month' in kwargs:
+            self.current_month = datetime.strptime(kwargs.get('month'), '%Y%m').date()
+        else:
+            self.current_month = date.today().replace(day=1)
+        return super(CategoryDetailView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
-
-        if 'month' in self.kwargs:
-            current_month = datetime.strptime(self.kwargs.get('month'), '%Y%m').date()
-        else:
-            current_month = date.today().replace(day=1)
-
-        next_month = current_month + relativedelta(months=1)
-        two_months_ago = current_month - relativedelta(months=2)
-        last_month = current_month - relativedelta(months=1)
+        next_month = self.current_month + relativedelta(months=1)
+        two_months_ago = self.current_month - relativedelta(months=2)
+        last_month = self.current_month - relativedelta(months=1)
         splits = context['category'].splits.filter(account__account_type=Account.PERSONAL,
-                                                   date__gte=current_month, date__lt=next_month)
+                                                   date__gte=self.current_month,
+                                                   date__lt=next_month)
         last_two_months_splits = context['category'].splits.filter(
             account__account_type=Account.PERSONAL,
-            date__gte=two_months_ago, date__lt=current_month)
+            date__gte=two_months_ago, date__lt=self.current_month)
         sum_last_month = 0
         sum_two_months_ago = 0
         for s in last_two_months_splits:
@@ -104,9 +116,9 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
         context['account_spending'] = dict(account_spending)
         context['destination_spending'] = dict(destination_spending)
 
-        context['current_month'] = current_month
+        context['current_month'] = self.current_month
         context['previous_month'] = last_month
-        context['next_month'] = current_month + relativedelta(months=1)
+        context['next_month'] = self.current_month + relativedelta(months=1)
         context['month_before'] = two_months_ago
 
         return context
