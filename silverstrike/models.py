@@ -54,7 +54,7 @@ class Account(models.Model):
         return self.balance_on(date.today())
 
     def balance_on(self, date):
-        return Split.objects.filter(account=self, transaction__date__lte=date).aggregate(
+        return Split.objects.filter(account=self, date__lte=date).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
 
     def get_absolute_url(self):
