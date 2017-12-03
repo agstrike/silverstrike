@@ -40,8 +40,6 @@
   <td class="hidden-xs">
     {% if transaction.category %}
     <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a></td>
-    {% else %}
-    None
     {% endif %}
   </tr>
 {% endfor %}
