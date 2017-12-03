@@ -23,6 +23,9 @@
   <tr>
     <th>Date</th><td>{{ transaction.date }}</td>
   </tr>
+  <tr>
+    <th>{% trans 'Total amount' %}</th><td>{{ transaction.amount }}</td>
+  </tr>
   {% if transaction.notes %}
   <tr><th>{% trans 'Notes' %}</th><td>{{ transaction.notes }}</td></tr>
   {% endif %}

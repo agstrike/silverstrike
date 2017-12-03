@@ -127,11 +127,11 @@ class Transaction(models.Model):
 
     @property
     def amount(self):
-        """
-        TODO that means that transfers dont have an amount?
-        """
-        return self.splits.filter(account__account_type=Account.PERSONAL).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0
+        if self.transaction_type == Transaction.TRANSFER:
+            splits = self.splits.transfers_once()
+        else:
+            splits = self.splits.personal()
+        return splits.aggregate(models.Sum('amount'))['amount__sum'] or 0
 
     @property
     def is_split(self):
