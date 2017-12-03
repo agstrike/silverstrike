@@ -84,7 +84,7 @@
 <tr>
   <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
   <td>{{ transaction.transaction.date }}</td>
-  <td{% if transaction.amount < 0 %} class="text-red"{% endif %}>{{ transaction.amount }}</td>
+  <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
   <td class="hidden-xs">{% if transaction.is_system %}Reconcilation{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">
     {% if transaction.category %}
