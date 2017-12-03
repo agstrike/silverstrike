@@ -1,4 +1,6 @@
 # SilverStrike
+
+[![Join the chat at https://gitter.im/agstrike/silverstrike](https://badges.gitter.im/agstrike/silverstrike.svg)](https://gitter.im/agstrike/silverstrike?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/agstrike/silverstrike.svg?branch=master)](https://travis-ci.org/agstrike/silverstrike)
 [![codecov](https://codecov.io/gh/agstrike/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/agstrike/silverstrike)
 
