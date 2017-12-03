@@ -25,14 +25,23 @@
   <tr>
     <th>Next expected ocurrence</th><td>{{ recurrence.date }}</td>
   </tr>
+  <tr>
+    <th>{% trans 'Source' %}</th><td><a href="{{ recurrence.src.get_absolute_url }}">{{ recurrence.src }}</a></td>
+  </tr>
+  <tr>
+    <th>{% trans 'Destination' %}</th><td><a href="{{ recurrence.dst.get_absolute_url }}">{{ recurrence.dst }}</a></td>
+  </tr>
+  <tr>
+    <th>{% trans 'Amount' %}</th><td{% if recurrence.is_deposit %} class="text-green"{% elif recurrence.is_withdraw %} class="text-red"{% endif %}>{{ recurrence.amount }}</td>
+  </tr>
+  {% if recurrence.category %}
   <tr><th>{% trans 'Category' %}</th><td>
-    {% if recurrence.category %}
     <a href="{{ recurrence.category.get_absolute_url }}">{{ recurrence.category }}</a>
-    {% else %}
-    {{ recurrence.category }}
-    {% endif %}
   </td></tr>
+  {% endif %}
+  {% if recurrence.notes %}
   <tr><th>{% trans 'Notes' %}</th><td>{{ recurrence.notes }}</td></tr>
+  {% endif %}
 </table>
 </div>
 <div class="box-footer">
