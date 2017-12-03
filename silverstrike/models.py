@@ -141,6 +141,18 @@ class Transaction(models.Model):
     def is_system(self):
         return self.transaction_type == self.SYSTEM
 
+    @property
+    def is_transfer(self):
+        return self.transaction_type == self.TRANSFER
+
+    @property
+    def is_withdraw(self):
+        return self.transaction_type == self.WITHDRAW
+
+    @property
+    def is_deposit(self):
+        return self.transaction_type == self.DEPOSIT
+
 
 class SplitQuerySet(models.QuerySet):
     def personal(self):

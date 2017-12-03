@@ -24,7 +24,7 @@
     <th>Date</th><td>{{ transaction.date }}</td>
   </tr>
   <tr>
-    <th>{% trans 'Total amount' %}</th><td>{{ transaction.amount }}</td>
+    <th>{% trans 'Total amount' %}</th><td{% if transaction.is_withdraw %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
   </tr>
   {% if transaction.notes %}
   <tr><th>{% trans 'Notes' %}</th><td>{{ transaction.notes }}</td></tr>
@@ -63,7 +63,7 @@
     <td>{{ split.title }}</td>
     <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>
     <td><a href="{{ split.opposing_account.get_absolute_url }}">{{ split.opposing_account }}</a></td>
-    <td>{{ split.amount }}</td>
+    <td{% if split.is_withdraw %} class="text-red"{% elif split.is_deposit %} class="text-green"{% endif %}>{{ split.amount }}</td>
     <td>{{ split.date }}</td>
     <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% else %}None{% endif %}</td>
   </tr>
