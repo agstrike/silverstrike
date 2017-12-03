@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
+{% load tags %}
 
 {% block content_header %}
 <h1>{{ transaction.title }}</h1>
@@ -63,7 +64,9 @@
     <td>{{ split.title }}</td>
     <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>
     <td><a href="{{ split.opposing_account.get_absolute_url }}">{{ split.opposing_account }}</a></td>
-    <td{% if split.is_withdraw %} class="text-red"{% elif split.is_deposit %} class="text-green"{% endif %}>{{ split.amount }}</td>
+    <td{% if split.is_withdraw %} class="text-red"{% elif split.is_deposit %} class="text-green"{% endif %}>
+      {% if split.is_transfer %}{{ split.amount|negate }}{% else %}{{ split.amount }}{% endif %}
+    </td>
     <td>{{ split.date }}</td>
     <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% else %}None{% endif %}</td>
   </tr>

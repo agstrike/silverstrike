@@ -128,10 +128,10 @@ class Transaction(models.Model):
     @property
     def amount(self):
         if self.transaction_type == Transaction.TRANSFER:
-            splits = self.splits.transfers_once()
+            return abs(
+                self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
         else:
-            splits = self.splits.personal()
-        return splits.aggregate(models.Sum('amount'))['amount__sum'] or 0
+            return self.splits.personal().aggregate(models.Sum('amount'))['amount__sum'] or 0
 
     @property
     def is_split(self):
