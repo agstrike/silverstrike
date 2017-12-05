@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 18:40-0500\n"
+"PO-Revision-Date: 2017-12-05 18:50-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -181,69 +181,75 @@ msgstr "添加电子邮件地址"
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
-msgstr ""
+msgstr "添加电子邮件地址"
 
 #: templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr ""
+msgstr "是否确实要删除所选的电子邮件地址？"
 
 #: templates/account/email/email_confirmation_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account.\n\n"
 "To confirm this is correct, go to %(activate_url)s\n"
-msgstr ""
+msgstr "%(site_name)s 向您问好!\n\n"
+"您收到此电子邮件是因为用户 %(user_display)s 已将您的电子邮件地址作为连接他们帐户的邮箱。\n\n"
+"要确认这是正确的, 请查阅 %(activate_url)s\n"
 
 #: templates/account/email/email_confirmation_message.txt:7
 #, python-format
 msgid "Thank you from %(site_name)s!\n"
 "%(site_domain)s"
-msgstr ""
+msgstr "%(site_name)s! 向您致谢！\n"
+"%(site_domain)s"
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr ""
+msgstr "请确认您的电子邮件地址"
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr ""
+msgstr "%(site_name)s 向您问好!\n\n"
+"您收到此电子邮件是因为您或其他人已为您的用户帐户请求密码重置。\n"
+"如果您没有请求密码重置, 则可以安全地忽略它。单击下面的链接以重置您的密码。"
 
 #: templates/account/email/password_reset_key_message.txt:8
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr ""
+msgstr "万一你忘了, 你的用户名是 %(username)s。"
 
 #: templates/account/email/password_reset_key_message.txt:10
 #, python-format
 msgid "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
-msgstr ""
+msgstr "感谢您使用 %(site_name)s!\n"
+"%(site_domain)s"
 
 #: templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr ""
+msgstr "密码重设电子邮件"
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr ""
+msgstr "确认电子邮件地址"
 
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr ""
+msgstr "请确认<a href=\"mailto:%(email)s\">%(email)s</a> 是用户 %(user_display)s 的电子邮件地址。"
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: templates/account/email_confirm.html:27
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr ""
+msgstr "此电子邮件确认链接已过期或无效。请 <a href=\"%(email_url)s\"> 发布一个新的电子邮件确认请求 request</a>。"
 
 #: templates/account/login.html:17
 #, python-format
@@ -453,7 +459,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -464,7 +470,7 @@ msgstr ""
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr ""
+msgstr "删除"
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -477,7 +483,7 @@ msgstr ""
 #: templates/silverstrike/index.html:11
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr ""
+msgstr "首页"
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -487,71 +493,71 @@ msgstr ""
 #: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:102
 #: templates/silverstrike/index.html:66
 msgid "Accounts"
-msgstr ""
+msgstr "帐户"
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr ""
+msgstr "上一个"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr ""
+msgstr "下一个"
 
 #: templates/silverstrike/account_detail.html:36
 msgid "Current Balance"
-msgstr ""
+msgstr "当前余额"
 
 #: templates/silverstrike/account_detail.html:39
 msgid "In"
-msgstr ""
+msgstr "里"
 
 #: templates/silverstrike/account_detail.html:42
 msgid "Out"
-msgstr ""
+msgstr "外"
 
 #: templates/silverstrike/account_detail.html:45
 #: templates/silverstrike/index.html:30 templates/silverstrike/index.html:59
 msgid "Difference"
-msgstr ""
+msgstr "差额"
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/category_detail.html:36
 #: templates/silverstrike/recurringtransaction_detail.html:50
 #: templates/silverstrike/transaction_detail.html:40
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: templates/silverstrike/account_detail.html:53
 msgid "Reconcile"
-msgstr ""
+msgstr "对帐"
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr ""
+msgstr "交易列表"
 
 #: templates/silverstrike/account_detail.html:71
 msgid "Show all"
-msgstr ""
+msgstr "显示全部"
 
 #: templates/silverstrike/account_detail.html:88
 msgid "Reconcilation"
-msgstr ""
+msgstr "和解"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr ""
+msgstr "更新 %(object.name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr ""
+msgstr "创建新帐户"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -562,18 +568,18 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr ""
+msgstr "帐户详细资料"
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -584,62 +590,62 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr ""
+msgstr "创建"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:72
 #: templates/silverstrike/index.html:87
 msgid "Balance"
-msgstr ""
+msgstr "余额"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr ""
+msgstr "活动"
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr ""
+msgstr "新取款业务"
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr ""
+msgstr "新存款"
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr ""
+msgstr "新转账"
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr ""
+msgstr "新拆分交易"
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr ""
+msgstr "个人资料"
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr ""
+msgstr "注销"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr ""
+msgstr "主要导航"
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr ""
+msgstr "交易记录"
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr ""
+msgstr "复发"
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -648,55 +654,55 @@ msgstr ""
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr ""
+msgstr "类别"
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr ""
+msgstr "预算"
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr ""
+msgstr "图表"
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
-msgstr ""
+msgstr "导入和导出"
 
 #: templates/silverstrike/base.html:143
 msgid "Import"
-msgstr ""
+msgstr "导入"
 
 #: templates/silverstrike/base.html:146
 msgid "Export"
-msgstr ""
+msgstr "导出"
 
 #: templates/silverstrike/base.html:165
 msgid "<b>Version</b> 0.1"
-msgstr ""
+msgstr "<b>版本</b>"
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
-msgstr ""
+msgstr "预算对象 "
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr ""
+msgstr "已分配"
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr ""
+msgstr "已花销"
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
-msgstr ""
+msgstr "左侧"
 
 #: templates/silverstrike/budget_index.html:65
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "\n"
@@ -707,55 +713,55 @@ msgstr ""
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr ""
+msgstr "概述"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr ""
+msgstr "显示所有交易记录"
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
-msgstr ""
+msgstr "按来源分布"
 
 #: templates/silverstrike/category_detail.html:76
 msgid "Distribution by Destination"
-msgstr ""
+msgstr "按目的地分布"
 
 #: templates/silverstrike/category_form.html:10
 msgid "Create new category"
-msgstr ""
+msgstr "新建分类"
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr ""
+msgstr "类别详细信息"
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
-msgstr ""
+msgstr "按类别分布"
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
-msgstr ""
+msgstr "因为他们很有趣!"
 
 #: templates/silverstrike/charts.html:18
 msgid "Last year"
-msgstr ""
+msgstr "去年"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr ""
+msgstr "过去6个月"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr ""
+msgstr "过去3个月"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr ""
+msgstr "当前月份"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr ""
+msgstr "个人账户"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
@@ -791,11 +797,11 @@ msgstr ""
 
 #: templates/silverstrike/index.html:48
 msgid "Previous Month"
-msgstr ""
+msgstr "上个月"
 
 #: templates/silverstrike/index.html:96
 msgid "Upcoming Transactions"
-msgstr ""
+msgstr "即将进行的交易"
 
 #: templates/silverstrike/index.html:120
 msgid "Upcoming Recurrences"
