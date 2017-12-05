@@ -90,12 +90,12 @@
   <canvas id="myChart" width="450" height="250"></canvas>
 </div>
 </div>
+{% if upcoming_transactions %}
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Upcoming Transactions' %}</h3>
 </div>
 <div class="box-body">
-{% if upcoming_transactions %}
 <table class="table table-striped">
   <tr>
     <th>Title</th>
@@ -112,13 +112,9 @@
   </tr>
   {% endfor %}
 </table>
-{% else %}
-<p>
-{% trans 'No upcoming transactions' %}
-</p>
+</div>
+</div>
 {% endif %}
-</div>
-</div>
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Upcoming Recurrences' %}</h3>
