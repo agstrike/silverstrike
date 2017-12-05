@@ -5,8 +5,8 @@
 {% block content_header %}
 <h1>Categories</h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Categories</li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Categories' %}</li>
 </ol>
 {% endblock %}
 
@@ -14,9 +14,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'categories_month' previous_month|date:'Ym' %}" class="btn btn-xs btn-default">Previous</a>
+      <a href="{% url 'categories_month' previous_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
       <span>{{ month|date:'F Y'}}</span>
-      <a href="{% url 'categories_month' next_month|date:'Ym' %}" class="btn btn-xs btn-default">Next</a>
+      <a href="{% url 'categories_month' next_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
     </div>
   </div>
 </div>
@@ -39,8 +39,8 @@
   <div class="box-body no-padding">
     <table class="table table-striped">
       <tr>
-        <th>Name</th>
-        <th>Money spent</th>
+        <th>{% trans 'Name' %}</th>
+        <th>{% trans 'Money spent' %}</th>
       </tr>
       {% for category in categories %}
       {% if category.0 %}

@@ -15,9 +15,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'budget_month' previous_month|date:'Ym' %}" class="btn btn-xs btn-default">Previous</a>
+      <a href="{% url 'budget_month' previous_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
       <span>{{ month|date:'F Y'}}</span>
-      <a href="{% url 'budget_month' next_month|date:'Ym' %}" class="btn btn-xs btn-default">Next</a>
+      <a href="{% url 'budget_month' next_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
     </div>
   </div>
 </div>
@@ -32,9 +32,9 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th class="col-md-6">Name</th>
-          <th class="col-md-2">Allocated</th>
-          <th class="col-md-2">Money spent</th>
+          <th class="col-md-6">{% trans 'Name' %}</th>
+          <th class="col-md-2">{% trans 'Allocated' %}</th>
+          <th class="col-md-2">{% trans 'Money spent' %}</th>
           <th class="col-md-2">{% trans 'Left' %}</th>
         </tr>
       </thead>

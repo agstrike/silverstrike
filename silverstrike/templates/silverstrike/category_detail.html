@@ -7,8 +7,8 @@
   <small>{{ month|date:'F Y'}}</small>
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'categories' %}">Categories</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'categories' %}">{% trans 'Categories' %}</a></li>
   <li class="active">{{ category.name|title }}</li>
 </ol>
 {% endblock %}
@@ -17,9 +17,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'category_month' category.id previous_month|date:'Ym' %}" class="btn btn-xs btn-default">Previous</a>
+      <a href="{% url 'category_month' category.id previous_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
       <span>{{ current_month|date:'F Y'}}</span>
-      <a href="{% url 'category_month' category.id next_month|date:'Ym' %}" class="btn btn-xs btn-default">Next</a>
+      <a href="{% url 'category_month' category.id next_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
     </div>
   </div>
 </div>
@@ -27,7 +27,7 @@
   <div class="col-md-8">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Overview</h3>
+        <h3 class="box-title">{% trans 'Overview' %}</h3>
       </div>
       <div class="box-body">
         <center><canvas id="historyChart"></canvas></center>
@@ -39,14 +39,14 @@
     </div>
     <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Transactions</h3>
+    <h3 class="box-title">{% trans 'Transactions' %}</h3>
   </div>
   <div class="box-body">
     <table class="table">
       <tr>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Amount</th>
+        <th>{% trans 'Title' %}</th>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Amount' %}</th>
       </tr>
       {% for split in splits %}
       <tr>
@@ -65,7 +65,7 @@
   <div class="col-md-4">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Distribution by Source</h3>
+        <h3 class="box-title">{% trans 'Distribution by Source' %}</h3>
       </div>
       <div class="box-body">
         <center><canvas id="myChart"></canvas></center>
@@ -73,7 +73,7 @@
     </div>
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Distribution by Destination</h3>
+        <h3 class="box-title">{% trans 'Distribution by Destination' %}</h3>
       </div>
       <div class="box-body">
         <center><canvas id="destinationChart"></canvas></center>

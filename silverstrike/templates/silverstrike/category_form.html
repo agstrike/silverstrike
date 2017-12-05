@@ -11,8 +11,8 @@
   {% endif %}
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'categories' %}">Categories</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'categories' %}">{% trans 'Categories' %}</a></li>
   {% if object %}
   <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
   <li class="active">{% trans 'Update' %}</li>

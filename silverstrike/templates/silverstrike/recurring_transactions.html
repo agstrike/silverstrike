@@ -6,11 +6,11 @@
 
 
 {% block content_header %}
-<h1>Recurring Transactions
+<h1>{% trans 'Recurring Transactions' %}
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Recurrences</li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Recurrences' %}</li>
 </ol>
 {% endblock %}
 
@@ -23,12 +23,12 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th class="hidden-xs">Source Account</th>
-    <th class="hidden-xs">Destination Account</th>
-    <th class="hidden-xs">Recurrance</th>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th class="hidden-xs">{% trans 'Source Account' %}</th>
+    <th class="hidden-xs">{% trans 'Destination Account' %}</th>
+    <th class="hidden-xs">{% trans 'Recurrance' %}</th>
   </tr>
 {% for transaction in transactions %}
 <tr>
@@ -54,7 +54,7 @@
             {% for _ in ''|center:page_obj.paginator.num_pages %}
             {% if forloop.counter == page_obj.number %}
             <option selected="">
-            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            {{ page_obj.number }}
             </option>
             {% else %}
             <option>

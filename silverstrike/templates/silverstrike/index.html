@@ -4,11 +4,11 @@
 {% load tags %}
 
 {% block content_header %}
-<h1>Home
-  <small>All imporant stuff</small>
+<h1>{% trans 'Home' %}
+  <small>{% trans 'All imporant stuff' %}</small>
 </h1>
 <ol class="breadcrumb">
-  <li class="active">Home</li>
+  <li class="active">{% trans 'Home' %}</li>
 </ol>
 {% endblock %}
 {% block content %}
@@ -16,28 +16,28 @@
 <div class="col-md-4 col-md-push-8">
 <div class="box">
 <div class="box-header with-boarder">
-  <h3 class="box-title">Quick Overview</h3>
+  <h3 class="box-title">{% trans 'Quick Overview' %}</h3>
 </div>
 <div class="box-content">
   <table class="table">
     <tr>
-      <th>Income</th><td>{{ income }}</td>
+      <th>{% trans 'Income' %}</th><td>{{ income }}</td>
     </tr>
     <tr>
-      <th>Expenses</th><td class="text-red">{{ expenses }}</td>
+      <th>{% trans 'Expenses' %}</th><td class="text-red">{{ expenses }}</td>
     </tr>
     <tr>
-      <th>Difference</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
+      <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
     </tr>
     <tr>
-    <th>Total Balance</th><th class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</th>
+    <th>{% trans 'Total Balance' %}</th><th class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</th>
     </tr>
     {% if outstanding %}
     <tr>
       <th>{% trans 'Outstanding' %}</th><td>{{ outstanding }}</td>
     </tr>
     <tr>
-    <th>Expected end of month</th><th class="text-{% if expected_balance < 0 %}red{% else %}green{% endif %}">{{ expected_balance }}</th>
+    <th>{% trans 'Expected end of month' %}</th><th class="text-{% if expected_balance < 0 %}red{% else %}green{% endif %}">{{ expected_balance }}</th>
     </tr>
     {% endif %}
   </table>
@@ -45,31 +45,31 @@
 </div>
 <div class="box">
 <div class="box-header with-boarder">
-  <h3 class="box-title">Previous Month</h3>
+  <h3 class="box-title">{% trans 'Previous Month' %}</h3>
 </div>
 <div class="box-content">
   <table class="table">
     <tr>
-      <th>Income</th><td>{{ previous_income }}</td>
+      <th>{% trans 'Income' %}</th><td>{{ previous_income }}</td>
     </tr>
     <tr>
-      <th>Expenses</th><td class="text-red">{{ previous_expenses }}</td>
+      <th>{% trans 'Expenses' %}</th><td class="text-red">{{ previous_expenses }}</td>
     </tr>
     <tr>
-      <th>Difference</th><td{% if previous_difference < 0 %} class="text-red"{% endif %}>{{ previous_difference }}</td>
+      <th>{% trans 'Difference' %}</th><td{% if previous_difference < 0 %} class="text-red"{% endif %}>{{ previous_difference }}</td>
     </tr>
   </table>
 </div>
 </div>
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Accounts</h3>
+    <h3 class="box-title">{% trans 'Accounts' %}</h3>
   </div>
   <div class="box-body">
   <table class="table">
   <tr>
-  <th>Account</th>
-  <th>Balance</th>
+  <th>{% trans 'Account' %}</th>
+  <th>{% trans 'Balance' %}</th>
   </tr>
   {% for account in accounts %}
   <tr>
@@ -84,7 +84,7 @@
 <div class="col-md-8 col-md-pull-4">
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Balance</h3>
+    <h3 class="box-title">{% trans 'Balance' %}</h3>
   </div>
   <div class="box-body">
   <canvas id="myChart" width="450" height="250"></canvas>
@@ -98,10 +98,10 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Account</th>
-    <th>Amount</th>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Account' %}</th>
+    <th>{% trans 'Amount' %}</th>
   </tr>
   {% for transaction in upcoming_transactions %}
   <tr>
@@ -123,10 +123,10 @@
 {% if upcoming_recurrences %}
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th>Actions</th>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th>{% trans 'Actions' %}</th>
   </tr>
 {% for transaction in upcoming_recurrences %}
 <tr>
@@ -155,13 +155,13 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th class="hidden-xs">Type</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th class="hidden-xs">Account</th>
-    <th class="hidden-xs">Opposing Account</th>
-    <th class="hidden-xs">Category</th>
+    <th>{% trans 'Title' %}</th>
+    <th class="hidden-xs">{% trans 'Type' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th class="hidden-xs">{% trans 'Account' %}</th>
+    <th class="hidden-xs">{% trans 'Opposing Account' %}</th>
+    <th class="hidden-xs">{% trans 'Category' %}</th>
   </tr>
 {% for transaction in transactions %}
 <tr>

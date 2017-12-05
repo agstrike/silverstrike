@@ -7,8 +7,8 @@
   <small>{{ month|date:'F Y'}}</small>
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'accounts' %}">Accounts</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
   <li class="active">{{ account }}</li>
 </ol>
 {% endblock %}
@@ -17,9 +17,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'account_detail' account.pk previous_month|date:'Ym' %}" class="btn btn-xs btn-default">Previous</a>
+      <a href="{% url 'account_detail' account.pk previous_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
       <span>{{ month|date:'F Y'}}</span>
-      <a href="{% url 'account_detail' account.pk next_month|date:'Ym' %}" class="btn btn-xs btn-default">Next</a>
+      <a href="{% url 'account_detail' account.pk next_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
     </div>
   </div>
 </div>
@@ -33,24 +33,24 @@
       <div class="box-content">
         <table class="table">
           <tr>
-          <th>Current Balance</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
+          <th>{% trans 'Current Balance' %}</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
         </tr>
         <tr>
-          <th>In</th><td>{{ in }}</td>
+          <th>{% trans 'In' %}</th><td>{{ in }}</td>
         </tr>
         <tr>
-          <th>Out</th><td class="text-red">{{ out }}</td>
+          <th>{% trans 'Out' %}</th><td class="text-red">{{ out }}</td>
         </tr>
         <tr>
-          <th>Difference</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
+          <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
         </tr>
         </table>
       </div>
       <div class="box-footer">
-          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">Edit</a>
-  <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger">Delete</a>
+          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+  <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger">{% trans 'Delete' %}</a>
   {% if account.is_personal %}
-  <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">Reconcile</a>
+  <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
   {% endif %}
       </div>
     </div>
@@ -68,24 +68,24 @@
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Transaction list' %}</h3>
   <div class="pull-right">
-  <a href="{% url 'transactions' %}?account={{ account.pk }}" class="btn btn-xs btn-default">Show all</a>
+  <a href="{% url 'transactions' %}?account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
   </div>
 </div>
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th class="hidden-xs">Account</th>
-    <th class="hidden-xs">Category</th>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th class="hidden-xs">{% trans 'Account' %}</th>
+    <th class="hidden-xs">{% trans 'Category' %}</th>
   </tr>
 {% for transaction in transactions %}
 <tr>
   <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
   <td>{{ transaction.transaction.date }}</td>
   <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
-  <td class="hidden-xs">{% if transaction.is_system %}Reconcilation{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
+  <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">
     {% if transaction.category %}
     <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}
@@ -108,7 +108,7 @@
             {% for _ in ''|center:page_obj.paginator.num_pages %}
             {% if forloop.counter == page_obj.number %}
             <option selected="">
-            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            {{ page_obj.number }}
             </option>
             {% else %}
             <option>

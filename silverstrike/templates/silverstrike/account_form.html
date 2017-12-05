@@ -3,16 +3,16 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Accounts
+<h1>{% trans 'Accounts' %}
   {% if object %}
-  <small>Update {{ object.name }}</small>
+  <small>{% blocktrans %}Update {{ object.name }}{% endblocktrans %}</small>
   {% else %}
-  <small>Create new account</small>
+  <small>{% trans 'Create new account' %}</small>
   {% endif %}
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="#">Accounts</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="#">{% trans 'Accounts' %}</a></li>
   {% if object %}
   <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
   <li class="active">{% trans 'Update' %}</li>

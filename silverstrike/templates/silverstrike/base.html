@@ -41,7 +41,7 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">New</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans 'New' %}</a>
               <ul class="dropdown-menu">
                 <li class="header">
                   <a href="{% url 'withdraw_new' %}">{% trans 'New Withdrawl' %}</a>
@@ -75,10 +75,10 @@
                   </li>
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="{% url 'account_email' %}" class="btn btn-default btn-flat">Profile</a>
+                      <a href="{% url 'account_email' %}" class="btn btn-default btn-flat">{% trans 'Profile' %}</a>
                     </div>
                     <div class="pull-right">
-                      <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">{% trans 'Sign out' %}</a>
                     </div>
                   </li>
                 </ul>
@@ -90,10 +90,10 @@
       <aside class="main-sidebar">
         <section class="sidebar">
           <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
             <li {% if menu == "home" %}class="active"{% endif %}>
               <a href="/">
-                <i class="fa fa-home"></i> <span>Home</span>
+                <i class="fa fa-home"></i> <span>{% trans 'Home' %}</span>
               </a>
             </li>
             <li{% if menu == "accounts" %} class="active"{% endif %}>
@@ -105,32 +105,35 @@
             <li class="{% if menu == "transactions" %}active{% endif %}">
               <a href="{% url 'transactions' %}">
                 <i class="fa fa-exchange fa-fw"></i>
-                <span>Transactions</span>
+                <span>{% trans 'Transactions' %}</span>
               </a>
             </li>
-            <li{% if menu == "recurrences" %} class="active"{% endif %}><a href="{% url 'recurrences' %}"><i class="fa fa-repeat"></i>
-            <span>Recurrences</span></a></li>
+            <li{% if menu == "recurrences" %} class="active"{% endif %}>
+              <a href="{% url 'recurrences' %}"><i class="fa fa-repeat"></i>
+                <span>{% trans 'Recurrences' %}</span>
+              </a>
+            </li>
             <li{% if menu == "categories" %} class="active"{% endif%}>
               <a href="{% url 'categories' %}">
-              <i class="fa fa-tags" aria-hidden="true"></i>
-              <span>{% trans 'Categories' %}</span>
+                <i class="fa fa-tags" aria-hidden="true"></i>
+                <span>{% trans 'Categories' %}</span>
               </a>
             </li>
             <li{% if menu == "budgets" %} class="active"{% endif%}>
               <a href="{% url 'budgets' %}">
-              <i class="fa fa-book" aria-hidden="true"></i>
-              <span>{% trans 'Budgets' %}</span>
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <span>{% trans 'Budgets' %}</span>
               </a>
             </li>
             <li{% if menu == "charts" %} class="active"{% endif %}>
               <a href="{% url 'charts' %}">
-              <i class="fa fa-line-chart" aria-hidden="true"></i>
-              <span>{% trans 'Charts' %}</span>
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span>{% trans 'Charts' %}</span>
               </a>
             <li class="treeview{% if menu == "settings" %} active{% endif %}">
               <a href="#">
-                <i class="fa fa-wrench fa-fw"></i>
-                <span>Settings</span>
+                <i class="fa fa-file-o fa-fw"></i>
+                <span>{% trans 'Import & Export' %}</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -159,7 +162,7 @@
       </div>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 0.1
+          {% trans '<b>Version</b> 0.1' %}
         </div>
         <strong><a href="https://github.com/agstrike/silverstrike">SilverStrike</a></strong>
       </footer>
