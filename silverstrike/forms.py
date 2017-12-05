@@ -1,5 +1,3 @@
-from datetime import date
-
 from django import forms
 from django.utils.translation import ugettext as _
 
@@ -155,13 +153,8 @@ class DepositForm(TransactionForm):
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = RecurringTransaction
-        fields = ['title', 'transaction_type', 'date', 'amount',
+        fields = ['title', 'date', 'amount',
                   'src', 'dst', 'category', 'recurrence']
-
-    src = forms.CharField(max_length=64, label=_('Source Account'),
-                          widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-    dst = forms.CharField(max_length=64, label=_('Destination Account'),
-                          widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
     def clean_amount(self):
         amount = self.cleaned_data['amount']
@@ -169,27 +162,26 @@ class RecurringTransactionForm(forms.ModelForm):
             raise forms.ValidationError(_('Amount has to be positive'))
         return amount
 
-    def clean_date(self):
-        recurrence_date = self.cleaned_data['date']
-        if recurrence_date < date.today():
-            raise forms.ValidationError(_("Date can't be in the past"))
-        return recurrence_date
-
     def clean(self):
-        if self.cleaned_data['transaction_type'] == Transaction.TRANSFER:
-            src_type = dst_type = Account.PERSONAL
-        elif self.cleaned_data['transaction_type'] == Transaction.WITHDRAW:
-            src_type = Account.PERSONAL
-            dst_type = Account.FOREIGN
+        super(RecurringTransactionForm, self).clean()
+        src = self.cleaned_data['src']
+        dst = self.cleaned_data['dst']
+        if src.account_type == Account.PERSONAL:
+            if dst.account_type == Account.PERSONAL:
+                self.transaction_type = Transaction.TRANSFER
+            else:
+                self.transaction_type = Transaction.WITHDRAW
+        elif dst.account_type == Account.PERSONAL:
+            self.transaction_type = Transaction.DEPOSIT
         else:
-            src_type = Account.FOREIGN
-            dst_type = Account.PERSONAL
-        src, _ = Account.objects.get_or_create(name=self.cleaned_data['src'],
-                                               account_type=src_type)
-        self.cleaned_data['src'] = src
-        dst, _ = Account.objects.get_or_create(name=self.cleaned_data['dst'],
-                                               account_type=dst_type)
-        self.cleaned_data['dst'] = dst
+            raise forms.ValidationError(
+                _('You are trying to create a transaction between two foreign accounts'))
+
+    def save(self, commit=False):
+        recurrence = super(RecurringTransactionForm, self).save(commit=False)
+        recurrence.transaction_type = self.transaction_type
+        recurrence.save()
+        return recurrence
 
 
 class ReconcilationForm(forms.ModelForm):
