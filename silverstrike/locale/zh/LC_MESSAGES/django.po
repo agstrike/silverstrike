@@ -3,66 +3,66 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 11:12-0500\n"
+"PO-Revision-Date: 2017-12-05 18:21-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
-"Language-Team: Chinese Traditional\n"
-"Language: zh_TW\n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: silverstrike\n"
-"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
 
 #: forms.py:124
 msgid "Debitor"
-msgstr ""
+msgstr "债务人"
 
 #: forms.py:139
 msgid "Creditor"
-msgstr ""
+msgstr "债权人"
 
 #: forms.py:162
 msgid "Amount has to be positive"
-msgstr ""
+msgstr "金额必须是正数"
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr ""
+msgstr "您正在尝试在两个外国帐户之间创建交易记录"
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr ""
+msgstr "实际余额"
 
 #: models.py:16
 msgid "Personal"
-msgstr ""
+msgstr "个人"
 
 #: models.py:17
 msgid "Foreign"
-msgstr ""
+msgstr "外国"
 
 #: models.py:18
 msgid "System"
-msgstr ""
+msgstr "系统"
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr ""
+msgstr "初始余额"
 
 #: models.py:274
 msgid "Do not use"
-msgstr ""
+msgstr "不要使用"
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr ""
+msgstr "源帐户"
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr ""
+msgstr "目标帐户"
 
 #: models.py:277 templates/silverstrike/account_detail.html:79
 #: templates/silverstrike/category_detail.html:49
@@ -71,7 +71,7 @@ msgstr ""
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr ""
+msgstr "金额"
 
 #: models.py:278 templates/silverstrike/account_detail.html:78
 #: templates/silverstrike/category_detail.html:48
@@ -79,7 +79,7 @@ msgstr ""
 #: templates/silverstrike/index.html:160
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
