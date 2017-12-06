@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 18:50-0500\n"
+"PO-Revision-Date: 2017-12-05 19:01-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -256,78 +256,78 @@ msgstr "此电子邮件确认链接已过期或无效。请 <a href=\"%(email_ur
 msgid "Please sign in with one\n"
 "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
-msgstr ""
+msgstr "请使用您现有的第三方帐户之一登录。或者, <a href=\"%(signup_url)s\">注册</a> 一个新帐户 %(site_name)s 并在下面登陆:"
 
 #: templates/account/login.html:27
 msgid "or"
-msgstr ""
+msgstr "或者"
 
 #: templates/account/login.html:34
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
+msgstr "如果你还没有创建一个帐户, 那么请先 <a href=\"%(signup_url)s\">注册</a>。"
 
 #: templates/account/login.html:65
 msgid "Sign In"
-msgstr ""
+msgstr "登录"
 
 #: templates/account/login.html:71
 msgid "Forgot Password?"
-msgstr ""
+msgstr "忘记密码?"
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "确实要退出吗？"
 
 #: templates/account/logout.html:22
 msgid "Sign Out"
-msgstr ""
+msgstr "退出"
 
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr ""
+msgstr "无法删除主电子邮件地址 (%(email)s)。"
 
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
 msgid "Confirmation e-mail sent to %(email)s."
-msgstr ""
+msgstr "确认邮件请发送到 %(email)s。"
 
 #: templates/account/messages/email_confirmed.txt:2
 #, python-format
 msgid "You have confirmed %(email)s."
-msgstr ""
+msgstr "你已经验证了 %(email)s。"
 
 #: templates/account/messages/email_deleted.txt:2
 #, python-format
 msgid "Removed e-mail address %(email)s."
-msgstr ""
+msgstr "已删除电子邮件地址 %(email)s。"
 
 #: templates/account/messages/logged_in.txt:4
 #, python-format
 msgid "Successfully signed in as %(name)s."
-msgstr ""
+msgstr "成功地以 %(name)s 登陆。"
 
 #: templates/account/messages/logged_out.txt:2
 msgid "You have signed out."
-msgstr ""
+msgstr "您已退出。"
 
 #: templates/account/messages/password_changed.txt:2
 msgid "Password successfully changed."
-msgstr ""
+msgstr "密码变更成功"
 
 #: templates/account/messages/password_set.txt:2
 msgid "Password successfully set."
-msgstr ""
+msgstr "已成功设置密码。"
 
 #: templates/account/messages/primary_email_set.txt:2
 msgid "Primary e-mail address set."
-msgstr ""
+msgstr "主电子邮件地址集。"
 
 #: templates/account/messages/unverified_primary_email.txt:2
 msgid "Your primary e-mail address must be verified."
-msgstr ""
+msgstr "必须验证您的主要电子邮件地址。"
 
 #: templates/account/password_change.html:5
 #: templates/account/password_change.html:8
@@ -337,84 +337,84 @@ msgstr ""
 #: templates/account/password_reset_from_key_done.html:4
 #: templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "更改密码"
 
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:12
 #: templates/account/password_reset_done.html:6
 #: templates/account/password_reset_done.html:9
 msgid "Password Reset"
-msgstr ""
+msgstr "密码重置"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr ""
+msgstr "忘记了密码？请在下面输入您的电子邮件地址, 我们将向您发送一封电子邮件, 允许您重置密码。"
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
-msgstr ""
+msgstr "重设个人密码"
 
 #: templates/account/password_reset.html:34
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
+msgstr "如果在重置密码过程中您有任何问题, 请与我们联系。"
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "我们给您发了一封电子邮件。如果您在几分钟内没有收到, 请与我们联系。"
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
-msgstr ""
+msgstr "坏令牌"
 
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "密码重置链接无效, 可能是因为它已被使用。 请发送一个<a href=\"%(passwd_reset_url)s\">密码重置reset</a>的请求。"
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr ""
+msgstr "更改密码"
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "您的密码现在已更改。"
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr ""
+msgstr "设置密码"
 
 #: templates/account/signup.html:6 templates/socialaccount/signup.html:5
 msgid "Signup"
-msgstr ""
+msgstr "注册"
 
 #: templates/account/signup.html:16
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "已经有账户了？那么请 <a href=\"%(login_url)s\">登陆</a>。"
 
 #: templates/account/signup.html:31
 msgid "Sign up"
-msgstr ""
+msgstr "注册"
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr ""
+msgstr "注册关闭"
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr ""
+msgstr "我们很抱歉, 但注册目前已关闭。"
 
 #: templates/account/snippets/already_logged_in.html:5
 msgid "Note"
-msgstr ""
+msgstr "备注"
 
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "您已经以%(user_display)s 身份登录。"
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:8
@@ -809,7 +809,7 @@ msgstr ""
 
 #: templates/silverstrike/index.html:129
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #: templates/silverstrike/index.html:144
 msgid "No upcoming recurrences"
@@ -817,11 +817,11 @@ msgstr ""
 
 #: templates/silverstrike/index.html:153
 msgid "Recent Transactions"
-msgstr ""
+msgstr "近期交易"
 
 #: templates/silverstrike/index.html:159
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: templates/silverstrike/index.html:163
 msgid "Opposing Account"
@@ -832,11 +832,11 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr ""
+msgstr "交易详情"
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr ""
+msgstr "添加拆分"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
@@ -861,11 +861,11 @@ msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr ""
+msgstr "来源"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr ""
+msgstr "目标"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
@@ -877,11 +877,11 @@ msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr ""
+msgstr "交易类型"
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr ""
+msgstr "总金额"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
@@ -894,16 +894,16 @@ msgstr ""
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
-msgstr ""
+msgstr "社交网络登录失败"
 
 #: templates/socialaccount/authentication_error.html:10
 msgid "An error occurred while attempting to login via your social network account."
-msgstr ""
+msgstr "试图通过您的社交网络帐户登录时出错。"
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:8
 msgid "Account Connections"
-msgstr ""
+msgstr "帐户连接"
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
@@ -920,32 +920,32 @@ msgstr ""
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
 msgid "Login Cancelled"
-msgstr ""
+msgstr "已取消登录"
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "您决定使用现有帐户之一取消登录到我们的网站。如果这是一个错误, 请继续 <a href=\"%(login_url)s\">登陆</a>。"
 
 #: templates/socialaccount/messages/account_connected.txt:2
 msgid "The social account has been connected."
-msgstr ""
+msgstr "社会帐户已经连接。"
 
 #: templates/socialaccount/messages/account_connected_other.txt:2
 msgid "The social account is already connected to a different account."
-msgstr ""
+msgstr "社交帐户已经连接到不同的帐户。"
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
-msgstr ""
+msgstr "社交帐户已被断开。"
 
 #: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
 msgid "Sign Up"
-msgstr ""
+msgstr "注册"
 
 #: templates/socialaccount/signup.html:10
 #, python-format
 msgid "You are about to use your %(provider_name)s account to login to\n"
 "%(site_name)s. As a final step, please complete the following form:"
-msgstr ""
+msgstr "您将使用您的%(provider_name)s 帐户登录到 %(site_name)s。最后一步, 请填写以下表格:"
 
