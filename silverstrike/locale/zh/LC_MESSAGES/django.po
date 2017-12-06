@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 19:01-0500\n"
+"PO-Revision-Date: 2017-12-05 19:11-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -421,35 +421,36 @@ msgstr "您已经以%(user_display)s 身份登录。"
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "验证您的电子邮件地址"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "我们已经发了一封电子邮件给你核实。按照提供的链接完成注册过程。如果您在几分钟内没有收到, 请与我们联系。"
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr ""
+msgstr "网站的这一部分要求我们确认您是您自称的人。为此, 我们要求您验证您的电子邮件地址的所有权。 "
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "我们已经发了一封电子邮件给你核实。请单击此电子邮件中的链接。如果您在几分钟内没有收到, 请与我们联系。"
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr ""
+msgstr "<strong>备注:</strong> 您仍然可以<a href=\"%(email_url)s\">更改您的电子邮件 address</a>。"
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
 msgid "\n"
 "          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
 "          "
-msgstr ""
+msgstr "\n"
+"是否确实要删除该帐户以及%(object.transaction_num)s 的交易记录？          "
 
 #: templates/silverstrike/account_confirm_delete.html:22
 #: templates/silverstrike/account_form.html:60
@@ -709,7 +710,8 @@ msgid "\n"
 "      <p>Are you sure you want to delete the category?</p>\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
-msgstr ""
+msgstr "\n"
+"<p>Are 您确定要删除此类别？</p> <p>与此类别关联的全部交易记录将不会被删除, 但将会丢失该项的类别信息</p>      "
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
@@ -765,35 +767,35 @@ msgstr "个人账户"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr ""
+msgstr "按类别支出"
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr ""
+msgstr "所有重要的东西"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr ""
+msgstr "快速概览"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:53
 msgid "Income"
-msgstr ""
+msgstr "收入"
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:56
 msgid "Expenses"
-msgstr ""
+msgstr "支出"
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr ""
+msgstr "总余额"
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr ""
+msgstr "未支付"
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr ""
+msgstr "预计月底"
 
 #: templates/silverstrike/index.html:48
 msgid "Previous Month"
@@ -805,7 +807,7 @@ msgstr "即将进行的交易"
 
 #: templates/silverstrike/index.html:120
 msgid "Upcoming Recurrences"
-msgstr ""
+msgstr "即将发生的周期交易"
 
 #: templates/silverstrike/index.html:129
 msgid "Actions"
@@ -813,7 +815,7 @@ msgstr "操作"
 
 #: templates/silverstrike/index.html:144
 msgid "No upcoming recurrences"
-msgstr ""
+msgstr "没有即将发生的周期交易"
 
 #: templates/silverstrike/index.html:153
 msgid "Recent Transactions"
@@ -825,7 +827,7 @@ msgstr "类型"
 
 #: templates/silverstrike/index.html:163
 msgid "Opposing Account"
-msgstr ""
+msgstr "对方帐户"
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
@@ -840,24 +842,24 @@ msgstr "添加拆分"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr ""
+msgstr "创建对账交易"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "周期性交易"
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr ""
+msgstr "重现"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr ""
+msgstr "周期交易细节"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr ""
+msgstr "周期业务"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
@@ -869,11 +871,11 @@ msgstr "目标"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr ""
+msgstr "近期周期交易"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr ""
+msgstr "新周期交易"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
@@ -885,11 +887,11 @@ msgstr "总金额"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr ""
+msgstr "编辑拆分交易"
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr ""
+msgstr "拆分"
 
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
@@ -907,15 +909,15 @@ msgstr "帐户连接"
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr ""
+msgstr "您可以使用下列任何第三方帐户登录您的帐户:"
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
-msgstr ""
+msgstr "您当前没有连接到此帐户的社交网络帐户。"
 
 #: templates/socialaccount/connections.html:46
 msgid "Add a 3rd Party Account"
-msgstr ""
+msgstr "添加第三方帐户"
 
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
