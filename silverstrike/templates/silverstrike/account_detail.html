@@ -68,7 +68,11 @@
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Transaction list' %}</h3>
   <div class="pull-right">
-  <a href="{% url 'transactions' %}?account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
+    {% if account.is_personal %}
+    <a href="{% url 'transactions' %}?account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
+    {% else %}
+    <a href="{% url 'transactions' %}?opposing_account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
+    {% endif %}
   </div>
 </div>
 <div class="box-body">
