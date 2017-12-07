@@ -17,6 +17,7 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_filter = ('account_type',)
     actions = ['merge_accounts']
+    search_fields = ['name']
 
     def merge_accounts(self, request, queryset):
         accounts = list(queryset)
