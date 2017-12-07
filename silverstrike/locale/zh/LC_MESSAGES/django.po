@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 02:22-0500\n"
+"PO-Revision-Date: 2017-12-07 02:32-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -26,43 +26,43 @@ msgstr "債權人"
 
 #: forms.py:162
 msgid "Amount has to be positive"
-msgstr ""
+msgstr "金額必須是正數"
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr ""
+msgstr "您正嘗試在兩個外國帳戶之間創建交易"
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr ""
+msgstr "實際餘額"
 
 #: models.py:16
 msgid "Personal"
-msgstr ""
+msgstr "個人"
 
 #: models.py:17
 msgid "Foreign"
-msgstr ""
+msgstr "外國"
 
 #: models.py:18
 msgid "System"
-msgstr ""
+msgstr "系統"
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr ""
+msgstr "初始餘額"
 
 #: models.py:274
 msgid "Do not use"
-msgstr ""
+msgstr "不要使用"
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr ""
+msgstr "源帳戶"
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr ""
+msgstr "目標帳戶"
 
 #: models.py:277 templates/silverstrike/account_detail.html:79
 #: templates/silverstrike/category_detail.html:49
@@ -71,7 +71,7 @@ msgstr ""
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr ""
+msgstr "金額"
 
 #: models.py:278 templates/silverstrike/account_detail.html:78
 #: templates/silverstrike/category_detail.html:48
@@ -79,18 +79,18 @@ msgstr ""
 #: templates/silverstrike/index.html:160
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr ""
+msgstr "備註"
 
 #: models.py:280 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/index.html:164
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
-msgstr ""
+msgstr "類型"
 
 #: models.py:281 templates/silverstrike/account_detail.html:77
 #: templates/silverstrike/category_detail.html:47
@@ -98,11 +98,12 @@ msgstr ""
 #: templates/silverstrike/index.html:158
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: models.py:285
 msgid "First line contains headers"
-msgstr ""
+msgstr "\n"
+"第一行包含標題"
 
 #: models.py:312
 msgid "Disabled"
