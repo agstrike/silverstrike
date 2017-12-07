@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 09:14-0500\n"
+"PO-Revision-Date: 2017-12-07 10:23-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -781,43 +781,43 @@ msgstr "個人帳戶"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr ""
+msgstr "按類別支出"
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr ""
+msgstr "所有重要的東西"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr ""
+msgstr "快速概覽"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:53
 msgid "Income"
-msgstr ""
+msgstr "收入"
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:56
 msgid "Expenses"
-msgstr ""
+msgstr "支出"
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr ""
+msgstr "總計餘額"
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr ""
+msgstr "優秀"
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr ""
+msgstr "預計月底"
 
 #: templates/silverstrike/index.html:48
 msgid "Previous Month"
-msgstr ""
+msgstr "上個月"
 
 #: templates/silverstrike/index.html:96
 msgid "Upcoming Transactions"
-msgstr ""
+msgstr "即將到來的交易"
 
 #: templates/silverstrike/index.html:120
 msgid "Upcoming Recurrences"
