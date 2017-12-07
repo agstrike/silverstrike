@@ -26,6 +26,10 @@ class AccountAdmin(admin.ModelAdmin):
                               _('You need to select more than one account to merge them.'),
                               messages.ERROR)
             return
+        for account in accounts:
+            if account.account_type != Account.FOREIGN:
+                self.message_user(request, _('You can only merge foreign accounts'))
+            return
         base = accounts.pop()
         for account in accounts:
             Split.objects.filter(account_id=account.id).update(account_id=base.id)
