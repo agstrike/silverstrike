@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 03:02-0500\n"
+"PO-Revision-Date: 2017-12-07 03:29-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -206,43 +206,47 @@ msgstr "謝謝你的 %(site_name)s!\n"
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr ""
+msgstr "請確認您的電子郵件地址"
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr ""
+msgstr "%(site_name)s!\n"
+"向您問好！\n\n"
+"您收到此電子郵件是因為您或其他人已為您的用戶帳戶請求密碼重置。\n"
+"如果您沒有請求密碼重置，則可以安全地忽略它。單擊下面的鏈接以重置您的密碼。"
 
 #: templates/account/email/password_reset_key_message.txt:8
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr ""
+msgstr "萬一你忘了, 你的使用者名是%(username)s。"
 
 #: templates/account/email/password_reset_key_message.txt:10
 #, python-format
 msgid "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
-msgstr ""
+msgstr "感謝您使用 %(site_name)s!\n"
+"%(site_domain)s"
 
 #: templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr ""
+msgstr "密碼重設電子郵件"
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr ""
+msgstr "確認電子郵件地址"
 
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr ""
+msgstr "請確認<a href=\"mailto:%(email)s\">%(email)s</a> 是使用者%(user_display)s 的電子郵件地址。"
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: templates/account/email_confirm.html:27
 #, python-format
