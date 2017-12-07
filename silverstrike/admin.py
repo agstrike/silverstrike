@@ -7,9 +7,19 @@ from django.utils.translation import ugettext as _
 from .models import (Account, Category, ImportConfiguration,
                      RecurringTransaction, Split, Transaction)
 
-admin.site.register(Category)
 admin.site.register(ImportConfiguration)
-admin.site.register(RecurringTransaction)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+
+
+@admin.register(RecurringTransaction)
+class RecurringTransactionAdmin(admin.ModelAdmin):
+    search_fields = ['title']
+    list_display = ('title', 'recurrence', 'date', 'amount')
+    list_filter = ('recurrence',)
 
 
 @admin.register(Account)
