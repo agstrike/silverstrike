@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 03:33-0500\n"
+"PO-Revision-Date: 2017-12-07 03:42-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -259,11 +259,12 @@ msgstr "此電子郵件確認連結已過期或無效。\n"
 msgid "Please sign in with one\n"
 "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
-msgstr ""
+msgstr "請使用您現有的協力廠商帳戶之一登錄。\n"
+"或者, <a href=\"%(signup_url)s\">sign up</a> 為%(site_name)s 帳戶並在下面簽名:"
 
 #: templates/account/login.html:27
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: templates/account/login.html:34
 #, python-format
