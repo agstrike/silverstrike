@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 03:58-0500\n"
+"PO-Revision-Date: 2017-12-07 06:42-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -297,7 +297,7 @@ msgstr "無法刪除你的\n"
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
 msgid "Confirmation e-mail sent to %(email)s."
-msgstr ""
+msgstr "發送到%(email)s 的確認電子郵件。"
 
 #: templates/account/messages/email_confirmed.txt:2
 #, python-format
