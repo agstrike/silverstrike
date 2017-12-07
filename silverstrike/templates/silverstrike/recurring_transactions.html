@@ -51,18 +51,18 @@
 </li>
 <li>
   <select class="form-control">
-            {% for _ in ''|center:page_obj.paginator.num_pages %}
-            {% if forloop.counter == page_obj.number %}
-            <option selected="">
-            {{ page_obj.number }}
-            </option>
-            {% else %}
-            <option>
-            {{ forloop.counter }}
-            </option>
-            {% endif %}
-            {% endfor %}
-        </select>
+    {% for _ in ''|center:page_obj.paginator.num_pages %}
+    {% if forloop.counter == page_obj.number %}
+    <option selected="">
+    {{ page_obj.number }}
+    </option>
+    {% else %}
+    <option>
+    {{ forloop.counter }}
+    </option>
+    {% endif %}
+    {% endfor %}
+  </select>
 </li>
 {% if page_obj.has_next %}
 <li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right" aria-hidden="true"></i>
