@@ -1,7 +1,7 @@
 import csv
 import datetime
 
-from .models import Account, Category, ImportConfiguration, Split, Transaction
+from silverstrike.models import Account, Category, ImportConfiguration, Split, Transaction
 
 
 def last_day_of_month(any_day):
