@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 02:32-0500\n"
+"PO-Revision-Date: 2017-12-07 02:40-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -107,62 +107,62 @@ msgstr "\n"
 
 #: models.py:312
 msgid "Disabled"
-msgstr ""
+msgstr "已禁用"
 
 #: models.py:313
 msgid "Weekly"
-msgstr ""
+msgstr "每週"
 
 #: models.py:314
 msgid "Monthly"
-msgstr ""
+msgstr "每月"
 
 #: models.py:315
 msgid "Yearly"
-msgstr ""
+msgstr "每年"
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:8
 msgid "Account Inactive"
-msgstr ""
+msgstr "帳戶無效"
 
 #: templates/account/account_inactive.html:10
 msgid "This account is inactive."
-msgstr ""
+msgstr "此帳戶無效"
 
 #: templates/account/email.html:5 templates/silverstrike/account_detail.html:80
 #: templates/silverstrike/index.html:71 templates/silverstrike/index.html:103
 #: templates/silverstrike/index.html:162
 msgid "Account"
-msgstr ""
+msgstr "帳戶"
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr ""
+msgstr "電子郵件地址"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr ""
+msgstr "以下電子郵件地址與您的帳戶相關聯："
 
 #: templates/account/email.html:24
 msgid "Verified"
-msgstr ""
+msgstr "已認證"
 
 #: templates/account/email.html:26
 msgid "Unverified"
-msgstr ""
+msgstr "未認證"
 
 #: templates/account/email.html:28
 msgid "Primary"
-msgstr ""
+msgstr "主要"
 
 #: templates/account/email.html:34
 msgid "Make Primary"
-msgstr ""
+msgstr "設為主要"
 
 #: templates/account/email.html:35
 msgid "Re-send Verification"
-msgstr ""
+msgstr "重新發送驗證"
 
 #: templates/account/email.html:36 templates/socialaccount/connections.html:35
 msgid "Remove"
