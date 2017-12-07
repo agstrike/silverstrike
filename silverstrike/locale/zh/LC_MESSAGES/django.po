@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-07 03:42-0500\n"
+"PO-Revision-Date: 2017-12-07 03:58-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -270,28 +270,29 @@ msgstr "或"
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
+msgstr "如果你還沒有創建一個帳戶, 那麼請<a href=\"%(signup_url)s\">sign up</a> 第一。"
 
 #: templates/account/login.html:65
 msgid "Sign In"
-msgstr ""
+msgstr "登錄"
 
 #: templates/account/login.html:71
 msgid "Forgot Password?"
-msgstr ""
+msgstr "忘記密碼?"
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "確定要登出嗎?"
 
 #: templates/account/logout.html:22
 msgid "Sign Out"
-msgstr ""
+msgstr "登出"
 
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr ""
+msgstr "無法刪除你的\n"
+"主電子郵件地址 (%(email)s)。"
 
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
