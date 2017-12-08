@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 14:51-0500\n"
+"PO-Revision-Date: 2017-12-08 15:01-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -266,7 +266,7 @@ msgstr "veya"
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
+msgstr "Henüz bir hesap oluşturmadıysanız, lütfen önce <a href=\" %(signup_url)s \"> kaydolun </a>."
 
 #: templates/account/login.html:65
 msgid "Sign In"
@@ -369,7 +369,7 @@ msgstr "Hatalı simge"
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "Şifre sıfırlama bağlantısını kullandığınızdan dolayı geçersizdir. Lütfen bir <a href=\" %(passwd_reset_url)s \"> yeni şifre sıfırlamasını </a> isteyin."
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
@@ -392,7 +392,7 @@ msgstr "Kaydol"
 #: templates/account/signup.html:16
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Zaten bir hesabınız mı var? O zaman <a href=\" %(login_url)s \"> oturum açın </a>."
 
 #: templates/account/signup.html:31
 msgid "Sign up"
@@ -414,7 +414,7 @@ msgstr "Not"
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "%(user_display)s olarak zaten oturum açtınız."
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:8
@@ -425,13 +425,13 @@ msgstr "E-posta adresinizi doğrulayın"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Doğrulama için size bir e-posta gönderdik. Kayıt işlemini tamamlamak için verilen bağlantıyı takip edin. E-posta size birkaç dakika içinde ulaşmazsa lütfen bizimle iletişime geçin."
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr ""
+msgstr "Sitenin bu kısmında, İddia ettiğiniz kişi olduğunuzu doğrulamanız gerekir. Bu nedenle, e-posta adresinizin size ait olduğunu doğrulamanızı istiyoruz. "
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
