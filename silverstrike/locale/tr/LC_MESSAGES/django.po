@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 08:31-0500\n"
+"PO-Revision-Date: 2017-12-08 08:41-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -838,70 +838,70 @@ msgstr ""
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "Tekrar Eden İşlemler"
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr ""
+msgstr "Tekrarlanma"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr ""
+msgstr "Tekrarlanma Detayları"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr ""
+msgstr "Tekrarlanma"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr ""
+msgstr "Kaynak"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr ""
+msgstr "Hedef"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr ""
+msgstr "Son olaylar"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr ""
+msgstr "Yeni Tekrarlayan İşlem"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr ""
+msgstr "İşlem Türü"
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr ""
+msgstr "Toplam miktar"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr ""
+msgstr "Bölünmüş işlem olarak düzenle"
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr ""
+msgstr "Bölmeler"
 
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
-msgstr ""
+msgstr "Sosyal ağ oturum açma hatası"
 
 #: templates/socialaccount/authentication_error.html:10
 msgid "An error occurred while attempting to login via your social network account."
-msgstr ""
+msgstr "Sosyal ağ hesabınızla giriş yapmaya çalışırken bir hata oluştu."
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:8
 msgid "Account Connections"
-msgstr ""
+msgstr "Hesap bağlantıları"
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr ""
+msgstr "Şu üçüncü parti hesapların herhangi birini kullanarak hesabınıza giriş yapabilirsiniz."
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
