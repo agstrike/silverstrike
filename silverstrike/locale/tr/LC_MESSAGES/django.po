@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 09:31-0500\n"
+"PO-Revision-Date: 2017-12-08 09:42-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -240,23 +240,23 @@ msgstr "E-posta Adresini onaylayın"
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr ""
+msgstr "Lütfen <a href=\"mailto:%(email)s\">%(email)s</a>in %(user_display)s kullanıcısı için bir e-posta adresi olduğunu doğrulayınız."
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
-msgstr ""
+msgstr "Onayla"
 
 #: templates/account/email_confirm.html:27
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr ""
+msgstr "Bu e-posta onaylama bağlantısı zaman aşımına uğradı ya da geçerli değil. Lütfen <a href=\"%(email_url)s\">yeni bir e-posta onaylama isteği bildiriniz</a>."
 
 #: templates/account/login.html:17
 #, python-format
 msgid "Please sign in with one\n"
 "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
-msgstr ""
+msgstr "Lütfen mevcut üçüncü parti hesaplarınızdan biriyle giriş yapınız. Ya da, bir %(site_name)s hesabı için <a href=\"%(signup_url)s\">kayıt olunuz</a> ve aşağıdan giriş yapınız:"
 
 #: templates/account/login.html:27
 msgid "or"
@@ -531,7 +531,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_detail.html:50
 #: templates/silverstrike/transaction_detail.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
 #: templates/silverstrike/account_detail.html:53
 msgid "Reconcile"
@@ -540,11 +540,11 @@ msgstr ""
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr ""
+msgstr "İşlem listesi"
 
 #: templates/silverstrike/account_detail.html:71
 msgid "Show all"
-msgstr ""
+msgstr "Tümünü göster"
 
 #: templates/silverstrike/account_detail.html:88
 msgid "Reconcilation"
@@ -553,11 +553,11 @@ msgstr ""
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr ""
+msgstr "%(object.name)s'i güncelle"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr ""
+msgstr "Yeni hesap oluştur"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -568,18 +568,18 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr ""
+msgstr "Güncelle"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr ""
+msgstr "Hesap Detayları"
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -590,47 +590,47 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr ""
+msgstr "Oluştur"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:72
 #: templates/silverstrike/index.html:87
 msgid "Balance"
-msgstr ""
+msgstr "Bakiye"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr ""
+msgstr "Yeni çekim"
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr ""
+msgstr "Yeni yükleme"
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr ""
+msgstr "Yeni Transfer"
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr ""
+msgstr "Yeni bölünmüş işlem"
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr ""
+msgstr "Oturumu Kapat"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
@@ -639,7 +639,7 @@ msgstr ""
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr ""
+msgstr "İşlemler"
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
@@ -654,18 +654,18 @@ msgstr ""
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr ""
+msgstr "Kategoriler"
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr ""
+msgstr "Bütçeler"
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr ""
+msgstr "Grafikler"
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
