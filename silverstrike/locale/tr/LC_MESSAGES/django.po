@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 08:23-0500\n"
+"PO-Revision-Date: 2017-12-08 08:31-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -803,7 +803,7 @@ msgstr ""
 
 #: templates/silverstrike/index.html:129
 msgid "Actions"
-msgstr ""
+msgstr "Eylemler"
 
 #: templates/silverstrike/index.html:144
 msgid "No upcoming recurrences"
@@ -811,26 +811,26 @@ msgstr ""
 
 #: templates/silverstrike/index.html:153
 msgid "Recent Transactions"
-msgstr ""
+msgstr "Geçmiş işlemler"
 
 #: templates/silverstrike/index.html:159
 msgid "Type"
-msgstr ""
+msgstr "Tür"
 
 #: templates/silverstrike/index.html:163
 msgid "Opposing Account"
-msgstr ""
+msgstr "Karşı hesap"
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr ""
+msgstr "İşlem Detayları"
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr ""
+msgstr "Bölme Ekle"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
