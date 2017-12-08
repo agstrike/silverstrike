@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 14:41-0500\n"
+"PO-Revision-Date: 2017-12-08 14:51-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -360,11 +360,11 @@ msgstr "Şifrenizi sıfırlamayla ilgili bir sorun yaşarsanız bize ulaşın."
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Size bir e-posta gönderdik. Birkaç dakika içinde ulaşmazsa bize bildirin."
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
-msgstr ""
+msgstr "Hatalı simge"
 
 #: templates/account/password_reset_from_key.html:11
 #, python-format
@@ -373,21 +373,21 @@ msgstr ""
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr ""
+msgstr "şifreyi değiştir"
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Şifreniz şimdi değiştirildi."
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr ""
+msgstr "Şifre oluştur"
 
 #: templates/account/signup.html:6 templates/socialaccount/signup.html:5
 msgid "Signup"
-msgstr ""
+msgstr "Kaydol"
 
 #: templates/account/signup.html:16
 #, python-format
@@ -396,20 +396,20 @@ msgstr ""
 
 #: templates/account/signup.html:31
 msgid "Sign up"
-msgstr ""
+msgstr "Kayıt ol"
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr ""
+msgstr "Kapalı kayıt ol"
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr ""
+msgstr "Üzgünüz, kaydolma işlemi şuan kapalıdır."
 
 #: templates/account/snippets/already_logged_in.html:5
 msgid "Note"
-msgstr ""
+msgstr "Not"
 
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
@@ -421,7 +421,7 @@ msgstr ""
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "E-posta adresinizi doğrulayın"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
@@ -459,7 +459,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -470,7 +470,7 @@ msgstr ""
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -483,7 +483,7 @@ msgstr ""
 #: templates/silverstrike/index.html:11
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr ""
+msgstr "Ana menü"
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -493,38 +493,38 @@ msgstr ""
 #: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:102
 #: templates/silverstrike/index.html:66
 msgid "Accounts"
-msgstr ""
+msgstr "Hesaplar"
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr ""
+msgstr "Önceki"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr ""
+msgstr "İleri"
 
 #: templates/silverstrike/account_detail.html:36
 msgid "Current Balance"
-msgstr ""
+msgstr "Mevcut bakiye"
 
 #: templates/silverstrike/account_detail.html:39
 msgid "In"
-msgstr ""
+msgstr "Giriş"
 
 #: templates/silverstrike/account_detail.html:42
 msgid "Out"
-msgstr ""
+msgstr "Çıkış"
 
 #: templates/silverstrike/account_detail.html:45
 #: templates/silverstrike/index.html:30 templates/silverstrike/index.html:59
 msgid "Difference"
-msgstr ""
+msgstr "Fark"
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/category_detail.html:36
@@ -535,7 +535,7 @@ msgstr "Düzenle"
 
 #: templates/silverstrike/account_detail.html:53
 msgid "Reconcile"
-msgstr ""
+msgstr "Onayla"
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
@@ -548,7 +548,7 @@ msgstr "Tümünü göster"
 
 #: templates/silverstrike/account_detail.html:88
 msgid "Reconcilation"
-msgstr ""
+msgstr "Onay"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
@@ -634,7 +634,7 @@ msgstr "Oturumu Kapat"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr ""
+msgstr "ANA GEZİNTİ"
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
@@ -645,7 +645,7 @@ msgstr "İşlemler"
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr ""
+msgstr "Tekrarlamalar"
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -713,59 +713,59 @@ msgstr ""
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr ""
+msgstr "Genel bakış"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr ""
+msgstr "Tüm işlemleri göster"
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
-msgstr ""
+msgstr "Kaynak tarafından dağıtım"
 
 #: templates/silverstrike/category_detail.html:76
 msgid "Distribution by Destination"
-msgstr ""
+msgstr "Hedef tarafından dağıtım"
 
 #: templates/silverstrike/category_form.html:10
 msgid "Create new category"
-msgstr ""
+msgstr "Yeni kategori oluştur"
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr ""
+msgstr "Kategori detayları"
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
-msgstr ""
+msgstr "Kategoriye göre dağılım"
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
-msgstr ""
+msgstr "çünkü eğlenceliler!"
 
 #: templates/silverstrike/charts.html:18
 msgid "Last year"
-msgstr ""
+msgstr "Geçen yıl"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr ""
+msgstr "Geçen 6 ay"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr ""
+msgstr "Geçen 3 ay"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr ""
+msgstr "Bu ay"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr ""
+msgstr "Kişisel Hesaplar"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr ""
+msgstr "Kategoriye göre harcama"
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
@@ -805,7 +805,7 @@ msgstr "Yaklaşan İşlemler"
 
 #: templates/silverstrike/index.html:120
 msgid "Upcoming Recurrences"
-msgstr ""
+msgstr "Yaklaşan Tekrarlar"
 
 #: templates/silverstrike/index.html:129
 msgid "Actions"
@@ -813,7 +813,7 @@ msgstr "Eylemler"
 
 #: templates/silverstrike/index.html:144
 msgid "No upcoming recurrences"
-msgstr ""
+msgstr "Yakında yapılacak tekrarlama yok"
 
 #: templates/silverstrike/index.html:153
 msgid "Recent Transactions"
@@ -840,7 +840,7 @@ msgstr "Bölme Ekle"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr ""
+msgstr "Uzlaştırmaya dayalı işlem oluştur"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
