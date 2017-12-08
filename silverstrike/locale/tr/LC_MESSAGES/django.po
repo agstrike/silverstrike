@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 09:12-0500\n"
+"PO-Revision-Date: 2017-12-08 09:21-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -30,39 +30,39 @@ msgstr "Miktar pozitif olmalıdır"
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr ""
+msgstr "İki dış hesap arasında işlem oluşturmaya çalışıyorsunuz"
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr ""
+msgstr "Güncel bakiye"
 
 #: models.py:16
 msgid "Personal"
-msgstr ""
+msgstr "Kişisel"
 
 #: models.py:17
 msgid "Foreign"
-msgstr ""
+msgstr "Yabancı"
 
 #: models.py:18
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr ""
+msgstr "Başlangıç bakiyesi"
 
 #: models.py:274
 msgid "Do not use"
-msgstr ""
+msgstr "Kullanma"
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr ""
+msgstr "Kaynak Hesap"
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr ""
+msgstr "Hedef Hesap"
 
 #: models.py:277 templates/silverstrike/account_detail.html:79
 #: templates/silverstrike/category_detail.html:49
@@ -71,7 +71,7 @@ msgstr ""
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr ""
+msgstr "Miktar"
 
 #: models.py:278 templates/silverstrike/account_detail.html:78
 #: templates/silverstrike/category_detail.html:48
@@ -79,18 +79,18 @@ msgstr ""
 #: templates/silverstrike/index.html:160
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr ""
+msgstr "Notlar"
 
 #: models.py:280 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/index.html:164
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: models.py:281 templates/silverstrike/account_detail.html:77
 #: templates/silverstrike/category_detail.html:47
@@ -98,86 +98,86 @@ msgstr ""
 #: templates/silverstrike/index.html:158
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
-msgstr ""
+msgstr "Başlık"
 
 #: models.py:285
 msgid "First line contains headers"
-msgstr ""
+msgstr "İlk satır başlıklar içermekte"
 
 #: models.py:312
 msgid "Disabled"
-msgstr ""
+msgstr "Devre Dışı"
 
 #: models.py:313
 msgid "Weekly"
-msgstr ""
+msgstr "Haftalık"
 
 #: models.py:314
 msgid "Monthly"
-msgstr ""
+msgstr "Aylık"
 
 #: models.py:315
 msgid "Yearly"
-msgstr ""
+msgstr "Yıllık"
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:8
 msgid "Account Inactive"
-msgstr ""
+msgstr "Hesap etkin değil"
 
 #: templates/account/account_inactive.html:10
 msgid "This account is inactive."
-msgstr ""
+msgstr "Bu hesap aktif değildir."
 
 #: templates/account/email.html:5 templates/silverstrike/account_detail.html:80
 #: templates/silverstrike/index.html:71 templates/silverstrike/index.html:103
 #: templates/silverstrike/index.html:162
 msgid "Account"
-msgstr ""
+msgstr "Hesap"
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr ""
+msgstr "E-Posta Adresleri"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr ""
+msgstr "Bu e-mail adresleri hesabınızla ilişkilidir:"
 
 #: templates/account/email.html:24
 msgid "Verified"
-msgstr ""
+msgstr "Doğrulanmış"
 
 #: templates/account/email.html:26
 msgid "Unverified"
-msgstr ""
+msgstr "Doğrulanmamış"
 
 #: templates/account/email.html:28
 msgid "Primary"
-msgstr ""
+msgstr "Birincil"
 
 #: templates/account/email.html:34
 msgid "Make Primary"
-msgstr ""
+msgstr "Birincil Yap"
 
 #: templates/account/email.html:35
 msgid "Re-send Verification"
-msgstr ""
+msgstr "Onayı tekrar gönder"
 
 #: templates/account/email.html:36 templates/socialaccount/connections.html:35
 msgid "Remove"
-msgstr ""
+msgstr "Kaldır"
 
 #: templates/account/email.html:43
 msgid "Warning:"
-msgstr ""
+msgstr "Uyarı:"
 
 #: templates/account/email.html:43
 msgid "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc."
-msgstr ""
+msgstr "Şu anda ayarlanmış hiçbir e-mail adresiniz bulunmamakta. Gerçekten bir e-mail adresi eklemelisiniz ki bildirimleri alabilin, şifrenizi sıfırlayabilin, vb."
 
 #: templates/account/email.html:48
 msgid "Add E-mail Address"
-msgstr ""
+msgstr "E-mail Adresi ekle"
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
