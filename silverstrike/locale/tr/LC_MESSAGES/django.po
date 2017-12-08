@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 10:47-0500\n"
+"PO-Revision-Date: 2017-12-08 08:23-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -763,39 +763,39 @@ msgstr ""
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr ""
+msgstr "Tüm önemli şeyler"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr ""
+msgstr "Hızlı genel bakış"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:53
 msgid "Income"
-msgstr ""
+msgstr "Gelir"
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:56
 msgid "Expenses"
-msgstr ""
+msgstr "Giderler"
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr ""
+msgstr "Toplam Bakiye"
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr ""
+msgstr "Ödenmemiş"
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr ""
+msgstr "Ay sonu beklenen"
 
 #: templates/silverstrike/index.html:48
 msgid "Previous Month"
-msgstr ""
+msgstr "Önceki Ay"
 
 #: templates/silverstrike/index.html:96
 msgid "Upcoming Transactions"
-msgstr ""
+msgstr "Yaklaşan İşlemler"
 
 #: templates/silverstrike/index.html:120
 msgid "Upcoming Recurrences"
