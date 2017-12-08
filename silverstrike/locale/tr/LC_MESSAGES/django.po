@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-08 08:41-0500\n"
+"PO-Revision-Date: 2017-12-08 08:51-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -905,29 +905,29 @@ msgstr "Şu üçüncü parti hesapların herhangi birini kullanarak hesabınıza
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
-msgstr ""
+msgstr "Şu anda hesabınıza bağlı hiç bir sosyal hesabınız bulunmamakta."
 
 #: templates/socialaccount/connections.html:46
 msgid "Add a 3rd Party Account"
-msgstr ""
+msgstr "3üncü parti hesap ekle"
 
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Oturum açma iptal edildi"
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Sitemize mevcut hesaplarınızdan biriyle girme işlemini iptal etmeyi tercih ettiniz. Bu hatayla yapılmış bir şeydiyse, lütfen <a href=\"%(login_url)s\">giriş yap</a>'a gidiniz."
 
 #: templates/socialaccount/messages/account_connected.txt:2
 msgid "The social account has been connected."
-msgstr ""
+msgstr "Sosyal hesap bağlanmıştır."
 
 #: templates/socialaccount/messages/account_connected_other.txt:2
 msgid "The social account is already connected to a different account."
-msgstr ""
+msgstr "Bu sosyal hesap zaten başka bir hesaba bağlı."
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
