@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-09 09:40+0100\n"
+"POT-Creation-Date: 2017-12-09 18:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,20 +21,16 @@ msgstr ""
 msgid "You need to select more than one account to merge them."
 msgstr ""
 
-#: admin.py:41
-msgid "You can only merge foreign accounts"
+#: admin.py:43
+msgid "You can only merge foreign accounts, {} isn't."
 msgstr ""
 
-#: admin.py:49
-msgid "1 account"
+#: admin.py:54
+msgid "Merged one account into <a href={}>{}</a>."
 msgstr ""
 
-#: admin.py:51
-msgid "{} accounts"
-msgstr ""
-
-#: admin.py:53
-msgid "Merged {} into <a href={}>{}</a>."
+#: admin.py:59
+msgid "Merged {} accounts into <a href={}>{}</a>."
 msgstr ""
 
 #: forms.py:124
@@ -736,7 +732,8 @@ msgid "Export"
 msgstr ""
 
 #: templates/silverstrike/base.html:165
-msgid "<b>Version</b> 0.1"
+#, python-format
+msgid "<b>Version</b> %(version)s"
 msgstr ""
 
 #: templates/silverstrike/budget_index.html:29

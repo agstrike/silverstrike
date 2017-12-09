@@ -37,23 +37,29 @@ class AccountAdmin(admin.ModelAdmin):
                               messages.ERROR)
             return
         for account in accounts:
+            failure = False
             if account.account_type != Account.FOREIGN:
-                self.message_user(request, _('You can only merge foreign accounts'))
-            return
+                self.message_user(request, _(
+                    'You can only merge foreign accounts, {} isn\'t.'.format(account.name)))
+                failure = True
+            if failure:
+                return
         base = accounts.pop()
         for account in accounts:
             Split.objects.filter(account_id=account.id).update(account_id=base.id)
             Split.objects.filter(opposing_account_id=account.id).update(opposing_account_id=base.id)
             account.delete()
         if len(accounts) == 1:
-            message = _('1 account')
+            self.message_user(request, format_html(
+                _('Merged one account into <a href={}>{}</a>.'),
+                reverse('admin:silverstrike_account_change', args=[base.id]),
+                base))
         else:
-            message = _('{} accounts' % len(accounts))
-        self.message_user(request, format_html(
-            _('Merged {} into <a href={}>{}</a>.'),
-            message,
-            reverse('admin:silverstrike_account_change', args=[base.id]),
-            base))
+            self.message_user(request, format_html(
+                _('Merged {} accounts into <a href={}>{}</a>.'),
+                len(accounts),
+                reverse('admin:silverstrike_account_change', args=[base.id]),
+                base))
 
 
 class SplitInline(admin.TabularInline):
