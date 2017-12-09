@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 08:51-0500\n"
+"PO-Revision-Date: 2017-12-09 09:11-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -576,30 +576,30 @@ msgstr "編輯"
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
-msgstr ""
+msgstr "對帳"
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr ""
+msgstr "交易"
 
 #: templates/silverstrike/account_detail.html:72
 #: templates/silverstrike/account_detail.html:74
 msgid "Show all"
-msgstr ""
+msgstr "顯示全部"
 
 #: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
-msgstr ""
+msgstr "和解"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr ""
+msgstr "更新 %(object.name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr ""
+msgstr "建立新帳戶"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -610,18 +610,18 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr ""
+msgstr "新"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr ""
+msgstr "帳戶詳細資料"
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -632,62 +632,62 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr ""
+msgstr "創建"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
 #: templates/silverstrike/index.html:92
 msgid "Balance"
-msgstr ""
+msgstr "餘額"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr ""
+msgstr "活動"
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr ""
+msgstr "新棄權"
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr ""
+msgstr "新存款"
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr ""
+msgstr "新的轉帳"
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr ""
+msgstr "拆分交易"
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr ""
+msgstr "個人資料"
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr ""
+msgstr "登出"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr ""
+msgstr "主要導航"
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr ""
+msgstr "交易"
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr ""
+msgstr "循環"
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -696,70 +696,73 @@ msgstr ""
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr ""
+msgstr "類型"
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr ""
+msgstr "預算"
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr ""
+msgstr "圖表"
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
-msgstr ""
+msgstr "導入和匯出"
 
 #: templates/silverstrike/base.html:143
 msgid "Import"
-msgstr ""
+msgstr "導入"
 
 #: templates/silverstrike/base.html:146
 msgid "Export"
-msgstr ""
+msgstr "導出"
 
 #: templates/silverstrike/base.html:165
 msgid "<b>Version</b> 0.1"
-msgstr ""
+msgstr "<b>版本:</b>"
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
-msgstr ""
+msgstr "預算為 "
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr ""
+msgstr "已分配"
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr ""
+msgstr "已花銷"
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: templates/silverstrike/budget_index.html:65
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "\n"
 "      <p>Are you sure you want to delete the category?</p>\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
-msgstr ""
+msgstr "\n"
+"<p>您確定要刪除類別嗎？</ p>\n"
+"      所有鏈接到這個類別的交易都不會被刪除，\n"
+"但是會丟失類別的輸入。</ p>      "
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr ""
+msgstr "概述"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr ""
+msgstr "顯示所有交易記錄"
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
@@ -839,7 +842,7 @@ msgstr "預計月底"
 
 #: templates/silverstrike/index.html:48
 msgid "You have recurrences that are overdue!"
-msgstr ""
+msgstr "您有逾期的復發!"
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
@@ -855,55 +858,55 @@ msgstr "即將發生的週期交易"
 
 #: templates/silverstrike/index.html:134
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #: templates/silverstrike/index.html:149
 msgid "No upcoming recurrences"
-msgstr ""
+msgstr "沒有即將發生的週期交易"
 
 #: templates/silverstrike/index.html:158
 msgid "Recent Transactions"
-msgstr ""
+msgstr "近期交易"
 
 #: templates/silverstrike/index.html:164
 msgid "Type"
-msgstr ""
+msgstr "類型"
 
 #: templates/silverstrike/index.html:168
 msgid "Opposing Account"
-msgstr ""
+msgstr "對方帳戶"
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr ""
+msgstr "交易記錄詳細資訊"
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr ""
+msgstr "添加拆分"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr ""
+msgstr "創建對賬交易"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "週期性交易"
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr ""
+msgstr "週期性"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr ""
+msgstr "週期交易細節"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr ""
+msgstr "週期業務"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
