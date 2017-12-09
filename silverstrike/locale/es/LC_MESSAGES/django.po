@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 03:50-0500\n"
+"PO-Revision-Date: 2017-12-09 04:01-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -38,51 +38,51 @@ msgstr ""
 
 #: forms.py:124
 msgid "Debitor"
-msgstr "Felipe"
+msgstr ""
 
 #: forms.py:139
 msgid "Creditor"
-msgstr "Acreedor"
+msgstr ""
 
 #: forms.py:162
 msgid "Amount has to be positive"
-msgstr "Cantidad tiene que ser positivo"
+msgstr ""
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr "Intenta crear una transacción entre dos cuentas en el extranjero"
+msgstr ""
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr "Equilibrio real"
+msgstr ""
 
 #: models.py:16
 msgid "Personal"
-msgstr "Personal"
+msgstr ""
 
 #: models.py:17
 msgid "Foreign"
-msgstr "Extranjero"
+msgstr ""
 
 #: models.py:18
 msgid "System"
-msgstr "Sistema de"
+msgstr ""
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr "Saldo inicial"
+msgstr ""
 
 #: models.py:274
 msgid "Do not use"
-msgstr "No utilice"
+msgstr ""
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr "Cuenta de origen"
+msgstr ""
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr "Cuenta de destino"
+msgstr ""
 
 #: models.py:277 templates/silverstrike/account_detail.html:83
 #: templates/silverstrike/category_detail.html:49
@@ -91,7 +91,7 @@ msgstr "Cuenta de destino"
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr "Cantidad"
+msgstr ""
 
 #: models.py:278 templates/silverstrike/account_detail.html:82
 #: templates/silverstrike/category_detail.html:48
@@ -99,18 +99,18 @@ msgstr "Cantidad"
 #: templates/silverstrike/index.html:165
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr "Fecha"
+msgstr ""
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr "Notas"
+msgstr ""
 
 #: models.py:280 templates/silverstrike/account_detail.html:85
 #: templates/silverstrike/index.html:169
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
-msgstr "Categoría"
+msgstr ""
 
 #: models.py:281 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/category_detail.html:47
@@ -118,236 +118,230 @@ msgstr "Categoría"
 #: templates/silverstrike/index.html:163
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
-msgstr "Título"
+msgstr ""
 
 #: models.py:285
 msgid "First line contains headers"
-msgstr "Primera línea contiene los encabezados de"
+msgstr ""
 
 #: models.py:312
 msgid "Disabled"
-msgstr "Con discapacidad"
+msgstr ""
 
 #: models.py:313
 msgid "Weekly"
-msgstr "Semanal"
+msgstr ""
 
 #: models.py:314
 msgid "Monthly"
-msgstr "Mensual"
+msgstr ""
 
 #: models.py:315
 msgid "Yearly"
-msgstr "Anual"
+msgstr ""
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:8
 msgid "Account Inactive"
-msgstr "Cuenta inactiva"
+msgstr ""
 
 #: templates/account/account_inactive.html:10
 msgid "This account is inactive."
-msgstr "Esta cuenta está inactiva."
+msgstr ""
 
 #: templates/account/email.html:5 templates/silverstrike/account_detail.html:84
 #: templates/silverstrike/index.html:76 templates/silverstrike/index.html:108
 #: templates/silverstrike/index.html:167
 msgid "Account"
-msgstr "Cuenta"
+msgstr ""
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr "Direcciones de correo electrónico"
+msgstr ""
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Las siguientes direcciones de correo electrónico están asociadas a tu cuenta:"
+msgstr ""
 
 #: templates/account/email.html:24
 msgid "Verified"
-msgstr "Verificado"
+msgstr ""
 
 #: templates/account/email.html:26
 msgid "Unverified"
-msgstr "Sin verificar"
+msgstr ""
 
 #: templates/account/email.html:28
 msgid "Primary"
-msgstr "Primaria"
+msgstr ""
 
 #: templates/account/email.html:34
 msgid "Make Primary"
-msgstr "Hacer primarias"
+msgstr ""
 
 #: templates/account/email.html:35
 msgid "Re-send Verification"
-msgstr "Volver a enviar verificación"
+msgstr ""
 
 #: templates/account/email.html:36 templates/socialaccount/connections.html:35
 msgid "Remove"
-msgstr "Quitar"
+msgstr ""
 
 #: templates/account/email.html:43
 msgid "Warning:"
-msgstr "ADVERTENCIA:"
+msgstr ""
 
 #: templates/account/email.html:43
 msgid "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "Actualmente no tienes ninguna dirección de correo electrónico configurado. Usted realmente debe agregar una dirección de correo electrónico para que puedan recibir notificaciones, restablece su contraseña, etcetera."
+msgstr ""
 
 #: templates/account/email.html:48
 msgid "Add E-mail Address"
-msgstr "Agregar dirección de correo electrónico"
+msgstr ""
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
-msgstr "Añadir correo electrónico"
+msgstr ""
 
 #: templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr "¿Realmente desea eliminar la dirección de correo electrónico seleccionado?"
+msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account.\n\n"
 "To confirm this is correct, go to %(activate_url)s\n"
-msgstr "¡Hola desde %(site_name)s!\n\n"
-"Estás recibiendo este correo electrónico debido a %(user_display)s de usuario tuyo ha dado como una dirección de correo electrónico para conectarse a su cuenta.\n\n"
-"Para confirmar que esto es correcto, ir a %(activate_url)s\n"
+msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:7
 #, python-format
 msgid "Thank you from %(site_name)s!\n"
 "%(site_domain)s"
-msgstr "¡Gracias desde %(site_name)s!\n"
-"%(site_domain)s"
+msgstr ""
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Por favor confirme su dirección de correo electrónico"
+msgstr ""
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr "¡Hola desde %(site_name)s!\n\n"
-"Estás recibiendo este e-mail porque usted o alguien más ha solicitado una contraseña para su cuenta de usuario.\n"
-"Puede ser ignorada con seguridad si no solicitas una contraseña. Haga clic en el enlace de abajo para restablecer su contraseña."
+msgstr ""
 
 #: templates/account/email/password_reset_key_message.txt:8
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr "En caso de que usted olvidó su nombre de usuario es %(username)s."
+msgstr ""
 
 #: templates/account/email/password_reset_key_message.txt:10
 #, python-format
 msgid "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
-msgstr "¡Gracias por utilizar %(site_name)s!\n"
-"%(site_domain)s"
+msgstr ""
 
 #: templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr "Correo electrónico de restablecimiento de contraseña"
+msgstr ""
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr "Confirmar dirección de correo electrónico"
+msgstr ""
 
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr "Por favor confirmar que <a href=\"mailto:%(email)s\">%(email)s</a> es una dirección de correo electrónico para el usuario %(user_display)s."
+msgstr ""
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr ""
 
 #: templates/account/email_confirm.html:27
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr "Este enlace de confirmación de correo electrónico caducado o no es válido. Por favor, <a href=\"%(email_url)s\">issue un nuevo request</a> de confirmación de correo electrónico."
+msgstr ""
 
 #: templates/account/login.html:17
 #, python-format
 msgid "Please sign in with one\n"
 "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
-msgstr "Identifícate con una de sus cuentas existentes de terceros. O, up</a> de <a href=\"%(signup_url)s\">sign para una cuenta de %(site_name)s y muestra en a continuación:"
+msgstr ""
 
 #: templates/account/login.html:27
 msgid "or"
-msgstr "o"
+msgstr ""
 
 #: templates/account/login.html:34
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "Si no ha creado todavía una cuenta, entonces por favor<a href=\"%(signup_url)s\">sign up</a> primero."
+msgstr ""
 
 #: templates/account/login.html:65
 msgid "Sign In"
-msgstr "Inicia sesión"
+msgstr ""
 
 #: templates/account/login.html:71
 msgid "Forgot Password?"
-msgstr "¿Olvidó contraseña?"
+msgstr ""
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr "¿Está seguro que desea salir?"
+msgstr ""
 
 #: templates/account/logout.html:22
 msgid "Sign Out"
-msgstr "Cerrar sesión"
+msgstr ""
 
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr "No puede eliminar su dirección de correo electrónico principal (%(email)s)."
+msgstr ""
 
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
 msgid "Confirmation e-mail sent to %(email)s."
-msgstr "Correo electrónico de confirmación enviado a %(email)s."
+msgstr ""
 
 #: templates/account/messages/email_confirmed.txt:2
 #, python-format
 msgid "You have confirmed %(email)s."
-msgstr "Han confirmado %(email)s."
+msgstr ""
 
 #: templates/account/messages/email_deleted.txt:2
 #, python-format
 msgid "Removed e-mail address %(email)s."
-msgstr "Eliminar dirección de correo electrónico %(email)s."
+msgstr ""
 
 #: templates/account/messages/logged_in.txt:4
 #, python-format
 msgid "Successfully signed in as %(name)s."
-msgstr "Con éxito firmado como %(name)s."
+msgstr ""
 
 #: templates/account/messages/logged_out.txt:2
 msgid "You have signed out."
-msgstr "Han firmado hacia fuera."
+msgstr ""
 
 #: templates/account/messages/password_changed.txt:2
 msgid "Password successfully changed."
-msgstr "Contraseña cambiada con éxito."
+msgstr ""
 
 #: templates/account/messages/password_set.txt:2
 msgid "Password successfully set."
-msgstr "Contraseña fijado con éxito."
+msgstr ""
 
 #: templates/account/messages/primary_email_set.txt:2
 msgid "Primary e-mail address set."
-msgstr "Establezca la dirección de correo electrónico principal."
+msgstr ""
 
 #: templates/account/messages/unverified_primary_email.txt:2
 msgid "Your primary e-mail address must be verified."
-msgstr "Debe ser verificado su dirección de correo electrónico principal."
+msgstr ""
 
 #: templates/account/password_change.html:5
 #: templates/account/password_change.html:8
@@ -357,121 +351,119 @@ msgstr "Debe ser verificado su dirección de correo electrónico principal."
 #: templates/account/password_reset_from_key_done.html:4
 #: templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr "Cambiar contraseña"
+msgstr ""
 
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:12
 #: templates/account/password_reset_done.html:6
 #: templates/account/password_reset_done.html:9
 msgid "Password Reset"
-msgstr "Restablecimiento de contraseña"
+msgstr ""
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr "¿Ha olvidado su contraseña? Introduzca su dirección de e-mail y le enviaremos un correo electrónico que le permite a restablecerla."
+msgstr ""
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
-msgstr "Restablecer mi contraseña"
+msgstr ""
 
 #: templates/account/password_reset.html:34
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr "Póngase en contacto con nosotros si tiene cualquier dificultad para restablecer su contraseña."
+msgstr ""
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr "Te hemos enviado un correo electrónico. Póngase en contacto con nosotros si usted no lo recibe en pocos minutos."
+msgstr ""
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
-msgstr "Token mal"
+msgstr ""
 
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr "El enlace de restablecimiento de contraseña no es válido, posiblemente porque ya ha sido utilizado.  Por favor solicite una <a href=\"%(passwd_reset_url)s\">new contraseña reset</a>."
+msgstr ""
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr "cambiar contraseña"
+msgstr ""
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr "Ahora se cambia la contraseña."
+msgstr ""
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr "Set Password"
+msgstr ""
 
 #: templates/account/signup.html:6 templates/socialaccount/signup.html:5
 msgid "Signup"
-msgstr "Signup"
+msgstr ""
 
 #: templates/account/signup.html:16
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "¿Ya tienes una cuenta? Entonces por favor <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
 
 #: templates/account/signup.html:31
 msgid "Sign up"
-msgstr "Únete"
+msgstr ""
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr "Regístrate en cerrado"
+msgstr ""
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr "Lo sentimos, pero actualmente se encuentra cerrado el registro."
+msgstr ""
 
 #: templates/account/snippets/already_logged_in.html:5
 msgid "Note"
-msgstr "Nota"
+msgstr ""
 
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "ya está logueado como %(user_display)s."
+msgstr ""
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:8
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr "Verificar su dirección de correo electrónico"
+msgstr ""
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr "Hemos enviado un correo electrónico a usted para su verificación. Siga el enlace para finalizar el proceso de inscripción. Póngase en contacto con nosotros si usted no lo recibe en pocos minutos."
+msgstr ""
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr "Esta parte del sitio nos obliga a verificar que eres quién dices ser. Para ello, se requiere que Compruebe la propiedad de su dirección de correo electrónico. "
+msgstr ""
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr "Hemos enviado un correo electrónico a usted para su verificación. Haga clic en el enlace dentro de este correo electrónico. Póngase en contacto con nosotros si usted no lo recibe en pocos minutos."
+msgstr ""
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr "<strong>Note:</strong> todavía se puede <a href=\"%(email_url)s\">change su address</a> de correo electrónico."
+msgstr ""
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
 msgid "\n"
 "          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
 "          "
-msgstr "\n"
-"          ¿Está seguro que desea eliminar la cuenta junto con las transacciones de %(object.transaction_num)s?\n"
-"          "
+msgstr ""
 
 #: templates/silverstrike/account_confirm_delete.html:22
 #: templates/silverstrike/account_form.html:60
@@ -481,7 +473,7 @@ msgstr "\n"
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -492,7 +484,7 @@ msgstr "Cancelar"
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr "Eliminar"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -506,7 +498,7 @@ msgstr "Eliminar"
 #: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr "Página de inicio"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -517,74 +509,74 @@ msgstr "Página de inicio"
 #: templates/silverstrike/index.html:71
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
-msgstr "Cuentas"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr "Anterior"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr "Siguiente"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:36
 msgid "Current Balance"
-msgstr "Saldo actual"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:39
 msgid "In"
-msgstr "En"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:42
 msgid "Out"
-msgstr "Hacia fuera"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:45
 #: templates/silverstrike/index.html:30 templates/silverstrike/index.html:64
 msgid "Difference"
-msgstr "Diferencia"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/category_detail.html:36
 #: templates/silverstrike/recurringtransaction_detail.html:50
 #: templates/silverstrike/transaction_detail.html:40
 msgid "Edit"
-msgstr "Editar"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:53
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
-msgstr "Conciliar"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr "Lista de transacciones"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:72
 #: templates/silverstrike/account_detail.html:74
 msgid "Show all"
-msgstr "Mostrar todo"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
-msgstr "Reconciliación"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr "Actualización %(object.name)s"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr "Crear nueva cuenta"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -595,18 +587,18 @@ msgstr "Crear nueva cuenta"
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr "Actualización"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr "Nuevo"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr "Información de cuenta"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -617,62 +609,62 @@ msgstr "Información de cuenta"
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr "Crear"
+msgstr ""
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
 #: templates/silverstrike/index.html:92
 msgid "Balance"
-msgstr "Balance"
+msgstr ""
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr "Nuevo retiro"
+msgstr ""
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr "Nuevo depósito"
+msgstr ""
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr "Nueva transferencia"
+msgstr ""
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr "Nueva transacción Split"
+msgstr ""
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr "Perfil"
+msgstr ""
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr "Cerrar sesión"
+msgstr ""
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr "NAVEGACIÓN PRINCIPAL"
+msgstr ""
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr "Transacciones"
+msgstr ""
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr "Recurrencias"
+msgstr ""
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -681,148 +673,146 @@ msgstr "Recurrencias"
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr "Categorías"
+msgstr ""
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr "Presupuestos"
+msgstr ""
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr "Cartas"
+msgstr ""
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
-msgstr "Importación y exportación"
+msgstr ""
 
 #: templates/silverstrike/base.html:143
 msgid "Import"
-msgstr "Importación"
+msgstr ""
 
 #: templates/silverstrike/base.html:146
 msgid "Export"
-msgstr "De la exportación"
+msgstr ""
 
 #: templates/silverstrike/base.html:165
 msgid "<b>Version</b> 0.1"
-msgstr "<b>Version</b> 0.1"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
-msgstr "Presupuesto para "
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr "Asignados"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr "Dinero gastado"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
-msgstr "Izquierda"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:65
 msgid "Save"
-msgstr "Guardar"
+msgstr ""
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "\n"
 "      <p>Are you sure you want to delete the category?</p>\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
-msgstr "\n"
-"      <p>Are seguro que desea eliminar la categoría de?</p> <p>All transacciones vinculadas a esta categoría no pueden borrar, pero va a perder la entrada para el category</p>\n"
-"      "
+msgstr ""
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr "Resumen"
+msgstr ""
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr "Mostrar todas las transacciones"
+msgstr ""
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
-msgstr "Distribución por fuente de"
+msgstr ""
 
 #: templates/silverstrike/category_detail.html:76
 msgid "Distribution by Destination"
-msgstr "Distribución por destino"
+msgstr ""
 
 #: templates/silverstrike/category_form.html:10
 msgid "Create new category"
-msgstr "Crear nueva categoría"
+msgstr ""
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr "Detalles de categoría"
+msgstr ""
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
-msgstr "Distribución por categoría"
+msgstr ""
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
-msgstr "porque son divertidos!"
+msgstr ""
 
 #: templates/silverstrike/charts.html:18
 msgid "Last year"
-msgstr "Año pasado"
+msgstr ""
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr "Últimos 6 meses"
+msgstr ""
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr "Últimos 3 meses"
+msgstr ""
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr "Mes actual"
+msgstr ""
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr "Cuentas personales"
+msgstr ""
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr "Gasto por categoría"
+msgstr ""
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr "Todas las cosas importantes"
+msgstr ""
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr "Descripción rápida"
+msgstr ""
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
 msgid "Income"
-msgstr "Ingresos"
+msgstr ""
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:61
 msgid "Expenses"
-msgstr "Gastos"
+msgstr ""
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr "Saldo total"
+msgstr ""
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr "Excepcional"
+msgstr ""
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr "Espera fin de mes"
+msgstr ""
 
 #: templates/silverstrike/index.html:48
 msgid "You have recurrences that are overdue!"
@@ -830,155 +820,155 @@ msgstr ""
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
-msgstr "Mes anterior"
+msgstr ""
 
 #: templates/silverstrike/index.html:101
 msgid "Upcoming Transactions"
-msgstr "Próximas transacciones"
+msgstr ""
 
 #: templates/silverstrike/index.html:125
 msgid "Upcoming Recurrences"
-msgstr "Repeticiones futuras"
+msgstr ""
 
 #: templates/silverstrike/index.html:134
 msgid "Actions"
-msgstr "Acciones"
+msgstr ""
 
 #: templates/silverstrike/index.html:149
 msgid "No upcoming recurrences"
-msgstr "No repeticiones próximas"
+msgstr ""
 
 #: templates/silverstrike/index.html:158
 msgid "Recent Transactions"
-msgstr "Transacciones recientes"
+msgstr ""
 
 #: templates/silverstrike/index.html:164
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #: templates/silverstrike/index.html:168
 msgid "Opposing Account"
-msgstr "Cuenta de la oposición"
+msgstr ""
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr "Detalles de la transacción"
+msgstr ""
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr "Añadir Split"
+msgstr ""
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr "Crear transacción de conciliar"
+msgstr ""
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr "Transacciones recurrentes"
+msgstr ""
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr "Recurrencia"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr "Datos de repetición"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr "Repetición"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr "Fuente"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr "Destino"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr "Las últimas instancias"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr "Nueva transacción recurrente"
+msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr "Tipo de transacción"
+msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr "Cantidad total"
+msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr "Editar como operación fraccionada"
+msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr "Se divide"
+msgstr ""
 
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
-msgstr "Falla de inicio de sesión de red social"
+msgstr ""
 
 #: templates/socialaccount/authentication_error.html:10
 msgid "An error occurred while attempting to login via your social network account."
-msgstr "Se ha producido un error al intentar iniciar sesión a través de su cuenta de red social."
+msgstr ""
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:8
 msgid "Account Connections"
-msgstr "Cuenta las conexiones"
+msgstr ""
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr "Puede iniciar sesión en su cuenta usando cualquiera de las siguientes cuentas de terceros:"
+msgstr ""
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
-msgstr "No tiene actualmente ninguna cuenta de red social conectada a esta cuenta."
+msgstr ""
 
 #: templates/socialaccount/connections.html:46
 msgid "Add a 3rd Party Account"
-msgstr "Agregar una cuenta parte 3"
+msgstr ""
 
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
 msgid "Login Cancelled"
-msgstr "Inicio de sesión cancelada"
+msgstr ""
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr "Decidió cancelar el registro nuestro sitio usando una de sus cuentas existentes. Si esto fue un error, por favor proceda a <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
 
 #: templates/socialaccount/messages/account_connected.txt:2
 msgid "The social account has been connected."
-msgstr "Se ha conectado la cuenta social."
+msgstr ""
 
 #: templates/socialaccount/messages/account_connected_other.txt:2
 msgid "The social account is already connected to a different account."
-msgstr "La cuenta social ya está conectada a una cuenta diferente."
+msgstr ""
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
-msgstr "Se desconectó la cuenta social."
+msgstr ""
 
 #: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
 msgid "Sign Up"
-msgstr "Únete"
+msgstr ""
 
 #: templates/socialaccount/signup.html:10
 #, python-format
 msgid "You are about to use your %(provider_name)s account to login to\n"
 "%(site_name)s. As a final step, please complete the following form:"
-msgstr "Estás a punto de utilizar su cuenta de %(provider_name)s para ingresar al%(site_name)s. Como paso final, por favor complete el siguiente formulario:"
+msgstr ""
 
