@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 18:39+0100\n"
-"PO-Revision-Date: 2017-12-09 12:52-0500\n"
+"PO-Revision-Date: 2017-12-09 14:00-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -118,8 +118,7 @@ msgstr "標題"
 
 #: models.py:285
 msgid "First line contains headers"
-msgstr "\n"
-"第一行包含標題"
+msgstr "第一行包含標題"
 
 #: models.py:312
 msgid "Disabled"
@@ -752,9 +751,9 @@ msgid "\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
 msgstr "\n"
-"<p>您確定要刪除類別嗎？</ p>\n"
-"      所有鏈接到這個類別的交易都不會被刪除，\n"
-"但是會丟失類別的輸入。</ p>      "
+"<p>您確定要刪除類別嗎？</p>\n"
+"<p>所有鏈接到這個類別的交易都不會被刪除，\n"
+"但是會丟失類別的輸入。</p>      "
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
