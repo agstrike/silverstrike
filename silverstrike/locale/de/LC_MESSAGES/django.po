@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 18:39+0100\n"
-"PO-Revision-Date: 2017-12-09 12:52-0500\n"
+"PO-Revision-Date: 2017-12-09 14:00-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -26,7 +26,7 @@ msgstr "Sie können nur fremde Konten zusammenführen, {} ist keines."
 
 #: admin.py:54
 msgid "Merged one account into <a href={}>{}</a>."
-msgstr ""
+msgstr "Ein Konto in <a href={}>{}</a> vermschmolzen."
 
 #: admin.py:59
 msgid "Merged {} accounts into <a href={}>{}</a>."
