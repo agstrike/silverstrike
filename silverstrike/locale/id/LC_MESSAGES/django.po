@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 07:42-0500\n"
+"PO-Revision-Date: 2017-12-09 11:12-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -193,11 +193,11 @@ msgstr "Peringatan:"
 
 #: templates/account/email.html:43
 msgid "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "Anda saat ini tidak memiliki alamat e-mail yang disiapkan. Anda harus benar-benar menambahkan alamat e-mail sehingga Anda dapat menerima pemberitahuan, mengulang kata sandi Anda, dll."
+msgstr "Anda saat ini tidak memiliki alamat surel yang disiapkan. Anda harus benar-benar menambahkan alamat surel sehingga Anda dapat menerima pemberitahuan, mengulang kata sandi Anda, dll."
 
 #: templates/account/email.html:48
 msgid "Add E-mail Address"
-msgstr "Tambahkan Alamat E-mail"
+msgstr "Tambahkan Alamat surel"
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
