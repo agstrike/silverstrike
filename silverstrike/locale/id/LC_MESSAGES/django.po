@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 07:31-0500\n"
+"PO-Revision-Date: 2017-12-09 07:42-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -157,11 +157,11 @@ msgstr "Akun"
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr "Alamat Posel"
+msgstr "Alamat surel"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Alamat e-surat berikut dikaitkan dengan akun Anda:"
+msgstr "Alamat surel berikut dikaitkan dengan akun Anda:"
 
 #: templates/account/email.html:24
 msgid "Verified"
@@ -213,7 +213,7 @@ msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account.\n\n"
 "To confirm this is correct, go to %(activate_url)s\n"
 msgstr "Halo dari %(site_name)s!\n\n"
-"Anda menerima e-mail ini karena pengguna %(user_display)s telah memberi Anda alamat e-mail untuk menghubungkan akun mereka.\n\n"
+"Anda menerima surel ini karena pengguna %(user_display)s telah memberi Anda alamat e-mail untuk menghubungkan akun mereka.\n\n"
 "Untuk mengkonfirmasi ini benar, masuk ke %(activate_url)s\n"
 
 #: templates/account/email/email_confirmation_message.txt:7
@@ -225,7 +225,7 @@ msgstr "Terima kasih dari %(site_name)s!\n"
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Konfirmasikan Alamat E-mail Anda"
+msgstr "Konfirmasikan Alamat surel Anda"
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
@@ -233,8 +233,8 @@ msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
 msgstr "Halo dari %(site_name)s!\n\n"
-"Anda menerima e-mail ini karena Anda atau orang lain telah meminta kata sandi untuk akun pengguna Anda.\n"
-"Hal ini dapat diabaikan dengan aman jika Anda tidak meminta penyetelan ulang kata sandi. Klik link di bawah ini untuk mengatur ulang kata sandi Anda."
+"Anda menerima surel ini karena Anda atau orang lain telah meminta kata sandi untuk akun pengguna Anda.\n"
+"Hal ini dapat diabaikan dengan aman jika Anda tidak meminta penyetelan ulang kata sandi. Klik tautan di bawah ini untuk mengatur ulang kata sandi Anda."
 
 #: templates/account/email/password_reset_key_message.txt:8
 #, python-format
@@ -250,17 +250,17 @@ msgstr "Terima kasih telah menggunakan %(site_name)s!\n"
 
 #: templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr "Kata sandi mengatur ulang E-mail"
+msgstr "Kata sandi mengatur ulang surel"
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr "Konfirmasi alamat email"
+msgstr "Konfirmasi alamat surel"
 
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr "Harap konfirmasikan bahwa <a href=\"mailto:%(email)s\">%(email)s</a> adalah alamat e-mail untuk pengguna %(user_display)s."
+msgstr "Harap konfirmasikan bahwa <a href=\"mailto:%(email)s\">%(email)s</a> adalah alamat surel untuk pengguna %(user_display)s."
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
@@ -269,7 +269,7 @@ msgstr "Konfirmasi"
 #: templates/account/email_confirm.html:27
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr "Tautan konfirmasi e-mail ini kedaluwarsa atau tidak valid. <a href=\"%(email_url)s\"> menerbitkan permintaan konfirmasi e-mail baru </a>."
+msgstr "Tautan konfirmasi surel ini kedaluwarsa atau tidak valid. <a href=\"%(email_url)s\"> menerbitkan permintaan konfirmasi surel baru </a>."
 
 #: templates/account/login.html:17
 #, python-format
@@ -310,12 +310,12 @@ msgstr "Keluar"
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr "Anda tidak dapat menghapus alamat e-mail utama Anda (%(email)s)."
+msgstr "Anda tidak dapat menghapus alamat surel utama Anda (%(email)s)."
 
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
 msgid "Confirmation e-mail sent to %(email)s."
-msgstr "Konfirmasi e-mail dikirim ke %(email)s."
+msgstr "Konfirmasi surel dikirim ke %(email)s."
 
 #: templates/account/messages/email_confirmed.txt:2
 #, python-format
@@ -325,7 +325,7 @@ msgstr "Anda telah mengkonfirmasi %(email)s."
 #: templates/account/messages/email_deleted.txt:2
 #, python-format
 msgid "Removed e-mail address %(email)s."
-msgstr "Alamat e-mail yang dihapus %(email)s."
+msgstr "Alamat surel yang dihapus %(email)s."
 
 #: templates/account/messages/logged_in.txt:4
 #, python-format
@@ -346,11 +346,11 @@ msgstr "Kata sandi berhasil diubah."
 
 #: templates/account/messages/primary_email_set.txt:2
 msgid "Primary e-mail address set."
-msgstr "Alamat e-mail utama ditetapkan."
+msgstr "Alamat surel utama ditetapkan."
 
 #: templates/account/messages/unverified_primary_email.txt:2
 msgid "Your primary e-mail address must be verified."
-msgstr "Alamat e-mail utama Anda harus diverifikasi."
+msgstr "Alamat surel utama Anda harus diverifikasi."
 
 #: templates/account/password_change.html:5
 #: templates/account/password_change.html:8
@@ -371,7 +371,7 @@ msgstr "Atur ulang kata sandi"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr "Lupa kata sandi? Masukkan alamat e-mail Anda di bawah ini, dan kami akan mengirimkan e-mail yang memungkinkan Anda untuk mengatur ulangnya."
+msgstr "Lupa kata sandi? Masukkan alamat surel Anda di bawah ini, dan kami akan mengirimkan surel yang memungkinkan Anda untuk mengatur ulangnya."
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
@@ -383,7 +383,7 @@ msgstr "Silahkan hubungi kami jika Anda memiliki masalah saat menyetel ulang kat
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr "Kami telah mengirimi Anda e-mail. Silahkan hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
+msgstr "Kami telah mengirimi Anda surel. Silahkan hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
@@ -444,11 +444,11 @@ msgstr "anda sudah masuk sebagai %(user_display)s."
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr "Verifikasi alamat email Anda"
+msgstr "Verifikasi alamat surel Anda"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr "Kami telah mengirim e-mail kepada Anda untuk verifikasi. Ikuti tautan yang diberikan untuk menyelesaikan proses pendaftaran. Silahkan hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
+msgstr "Kami telah mengirim surel kepada Anda untuk verifikasi. Ikuti tautan yang diberikan untuk menyelesaikan proses pendaftaran. Silahkan hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
@@ -462,14 +462,14 @@ msgstr "Ini bagian dari situs mengharuskan kita untuk memverifikasi itu\n"
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr "Kami telah mengirim e-mail untuk Anda\n"
-"verifikasi. Silahkan klik pada tautan di dalam e-mail ini. Silahkan\n"
+msgstr "Kami telah mengirim surel untuk Anda\n"
+"verifikasi. Silahkan klik pada tautan di dalam surel ini. Silahkan\n"
 "hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr "<strong> Catatan: </strong> Anda tetap dapat <a href=\"%(email_url)s\"> mengubah alamat e-mail Anda </a>."
+msgstr "<strong> Catatan: </strong> Anda tetap dapat <a href=\"%(email_url)s\"> mengubah alamat surel Anda </a>."
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
