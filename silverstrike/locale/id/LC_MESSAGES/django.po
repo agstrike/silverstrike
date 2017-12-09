@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 04:11-0500\n"
+"PO-Revision-Date: 2017-12-09 04:21-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
-msgstr "Anda perlu memilih lebih dari satu akun untuk menggabungkan mereka."
+msgstr "Anda harus memilih lebih dari satu akun untuk menggabungkannya."
 
 #: admin.py:41
 msgid "You can only merge foreign accounts"
@@ -46,31 +46,31 @@ msgstr "Kreditor"
 
 #: forms.py:162
 msgid "Amount has to be positive"
-msgstr ""
+msgstr "Jumlah harus menjadi positif"
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr ""
+msgstr "Anda mencoba untuk membuat sebuah transaksi antara dua akun luar negeri"
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr ""
+msgstr "Keseimbangan sebenarnya"
 
 #: models.py:16
 msgid "Personal"
-msgstr ""
+msgstr "Pribadi"
 
 #: models.py:17
 msgid "Foreign"
-msgstr ""
+msgstr "Luar negeri"
 
 #: models.py:18
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr ""
+msgstr "Keseimbangan awal"
 
 #: models.py:274
 msgid "Do not use"
