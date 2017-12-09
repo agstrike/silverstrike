@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 12:21-0500\n"
+"POT-Creation-Date: 2017-12-09 18:39+0100\n"
+"PO-Revision-Date: 2017-12-09 12:52-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -20,21 +20,17 @@ msgstr ""
 msgid "You need to select more than one account to merge them."
 msgstr "Sie müssen mehr als ein Konto auswählen, um diese zusammenzuführen."
 
-#: admin.py:41
-msgid "You can only merge foreign accounts"
-msgstr "Sie können nur fremde Konten zusammenführen"
+#: admin.py:43
+msgid "You can only merge foreign accounts, {} isn't."
+msgstr "Sie können nur fremde Konten zusammenführen, {} ist keines."
 
-#: admin.py:49
-msgid "1 account"
-msgstr "ein Konto"
+#: admin.py:54
+msgid "Merged one account into <a href={}>{}</a>."
+msgstr ""
 
-#: admin.py:51
-msgid "{} accounts"
-msgstr "{} Konten"
-
-#: admin.py:53
-msgid "Merged {} into <a href={}>{}</a>."
-msgstr "{} in <a href={}>{}</a> zusammengeführt."
+#: admin.py:59
+msgid "Merged {} accounts into <a href={}>{}</a>."
+msgstr "{} Konten in <a href={}>{}</a> zusammengeführt."
 
 #: forms.py:124
 msgid "Debitor"
@@ -205,7 +201,7 @@ msgstr "E-Mail-Adresse hinzufügen"
 
 #: templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr "Möchten Sie wirklich die ausgewählte E-Mail-Adresse entfernen?"
+msgstr "Möchten Sie die ausgewählte E-Mail-Adresse wirklich entfernen?"
 
 #: templates/account/email/email_confirmation_message.txt:1
 #, python-format
@@ -225,7 +221,7 @@ msgstr "Ich danke Ihnen von %(site_name)s!\n"
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Bitte bestätigen Sie Ihre e-Mail-Adresse"
+msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse"
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
@@ -294,15 +290,15 @@ msgstr "Anmelden"
 
 #: templates/account/login.html:71
 msgid "Forgot Password?"
-msgstr "Vergessen Passwort?"
+msgstr "Passwort vergessen?"
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr "Sind Sie sicher, dass Sie sich abmelden möchten?"
+msgstr "Möchtest Sie sich wirklich abmelden?"
 
 #: templates/account/logout.html:22
 msgid "Sign Out"
-msgstr "Melden Sie sich ab"
+msgstr "Abmelden"
 
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
@@ -339,7 +335,7 @@ msgstr "Passwort erfolgreich geändert."
 
 #: templates/account/messages/password_set.txt:2
 msgid "Password successfully set."
-msgstr "Kennwort festlegen erfolgreich."
+msgstr "Passwort erfolgreich geändert."
 
 #: templates/account/messages/primary_email_set.txt:2
 msgid "Primary e-mail address set."
@@ -364,7 +360,7 @@ msgstr "Passwort ändern"
 #: templates/account/password_reset_done.html:6
 #: templates/account/password_reset_done.html:9
 msgid "Password Reset"
-msgstr "Das Zurücksetzen von Kennwörtern"
+msgstr "Passwort zurücksetzen"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
@@ -524,7 +520,7 @@ msgstr "Konten"
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr "Vorherigen"
+msgstr "Zurück"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
@@ -707,8 +703,9 @@ msgid "Export"
 msgstr "Export"
 
 #: templates/silverstrike/base.html:165
-msgid "<b>Version</b> 0.1"
-msgstr "<b>Version</b> 0.1"
+#, python-format
+msgid "<b>Version</b> %(version)s"
+msgstr "<b>Version</b> %(version)s"
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
@@ -763,7 +760,7 @@ msgstr "Neue Kategorie erstellen"
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr "Kategorie Details"
+msgstr "Kategoriedetails"
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
@@ -779,11 +776,11 @@ msgstr "Letztes Jahr"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr "Die letzten 6 Monate"
+msgstr "Letzten 6 Monate"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr "Die letzten 3 Monate"
+msgstr "Letzten 3 Monate"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
@@ -791,7 +788,7 @@ msgstr "Aktueller Monat"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr "Private Konten"
+msgstr "Persönliche Konten"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
@@ -803,7 +800,7 @@ msgstr "Alle wichtige Sachen"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr "Schnelle Übersicht"
+msgstr "Schnellübersicht"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
 msgid "Income"
@@ -831,7 +828,7 @@ msgstr "Sie haben fällige wiederkehrende Zahlungen!"
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
-msgstr "Letzer Monat"
+msgstr "Vorheriger Monat"
 
 #: templates/silverstrike/index.html:101
 msgid "Upcoming Transactions"
