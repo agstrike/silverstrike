@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 05:00-0500\n"
+"PO-Revision-Date: 2017-12-09 05:10-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -776,135 +776,135 @@ msgstr "Tahun lalu"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr ""
+msgstr "6 bulan terakhir"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr ""
+msgstr "3 bulan terakhir"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr ""
+msgstr "Bulan ini"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr ""
+msgstr "Akun pribadi"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr ""
+msgstr "Pengeluaran menurut kategori"
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr ""
+msgstr "Semua barang penting"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr ""
+msgstr "Ikhtisar Cepat"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
 msgid "Income"
-msgstr ""
+msgstr "Pendapatan"
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:61
 msgid "Expenses"
-msgstr ""
+msgstr "Beban"
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr ""
+msgstr "Total Saldo"
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr ""
+msgstr "Luar biasa"
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr ""
+msgstr "Diharapkan akhir bulan"
 
 #: templates/silverstrike/index.html:48
 msgid "You have recurrences that are overdue!"
-msgstr ""
+msgstr "Anda memiliki kekambuhan yang terlambat!"
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
-msgstr ""
+msgstr "Bulan sebelumnya"
 
 #: templates/silverstrike/index.html:101
 msgid "Upcoming Transactions"
-msgstr ""
+msgstr "Transaksi yang akan Datang"
 
 #: templates/silverstrike/index.html:125
 msgid "Upcoming Recurrences"
-msgstr ""
+msgstr "Kelahiran yang akan datang"
 
 #: templates/silverstrike/index.html:134
 msgid "Actions"
-msgstr ""
+msgstr "Tindakan"
 
 #: templates/silverstrike/index.html:149
 msgid "No upcoming recurrences"
-msgstr ""
+msgstr "Tidak akan terjadi lagi kekambuhan"
 
 #: templates/silverstrike/index.html:158
 msgid "Recent Transactions"
-msgstr ""
+msgstr "Transaksi terkini"
 
 #: templates/silverstrike/index.html:164
 msgid "Type"
-msgstr ""
+msgstr "Jenis"
 
 #: templates/silverstrike/index.html:168
 msgid "Opposing Account"
-msgstr ""
+msgstr "Menentang akun"
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr ""
+msgstr "Rincian transaksi"
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr ""
+msgstr "Tambahkan Split"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr ""
+msgstr "Buat transaksi rekonsiliasi"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "Transaksi Berulang"
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr ""
+msgstr "Kambuh"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr ""
+msgstr "Rincian Perulangan"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr ""
+msgstr "Kambuh"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr ""
+msgstr "Sumber"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr ""
+msgstr "Tujuan"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr ""
+msgstr "Kejadian baru"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr ""
+msgstr "Transaksi Berulang yang Baru"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
