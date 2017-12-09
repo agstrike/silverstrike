@@ -3,7 +3,7 @@
 Thanks for concidering to contribute! Even if not explicitly said, it's appreciated!
 
 You can contribute in different ways. You can write code, file bugs and feature requests.
-If you're more of a designer (I'm not) you are very welcome to help with layouts.
+If you're more of a designer (I'm not) you are very welcome to help with layouts. In case you know more than just english you can help translating.
 
 ### Reporting Bugs
 
@@ -20,6 +20,11 @@ Explain the problem and include additional details to help reproduce the problem
 * **Include screenshots** if you think they are helpful
 * **If you're reporting that an unhandled exception**, include a stack trace. If it's rather small, include it in the issue itself. Otherwise please attach it as a file or paste the content to some pasting service like [dpaste](https://dpaste.de)
 * **Can you reproduce the problem in the [demo](https://silverstrike.herokuapp.com)?**
+
+### Translation
+
+Translation is done using [crowdin](https://crowdin.com/project/silverstrike). You should be able to translate and suggest translations for existing languages right after creating an account there. If you would like to rights to approve suggestions for specific languages or add entirely new languages, don't hesitate to contact me on crowdin.
+
 
 ### Feature Requests
 

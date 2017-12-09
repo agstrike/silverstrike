@@ -30,6 +30,10 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                                                      show_on_dashboard=True)
         upcoming = Split.objects.personal().upcoming()
         recurrences = RecurringTransaction.objects.due_in_month()
+        for recurrence in recurrences:
+            if recurrence.is_due:
+                context['overdue_transactions'] = True
+                break
 
         context['upcoming_transactions'] = upcoming
         context['upcoming_recurrences'] = recurrences

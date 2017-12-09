@@ -4,16 +4,16 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Reconcile
+<h1>{% trans 'Reconcile' %}
   <small>
     {{ account|title }}
   </small>
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'accounts' %}">Accounts</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
   <li><a href="{{ account.get_absolute_url }}">{{ account }}</a></li>
-  <li class="active">Reconcile</li>
+  <li class="active">{% trans 'Reconcile' %}</li>
 </ol>
 {% endblock %}
 

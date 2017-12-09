@@ -30,9 +30,10 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
             queryset = queryset.filter(category_id=self.request.GET['category'])
         if 'account' in self.request.GET:
             queryset = queryset.filter(account_id=self.request.GET['account'])
+        elif 'opposing_account' in self.request.GET:
+            queryset = queryset.filter(opposing_account_id=self.request.GET['opposing_account'])
         else:
-            queryset = queryset.exclude(transaction__transaction_type=Transaction.TRANSFER,
-                                        amount__gt=0)
+            queryset = queryset.transfers_once()
         return queryset
 
     def get_context_data(self, **kwargs):

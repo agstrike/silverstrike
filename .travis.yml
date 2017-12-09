@@ -13,6 +13,8 @@ matrix:
   - env: TOXENV=djangolatest
   - python: "3.5"
     env: TOXENV=django110,django111
+  - python: "3.4"
+    env: TOXENV=django110,django111
   allow_failures:
   - env: TOXENV=djangolatest 
 

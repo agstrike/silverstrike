@@ -32,6 +32,22 @@ msgstr ""
 msgid "Merged {} accounts into <a href={}>{}</a>."
 msgstr ""
 
+#: admin.py:36
+msgid "You need to select more than one account to merge them."
+msgstr ""
+
+#: admin.py:43
+msgid "You can only merge foreign accounts, {} isn't."
+msgstr ""
+
+#: admin.py:54
+msgid "Merged one account into <a href={}>{}</a>."
+msgstr ""
+
+#: admin.py:59
+msgid "Merged {} accounts into <a href={}>{}</a>."
+msgstr ""
+
 #: forms.py:124
 msgid "Debitor"
 msgstr ""

@@ -43,6 +43,11 @@
   </table>
 </div>
 </div>
+{% if overdue_transactions %}
+<div class="alert alert-danger">
+  <b>{% trans 'You have recurrences that are overdue!' %}</b>
+</div>
+{% endif %}
 <div class="box">
 <div class="box-header with-boarder">
   <h3 class="box-title">{% trans 'Previous Month' %}</h3>
