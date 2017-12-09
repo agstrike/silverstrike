@@ -1,3 +1,7 @@
 files:
   - source: /silverstrike/locale/en/LC_MESSAGES/django.po
     translation: /silverstrike/locale/%two_letters_code%/LC_MESSAGES/django.po
+    languages_mapping:
+      two_letters_code:
+        zh-CN: zh_CN
+        zh-TW: zh_TW
