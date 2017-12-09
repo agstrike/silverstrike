@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 12:11-0500\n"
+"PO-Revision-Date: 2017-12-09 12:21-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -34,7 +34,7 @@ msgstr "{} Konten"
 
 #: admin.py:53
 msgid "Merged {} into <a href={}>{}</a>."
-msgstr ""
+msgstr "{} in <a href={}>{}</a> zusammengeführt."
 
 #: forms.py:124
 msgid "Debitor"
@@ -575,7 +575,7 @@ msgstr "Alle anzeigen"
 
 #: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
-msgstr ""
+msgstr "Abgleichung"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
@@ -827,7 +827,7 @@ msgstr "Erwartung zum Ende des Monats"
 
 #: templates/silverstrike/index.html:48
 msgid "You have recurrences that are overdue!"
-msgstr ""
+msgstr "Sie haben fällige wiederkehrende Zahlungen!"
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
