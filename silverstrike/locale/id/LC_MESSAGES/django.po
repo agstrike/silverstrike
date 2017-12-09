@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 05:30-0500\n"
+"PO-Revision-Date: 2017-12-09 05:40-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -157,7 +157,7 @@ msgstr "Akun"
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr "Alamat E-mail"
+msgstr "Alamat Posel"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
@@ -454,25 +454,30 @@ msgstr "Kami telah mengirim e-mail kepada Anda untuk verifikasi. Ikuti tautan ya
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr ""
+msgstr "Ini bagian dari situs mengharuskan kita untuk memverifikasi itu\n"
+"Anda adalah siapa yang Anda klaim. Untuk tujuan ini, kami mewajibkan Anda\n"
+"verifikasi kepemilikan alamat e-mail Anda. "
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Kami telah mengirim e-mail untuk Anda\n"
+"verifikasi. Silahkan klik pada tautan di dalam e-mail ini. Silahkan\n"
+"hubungi kami jika Anda tidak menerimanya dalam beberapa menit."
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr ""
+msgstr "<strong> Catatan: </strong> Anda tetap dapat <a href=\"%(email_url)s\"> mengubah alamat e-mail Anda </a>."
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
 msgid "\n"
 "          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
 "          "
-msgstr ""
+msgstr "\n"
+"Apakah anda yakin ngin menghapus akun dengan transaksi? %(object.transaction_num)s?          "
 
 #: templates/silverstrike/account_confirm_delete.html:22
 #: templates/silverstrike/account_form.html:60
@@ -482,7 +487,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -493,7 +498,7 @@ msgstr ""
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr ""
+msgstr "Menghapus"
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -507,7 +512,7 @@ msgstr ""
 #: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr ""
+msgstr "Beranda"
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -518,14 +523,14 @@ msgstr ""
 #: templates/silverstrike/index.html:71
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
-msgstr ""
+msgstr "Akun"
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr ""
+msgstr "Sebelumnya"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
