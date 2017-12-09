@@ -3,34 +3,18 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 18:39+0100\n"
-"PO-Revision-Date: 2017-12-09 12:52-0500\n"
+"PO-Revision-Date: 2017-12-09 12:51-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
-"Language-Team: English\n"
-"Language: en_US\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: silverstrike\n"
-"X-Crowdin-Language: en\n"
+"X-Crowdin-Language: pl\n"
 "X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
-
-#: admin.py:36
-msgid "You need to select more than one account to merge them."
-msgstr ""
-
-#: admin.py:43
-msgid "You can only merge foreign accounts, {} isn't."
-msgstr ""
-
-#: admin.py:54
-msgid "Merged one account into <a href={}>{}</a>."
-msgstr ""
-
-#: admin.py:59
-msgid "Merged {} accounts into <a href={}>{}</a>."
-msgstr ""
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
