@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 05:40-0500\n"
+"PO-Revision-Date: 2017-12-09 07:31-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -161,7 +161,7 @@ msgstr "Alamat Posel"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Alamat e-mail berikut dikaitkan dengan akun Anda:"
+msgstr "Alamat e-surat berikut dikaitkan dengan akun Anda:"
 
 #: templates/account/email.html:24
 msgid "Verified"
@@ -201,11 +201,11 @@ msgstr "Tambahkan Alamat E-mail"
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
-msgstr "Tambahkan E-mail"
+msgstr "Tambahkan surel"
 
 #: templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr "Apakah Anda benar-benar ingin menghapus alamat e-mail yang dipilih?"
+msgstr "Apakah Anda benar-benar ingin menghapus alamat surel yang dipilih?"
 
 #: templates/account/email/email_confirmation_message.txt:1
 #, python-format
