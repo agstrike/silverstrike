@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-09 18:39+0100\n"
+"POT-Creation-Date: 2017-12-09 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -864,10 +864,6 @@ msgstr ""
 
 #: templates/silverstrike/index.html:125
 msgid "Upcoming Recurrences"
-msgstr ""
-
-#: templates/silverstrike/index.html:134
-msgid "Actions"
 msgstr ""
 
 #: templates/silverstrike/index.html:149
