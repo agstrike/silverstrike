@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 09:40+0100\n"
-"PO-Revision-Date: 2017-12-09 04:21-0500\n"
+"PO-Revision-Date: 2017-12-09 04:30-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -74,15 +74,15 @@ msgstr "Keseimbangan awal"
 
 #: models.py:274
 msgid "Do not use"
-msgstr ""
+msgstr "Jangan gunakan"
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr ""
+msgstr "Sumber akun"
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr ""
+msgstr "Tujuan akun"
 
 #: models.py:277 templates/silverstrike/account_detail.html:83
 #: templates/silverstrike/category_detail.html:49
@@ -91,7 +91,7 @@ msgstr ""
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr ""
+msgstr "Jumlah"
 
 #: models.py:278 templates/silverstrike/account_detail.html:82
 #: templates/silverstrike/category_detail.html:48
@@ -99,18 +99,18 @@ msgstr ""
 #: templates/silverstrike/index.html:165
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr ""
+msgstr "Catatan"
 
 #: models.py:280 templates/silverstrike/account_detail.html:85
 #: templates/silverstrike/index.html:169
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: models.py:281 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/category_detail.html:47
@@ -118,7 +118,7 @@ msgstr ""
 #: templates/silverstrike/index.html:163
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: models.py:285
 msgid "First line contains headers"
