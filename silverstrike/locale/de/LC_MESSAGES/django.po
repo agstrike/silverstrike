@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-05 16:17+0100\n"
-"PO-Revision-Date: 2017-12-05 11:01-0500\n"
+"PO-Revision-Date: 2017-12-09 03:10-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -348,7 +348,7 @@ msgstr "Das Zurücksetzen von Kennwörtern"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr "Vergessen Ihr Passwort? Gib unten deine e-Mail-Adresse und wir senden Ihnen eine E-mail, so dass Sie es zurücksetzen."
+msgstr "Vergessen Ihr Passwort? Gib unten deine E-Mail-Adresse ein und wir senden Ihnen eine E-mail, so dass Sie es zurücksetzen können."
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
@@ -360,7 +360,7 @@ msgstr "Bitte kontaktieren Sie uns, wenn Sie irgendwelche Probleme beim Zurücks
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr "Wir haben Ihnen eine E-mail geschickt. Bitte kontaktieren Sie uns, wenn Sie es nicht innerhalb weniger Minuten erhalten."
+msgstr "Wir haben Ihnen eine E-mail geschickt. Bitte kontaktieren Sie uns, wenn Sie sie nicht innerhalb weniger Minuten erhalten."
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
