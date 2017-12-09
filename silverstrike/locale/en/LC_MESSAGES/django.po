@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-05 16:17+0100\n"
+"POT-Creation-Date: 2017-12-09 09:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,26 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:36
+msgid "You need to select more than one account to merge them."
+msgstr ""
+
+#: admin.py:41
+msgid "You can only merge foreign accounts"
+msgstr ""
+
+#: admin.py:49
+msgid "1 account"
+msgstr ""
+
+#: admin.py:51
+msgid "{} accounts"
+msgstr ""
+
+#: admin.py:53
+msgid "Merged {} into <a href={}>{}</a>."
+msgstr ""
 
 #: forms.py:124
 msgid "Debitor"
@@ -65,19 +85,19 @@ msgstr ""
 msgid "Destination Account"
 msgstr ""
 
-#: models.py:277 templates/silverstrike/account_detail.html:79
+#: models.py:277 templates/silverstrike/account_detail.html:83
 #: templates/silverstrike/category_detail.html:49
-#: templates/silverstrike/index.html:104 templates/silverstrike/index.html:128
-#: templates/silverstrike/index.html:161
+#: templates/silverstrike/index.html:109 templates/silverstrike/index.html:133
+#: templates/silverstrike/index.html:166
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
 msgstr ""
 
-#: models.py:278 templates/silverstrike/account_detail.html:78
+#: models.py:278 templates/silverstrike/account_detail.html:82
 #: templates/silverstrike/category_detail.html:48
-#: templates/silverstrike/index.html:102 templates/silverstrike/index.html:127
-#: templates/silverstrike/index.html:160
+#: templates/silverstrike/index.html:107 templates/silverstrike/index.html:132
+#: templates/silverstrike/index.html:165
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
 msgstr ""
@@ -87,16 +107,16 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: models.py:280 templates/silverstrike/account_detail.html:81
-#: templates/silverstrike/index.html:164
+#: models.py:280 templates/silverstrike/account_detail.html:85
+#: templates/silverstrike/index.html:169
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
 msgstr ""
 
-#: models.py:281 templates/silverstrike/account_detail.html:77
+#: models.py:281 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/category_detail.html:47
-#: templates/silverstrike/index.html:101 templates/silverstrike/index.html:126
-#: templates/silverstrike/index.html:158
+#: templates/silverstrike/index.html:106 templates/silverstrike/index.html:131
+#: templates/silverstrike/index.html:163
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
 msgstr ""
@@ -130,9 +150,9 @@ msgstr ""
 msgid "This account is inactive."
 msgstr ""
 
-#: templates/account/email.html:5 templates/silverstrike/account_detail.html:80
-#: templates/silverstrike/index.html:71 templates/silverstrike/index.html:103
-#: templates/silverstrike/index.html:162
+#: templates/account/email.html:5 templates/silverstrike/account_detail.html:84
+#: templates/silverstrike/index.html:76 templates/silverstrike/index.html:108
+#: templates/silverstrike/index.html:167
 msgid "Account"
 msgstr ""
 
@@ -512,6 +532,7 @@ msgstr ""
 #: templates/silverstrike/category_index.html:8
 #: templates/silverstrike/charts.html:10 templates/silverstrike/index.html:7
 #: templates/silverstrike/index.html:11
+#: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
 msgstr ""
@@ -522,7 +543,8 @@ msgstr ""
 #: templates/silverstrike/accounts.html:6
 #: templates/silverstrike/accounts.html:10
 #: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:102
-#: templates/silverstrike/index.html:66
+#: templates/silverstrike/index.html:71
+#: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
 msgstr ""
 
@@ -553,7 +575,7 @@ msgid "Out"
 msgstr ""
 
 #: templates/silverstrike/account_detail.html:45
-#: templates/silverstrike/index.html:30 templates/silverstrike/index.html:59
+#: templates/silverstrike/index.html:30 templates/silverstrike/index.html:64
 msgid "Difference"
 msgstr ""
 
@@ -565,6 +587,8 @@ msgid "Edit"
 msgstr ""
 
 #: templates/silverstrike/account_detail.html:53
+#: templates/silverstrike/reconcile.html:7
+#: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
 msgstr ""
 
@@ -573,11 +597,12 @@ msgstr ""
 msgid "Transaction list"
 msgstr ""
 
-#: templates/silverstrike/account_detail.html:71
+#: templates/silverstrike/account_detail.html:72
+#: templates/silverstrike/account_detail.html:74
 msgid "Show all"
 msgstr ""
 
-#: templates/silverstrike/account_detail.html:88
+#: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
 msgstr ""
 
@@ -630,8 +655,8 @@ msgid "Name"
 msgstr ""
 
 #: templates/silverstrike/accounts.html:23
-#: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:72
-#: templates/silverstrike/index.html:87
+#: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
+#: templates/silverstrike/index.html:92
 msgid "Balance"
 msgstr ""
 
@@ -808,11 +833,11 @@ msgstr ""
 msgid "Quick Overview"
 msgstr ""
 
-#: templates/silverstrike/index.html:24 templates/silverstrike/index.html:53
+#: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
 msgid "Income"
 msgstr ""
 
-#: templates/silverstrike/index.html:27 templates/silverstrike/index.html:56
+#: templates/silverstrike/index.html:27 templates/silverstrike/index.html:61
 msgid "Expenses"
 msgstr ""
 
@@ -829,34 +854,38 @@ msgid "Expected end of month"
 msgstr ""
 
 #: templates/silverstrike/index.html:48
+msgid "You have recurrences that are overdue!"
+msgstr ""
+
+#: templates/silverstrike/index.html:53
 msgid "Previous Month"
 msgstr ""
 
-#: templates/silverstrike/index.html:96
+#: templates/silverstrike/index.html:101
 msgid "Upcoming Transactions"
 msgstr ""
 
-#: templates/silverstrike/index.html:120
+#: templates/silverstrike/index.html:125
 msgid "Upcoming Recurrences"
 msgstr ""
 
-#: templates/silverstrike/index.html:129
+#: templates/silverstrike/index.html:134
 msgid "Actions"
 msgstr ""
 
-#: templates/silverstrike/index.html:144
+#: templates/silverstrike/index.html:149
 msgid "No upcoming recurrences"
 msgstr ""
 
-#: templates/silverstrike/index.html:153
+#: templates/silverstrike/index.html:158
 msgid "Recent Transactions"
 msgstr ""
 
-#: templates/silverstrike/index.html:159
+#: templates/silverstrike/index.html:164
 msgid "Type"
 msgstr ""
 
-#: templates/silverstrike/index.html:163
+#: templates/silverstrike/index.html:168
 msgid "Opposing Account"
 msgstr ""
 
