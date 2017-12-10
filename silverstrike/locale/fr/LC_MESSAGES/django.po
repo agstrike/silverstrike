@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 20:05+0100\n"
-"PO-Revision-Date: 2017-12-10 11:13-0500\n"
+"PO-Revision-Date: 2017-12-10 11:20-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -386,87 +386,89 @@ msgstr "Jeton de mauvais"
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
+msgstr "Le lien de réinitialisation de mot de passe était incorrect, peut-être parce qu’il a déjà été utilisé.  S’il vous plaît demander une <a href=\"%(passwd_reset_url)s\">nouvelle réinitialisation de mot de passe</a>."
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr ""
+msgstr "changer mot de passe"
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Votre mot de passe est maintenant modifié."
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr ""
+msgstr "Définir mot de passe"
 
 #: templates/account/signup.html:6 templates/socialaccount/signup.html:5
 msgid "Signup"
-msgstr ""
+msgstr "S'inscrire"
 
 #: templates/account/signup.html:16
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Vous avez déjà un compte? Alors s’il vous plaît <a href=\"%(login_url)s\">connecter</a>."
 
 #: templates/account/signup.html:31
 msgid "Sign up"
-msgstr ""
+msgstr "S'inscrire"
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr ""
+msgstr "S'inscrire a échoué"
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr ""
+msgstr "Nous sommes désolés, mais l’inscription est actuellement fermée."
 
 #: templates/account/snippets/already_logged_in.html:5
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "vous êtes déjà connecté tant que %(user_display)s."
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:8
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "Veuillez vérifier votre adresse e-mail"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Nous avons envoyé un e-mail pour vous pour vérification. Suivez le lien fourni pour finaliser le processus d’inscription. S’il vous plaît nous contacter si vous ne le recevez pas en quelques minutes."
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr ""
+msgstr "Cette partie du site nous oblige à vérifier que vous êtes qui vous prétendez être. À cette fin, nous exigeons que vous vérifiez la propriété de votre adresse de messagerie. "
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr ""
+msgstr "Nous avons envoyé un e-mail pour vous pour vérification. Veuillez cliquer sur le lien à l’intérieur de cet e-mail. S’il vous plaît nous contacter si vous ne le recevez pas en quelques minutes."
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr ""
+msgstr "<strong>Note:</strong> vous pouvez toujours <a href=\"%(email_url)s\">changer votre courriel addresse</a>."
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
 msgid "\n"
 "          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
 "          "
-msgstr ""
+msgstr "\n"
+"          Êtes-vous sûr de que vouloir supprimer le compte ainsi que les transactions de %(object.transaction_num)s?\n"
+"          "
 
 #: templates/silverstrike/account_confirm_delete.html:22
 #: templates/silverstrike/account_form.html:60
@@ -476,7 +478,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -487,7 +489,7 @@ msgstr ""
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -501,7 +503,7 @@ msgstr ""
 #: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -512,65 +514,65 @@ msgstr ""
 #: templates/silverstrike/index.html:71
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
-msgstr ""
+msgstr "Comptes"
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: templates/silverstrike/account_detail.html:36
 msgid "Current Balance"
-msgstr ""
+msgstr "Solde actuel"
 
 #: templates/silverstrike/account_detail.html:39
 msgid "In"
-msgstr ""
+msgstr "Dans"
 
 #: templates/silverstrike/account_detail.html:42
 msgid "Out"
-msgstr ""
+msgstr "Hors"
 
 #: templates/silverstrike/account_detail.html:45
 #: templates/silverstrike/index.html:30 templates/silverstrike/index.html:64
 msgid "Difference"
-msgstr ""
+msgstr "Différence"
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/category_detail.html:36
 #: templates/silverstrike/recurringtransaction_detail.html:50
 #: templates/silverstrike/transaction_detail.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Éditer"
 
 #: templates/silverstrike/account_detail.html:53
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
-msgstr ""
+msgstr "Concilier"
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr ""
+msgstr "Liste des transactions"
 
 #: templates/silverstrike/account_detail.html:72
 #: templates/silverstrike/account_detail.html:74
 msgid "Show all"
-msgstr ""
+msgstr "Afficher tout"
 
 #: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
-msgstr ""
+msgstr "Reconcilation"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
