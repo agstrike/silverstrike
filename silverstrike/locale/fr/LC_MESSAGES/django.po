@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 20:05+0100\n"
-"PO-Revision-Date: 2017-12-10 11:20-0500\n"
+"PO-Revision-Date: 2017-12-10 11:31-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -577,11 +577,11 @@ msgstr "Reconcilation"
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr ""
+msgstr "Mettre à jour %(object.name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr ""
+msgstr "Créer nouveau compte"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -592,18 +592,18 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr ""
+msgstr "Mettre à jour"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr ""
+msgstr "Détails de compte"
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -614,62 +614,62 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
 #: templates/silverstrike/index.html:92
 msgid "Balance"
-msgstr ""
+msgstr "Solde"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr ""
+msgstr "Nouveau retrait"
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr ""
+msgstr "Nouveau dépôt"
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr ""
+msgstr "Nouveau transfert"
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr ""
+msgstr "Nouvelle opération partagée"
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr ""
+msgstr "Fiche"
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr ""
+msgstr "Se déconnecter"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr ""
+msgstr "NAVIGATION PRINCIPALE"
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr ""
+msgstr "Transactions"
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr ""
+msgstr "Récurrences"
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -678,48 +678,48 @@ msgstr ""
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr ""
+msgstr "Budgets"
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr ""
+msgstr "Graphiques"
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
-msgstr ""
+msgstr "Import & Export"
 
 #: templates/silverstrike/base.html:143
 msgid "Import"
-msgstr ""
+msgstr "Importer"
 
 #: templates/silverstrike/base.html:146
 msgid "Export"
-msgstr ""
+msgstr "Exporter"
 
 #: templates/silverstrike/base.html:165
 #, python-format
 msgid "<b>Version</b> %(version)s"
-msgstr ""
+msgstr "<b>Versión</b> %(version)s"
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
-msgstr ""
+msgstr "Budget pour "
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr ""
+msgstr "Alloué"
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr ""
+msgstr "Argent dépensé"
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
@@ -734,11 +734,13 @@ msgid "\n"
 "      <p>Are you sure you want to delete the category?</p>\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
-msgstr ""
+msgstr "\n"
+"      <p>Êtes-vous sûr de vouloir supprimer la catégorie?</p> <p>Toutes les transactions liées à cette catégorie ne sera pas supprimées mais perdra l’entrée pour le catégorie</p>\n"
+"      "
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr ""
+msgstr "Résumé"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
@@ -873,104 +875,104 @@ msgstr ""
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr ""
+msgstr "Récurrence"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr ""
+msgstr "Détails de récurrence"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr ""
+msgstr "Récurrence"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr ""
+msgstr "Source"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr ""
+msgstr "Destination"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr ""
+msgstr "Occurrences récentes"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr ""
+msgstr "Nouvelle opération périodique"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr ""
+msgstr "Type de transaction"
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr ""
+msgstr "Montant total"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr ""
+msgstr "Modifier en tant que transaction partagée"
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr ""
+msgstr "Partages"
 
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
-msgstr ""
+msgstr "Échec de connexion de réseau social"
 
 #: templates/socialaccount/authentication_error.html:10
 msgid "An error occurred while attempting to login via your social network account."
-msgstr ""
+msgstr "Une erreur s’est produite en essayant de vous connecter via votre compte de réseau social."
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:8
 msgid "Account Connections"
-msgstr ""
+msgstr "Connexions de compte"
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr ""
+msgstr "Vous pouvez vous connecter à votre compte, utilisez l’un des comptes tiers suivants:"
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
-msgstr ""
+msgstr "Vous n’avez actuellement aucun compte de réseau social connecté à ce compte."
 
 #: templates/socialaccount/connections.html:46
 msgid "Add a 3rd Party Account"
-msgstr ""
+msgstr "Ajouter un compte de tiers"
 
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Connexion annulée"
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Vous avez décidé d’annuler la connexion à notre site à l’aide d’un de vos comptes existants. Si c’était une erreur, veuillez passer à <a href=\"%(login_url)s\">connecter</a>."
 
 #: templates/socialaccount/messages/account_connected.txt:2
 msgid "The social account has been connected."
-msgstr ""
+msgstr "Le compte social a été connecté."
 
 #: templates/socialaccount/messages/account_connected_other.txt:2
 msgid "The social account is already connected to a different account."
-msgstr ""
+msgstr "Le compte social est déjà connecté à un autre compte."
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
-msgstr ""
+msgstr "Le compte social a été déconnecté."
 
 #: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
 msgid "Sign Up"
-msgstr ""
+msgstr "S'inscrire"
 
 #: templates/socialaccount/signup.html:10
 #, python-format
 msgid "You are about to use your %(provider_name)s account to login to\n"
 "%(site_name)s. As a final step, please complete the following form:"
-msgstr ""
+msgstr "Vous êtes sur le point d’utiliser votre compte de %(provider_name)s pour vous connecter à%(site_name)s. Comme une étape finale, s’il vous plaît remplir le formulaire suivant:"
 
