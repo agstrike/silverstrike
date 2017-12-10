@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-09 20:05+0100\n"
-"PO-Revision-Date: 2017-12-10 09:50-0500\n"
+"PO-Revision-Date: 2017-12-10 11:01-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,27 +18,27 @@ msgstr ""
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
-msgstr ""
+msgstr "Vous devez sélectionner plusieurs comptes pour les fusionner."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, {} isn't."
-msgstr ""
+msgstr "Seulement, vous pouvez fusionner des comptes étrangers, {} n’est pas ."
 
 #: admin.py:54
 msgid "Merged one account into <a href={}>{}</a>."
-msgstr ""
+msgstr "Un compte fusionné avec <a href={}>{}</a>."
 
 #: admin.py:59
 msgid "Merged {} accounts into <a href={}>{}</a>."
-msgstr ""
+msgstr "Fusionné avec comptes {} <a href={}>{}</a>."
 
 #: forms.py:124
 msgid "Debitor"
-msgstr ""
+msgstr "Debitor"
 
 #: forms.py:139
 msgid "Creditor"
-msgstr ""
+msgstr "Créancier"
 
 #: forms.py:162
 msgid "Amount has to be positive"
@@ -122,7 +122,7 @@ msgstr "Première ligne contient des en-têtes"
 
 #: models.py:312
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: models.py:313
 msgid "Weekly"
