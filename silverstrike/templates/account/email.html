@@ -1,11 +1,16 @@
-{% extends "_plain.html" %}
+{% extends 'silverstrike/base.html' %}
 
 {% load i18n %}
+{% load widget_tweaks %}
 
-{% block title %}{% trans "Account" %}{% endblock %}
-
+{% block content_header %}<h1>{% trans "E-mail Addresses" %}</h1>{% endblock %}
 {% block content %}
-    <h1>{% trans "E-mail Addresses" %}</h1>
+<div class="col-md-8">
+  <div class="box">
+    <div class="box-header">
+    <h3 class="box-title">{% trans "E-mail Addresses" %}</h3>
+    </div>
+    <div class="box-body">
 {% if user.emailaddress_set.all %}
 <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 
@@ -21,19 +26,19 @@
 
 {{ emailaddress.email }}
     {% if emailaddress.verified %}
-    <span class="verified">{% trans "Verified" %}</span>
+    <span class="label label-success">{% trans "Verified" %}</span>
     {% else %}
-    <span class="unverified">{% trans "Unverified" %}</span>
+    <span class="label label-warning">{% trans "Unverified" %}</span>
     {% endif %}
-      {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+      {% if emailaddress.primary %}<span class="label label-primary">{% trans "Primary" %}</span>{% endif %}
 </label>
 </div>
   {% endfor %}
 
 <div class="buttonHolder">
-      <button class="secondaryAction" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-      <button class="secondaryAction" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-      <button class="primaryAction" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+      <button class="btn btn-primary" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="btn btn-warning" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="btn btn-danger" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
 </div>
 
 </fieldset>
@@ -41,22 +46,27 @@
 
 {% else %}
 <p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
-
 {% endif %}
-
-
     <h2>{% trans "Add E-mail Address" %}</h2>
-
-    <form method="post" action="{% url 'account_email' %}" class="add_email">
+    <form method="post" action="{% url 'account_email' %}" class="form-horizontal">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+        {% for field in form %}
+        <div class="form-group">
+          <label class="control-label col-md-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          <div class="col-md-8">
+            {% render_field field class='form-control' %}
+          </div>
+        </div>
+        {% endfor %}
+        <button name="action_add" class="btn btn-primary" type="submit">{% trans "Add E-mail" %}</button>
     </form>
-
+</div>
+</div>
+</div>
 {% endblock %}
 
 
-{% block extra_body %}
+{% block scripts %}
 <script type="text/javascript">
 (function() {
   var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";

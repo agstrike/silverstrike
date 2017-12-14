@@ -1,0 +1,35 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block content_header %}
+<h1>{% trans 'Profile' %}
+  <small>{% trans 'Your account details' %}</small>
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Profile' %}</li>
+</ol>
+{% endblock %}
+{% block content %}
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Profile' %}</h3>
+</div>
+<div class="box-body">
+  <dl class="dl-horizontal">
+    <dt>{% trans 'Username' %}</dt>
+    <dd>{{ request.user.username }}</dd>
+    <dt>{% trans 'API auth key' %}</dt>
+    <dd>{{ token }}</dd>
+    <dt>{% trans 'Email Addresses' %}</dt>
+    <dd><a href="{% url 'account_email' %}">{% trans 'Manage Email Addresses' %}</a></dd>
+    <dt>{% trans 'Password' %}</dt>
+    <dd><a href="{% url 'account_change_password' %}">{% trans 'Change Password' %}</a></dd>
+    <dt>{% trans 'Social logins' %}</dt>
+    <dd><a href="{% url 'socialaccount_connections' %}">{% trans 'Manage social logins' %}</a></dd>
+  </dl>
+</div>
+</div>
+{% endblock %}
