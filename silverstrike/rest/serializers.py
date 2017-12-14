@@ -1,12 +1,13 @@
 from rest_framework import serializers
 
-from silverstrike.models import Account, Category, Split, Transaction
+from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
 
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('id', 'name', 'account_type', 'active', 'show_on_dashboard')
+        fields = ('id', 'name', 'account_type', 'active', 'show_on_dashboard', 'last_modified')
+        read_only_fields = ('last_modified',)
 
     def validate_account_type(self, value):
         if value == Account.SYSTEM:
@@ -18,7 +19,8 @@ class SplitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Split
         fields = ('id', 'title', 'date', 'account', 'opposing_account',
-                  'amount', 'category', 'transaction')
+                  'amount', 'category', 'transaction', 'last_modified')
+        read_only_fields = ('last_modified',)
 
     # needed so that the id is transfered for update actions
     id = serializers.IntegerField(required=False)
@@ -27,7 +29,8 @@ class SplitSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'title', 'date', 'transaction_type', 'splits')
+        fields = ('id', 'title', 'date', 'transaction_type', 'splits', 'last_modified')
+        read_only_fields = ('last_modified',)
 
     splits = SplitSerializer(many=True)
 
@@ -70,4 +73,12 @@ class TransactionSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'active', 'last_modified')
+        read_only_fields = ('last_modified',)
+
+
+class RecurringTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecurringTransaction
+        fields = ('id', 'title', 'src', 'dst', 'amount', 'date', 'recurrence', 'category', 'transaction_type', 'last_modified')
+        read_only_fields = ('last_modified',)

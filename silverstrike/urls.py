@@ -18,8 +18,8 @@ from silverstrike.views import transactions as transaction_views
 router = routers.DefaultRouter()
 router.register(r'accounts', rest_views.AccountViewSet)
 router.register(r'transactions', rest_views.TransactionViewSet)
-router.register(r'splits', rest_views.SplitViewSet)
 router.register(r'categories', rest_views.CategoryViewSet)
+router.register(r'recurrences', rest_views.RecurringTransactionsViewset)
 
 urlpatterns = [
     url(r'^$', general_views.IndexView.as_view(), name='index'),

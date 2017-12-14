@@ -2,9 +2,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from silverstrike.models import Account, Category, Split, Transaction
+from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
 from silverstrike.rest.permissions import ProtectSystemAccount
 from silverstrike.rest.serializers import (AccountSerializer, CategorySerializer,
+                                           RecurringTransactionSerializer,
                                            SplitSerializer, TransactionSerializer)
 
 
@@ -30,11 +31,11 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
 
 
-class SplitViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Split.objects.all()
-    serializer_class = SplitSerializer
-
-
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class RecurringTransactionsViewset(viewsets.ModelViewSet):
+    queryset = RecurringTransaction.objects.all()
+    serializer_class = RecurringTransactionSerializer
