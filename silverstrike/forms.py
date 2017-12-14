@@ -66,7 +66,8 @@ class TransactionForm(forms.ModelForm):
                   'amount', 'date', 'value_date', 'category', 'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.exclude(active=False).order_by('name'), required=False)
     value_date = forms.DateField(required=False)
 
     source_account = forms.ModelChoiceField(queryset=Account.objects.filter(

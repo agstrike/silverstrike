@@ -66,6 +66,8 @@ urlpatterns = [
 
 
     url(r'^categories/$', category_views.CategoryIndex.as_view(), name='categories'),
+    url(r'^categories/inactive$', category_views.InactiveCategoriesView.as_view(),
+        name='inactive_categories'),
     url(r'^categories/month/(?P<month>\d+)/$', category_views.CategoryIndex.as_view(),
         name='categories_month'),
     url(r'^categories/create/$',

@@ -26,6 +26,7 @@ class Account(models.Model):
 
     class Meta:
         ordering = ['-active', 'name']
+        unique_together = (('name', 'account_type'),)
 
     def __str__(self):
         return self.name
@@ -107,6 +108,7 @@ class Transaction(models.Model):
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
+    last_modified = models.DateTimeField(auto_now=True)
     recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
                                    related_name='recurrences', blank=True, null=True)
 
@@ -192,6 +194,7 @@ class Split(models.Model):
                                  related_name='splits')
     transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
                                     blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     objects = SplitQuerySet.as_manager()
 
@@ -223,6 +226,7 @@ class Split(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64)
+    active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -251,6 +255,7 @@ class Budget(models.Model):
     category = models.ForeignKey(Category, models.CASCADE)
     month = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    last_modified = models.DateTimeField(auto_now=True)
 
     objects = BudgetQuerySet.as_manager()
 
@@ -328,6 +333,7 @@ class RecurringTransaction(models.Model):
     recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
     transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title

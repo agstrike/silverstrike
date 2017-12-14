@@ -48,7 +48,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
             })
 
         ids = [budget.category_id for budget in budgets]
-        for category in Category.objects.exclude(id__in=ids):
+        for category in Category.objects.exclude(id__in=ids).exclude(active=False):
             initial.append({
                 'budget_id': -1,
                 'category_id': category.id,

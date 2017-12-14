@@ -33,7 +33,7 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
 
         categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
 
-        all_categories = list(Category.objects.values_list('id', 'name'))
+        all_categories = list(Category.objects.exclude(active=False).values_list('id', 'name'))
         for id, name, spent in categories:
             if id:
                 all_categories.remove((id, name))
@@ -48,13 +48,13 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
 
 class CategoryCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Category
-    fields = ['name']
+    fields = ['name', 'active']
     success_url = reverse_lazy('categories')
 
 
 class CategoryUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Category
-    fields = ['name']
+    fields = ['name', 'active']
 
     def get_success_url(self):
         return reverse('category_detail', args=[self.object.id])
@@ -63,6 +63,14 @@ class CategoryUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 class CategoryDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Category
     success_url = reverse_lazy('categories')
+
+
+class InactiveCategoriesView(LoginRequiredMixin, generic.ListView):
+    model = Category
+    template_name = 'silverstrike/inactive_categories.html'
+
+    def get_queryset(self):
+        return super(InactiveCategoriesView, self).get_queryset().filter(active=False)
 
 
 class CategoryDetailView(LoginRequiredMixin, generic.DetailView):

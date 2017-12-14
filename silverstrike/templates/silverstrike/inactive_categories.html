@@ -1,0 +1,32 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>{% trans 'Inactive Categories' %}
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Inactive Categories' %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Inactive Categories' %}</h3>
+  </div>
+  <div class="box-body no-padding">
+    <table class="table table-striped">
+      <tr>
+        <th>{% trans 'Name' %}</th>
+      </tr>
+      {% for category in object_list %}
+      <tr>
+        <td><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
