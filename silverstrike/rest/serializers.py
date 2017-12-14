@@ -80,5 +80,6 @@ class CategorySerializer(serializers.ModelSerializer):
 class RecurringTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecurringTransaction
-        fields = ('id', 'title', 'src', 'dst', 'amount', 'date', 'recurrence', 'category', 'transaction_type', 'last_modified')
+        fields = ('id', 'title', 'src', 'dst', 'amount', 'date',
+                  'recurrence', 'category', 'transaction_type', 'last_modified')
         read_only_fields = ('last_modified',)
