@@ -28,6 +28,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'django>=1.10,<2',
+        'djangorestframework',
         'django-widget-tweaks',
         'django-allauth',
         'python-dateutil',
@@ -48,3 +49,4 @@ setup(
     keywords='finance django money money-manager',
     python_requires='>=3.4',
 )
+

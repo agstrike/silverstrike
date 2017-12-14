@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.views import generic
 
+from rest_framework.authtoken.models import Token as AuthToken
+
 from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, RecurringTransaction, Split, Transaction
 
@@ -63,4 +65,13 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['previous_difference'] = context['previous_income'] - context['previous_expenses']
         context['today'] = date.today()
         context['past'] = date.today() - timedelta(days=60)
+        return context
+
+
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'silverstrike/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data()
+        context['token'], created = AuthToken.objects.get_or_create(user=self.request.user)
         return context

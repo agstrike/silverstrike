@@ -1,8 +1,10 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
+from rest_framework import routers
 
 from silverstrike import api
+from silverstrike.rest import views as rest_views
 from silverstrike.views import account as account_views
 from silverstrike.views import budgets as budget_views
 from silverstrike.views import categories as category_views
@@ -13,8 +15,16 @@ from silverstrike.views import recurrences as recurrence_views
 from silverstrike.views import transactions as transaction_views
 
 
+router = routers.DefaultRouter()
+router.register(r'accounts', rest_views.AccountViewSet)
+router.register(r'transactions', rest_views.TransactionViewSet)
+router.register(r'categories', rest_views.CategoryViewSet)
+router.register(r'recurrences', rest_views.RecurringTransactionsViewset)
+
 urlpatterns = [
     url(r'^$', general_views.IndexView.as_view(), name='index'),
+    url(r'^profile/$', general_views.ProfileView.as_view(), name='profile'),
+
     url(r'^auth/', include('allauth.urls')),
 
     url(r'^transactions/$', transaction_views.TransactionIndex.as_view(), name='transactions'),
@@ -106,4 +116,8 @@ urlpatterns = [
         import_views.ImportProcessView.as_view(), name='import_process'),
 
     url(r'^export/$', import_views.ExportView.as_view(), name='export'),
+
+    url(r'^rest/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]
