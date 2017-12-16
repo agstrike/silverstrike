@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
@@ -70,16 +70,19 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     model = Split
     paginate_by = 50
 
+    def dispatch(self, request, *args, **kwargs):
+        if 'month' in self.kwargs:
+            self.month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
+        else:
+            self.month = date.today().replace(day=1)
+
+        self.dend = last_day_of_month(self.month)
+        return super(AccountView, self).dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
             'category', 'account', 'transaction', 'opposing_account')
-        if 'month' in self.kwargs:
-            self.month = datetime.strptime(self.kwargs.get('month'), '%Y%m')
-        else:
-            self.month = datetime.combine(date.today().replace(day=1), datetime.min.time())
-
-        self.dend = last_day_of_month(self.month)
         queryset = queryset.date_range(self.month, self.dend)
         return queryset
 

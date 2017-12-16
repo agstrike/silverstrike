@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
@@ -20,7 +20,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if 'month' in kwargs:
-            self.month = datetime.strptime(kwargs.get('month'), '%Y%m')
+            self.month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
         else:
             self.month = date.today().replace(day=1)
         return super(BudgetIndex, self).dispatch(request, *args, **kwargs)

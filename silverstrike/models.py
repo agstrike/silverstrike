@@ -69,7 +69,7 @@ class Account(models.Model):
             account_id=self.pk, transaction__date__gt=dstart,
             transaction__date__lte=dend).order_by('-transaction__date'))
         for i in range(steps):
-            while len(transactions) > 0 and transactions[-1].transaction.date <= dstart.date():
+            while len(transactions) > 0 and transactions[-1].transaction.date <= dstart:
                 t = transactions.pop()
                 balance += t.amount
             data_points.append((dstart, balance))

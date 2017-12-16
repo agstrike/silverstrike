@@ -43,15 +43,26 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class TransferCreate(LoginRequiredMixin, generic.edit.CreateView):
+class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Transaction
-    form_class = TransferForm
     template_name = 'silverstrike/transaction_edit.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.type = kwargs.pop('type')
+        return super(TransactionCreate, self).dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+        if self.type == 'transfer':
+            return TransferForm
+        elif self.type == 'withdraw':
+            return WithdrawForm
+        else:
+            return DepositForm
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(TransactionCreate, self).get_context_data(**kwargs)
         context['menu'] = 'transactions'
-        context['submenu'] = 'transfer'
+        context['submenu'] = self.type
         return context
 
 
@@ -88,24 +99,6 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
-        return context
-
-
-class WithdrawCreate(TransferCreate):
-    form_class = WithdrawForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['submenu'] = 'withdraw'
-        return context
-
-
-class DepositCreate(TransferCreate):
-    form_class = DepositForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['submenu'] = 'deposit'
         return context
 
 

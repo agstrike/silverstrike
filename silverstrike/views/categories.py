@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import date, datetime
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
@@ -17,7 +17,7 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if 'month' in kwargs:
-            self.month = datetime.strptime(kwargs.get('month'), '%Y%m').date()
+            self.month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
         else:
             self.month = date.today().replace(day=1)
         return super(CategoryIndex, self).dispatch(request, *args, **kwargs)
@@ -79,7 +79,7 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         if 'month' in kwargs:
-            self.current_month = datetime.strptime(kwargs.get('month'), '%Y%m').date()
+            self.current_month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
         else:
             self.current_month = date.today().replace(day=1)
         return super(CategoryDetailView, self).dispatch(request, *args, **kwargs)

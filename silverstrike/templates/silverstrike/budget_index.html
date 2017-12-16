@@ -15,9 +15,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'budget_month' previous_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
+      <a href="{% url 'budget_month' previous_month.year previous_month.month %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
       <span>{{ month|date:'F Y'}}</span>
-      <a href="{% url 'budget_month' next_month|date:'Ym' %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
+      <a href="{% url 'budget_month' next_month.year next_month.month %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
     </div>
   </div>
 </div>
