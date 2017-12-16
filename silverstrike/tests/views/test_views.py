@@ -19,28 +19,28 @@ class ViewTests(TestCase):
 
     def test_context_TransactionIndex(self):
         context = self.client.get(reverse('transactions')).context
-        self.assertEquals(context['menu'], 'transactions')
-        self.assertEquals(context['submenu'], 'all')
+        self.assertEqual(context['menu'], 'transactions')
+        self.assertEqual(context['submenu'], 'all')
 
     def test_context_account_TransactionIndex(self):
         context = self.client.get(self.account.get_absolute_url()).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(context['account'], self.account)
+        self.assertEqual(context['menu'], 'accounts')
+        self.assertEqual(context['account'], self.account)
 
     def test_context_TransferCreate(self):
         context = self.client.get(reverse('transfer_new')).context
-        self.assertEquals(context['menu'], 'transactions')
-        self.assertEquals(context['submenu'], 'transfer')
+        self.assertEqual(context['menu'], 'transactions')
+        self.assertEqual(context['submenu'], 'transfer')
 
     def test_context_DepositCreate(self):
         context = self.client.get(reverse('deposit_new')).context
-        self.assertEquals(context['menu'], 'transactions')
-        self.assertEquals(context['submenu'], 'deposit')
+        self.assertEqual(context['menu'], 'transactions')
+        self.assertEqual(context['submenu'], 'deposit')
 
     def test_context_WithdrawCreate(self):
         context = self.client.get(reverse('withdraw_new')).context
-        self.assertEquals(context['menu'], 'transactions')
-        self.assertEquals(context['submenu'], 'withdraw')
+        self.assertEqual(context['menu'], 'transactions')
+        self.assertEqual(context['submenu'], 'withdraw')
 
     def test_context_and_initial_TransferUpdate(self):
         form = TransferForm({
@@ -63,14 +63,14 @@ class ViewTests(TestCase):
                     'amount': 123,
                     'date': '2017-01-01'},
                     args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
-        self.assertEquals(context['menu'], 'transactions')
+        self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
-        self.assertEquals(context['form']['title'].value(), 'transaction_title')
-        self.assertEquals(context['form']['source_account'].value(), self.account.pk)
-        self.assertEquals(context['form']['destination_account'].value(), self.personal.pk)
-        self.assertEquals(context['form']['amount'].value(), 123)
-        self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+        self.assertEqual(context['form']['title'].value(), 'transaction_title')
+        self.assertEqual(context['form']['source_account'].value(), self.account.pk)
+        self.assertEqual(context['form']['destination_account'].value(), self.personal.pk)
+        self.assertEqual(context['form']['amount'].value(), 123)
+        self.assertEqual(str(context['form']['date'].value()), '2017-01-01')
 
     def test_context_and_initial_WithdrawUpdate(self):
         form = WithdrawForm({
@@ -93,14 +93,14 @@ class ViewTests(TestCase):
                     'amount': 123,
                     'date': '2017-01-01'},
                     args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
-        self.assertEquals(context['menu'], 'transactions')
+        self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
-        self.assertEquals(context['form']['title'].value(), 'transaction_title')
-        self.assertEquals(context['form']['source_account'].value(), self.account.pk)
-        self.assertEquals(context['form']['destination_account'].value(), self.expense)
-        self.assertEquals(context['form']['amount'].value(), 123)
-        self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+        self.assertEqual(context['form']['title'].value(), 'transaction_title')
+        self.assertEqual(context['form']['source_account'].value(), self.account.pk)
+        self.assertEqual(context['form']['destination_account'].value(), self.expense)
+        self.assertEqual(context['form']['amount'].value(), 123)
+        self.assertEqual(str(context['form']['date'].value()), '2017-01-01')
 
     def test_context_and_initial_DepositUpdate(self):
         form = DepositForm({
@@ -123,16 +123,16 @@ class ViewTests(TestCase):
                     'amount': 123,
                     'date': '2017-01-01'},
                     args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
-        self.assertEquals(context['menu'], 'transactions')
+        self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
-        self.assertEquals(context['form']['title'].value(), 'transaction_title')
-        self.assertEquals(context['form']['source_account'].value(), self.revenue)
-        self.assertEquals(context['form']['destination_account'].value(), self.account.pk)
-        self.assertEquals(context['form']['amount'].value(), 123)
-        self.assertEquals(str(context['form']['date'].value()), '2017-01-01')
+        self.assertEqual(context['form']['title'].value(), 'transaction_title')
+        self.assertEqual(context['form']['source_account'].value(), self.revenue)
+        self.assertEqual(context['form']['destination_account'].value(), self.account.pk)
+        self.assertEqual(context['form']['amount'].value(), 123)
+        self.assertEqual(str(context['form']['date'].value()), '2017-01-01')
 
     def test_context_CategoryIndex(self):
         context = self.client.get(reverse('categories')).context
-        self.assertEquals(context['menu'], 'categories')
+        self.assertEqual(context['menu'], 'categories')
         self.assertFalse('submenu' in context)

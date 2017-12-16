@@ -27,50 +27,50 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
         today = datetime.date.today()
         month = context['month']
-        self.assertEquals(month.year, today.year)
-        self.assertEquals(month.month, today.month)
+        self.assertEqual(month.year, today.year)
+        self.assertEqual(month.month, today.month)
 
     def test_view_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_view', args=[system.id]))
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_correct_income(self):
         create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['out'], 0)
-        self.assertEquals(context['in'], 100)
-        self.assertEquals(context['difference'], 100)
-        self.assertEquals(context['balance'], 100)
+        self.assertEqual(context['out'], 0)
+        self.assertEqual(context['in'], 100)
+        self.assertEqual(context['difference'], 100)
+        self.assertEqual(context['balance'], 100)
 
     def test_correct_expenses(self):
         create_transaction('meh', self.account, self.expense, 100, Transaction.WITHDRAW)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['out'], -100)
-        self.assertEquals(context['in'], 0)
-        self.assertEquals(context['difference'], -100)
-        self.assertEquals(context['balance'], -100)
+        self.assertEqual(context['out'], -100)
+        self.assertEqual(context['in'], 0)
+        self.assertEqual(context['difference'], -100)
+        self.assertEqual(context['balance'], -100)
 
     def test_correct_difference(self):
         create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
         create_transaction('meh', self.account, self.expense, 50, Transaction.WITHDRAW)
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        self.assertEquals(context['out'], -50)
-        self.assertEquals(context['in'], 100)
-        self.assertEquals(context['difference'], 50)
-        self.assertEquals(context['balance'], 50)
+        self.assertEqual(context['out'], -50)
+        self.assertEqual(context['in'], 100)
+        self.assertEqual(context['difference'], 50)
+        self.assertEqual(context['balance'], 50)
 
     def test_next_month(self):
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
         next_month = last_day_of_month(datetime.date.today()) + datetime.timedelta(days=1)
-        self.assertEquals(context['next_month'].month, next_month.month)
-        self.assertEquals(context['next_month'].year, next_month.year)
+        self.assertEqual(context['next_month'].month, next_month.month)
+        self.assertEqual(context['next_month'].year, next_month.year)
 
     def test_previous_month(self):
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
         previous_month = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
-        self.assertEquals(context['previous_month'].month, previous_month.month)
-        self.assertEquals(context['previous_month'].year, previous_month.year)
+        self.assertEqual(context['previous_month'].month, previous_month.month)
+        self.assertEqual(context['previous_month'].year, previous_month.year)
 
     def test_dataset_for_personal_accounts(self):
         """
@@ -94,7 +94,7 @@ class AccountDetailViewTests(AbstractAccountViewTests):
 class AccountCreateViewTests(AbstractAccountViewTests):
     def test_context_AccountCreate(self):
         context = self.client.get(reverse('account_new')).context
-        self.assertEquals(context['menu'], 'accounts')
+        self.assertEqual(context['menu'], 'accounts')
         self.assertIsInstance(context['form'], forms.AccountCreateForm)
 
     def test_post_valid(self):
@@ -107,22 +107,22 @@ class AccountCreateViewTests(AbstractAccountViewTests):
 class AccountIndexViewTests(AbstractAccountViewTests):
     def test_context_with_no_transactions(self):
         context = self.client.get(reverse('accounts')).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(len(context['accounts']), 2)
-        self.assertEquals(context['accounts'][0]['id'], self.account.id)
-        self.assertEquals(context['accounts'][0]['name'], self.account.name)
-        self.assertEquals(context['accounts'][0]['active'], self.account.active)
-        self.assertEquals(context['accounts'][0]['balance'], self.account.balance)
+        self.assertEqual(context['menu'], 'accounts')
+        self.assertEqual(len(context['accounts']), 2)
+        self.assertEqual(context['accounts'][0]['id'], self.account.id)
+        self.assertEqual(context['accounts'][0]['name'], self.account.name)
+        self.assertEqual(context['accounts'][0]['active'], self.account.active)
+        self.assertEqual(context['accounts'][0]['balance'], self.account.balance)
 
     def test_context_with_transaction(self):
         create_transaction('meh', self.personal, self.expense, 100, Transaction.WITHDRAW)
         context = self.client.get(reverse('accounts')).context
-        self.assertEquals(context['menu'], 'accounts')
-        self.assertEquals(len(context['accounts']), 2)
-        self.assertEquals(context['accounts'][0]['id'], self.account.id)
-        self.assertEquals(context['accounts'][0]['name'], self.account.name)
-        self.assertEquals(context['accounts'][0]['active'], self.account.active)
-        self.assertEquals(context['accounts'][0]['balance'], self.account.balance)
+        self.assertEqual(context['menu'], 'accounts')
+        self.assertEqual(len(context['accounts']), 2)
+        self.assertEqual(context['accounts'][0]['id'], self.account.id)
+        self.assertEqual(context['accounts'][0]['name'], self.account.name)
+        self.assertEqual(context['accounts'][0]['active'], self.account.active)
+        self.assertEqual(context['accounts'][0]['balance'], self.account.balance)
 
 
 class AccountUpdateTests(AbstractAccountViewTests):
@@ -147,40 +147,40 @@ class AccountUpdateTests(AbstractAccountViewTests):
     def test_system_AccountUpdateView(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_update', args=[system.id]))
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
 
 class AccountDeleteTests(AbstractAccountViewTests):
     def test_delete_personal_account(self):
         response = self.client.get(reverse('account_delete', args=[self.account.id]))
-        self.assertEquals(200, response.status_code)
-        self.assertEquals(self.account, response.context['object'])
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(self.account, response.context['object'])
 
     def test_delete_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_delete', args=[system.id]))
-        self.assertEquals(404, response.status_code)
+        self.assertEqual(404, response.status_code)
 
 
 class AccountReconcileView(AbstractAccountViewTests):
     def test_personal_account(self):
         response = self.client.get(reverse('account_reconcile', args=[self.account.id]))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], forms.ReconcilationForm)
-        self.assertEquals(response.context['account'], self.account)
+        self.assertEqual(response.context['account'], self.account)
 
     def test_revenue_account(self):
         response = self.client.get(reverse('account_reconcile', args=[self.revenue.id]))
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_expense_account(self):
         response = self.client.get(reverse('account_reconcile', args=[self.expense.id]))
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_reconcile', args=[system.id]))
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_post_valid(self):
         pass

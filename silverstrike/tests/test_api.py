@@ -21,4 +21,4 @@ class ApiTests(TestCase):
             data = json.loads(response.content.decode('utf-8'))
             queryset = Account.objects.filter(account_type=t[0])
             queryset = queryset.exclude(account_type=Account.SYSTEM)
-            self.assertEquals(data, list(queryset.values_list('name', flat=True)))
+            self.assertEqual(data, list(queryset.values_list('name', flat=True)))
