@@ -18,7 +18,7 @@ class IndexViewTestCase(TestCase):
 
     def test_menu_entry_IndexView(self):
         context = self.client.get(reverse('index')).context
-        self.assertEquals(context['menu'], 'home')
+        self.assertEqual(context['menu'], 'home')
 
     def test_income(self):
         pass

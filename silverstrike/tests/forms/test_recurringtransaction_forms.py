@@ -9,7 +9,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm()
         fields = ['title', 'date', 'amount',
                   'src', 'dst', 'category', 'recurrence']
-        self.assertEquals(len(form.fields), len(fields))
+        self.assertEqual(len(form.fields), len(fields))
         for field in fields:
             self.assertIn(field, form.fields)
 
@@ -21,7 +21,7 @@ class RecurringTransactionFormTests(TestCase):
             'src': personal.id, 'dst': other.id, 'recurrence': RecurringTransaction.MONTHLY,
             'title': 'foo'})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)
         self.assertIn('amount', form.errors)
 
     def test_past_date(self):
@@ -42,7 +42,7 @@ class RecurringTransactionFormTests(TestCase):
             'title': 'foo'})
         self.assertTrue(form.is_valid())
         transaction = form.save()
-        self.assertEquals(transaction.transaction_type, Transaction.TRANSFER)
+        self.assertEqual(transaction.transaction_type, Transaction.TRANSFER)
         self.assertIsNotNone(transaction)
 
     def test_withdraw(self):
@@ -55,7 +55,7 @@ class RecurringTransactionFormTests(TestCase):
         self.assertTrue(form.is_valid())
         transaction = form.save()
         self.assertIsNotNone(transaction)
-        self.assertEquals(transaction.transaction_type, Transaction.WITHDRAW)
+        self.assertEqual(transaction.transaction_type, Transaction.WITHDRAW)
 
     def test_deposit(self):
         personal = Account.objects.create(name='foo')
@@ -67,7 +67,7 @@ class RecurringTransactionFormTests(TestCase):
         self.assertTrue(form.is_valid())
         transaction = form.save()
         self.assertIsNotNone(transaction)
-        self.assertEquals(transaction.transaction_type, Transaction.DEPOSIT)
+        self.assertEqual(transaction.transaction_type, Transaction.DEPOSIT)
 
     def test_two_foreign_accounts(self):
         first = Account.objects.create(name='foo', account_type=Account.FOREIGN)
@@ -77,4 +77,4 @@ class RecurringTransactionFormTests(TestCase):
             'src': other.id, 'dst': first.id, 'recurrence': RecurringTransaction.MONTHLY,
             'title': 'foo'})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)

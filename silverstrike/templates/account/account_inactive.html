@@ -3,9 +3,15 @@
 {% load i18n %}
 
 {% block head_title %}{% trans "Account Inactive" %}{% endblock %}
-
 {% block content %}
-<h1>{% trans "Account Inactive" %}</h1>
 
-<p>{% trans "This account is inactive." %}</p>
+<div class="login-box">
+  <div class="login-logo">
+    <b>SilverStrike</b>
+  </div>
+
+<div class="alert alert-danger">
+	<h4>{% trans "Account Inactive" %}</h4>
+{% trans "This account is inactive." %}</div>
+</div>
 {% endblock %}
