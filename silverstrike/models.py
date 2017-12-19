@@ -89,6 +89,11 @@ class Account(models.Model):
                              account=self, opposing_account=system)
 
 
+class TransactionQuerySet(models.QuerySet):
+    def last_10(self):
+        return self.order_by('-date')[:10]
+
+
 class Transaction(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
@@ -111,6 +116,8 @@ class Transaction(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
                                    related_name='recurrences', blank=True, null=True)
+
+    objects = TransactionQuerySet.as_manager()
 
     def __str__(self):
         return self.title

@@ -38,6 +38,8 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
 
         if 'category' in self.request.GET:
             queryset = queryset.filter(category_id=self.request.GET['category'])
+        if 'recurrence' in self.request.GET:
+            queryset = queryset.filter(transaction__recurrence_id=self.request.GET['recurrence'])
         if 'account' in self.request.GET:
             queryset = queryset.filter(account_id=self.request.GET['account'])
         elif 'opposing_account' in self.request.GET:

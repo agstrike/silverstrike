@@ -66,7 +66,7 @@
   <th>Amount</th>
   <th>Date</th>
   </tr>
-  {% for transaction in recurrence.recurrences.all %}
+  {% for transaction in recurrence.recurrences.last_10 %}
   <tr>
     <td><a href="{{ transaction.get_absolute_url}} ">{{ transaction.title }}</a></td>
     <td>{{ transaction.amount }}</td>
@@ -74,6 +74,9 @@
   </tr>
   {% endfor %}
 </table>
+</div>
+<div class="box-footer">
+  <a class="btn btn-primary" href="{% url 'transactions' %}?recurrence={{ recurrence.pk }}">{% trans 'Show all' %}</a>
 </div>
 </div>
 </div>
