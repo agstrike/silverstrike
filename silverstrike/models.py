@@ -182,6 +182,9 @@ class SplitQuerySet(models.QuerySet):
     def past(self):
         return self.filter(date__lte=date.today())
 
+    def recurrence(self, recurrence_id):
+        return self.filter(transaction__recurrence_id=recurrence_id)
+
 
 class Split(models.Model):
     account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
@@ -378,6 +381,11 @@ class RecurringTransaction(models.Model):
     @property
     def is_deposit(self):
         return self.transaction_type == Transaction.DEPOSIT
+
+    @property
+    def average_amount(self):
+        return Split.objects.personal().recurrence(self.id).aggregate(
+            models.Avg('amount'))['amount__avg']
 
     @classmethod
     def outstanding_transaction_sum(cls):

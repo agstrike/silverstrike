@@ -34,6 +34,9 @@
   <tr>
     <th>{% trans 'Amount' %}</th><td{% if recurrence.is_deposit %} class="text-green"{% elif recurrence.is_withdraw %} class="text-red"{% endif %}>{{ recurrence.amount }}</td>
   </tr>
+  <tr>
+    <th>{% trans 'Average amount' %}</th><td>{{ recurrence.average_amount }}</td>
+  </tr>
   {% if recurrence.category %}
   <tr><th>{% trans 'Category' %}</th><td>
     <a href="{{ recurrence.category.get_absolute_url }}">{{ recurrence.category }}</a>
