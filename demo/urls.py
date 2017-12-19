@@ -1,9 +1,9 @@
-from django.conf.urls import url, include
 from django.contrib import admin
+from django.urls import path, include
 from django.views.generic import RedirectView
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'', include('silverstrike.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('silverstrike.urls')),
 ]
