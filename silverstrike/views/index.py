@@ -30,7 +30,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
 
         context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
                                                      show_on_dashboard=True)
-        upcoming = Split.objects.personal().upcoming()
+        upcoming = Split.objects.personal().upcoming().transfers_once()
         recurrences = RecurringTransaction.objects.due_in_month()
         for recurrence in recurrences:
             if recurrence.is_due:
