@@ -19,8 +19,8 @@ def get_accounts(request, account_type):
 
 @login_required
 def get_accounts_balance(request, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
     dataset = []
     for account in Account.objects.filter(account_type=Account.PERSONAL):
         data = list(zip(*account.get_data_points(dstart, dend)))
@@ -34,31 +34,26 @@ def get_accounts_balance(request, dstart, dend):
 
 @login_required
 def get_balances(request, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
-    balance = Split.objects.personal().exclude_transfers().filter(date__lte=dstart).aggregate(
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    balance = Split.objects.personal().exclude_transfers().filter(date__lt=dstart).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
-    splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend)
-    splits = list(splits.order_by('-date'))
-
-    steps = 30
-    step = (dend - dstart) / steps
-    if step < datetime.timedelta(days=1):
-        step = datetime.timedelta(days=1)
-        steps = int((dend - dstart) / step)
+    splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend).order_by('date')
     data_points = []
     labels = []
-    for i in range(steps):
-        while len(splits) > 0 and splits[-1].date <= dstart.date():
-            t = splits.pop()
-            balance += t.amount
-        labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
-        data_points.append(balance)
-        dstart += step
-    for s in splits:
-        balance += s.amount
-        labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
+    days = (dend - dstart).days
+    if days > 50:
+        step = days / 50 + 1
+    else:
+        step = 1
+    for split in splits:
+        while split.date > dstart:
+            data_points.append(balance)
+            labels.append(datetime.datetime.strftime(dstart, '%Y-%m-%d'))
+            dstart += datetime.timedelta(days=step)
+        balance += split.amount
     data_points.append(balance)
+    labels.append(datetime.datetime.strftime(dend, '%Y-%m-%d'))
     return JsonResponse({'labels': labels, 'data': data_points})
 
 
