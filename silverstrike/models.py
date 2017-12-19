@@ -66,8 +66,8 @@ class Account(models.Model):
         data_points = []
         balance = self.balance_on(dstart)
         transactions = list(Split.objects.prefetch_related('transaction').filter(
-            account_id=self.pk, transaction__date__gt=dstart,
-            transaction__date__lte=dend).order_by('-transaction__date'))
+            account_id=self.pk).date_range(dstart, dend).order_by(
+            '-transaction__date'))
         for i in range(steps):
             while len(transactions) > 0 and transactions[-1].transaction.date <= dstart:
                 t = transactions.pop()

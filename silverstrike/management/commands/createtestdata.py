@@ -67,9 +67,9 @@ class Command(BaseCommand):
                       'date': (date.today() + relativedelta(months=+1)).replace(day=15)})
 
         self.MONTHLY = [
-            ('income', [1], self.work, self.checking, [2000, 2500], None, D, None),
+            ('income', [1], self.work, self.checking, [2500, 3000], None, D, None),
             ('rent', [2], self.checking, self.landlord, [900, 901], self.home, W, self.rent),
-            ('saving', [27], self.checking, self.savings, [100, 300], None, T, None),
+            ('saving', [27], self.checking, self.savings, [50, 200], None, T, None),
             ('groceries', [1, 5, 10, 13, 15, 20, 21, 25, 27], self.checking, self.supermarket,
              [50, 100], self.groceries, W, None),
             ('insurance', [15], self.checking, self.insurer, [70, 200], self.insurance, W,
