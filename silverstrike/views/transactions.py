@@ -11,10 +11,20 @@ class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Transaction
     context_object_name = 'transaction'
 
+    def get_context_data(self, **kwargs):
+        context = super(TransactionDetailView, self).get_context_data(**kwargs)
+        context['menu'] = 'transactions'
+        return context
+
 
 class TransactionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Transaction
     success_url = reverse_lazy('accounts')
+
+    def get_context_data(self, **kwargs):
+        context = super(TransactionDeleteView, self).get_context_data(**kwargs)
+        context['menu'] = 'transactions'
+        return context
 
 
 class TransactionIndex(LoginRequiredMixin, generic.ListView):
