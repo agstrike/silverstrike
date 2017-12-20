@@ -1,4 +1,4 @@
 include *.md
-recursive-include silverstrike *.py *.html *.po
+recursive-include silverstrike *.py *.html *.po *.mo
 graft silverstrike/static
 prune silverstrike/tests
