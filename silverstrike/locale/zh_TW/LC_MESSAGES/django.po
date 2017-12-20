@@ -5,80 +5,80 @@ msgstr ""
 "POT-Creation-Date: 2017-12-09 20:05+0100\n"
 "PO-Revision-Date: 2017-12-09 14:12-0500\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
-"Language-Team: German\n"
-"Language: de_DE\n"
+"Language-Team: Chinese Traditional\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: silverstrike\n"
-"X-Crowdin-Language: de\n"
+"X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
-msgstr "Sie müssen mehr als ein Konto auswählen, um diese zusammenzuführen."
+msgstr "您需要選擇多個帳戶來合併它們。"
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, {} isn't."
-msgstr "Sie können nur fremde Konten zusammenführen, {} ist keines."
+msgstr ""
 
 #: admin.py:54
 msgid "Merged one account into <a href={}>{}</a>."
-msgstr "Ein Konto in <a href={}>{}</a> vermschmolzen."
+msgstr ""
 
 #: admin.py:59
 msgid "Merged {} accounts into <a href={}>{}</a>."
-msgstr "{} Konten in <a href={}>{}</a> zusammengeführt."
+msgstr ""
 
 #: forms.py:124
 msgid "Debitor"
-msgstr "Debitor"
+msgstr "債務人"
 
 #: forms.py:139
 msgid "Creditor"
-msgstr "Gläubiger"
+msgstr "債權人"
 
 #: forms.py:162
 msgid "Amount has to be positive"
-msgstr "Betrag muss positiv sein"
+msgstr "金額必須是正數"
 
 #: forms.py:178
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr "Sie versuchen, eine Transaktion zwischen zwei fremden Konten zu erstellen"
+msgstr "您正嘗試在兩個外國帳戶之間創建交易"
 
 #: forms.py:193
 msgid "Actual balance"
-msgstr "Tatsächlicher Kontostand"
+msgstr "實際餘額"
 
 #: models.py:16
 msgid "Personal"
-msgstr "Privat"
+msgstr "個人"
 
 #: models.py:17
 msgid "Foreign"
-msgstr "Fremd"
+msgstr "外國"
 
 #: models.py:18
 msgid "System"
-msgstr "System"
+msgstr "系統"
 
 #: models.py:83
 msgid "Initial Balance"
-msgstr "Anfangs-Kontostand"
+msgstr "初始餘額"
 
 #: models.py:274
 msgid "Do not use"
-msgstr "Nicht verwenden"
+msgstr "不要使用"
 
 #: models.py:275 templates/silverstrike/recurring_transactions.html:29
 msgid "Source Account"
-msgstr "Abbuchungskonto"
+msgstr "源帳戶"
 
 #: models.py:276 templates/silverstrike/recurring_transactions.html:30
 msgid "Destination Account"
-msgstr "Zielkonto"
+msgstr "目標帳戶"
 
 #: models.py:277 templates/silverstrike/account_detail.html:83
 #: templates/silverstrike/category_detail.html:49
@@ -87,7 +87,7 @@ msgstr "Zielkonto"
 #: templates/silverstrike/recurring_transactions.html:28
 #: templates/silverstrike/recurringtransaction_detail.html:35
 msgid "Amount"
-msgstr "Betrag"
+msgstr "金額"
 
 #: models.py:278 templates/silverstrike/account_detail.html:82
 #: templates/silverstrike/category_detail.html:48
@@ -95,18 +95,18 @@ msgstr "Betrag"
 #: templates/silverstrike/index.html:165
 #: templates/silverstrike/recurring_transactions.html:27
 msgid "Date"
-msgstr "Datum"
+msgstr "日期"
 
 #: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr "Notizen"
+msgstr "備註"
 
 #: models.py:280 templates/silverstrike/account_detail.html:85
 #: templates/silverstrike/index.html:169
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Category"
-msgstr "Kategorie"
+msgstr "類型"
 
 #: models.py:281 templates/silverstrike/account_detail.html:81
 #: templates/silverstrike/category_detail.html:47
@@ -114,236 +114,243 @@ msgstr "Kategorie"
 #: templates/silverstrike/index.html:163
 #: templates/silverstrike/recurring_transactions.html:26
 msgid "Title"
-msgstr "Titel"
+msgstr "標題"
 
 #: models.py:285
 msgid "First line contains headers"
-msgstr "Erste Zeile enthält Header"
+msgstr "第一行包含標題"
 
 #: models.py:312
 msgid "Disabled"
-msgstr "Deaktiviert"
+msgstr "已禁用"
 
 #: models.py:313
 msgid "Weekly"
-msgstr "Wöchentlich"
+msgstr "每週"
 
 #: models.py:314
 msgid "Monthly"
-msgstr "Monatlich"
+msgstr "每月"
 
 #: models.py:315
 msgid "Yearly"
-msgstr "Jährlich"
+msgstr "每年"
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:8
 msgid "Account Inactive"
-msgstr "Konto inaktiv"
+msgstr "帳戶無效"
 
 #: templates/account/account_inactive.html:10
 msgid "This account is inactive."
-msgstr "Dieses Konto ist inaktiv"
+msgstr "此帳戶無效"
 
 #: templates/account/email.html:5 templates/silverstrike/account_detail.html:84
 #: templates/silverstrike/index.html:76 templates/silverstrike/index.html:108
 #: templates/silverstrike/index.html:167
 msgid "Account"
-msgstr "Konto"
+msgstr "帳戶"
 
 #: templates/account/email.html:8
 msgid "E-mail Addresses"
-msgstr "Email Adressen"
+msgstr "電子郵件地址"
 
 #: templates/account/email.html:10
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Die folgenden E-Mail-Adressen sind mit Ihrem Konto verknüpft:"
+msgstr "以下電子郵件地址與您的帳戶相關聯："
 
 #: templates/account/email.html:24
 msgid "Verified"
-msgstr "Verifiziert"
+msgstr "已認證"
 
 #: templates/account/email.html:26
 msgid "Unverified"
-msgstr "Nicht verifiziert"
+msgstr "未認證"
 
 #: templates/account/email.html:28
 msgid "Primary"
-msgstr "Primär"
+msgstr "主要"
 
 #: templates/account/email.html:34
 msgid "Make Primary"
-msgstr "Primär machen"
+msgstr "設為主要"
 
 #: templates/account/email.html:35
 msgid "Re-send Verification"
-msgstr "Bestätigungs-E-Mail erneut versenden"
+msgstr "重新發送驗證"
 
 #: templates/account/email.html:36 templates/socialaccount/connections.html:35
 msgid "Remove"
-msgstr "Entfernen"
+msgstr "刪除"
 
 #: templates/account/email.html:43
 msgid "Warning:"
-msgstr "Warnung:"
+msgstr "警告："
 
 #: templates/account/email.html:43
 msgid "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "Sie haben derzeit keine E-Mail-Adressen eingerichtet. Sie sollten wirklich eine hinzufügen, damit Sie Benachrichtigungen erhalten, ihr Konto Zurücksetzen können usw."
+msgstr "您目前沒有設置任何電子郵件地址。\n"
+"你真的應該添加一個電子郵件地址，\n"
+"以便你可以收到通知，重置密碼等"
 
 #: templates/account/email.html:48
 msgid "Add E-mail Address"
-msgstr "E-Mail-Adresse hinzufügen"
+msgstr "添加電子郵件地址"
 
 #: templates/account/email.html:53
 msgid "Add E-mail"
-msgstr "E-Mail-Adresse hinzufügen"
+msgstr "添加電子郵件"
 
 #: templates/account/email.html:62
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr "Möchten Sie die ausgewählte E-Mail-Adresse wirklich entfernen?"
+msgstr "你真的想刪除所選的電子郵件地址嗎?"
 
 #: templates/account/email/email_confirmation_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account.\n\n"
 "To confirm this is correct, go to %(activate_url)s\n"
-msgstr "Hallo aus %(site_name)s!\n\n"
-"Sie erhalten diese E-mail, weil Benutzer %(user_display)s dir, als eine e-Mail-Adresse gegeben hat, ihr Konto zu verbinden.\n\n"
-"Um zu bestätigen, dass dies richtig ist, gehen Sie zu %(activate_url)s\n"
+msgstr "你好，%(site_name)s!\n"
+"您收到此電子郵件是因為用戶 %(user_display)s\n"
+"已將您的電子郵件地址作為連接其帳戶的電子郵件地址。\n\n"
+"要確認這是正確的，請轉到 %(activate_url)s\n"
 
 #: templates/account/email/email_confirmation_message.txt:7
 #, python-format
 msgid "Thank you from %(site_name)s!\n"
 "%(site_domain)s"
-msgstr "Ich danke Ihnen von %(site_name)s!\n"
+msgstr "謝謝你的 %(site_name)s!\n"
 "%(site_domain)s"
 
 #: templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse"
+msgstr "請確認您的電子郵件地址"
 
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid "Hello from %(site_name)s!\n\n"
 "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr "Hallo aus %(site_name)s!\n\n"
-"Sie erhalten diese E-mail, weil Sie oder jemand anderes ein Passwort für Ihr Benutzerkonto angefordert hat.\n"
-"Es kann problemlos ignoriert werden, wenn Sie nicht angefordert haben, Zurücksetzen eines Kennworts. Klicken Sie auf den untenstehenden Link um Ihr Passwort zurückzusetzen."
+msgstr "%(site_name)s!\n"
+"向您問好！\n\n"
+"您收到此電子郵件是因為您或其他人已為您的用戶帳戶請求密碼重置。\n"
+"如果您沒有請求密碼重置，則可以安全地忽略它。單擊下面的鏈接以重置您的密碼。"
 
 #: templates/account/email/password_reset_key_message.txt:8
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr "Für den Fall, dass Sie vergessen haben, ist Ihr Benutzername %(username)s."
+msgstr "萬一你忘了, 你的使用者名是%(username)s。"
 
 #: templates/account/email/password_reset_key_message.txt:10
 #, python-format
 msgid "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
-msgstr "Vielen Dank für die Verwendung von %(site_name)s!\n"
+msgstr "感謝您使用 %(site_name)s!\n"
 "%(site_domain)s"
 
 #: templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr "Passwort-Reset-E-mail"
+msgstr "密碼重設電子郵件"
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
-msgstr "E-Mail-Adresse bestätigen"
+msgstr "確認電子郵件地址"
 
 #: templates/account/email_confirm.html:16
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr "Bitte bestätigen Sie, dass <a href=\"mailto:%(email)s\">%(email)s</a> eine e-Mail-Adresse für Benutzer %(user_display)s."
+msgstr "請確認<a href=\"mailto:%(email)s\">%(email)s</a> 是使用者%(user_display)s 的電子郵件地址。"
 
 #: templates/account/email_confirm.html:20
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "確認"
 
 #: templates/account/email_confirm.html:27
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr "Dieser e-Mail-Bestätigungslink abgelaufen oder ungültig ist. Bitte <a href=\"%(email_url)s\">issue eine neue e-Mail-Bestätigung request</a>."
+msgstr "此電子郵件確認連結已過期或無效。\n"
+"請<a href=\"%(email_url)s\">issue 一個新的電子郵件確認 request</a>。"
 
 #: templates/account/login.html:17
 #, python-format
 msgid "Please sign in with one\n"
 "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
-msgstr "Bitte melden Sie sich mit einer vorhandenen Drittanbieter-Konten. Oder <a href=\"%(signup_url)s\">sign up</a> für ein %(site_name)s Konto und Anmeldung unter:"
+msgstr "請使用您現有的協力廠商帳戶之一登錄。\n"
+"或者, <a href=\"%(signup_url)s\">sign up</a> 為%(site_name)s 帳戶並在下面簽名:"
 
 #: templates/account/login.html:27
 msgid "or"
-msgstr "oder"
+msgstr "或"
 
 #: templates/account/login.html:34
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "Wenn Sie noch kein Konto erstellt haben, dann bitte<a href=\"%(signup_url)s\">sign up</a> zuerst."
+msgstr "如果你還沒有創建一個帳戶, 那麼請<a href=\"%(signup_url)s\">sign up</a> 第一。"
 
 #: templates/account/login.html:65
 msgid "Sign In"
-msgstr "Anmelden"
+msgstr "登錄"
 
 #: templates/account/login.html:71
 msgid "Forgot Password?"
-msgstr "Passwort vergessen?"
+msgstr "忘記密碼?"
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr "Möchtest Sie sich wirklich abmelden?"
+msgstr "確定要登出嗎?"
 
 #: templates/account/logout.html:22
 msgid "Sign Out"
-msgstr "Abmelden"
+msgstr "登出"
 
 #: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
 msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr "Ihre primäre e-Mail-Adresse (%(email)s) kann nicht entfernt werden."
+msgstr "無法刪除你的\n"
+"主電子郵件地址 (%(email)s)。"
 
 #: templates/account/messages/email_confirmation_sent.txt:2
 #, python-format
 msgid "Confirmation e-mail sent to %(email)s."
-msgstr "Bestätigung per E-mail an %(email)s gesendet."
+msgstr "發送到%(email)s 的確認電子郵件。"
 
 #: templates/account/messages/email_confirmed.txt:2
 #, python-format
 msgid "You have confirmed %(email)s."
-msgstr "Sie haben %(email)s bestätigt."
+msgstr "你已經證實了%(email)s"
 
 #: templates/account/messages/email_deleted.txt:2
 #, python-format
 msgid "Removed e-mail address %(email)s."
-msgstr "E-Mail-Adresse %(email)s entfernt."
+msgstr "已 刪除電子 郵件地址 %(email)s。"
 
 #: templates/account/messages/logged_in.txt:4
 #, python-format
 msgid "Successfully signed in as %(name)s."
-msgstr "Erfolgreich als %(name)s angemeldet."
+msgstr "成功地 簽署了作為 %(name)s。"
 
 #: templates/account/messages/logged_out.txt:2
 msgid "You have signed out."
-msgstr "Sie haben sich abgemeldet."
+msgstr "你已 經簽約了."
 
 #: templates/account/messages/password_changed.txt:2
 msgid "Password successfully changed."
-msgstr "Passwort erfolgreich geändert."
+msgstr "密碼已成功更改。"
 
 #: templates/account/messages/password_set.txt:2
 msgid "Password successfully set."
-msgstr "Passwort erfolgreich geändert."
+msgstr "密碼已成功設置。"
 
 #: templates/account/messages/primary_email_set.txt:2
 msgid "Primary e-mail address set."
-msgstr "Primäre e-Mail-Adresse festgelegt."
+msgstr "主電子郵件地址集。"
 
 #: templates/account/messages/unverified_primary_email.txt:2
 msgid "Your primary e-mail address must be verified."
-msgstr "Ihre primäre e-Mail-Adresse muss verifiziert werden."
+msgstr "您的主要電子郵件地址 必須經過 驗證。"
 
 #: templates/account/password_change.html:5
 #: templates/account/password_change.html:8
@@ -353,112 +360,123 @@ msgstr "Ihre primäre e-Mail-Adresse muss verifiziert werden."
 #: templates/account/password_reset_from_key_done.html:4
 #: templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr "Passwort ändern"
+msgstr "更改密碼"
 
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:12
 #: templates/account/password_reset_done.html:6
 #: templates/account/password_reset_done.html:9
 msgid "Password Reset"
-msgstr "Passwort zurücksetzen"
+msgstr "密碼重設"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr "Vergessen Ihr Passwort? Gib unten deine E-Mail-Adresse ein und wir senden Ihnen eine E-mail, so dass Sie es zurücksetzen können."
+msgstr "忘記了你的密碼?\n"
+"在下面輸入您的電子郵件地址，\n"
+"我們將向您發送電子郵件，\n"
+"讓您重置它。"
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
-msgstr "Mein Passwort zurücksetzen"
+msgstr "重設密碼"
 
 #: templates/account/password_reset.html:34
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr "Bitte kontaktieren Sie uns, wenn Sie irgendwelche Probleme beim Zurücksetzen Ihres Kennworts."
+msgstr "如果您在重置密碼時遇到任何問題，請與我們聯繫。"
 
 #: templates/account/password_reset_done.html:15
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr "Wir haben Ihnen eine E-mail geschickt. Bitte kontaktieren Sie uns, wenn Sie sie nicht innerhalb weniger Minuten erhalten."
+msgstr "我們已經給你發了一封電子郵件。\n"
+"如果您在幾分鐘內沒有收到，請與我們聯繫。"
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
-msgstr "Schlechte Zeichen"
+msgstr "壞令牌"
 
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr "Der Link zum Zurücksetzen des Kennworts war möglicherweise ungültig, da es bereits verwendet wurde.  Bitte fordern Sie ein <a href=\"%(passwd_reset_url)s\">new Passwort reset</a>."
+msgstr "密碼重置鏈接無效，可能是因為它已被使用。\n"
+"請發送一個<a href=\"%(passwd_reset_url)s\">密碼重置</a>的請求。"
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr "Passwort ändern"
+msgstr "變更密碼"
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr "Ihr Passwort wurde geändert."
+msgstr "您的密碼現在已更改。"
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr "Kennwort festlegen"
+msgstr "設置密碼"
 
 #: templates/account/signup.html:6 templates/socialaccount/signup.html:5
 msgid "Signup"
-msgstr "Signup"
+msgstr "註冊"
 
 #: templates/account/signup.html:16
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "Sie haben bereits ein Konto? Dann bitte <a href=\"%(login_url)s\">sign in</a>."
+msgstr "已經有一個帳戶?\n"
+"那麼請<a href=\"%(login_url)s\">登錄</a>。"
 
 #: templates/account/signup.html:31
 msgid "Sign up"
-msgstr "Anmelden"
+msgstr "註冊"
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr "Melden Sie sich geschlossen"
+msgstr "註冊關閉"
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr "Wir sind traurig, aber die Anmeldung ist derzeit geschlossen."
+msgstr "我們很抱歉，但註冊目前已關閉。"
 
 #: templates/account/snippets/already_logged_in.html:5
 msgid "Note"
-msgstr "Hinweis"
+msgstr "注意"
 
 #: templates/account/snippets/already_logged_in.html:5
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "Sie sind bereits als %(user_display)s angemeldet."
+msgstr "您已作為%(user_display)s 登錄。"
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:8
 #: templates/account/verified_email_required.html:5
 #: templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
-msgstr "Überprüfen Sie Ihre e-Mail-Adresse"
+msgstr "驗證您的電子郵件地址"
 
 #: templates/account/verification_sent.html:10
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr "Wir haben eine E-mail an Sie zur Überprüfung gesendet. Folgen Sie dem Link um den Registrierungsvorgang abzuschließen. Bitte kontaktieren Sie uns, wenn Sie es nicht innerhalb weniger Minuten erhalten."
+msgstr "我們發送了一封電子郵件給您驗證。\n"
+"按照提供的鏈接完成註冊過程。\n"
+"如果您在幾分鐘內沒有收到，請與我們聯繫。"
 
 #: templates/account/verified_email_required.html:12
 msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your e-mail address. "
-msgstr "Dieser Teil der Website verlangt von uns, stellen Sie sicher, dass Sie, die Sie vorgeben sind zu sein. Zu diesem Zweck benötigen wir Besitz Ihrer e-Mail-Adresse zu überprüfen. "
+msgstr "網站的這一部分要求我們確認你是你自稱的人。\n"
+"為此, 我們要求您驗證您的電子郵件地址的擁有權。 "
 
 #: templates/account/verified_email_required.html:16
 msgid "We have sent an e-mail to you for\n"
 "verification. Please click on the link inside this e-mail. Please\n"
 "contact us if you do not receive it within a few minutes."
-msgstr "Wir haben eine E-mail an Sie zur Überprüfung gesendet. Klicken Sie bitte auf den Link in dieser E-mail. Bitte kontaktieren Sie uns, wenn Sie es nicht innerhalb weniger Minuten erhalten."
+msgstr "我們發了一封電子郵件給你驗證。\n"
+"請點擊這封電子郵件中的鏈接。\n"
+"如果您在幾分鐘內沒有收到，請與我們聯繫。"
 
 #: templates/account/verified_email_required.html:20
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr "<strong>Note:</strong> können Sie noch <a href=\"%(email_url)s\">change Ihre E-mail address</a>."
+msgstr "<strong>Note:</strong> 你仍然可以<a href=\"%(email_url)s\">change 你的電子郵件 address</a>。"
 
 #: templates/silverstrike/account_confirm_delete.html:17
 #, python-format
@@ -466,8 +484,7 @@ msgid "\n"
 "          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
 "          "
 msgstr "\n"
-"          Sind Sie sicher, dass Sie das Konto zusammen mit %(object.transaction_num)s Transaktionen löschen möchten?\n"
-"          "
+"您確定要刪除帳戶以及 %(object.transaction_num)s 的交易嗎？          "
 
 #: templates/silverstrike/account_confirm_delete.html:22
 #: templates/silverstrike/account_form.html:60
@@ -477,7 +494,7 @@ msgstr "\n"
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:18
 #: templates/silverstrike/transaction_confirm_delete.html:24
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "取消"
 
 #: templates/silverstrike/account_confirm_delete.html:23
 #: templates/silverstrike/account_detail.html:51
@@ -488,7 +505,7 @@ msgstr "Abbrechen"
 #: templates/silverstrike/transaction_confirm_delete.html:25
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr "Löschen"
+msgstr "刪除"
 
 #: templates/silverstrike/account_detail.html:10
 #: templates/silverstrike/account_form.html:14
@@ -502,7 +519,7 @@ msgstr "Löschen"
 #: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
 msgid "Home"
-msgstr "Startseite"
+msgstr "主頁"
 
 #: templates/silverstrike/account_detail.html:11
 #: templates/silverstrike/account_form.html:6
@@ -513,74 +530,74 @@ msgstr "Startseite"
 #: templates/silverstrike/index.html:71
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
-msgstr "Konten"
+msgstr "帳戶"
 
 #: templates/silverstrike/account_detail.html:20
 #: templates/silverstrike/budget_index.html:18
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr "Zurück"
+msgstr "上一頁"
 
 #: templates/silverstrike/account_detail.html:22
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr "Nächste"
+msgstr "下一頁"
 
 #: templates/silverstrike/account_detail.html:36
 msgid "Current Balance"
-msgstr "Aktueller Kontostand"
+msgstr "目前餘額"
 
 #: templates/silverstrike/account_detail.html:39
 msgid "In"
-msgstr "In"
+msgstr "在"
 
 #: templates/silverstrike/account_detail.html:42
 msgid "Out"
-msgstr "Aus"
+msgstr "外"
 
 #: templates/silverstrike/account_detail.html:45
 #: templates/silverstrike/index.html:30 templates/silverstrike/index.html:64
 msgid "Difference"
-msgstr "Unterschied"
+msgstr "差分"
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/category_detail.html:36
 #: templates/silverstrike/recurringtransaction_detail.html:50
 #: templates/silverstrike/transaction_detail.html:40
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "編輯"
 
 #: templates/silverstrike/account_detail.html:53
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
-msgstr "In Einklang zu bringen"
+msgstr "對帳"
 
 #: templates/silverstrike/account_detail.html:69
 #: templates/silverstrike/transaction_overview.html:19
 msgid "Transaction list"
-msgstr "Transaktionsliste"
+msgstr "交易"
 
 #: templates/silverstrike/account_detail.html:72
 #: templates/silverstrike/account_detail.html:74
 msgid "Show all"
-msgstr "Alle anzeigen"
+msgstr "顯示全部"
 
 #: templates/silverstrike/account_detail.html:92
 msgid "Reconcilation"
-msgstr "Abgleichung"
+msgstr "和解"
 
 #: templates/silverstrike/account_form.html:8
 #, python-format
 msgid "Update %(object.name)s"
-msgstr "%(object.name)s aktualisieren"
+msgstr "更新 %(object.name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr "Neues Konto erstellen"
+msgstr "建立新帳戶"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -591,18 +608,18 @@ msgstr "Neues Konto erstellen"
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "更新"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:18
 msgid "New"
-msgstr "Neu"
+msgstr "新"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr "Kontodetails"
+msgstr "帳戶詳細資料"
 
 #: templates/silverstrike/account_form.html:62
 #: templates/silverstrike/category_form.html:63
@@ -613,62 +630,62 @@ msgstr "Kontodetails"
 #: templates/silverstrike/recurringtransaction_form.html:47
 #: templates/silverstrike/transaction_edit.html:108
 msgid "Create"
-msgstr "Erstellen"
+msgstr "創建"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
 msgid "Name"
-msgstr "Name"
+msgstr "名稱"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
 #: templates/silverstrike/index.html:92
 msgid "Balance"
-msgstr "Kontostand"
+msgstr "餘額"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr "Aktiv"
+msgstr "活動"
 
 #: templates/silverstrike/base.html:47
 msgid "New Withdrawl"
-msgstr "Neue Auszahlung"
+msgstr "新棄權"
 
 #: templates/silverstrike/base.html:50
 msgid "New Deposit"
-msgstr "Neue Einzahlung"
+msgstr "新存款"
 
 #: templates/silverstrike/base.html:53
 msgid "New Transfer"
-msgstr "Neue Umbuchung"
+msgstr "新的轉帳"
 
 #: templates/silverstrike/base.html:56
 msgid "New Split Transaction"
-msgstr "Geteilte Transaktion"
+msgstr "拆分交易"
 
 #: templates/silverstrike/base.html:78
 msgid "Profile"
-msgstr "Profil"
+msgstr "個人資料"
 
 #: templates/silverstrike/base.html:81
 msgid "Sign out"
-msgstr "Abmelden"
+msgstr "登出"
 
 #: templates/silverstrike/base.html:93
 msgid "MAIN NAVIGATION"
-msgstr "MAIN NAVIGATION"
+msgstr "主要導航"
 
 #: templates/silverstrike/base.html:108
 #: templates/silverstrike/category_detail.html:42
 msgid "Transactions"
-msgstr "Transaktionen"
+msgstr "交易"
 
 #: templates/silverstrike/base.html:113
 #: templates/silverstrike/recurring_transactions.html:13
 #: templates/silverstrike/recurring_transactions.html:20
 msgid "Recurrences"
-msgstr "Wiederkehrende Zahlungen"
+msgstr "循環"
 
 #: templates/silverstrike/base.html:119
 #: templates/silverstrike/category_detail.html:11
@@ -677,56 +694,56 @@ msgstr "Wiederkehrende Zahlungen"
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "類型"
 
 #: templates/silverstrike/base.html:125
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr "Budgets"
+msgstr "預算"
 
 #: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr "Diagramme"
+msgstr "圖表"
 
 #: templates/silverstrike/base.html:136
 msgid "Import & Export"
-msgstr "Import & Export"
+msgstr "導入和匯出"
 
 #: templates/silverstrike/base.html:143
 msgid "Import"
-msgstr "Import"
+msgstr "導入"
 
 #: templates/silverstrike/base.html:146
 msgid "Export"
-msgstr "Export"
+msgstr "導出"
 
 #: templates/silverstrike/base.html:165
 #, python-format
 msgid "<b>Version</b> %(version)s"
-msgstr "<b>Version</b> %(version)s"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:29
 msgid "Budget for "
-msgstr "Budget für"
+msgstr "預算為 "
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr "Zugewiesen"
+msgstr "已分配"
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr "Ausgegeben"
+msgstr "已花銷"
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
-msgstr "Übrig"
+msgstr "左"
 
 #: templates/silverstrike/budget_index.html:65
 msgid "Save"
-msgstr "Speichern"
+msgstr "儲存"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "\n"
@@ -734,245 +751,247 @@ msgid "\n"
 "      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
 "      "
 msgstr "\n"
-"      <p>Sind sie sicher, dass sie diese Kategorie löschen wollen?</p>\n"
-"      <p>Die damit verbundenen Transaktionen bleiben erhalten</p>\n"
-"      "
+"<p>您確定要刪除類別嗎？</p>\n"
+"<p>所有鏈接到這個類別的交易都不會被刪除，\n"
+"但是會丟失類別的輸入。</p>      "
 
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr "Übersicht"
+msgstr "概述"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr "Alle Transaktionen anzeigen"
+msgstr "顯示所有交易記錄"
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
-msgstr "Verteilung nach Ursprung"
+msgstr "按來源分佈。"
 
 #: templates/silverstrike/category_detail.html:76
 msgid "Distribution by Destination"
-msgstr "Verteilung nach Ziel"
+msgstr "按目的地分佈"
 
 #: templates/silverstrike/category_form.html:10
 msgid "Create new category"
-msgstr "Neue Kategorie erstellen"
+msgstr "建立新分類"
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr "Kategoriedetails"
+msgstr "類別細節"
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
-msgstr "Verteilung nach Kategorie"
+msgstr "按類別分佈"
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
-msgstr "weil es Spaß macht!"
+msgstr "因為他們很有趣!"
 
 #: templates/silverstrike/charts.html:18
 msgid "Last year"
-msgstr "Letztes Jahr"
+msgstr "去年"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr "Letzten 6 Monate"
+msgstr "最近 6 個月"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr "Letzten 3 Monate"
+msgstr "最近 3 個月"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr "Aktueller Monat"
+msgstr "本月"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr "Persönliche Konten"
+msgstr "個人帳戶"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr "Ausgaben nach Kategorie"
+msgstr "按類別支出"
 
 #: templates/silverstrike/index.html:8
 msgid "All imporant stuff"
-msgstr "Alle wichtige Sachen"
+msgstr "所有重要的東西"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"
-msgstr "Schnellübersicht"
+msgstr "快速概覽"
 
 #: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
 msgid "Income"
-msgstr "Einkommen"
+msgstr "收入"
 
 #: templates/silverstrike/index.html:27 templates/silverstrike/index.html:61
 msgid "Expenses"
-msgstr "Ausgaben"
+msgstr "支出"
 
 #: templates/silverstrike/index.html:33
 msgid "Total Balance"
-msgstr "Gesamtsaldo"
+msgstr "總計餘額"
 
 #: templates/silverstrike/index.html:37
 msgid "Outstanding"
-msgstr "Ausstehend"
+msgstr "優秀"
 
 #: templates/silverstrike/index.html:40
 msgid "Expected end of month"
-msgstr "Erwartung zum Ende des Monats"
+msgstr "預計月底"
 
 #: templates/silverstrike/index.html:48
 msgid "You have recurrences that are overdue!"
-msgstr "Sie haben fällige wiederkehrende Zahlungen!"
+msgstr "您有逾期的復發!"
 
 #: templates/silverstrike/index.html:53
 msgid "Previous Month"
-msgstr "Vorheriger Monat"
+msgstr "上個月"
 
 #: templates/silverstrike/index.html:101
 msgid "Upcoming Transactions"
-msgstr "Anstehende Transaktionen"
+msgstr "即將到來的交易"
 
 #: templates/silverstrike/index.html:125
 msgid "Upcoming Recurrences"
-msgstr "Anstehende wiederkehrende Zahlungen"
+msgstr "即將發生的週期交易"
 
 #: templates/silverstrike/index.html:149
 msgid "No upcoming recurrences"
-msgstr "Keine anstehenden wiederkehrenden Zahlungen"
+msgstr "沒有即將發生的週期交易"
 
 #: templates/silverstrike/index.html:158
 msgid "Recent Transactions"
-msgstr "Letzte Transaktionen"
+msgstr "近期交易"
 
 #: templates/silverstrike/index.html:164
 msgid "Type"
-msgstr "Typ"
+msgstr "類型"
 
 #: templates/silverstrike/index.html:168
 msgid "Opposing Account"
-msgstr "Gegenkonto"
+msgstr "對方帳戶"
 
 #: templates/silverstrike/newform.html:31
 #: templates/silverstrike/recurringtransaction_form.html:25
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 msgid "Transaction Details"
-msgstr "Transaktionsdetails"
+msgstr "交易記錄詳細資訊"
 
 #: templates/silverstrike/newform.html:92
 msgid "Add Split"
-msgstr "Hinzufügen von Split"
+msgstr "添加拆分"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr "Erstellen Sie versöhnen Transaktion"
+msgstr "創建對賬交易"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr "Wiederkehrende Transaktionen"
+msgstr "週期性交易"
 
 #: templates/silverstrike/recurring_transactions.html:31
 msgid "Recurrance"
-msgstr "Recurrance"
+msgstr "週期性"
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr "Wiederholung-Details"
+msgstr "週期交易細節"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr "Wiederholung"
+msgstr "週期業務"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr "Ursprung"
+msgstr "來源"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr "Ziel"
+msgstr "目的地"
 
 #: templates/silverstrike/recurringtransaction_detail.html:57
 msgid "Recent ocurrences"
-msgstr "Den letzten Ereignissen"
+msgstr "近期週期交易"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr "Neue regelmäßige Buchung"
+msgstr "新週期交易"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr "Buchungsart"
+msgstr "交易類型"
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr "Gesamtbetrag"
+msgstr "總金額"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr "Als Splittbuchung bearbeiten"
+msgstr "編輯拆分交易"
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr "Spaltet"
+msgstr "拆分"
 
 #: templates/socialaccount/authentication_error.html:5
 #: templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
-msgstr "Soziales Netzwerk-Anmeldefehler"
+msgstr "社交網絡登錄失敗"
 
 #: templates/socialaccount/authentication_error.html:10
 msgid "An error occurred while attempting to login via your social network account."
-msgstr "Fehler beim Versuch, mit Ihrem sozialen Netzwerk-Account einloggen."
+msgstr "嘗試通過您的社交網絡帳戶登錄時發生錯誤。"
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:8
 msgid "Account Connections"
-msgstr "Konto-Verbindungen"
+msgstr "帳戶連接"
 
 #: templates/socialaccount/connections.html:11
 msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr "Sie können auf Ihr Konto mithilfe eines der folgenden Konten Dritter anmelden:"
+msgstr "您可以使用以下任何第三方帳戶登錄您的帳戶："
 
 #: templates/socialaccount/connections.html:43
 msgid "You currently have no social network accounts connected to this account."
-msgstr "Sie haben derzeit keine Konten sozialer Netzwerke, die mit diesem Konto verbunden."
+msgstr "您目前沒有連接到此帳戶的社交網絡帳戶。"
 
 #: templates/socialaccount/connections.html:46
 msgid "Add a 3rd Party Account"
-msgstr "3rd Party-Konto hinzufügen"
+msgstr "添加第三方帳戶"
 
 #: templates/socialaccount/login_cancelled.html:5
 #: templates/socialaccount/login_cancelled.html:9
 msgid "Login Cancelled"
-msgstr "Anmeldung abgebrochen"
+msgstr "已取消登錄"
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr "Sie beschlossen, abzusagen, auf unserer Website unter Verwendung eines vorhandenen Konten einloggen. Wenn dies ein Fehler war, gehen Sie bitte zu <a href=\"%(login_url)s\">sign in</a>."
+msgstr "您決定使用您的一個現有帳戶取消登錄我們的網站。\n"
+"如果這是一個錯誤，請繼續<a href=\"%(login_url)s\">登錄</a>。"
 
 #: templates/socialaccount/messages/account_connected.txt:2
 msgid "The social account has been connected."
-msgstr "Das soziale Konto hat verbunden."
+msgstr "社交帳戶已關聯。"
 
 #: templates/socialaccount/messages/account_connected_other.txt:2
 msgid "The social account is already connected to a different account."
-msgstr "Das soziale Konto ist bereits zu einem anderen Konto verbunden."
+msgstr "社交帳戶已經連接到不同的帳戶."
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
-msgstr "Das soziale Konto wurde getrennt."
+msgstr "社交帳戶已被斷開."
 
 #: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
 msgid "Sign Up"
-msgstr "Anmelden"
+msgstr "注册"
 
 #: templates/socialaccount/signup.html:10
 #, python-format
 msgid "You are about to use your %(provider_name)s account to login to\n"
 "%(site_name)s. As a final step, please complete the following form:"
-msgstr "Sie sollen Ihr %(provider_name)s-Konto für die Anmeldung bei%(site_name)s verwenden. Als letzten Schritt füllen Sie bitte das folgende Formular:"
+msgstr "您即將使用您的%(provider_name)s 的帳戶登錄 %(site_name)s.\n"
+"作為最後一步，請填寫以下表格："
 
