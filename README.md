@@ -5,8 +5,8 @@
 Webapp based on Django to manage personal finances
 
 ## Demo
-There is a [demo](https://silverstrike.herokuapp.com/) available.
-It is hosted on heruko and is deployed daily from the master branch. Since it is using the free tier, after 30 minutes of inactivity, the first page takes some time to load.
+There is a [demo](https://demo.silverstrike.tk/) available.
+It is regularly updated from the master branch.
 
 ## Get your own instance
 
