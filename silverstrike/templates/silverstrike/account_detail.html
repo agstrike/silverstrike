@@ -17,18 +17,15 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
-      <a href="{% url 'account_detail' account.pk previous_month.year previous_month.month %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
-      <span>{{ month|date:'F Y'}}</span>
-      <a href="{% url 'account_detail' account.pk next_month.year next_month.month %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
+      Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
     </div>
   </div>
 </div>
-{% if dataset %}
 <div class="row">
   <div class="col-md-4 col-md-push-8">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Overview for {{ month|date:'F' }}</h3>
+        <h3 class="box-title">Overview</h3>
       </div>
       <div class="box-content">
         <table class="table">
@@ -48,10 +45,10 @@
       </div>
       <div class="box-footer">
           <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-  <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger">{% trans 'Delete' %}</a>
-  {% if account.is_personal %}
-  <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
-  {% endif %}
+          {% if account.is_personal %}
+          <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+          {% endif %}
+          <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
       </div>
     </div>
   </div>
@@ -63,17 +60,9 @@
 </div>
 </div>
 </div>
-{% endif %}
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Transaction list' %}</h3>
-  <div class="pull-right">
-    {% if account.is_personal %}
-    <a href="{% url 'transactions' %}?account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
-    {% else %}
-    <a href="{% url 'transactions' %}?opposing_account={{ account.pk }}" class="btn btn-xs btn-default">{% trans 'Show all' %}</a>
-    {% endif %}
-  </div>
 </div>
 <div class="box-body">
 <table class="table table-striped">
@@ -143,7 +132,14 @@ var myChart = new Chart(ctx, {
     options: {
         legend: {
           position: 'none',
-        }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                }
+            }]
+        },
     },
     data: {
         labels: [

@@ -58,6 +58,7 @@
         {% if object %}
         <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
         <a href="{{ account.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
+        <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger">{% trans 'Delete' %}</a>
         {% else %}
         <button type="submit" class="btn btn-primary">{% trans 'Create' %}</button>
         {% endif %}

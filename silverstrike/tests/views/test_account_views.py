@@ -23,10 +23,11 @@ class AbstractAccountViewTests(TestCase):
 
 
 class AccountDetailViewTests(AbstractAccountViewTests):
-    def test_no_month_in_url(self):
+    def test_no_daterange_in_url(self):
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
         today = datetime.date.today()
-        month = context['month']
+        month = context['dstart']
+        self.assertEqual(last_day_of_month(context['dstart']), context['dend'])
         self.assertEqual(month.year, today.year)
         self.assertEqual(month.month, today.month)
 
@@ -60,35 +61,11 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         self.assertEqual(context['difference'], 50)
         self.assertEqual(context['balance'], 50)
 
-    def test_next_month(self):
-        context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        next_month = last_day_of_month(datetime.date.today()) + datetime.timedelta(days=1)
-        self.assertEqual(context['next_month'].month, next_month.month)
-        self.assertEqual(context['next_month'].year, next_month.year)
-
-    def test_previous_month(self):
-        context = self.client.get(reverse('account_view', args=[self.account.id])).context
-        previous_month = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
-        self.assertEqual(context['previous_month'].month, previous_month.month)
-        self.assertEqual(context['previous_month'].year, previous_month.year)
-
     def test_dataset_for_personal_accounts(self):
         """
         TODO Not sure how to test that...
         """
         pass
-
-    def test_dataset_absence_for_expense_accounts(self):
-        create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
-        create_transaction('meh', self.account, self.expense, 50, Transaction.WITHDRAW)
-        context = self.client.get(reverse('account_view', args=[self.expense.id])).context
-        self.assertFalse('dataset' in context)
-
-    def test_dataset_absence_for_revenue_accounts(self):
-        create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
-        create_transaction('meh', self.account, self.expense, 50, Transaction.WITHDRAW)
-        context = self.client.get(reverse('account_view', args=[self.revenue.id])).context
-        self.assertFalse('dataset' in context)
 
 
 class AccountCreateViewTests(AbstractAccountViewTests):
