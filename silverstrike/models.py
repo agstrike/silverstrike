@@ -64,7 +64,7 @@ class Account(models.Model):
             step = timedelta(days=1)
             steps = int((dend - dstart) / step)
         data_points = []
-        balance = self.balance_on(dstart)
+        balance = self.balance_on(dstart - timedelta(days=1))
         transactions = list(Split.objects.prefetch_related('transaction').filter(
             account_id=self.pk).date_range(dstart, dend).order_by(
             '-transaction__date'))

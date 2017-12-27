@@ -54,10 +54,11 @@
       {% endfor %}
     </div>
     <div class="box-footer">
-      <div class="col-sm-offset-2">
+      <div class="col-sm-offset-2 col-sm-8">
         {% if object %}
         <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
         <a href="{{ account.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
+        <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger pull-right">{% trans 'Delete' %}</a>
         {% else %}
         <button type="submit" class="btn btn-primary">{% trans 'Create' %}</button>
         {% endif %}

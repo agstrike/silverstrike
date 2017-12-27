@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
@@ -7,7 +7,6 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
-from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Split, Transaction
 
 
@@ -68,55 +67,60 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/account_detail.html'
     context_object_name = 'transactions'
     model = Split
-    paginate_by = 50
 
     def dispatch(self, request, *args, **kwargs):
-        if 'month' in self.kwargs:
-            self.month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
+        self.account = Account.objects.get(pk=self.kwargs['pk'])
+        if self.account.account_type == Account.SYSTEM:
+            raise Http404('Account not accessible')
+        if self.kwargs['period'] == 'all':
+            self.dstart = None
+            self.dend = None
+        elif self.kwargs['period'] == 'custom':
+            self.dstart = datetime.strptime(kwargs.pop('dstart'), '%Y-%m-%d').date()
+            self.dend = datetime.strptime(kwargs.pop('dend'), '%Y-%m-%d').date()
         else:
-            self.month = date.today().replace(day=1)
-
-        self.dend = last_day_of_month(self.month)
+            self.dend = date.today()
+            self.dstart = self.dend - timedelta(days=30)
         return super(AccountView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(account=self.kwargs.get('pk')).select_related(
+        queryset = queryset.filter(account=self.account).select_related(
             'category', 'account', 'transaction', 'opposing_account')
-        queryset = queryset.date_range(self.month, self.dend)
+        if self.dstart:
+            queryset = queryset.date_range(self.dstart, self.dend)
         return queryset
 
     def get_context_data(self, **kwargs):
-        account = Account.objects.get(pk=self.kwargs['pk'])
-        if account.account_type == Account.SYSTEM:
-            raise Http404('Account not accessible')
         context = super().get_context_data(**kwargs)
-        context['account'] = account
+        context['account'] = self.account
         context['menu'] = 'accounts'
-        context['month'] = self.month
-
-        context['previous_month'] = (self.month - timedelta(days=1)).replace(day=1)
-        context['next_month'] = self.dend + timedelta(days=1)
 
         income = 0
         expenses = 0
         today = date.today()
+        if not self.dend:
+            for s in context['transactions']:
+                self.dend = s.date
+                break
+        first_date = None
         for s in context['transactions']:
+            first_date = s.date
             if s.date > today:
                 continue
             if s.amount < 0:
                 expenses += s.amount
             elif s.amount > 0:
                 income += s.amount
+        self.dstart = self.dstart or first_date
+        context['dstart'] = self.dstart
+        context['dend'] = self.dend
         context['in'] = income
         context['out'] = expenses
         context['difference'] = context['in'] + context['out']
 
-        delta = timedelta(days=3)
-        if account.account_type == Account.PERSONAL:
-            context['dataset'] = account.get_data_points(
-                self.month - delta, self.dend + delta)
-        context['balance'] = account.balance
+        context['dataset'] = self.account.get_data_points(self.dstart, self.dend)
+        context['balance'] = self.account.balance
         return context
 
 

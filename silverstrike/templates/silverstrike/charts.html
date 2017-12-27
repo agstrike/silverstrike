@@ -107,7 +107,14 @@ var drawChart = function(res) {
             position: 'nearest',
             intersect: false,
             caretPadding: 5,
-          }
+          },
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true,
+                  }
+              }]
+          },
       }
   });
 }
@@ -138,8 +145,14 @@ var drawBalances = function(res) {
           },
           legend: {
             position: 'none',
-          }
-
+          },
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true,
+                  }
+              }]
+          },
       }
   });
 }
