@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
@@ -7,7 +7,6 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
-from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Split, Transaction
 
 
@@ -80,8 +79,8 @@ class AccountView(LoginRequiredMixin, generic.ListView):
             self.dstart = datetime.strptime(kwargs.pop('dstart'), '%Y-%m-%d').date()
             self.dend = datetime.strptime(kwargs.pop('dend'), '%Y-%m-%d').date()
         else:
-            self.dstart = date.today().replace(day=1)
-            self.dend = last_day_of_month(self.dstart)
+            self.dend = date.today()
+            self.dstart = self.dend - timedelta(days=30)
         return super(AccountView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
