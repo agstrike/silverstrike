@@ -5,7 +5,6 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike import forms
-from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Transaction
 from silverstrike.tests import create_transaction
 
@@ -26,10 +25,8 @@ class AccountDetailViewTests(AbstractAccountViewTests):
     def test_no_daterange_in_url(self):
         context = self.client.get(reverse('account_view', args=[self.account.id])).context
         today = datetime.date.today()
-        month = context['dstart']
-        self.assertEqual(last_day_of_month(context['dstart']), context['dend'])
-        self.assertEqual(month.year, today.year)
-        self.assertEqual(month.month, today.month)
+        self.assertEqual(context['dend'], today)
+        self.assertEqual(context['dstart'], today - datetime.timedelta(days=30))
 
     def test_view_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
