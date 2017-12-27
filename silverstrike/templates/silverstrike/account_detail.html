@@ -92,7 +92,6 @@
 {% endblock %}
 
 {% block scripts %}
-{% if dataset %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script type="text/javascript">
 var ctx = document.getElementById("myChart").getContext('2d');
@@ -130,6 +129,5 @@ var myChart = new Chart(ctx, {
         }]
     }
   });
-  {% endif %}
 </script>
 {% endblock %}
