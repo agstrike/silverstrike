@@ -19,7 +19,7 @@ Explain the problem and include additional details to help reproduce the problem
 * **Explain which behavior you expected to see instead and why.**
 * **Include screenshots** if you think they are helpful
 * **If you're reporting that an unhandled exception**, include a stack trace. If it's rather small, include it in the issue itself. Otherwise please attach it as a file or paste the content to some pasting service like [dpaste](https://dpaste.de)
-* **Can you reproduce the problem in the [demo](https://silverstrike.herokuapp.com)?**
+* **Can you reproduce the problem in the [demo](https://demo.silverstrike.tk)?**
 
 ### Translation
 
