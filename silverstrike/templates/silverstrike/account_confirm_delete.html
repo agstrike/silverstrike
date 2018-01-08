@@ -13,9 +13,7 @@
     <div class="box-body">
       {% csrf_token %}
         <p>
-          {% blocktrans %}
-          Are you sure you want to delete the account along with {{ object.transaction_num }} transactions?
-          {% endblocktrans %}
+          {% blocktrans %}Are you sure you want to delete the account along with {{ object.transaction_num }} transactions?{% endblocktrans %}
         </p>
         <div class="text-center">
         <a href="{{ object.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
