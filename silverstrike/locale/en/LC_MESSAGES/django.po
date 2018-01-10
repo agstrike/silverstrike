@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-08 22:55+0100\n"
+"POT-Creation-Date: 2018-01-08 23:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -670,7 +670,9 @@ msgid "Are you sure you want to delete the category?"
 msgstr ""
 
 #: templates/silverstrike/category_confirm_delete.html:16
-msgid "All transactions linked to this category won"
+msgid ""
+"All transactions linked to this category won't be deleted but will loose the "
+"entry for the category"
 msgstr ""
 
 #: templates/silverstrike/category_detail.html:30

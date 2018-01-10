@@ -13,7 +13,7 @@
     <div class="box-body">
       {% csrf_token %}
       <p>{% trans 'Are you sure you want to delete the category?' %}</p>
-      <p>{% trans 'All transactions linked to this category won't be deleted but will loose the entry for the category' %}</p>
+      <p>{% trans "All transactions linked to this category won't be deleted but will loose the entry for the category" %}</p>
       <div class="text-center">
         <a href="{{ object.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>
         <button type="submit" class="btn btn-danger">{% trans 'Delete' %}</button>
