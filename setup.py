@@ -29,7 +29,7 @@ setup(
     install_requires=[
         'django>=2.0',
         'djangorestframework',
-        'django-widget-tweaks',
+        'django-widgets-improved',
         'django-allauth',
         'python-dateutil',
     ],
