@@ -40,14 +40,18 @@ class AccountAdmin(admin.ModelAdmin):
             failure = False
             if account.account_type != Account.FOREIGN:
                 self.message_user(request, _(
-                    'You can only merge foreign accounts, {} isn\'t.'.format(account.name)))
+                    'You can only merge foreign accounts, "{}" isn\'t.'.format(account.name)))
                 failure = True
-            if failure:
-                return
+        if failure:
+            return
         base = accounts.pop()
         for account in accounts:
+            # update splits
             Split.objects.filter(account_id=account.id).update(account_id=base.id)
             Split.objects.filter(opposing_account_id=account.id).update(opposing_account_id=base.id)
+            # update recurrences
+            RecurringTransaction.objects.filter(src_id=account.id).update(src_id=base.id)
+            RecurringTransaction.objects.filter(dst_id=account.id).update(dst_id=base.id)
             account.delete()
         if len(accounts) == 1:
             self.message_user(request, format_html(
