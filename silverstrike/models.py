@@ -8,6 +8,20 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 
+class AccountQuerySet(models.QuerySet):
+    def personal(self):
+        return self.filter(account_type=Account.PERSONAL)
+
+    def foreign(self):
+        return self.filter(account_type=Account.FOREIGN)
+
+    def active(self):
+        return self.filter(active=True)
+
+    def inactive(self):
+        return self.filter(active=False)
+
+
 class Account(models.Model):
     PERSONAL = 1
     FOREIGN = 2
@@ -23,6 +37,8 @@ class Account(models.Model):
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
+
+    objects = AccountQuerySet.as_manager()
 
     class Meta:
         ordering = ['-active', 'name']
