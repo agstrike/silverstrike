@@ -22,18 +22,39 @@
         <th>{% trans 'Name' %}</th>
         <th>{% trans 'Balance' %}</th>
         <th>{% trans 'Active' %}</th>
+        <th></th>
       </tr>
       {% for account in accounts %}
-      <tr>
+      <tr{% if not account.active %} class="inactive-account"{% endif %}>
         <td><a href="{% url 'account_view' account.id %}">{{ account.name }}</a></td>
         <td>{{ account.balance }}</td>
         <td>{% if account.active %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-close"></i>{% endif %}</td>
+        <td><a href="{% url 'account_update' account.id %}">{% trans 'Edit' %}</a></td>
       </tr>
       {% endfor %}
     </table>
   </div>
   <div class="box-footer">
-    <a class="btn btn-primary pull-right" href="{% url 'account_new' %}">{% trans 'New' %}</a>
+    <a class="btn btn-primary" href="{% url 'account_new' %}">{% trans 'Create Account' %}</a>
+    <button class="btn btn-default" id="show-inactive">{% trans 'Show inactive accounts' %}</button>
+    <button class="btn btn-default" id="hide-inactive">{% trans 'Hide inactive accounts' %}</button>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  $('.inactive-account').hide();
+  $('#hide-inactive').hide();
+  $('#show-inactive').click(function() {
+    $('#show-inactive').hide();
+    $('#hide-inactive').show();
+    $('.inactive-account').show();
+  });
+  $('#hide-inactive').click(function() {
+    $('#show-inactive').show();
+    $('#hide-inactive').hide();
+    $('.inactive-account').hide();
+  });
+</script>
 {% endblock %}

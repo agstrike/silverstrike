@@ -51,8 +51,7 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
         context['menu'] = 'accounts'
         balances = Split.objects.personal().past().order_by('account_id').values(
             'account_id').annotate(Sum('amount'))
-        accounts = list(Account.objects.filter(account_type=Account.PERSONAL).values(
-            'id', 'name', 'active'))
+        accounts = list(Account.objects.personal().values('id', 'name', 'active'))
         for a in accounts:
             a['balance'] = 0
         for b in balances:
