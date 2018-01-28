@@ -1,10 +1,13 @@
+from datetime import date
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm
-from silverstrike.models import RecurringTransaction, Transaction
+from silverstrike.models import RecurringTransaction, Split, Transaction
 
 
 class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
@@ -78,4 +81,17 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'recurrences'
+        income = 0
+        expenses = 0
+        for t in context['transactions']:
+            if t.transaction_type == Transaction.WITHDRAW:
+                expenses += t.amount
+            elif t.transaction_type == Transaction.DEPOSIT:
+                income += t.amount
+        volume = Split.objects.past().filter(date__gte=date.today().replace(day=1)).exclude(
+            transaction__recurrence=None).personal().aggregate(Sum('amount'))['amount__sum'] or 0
+        context['expenses'] = expenses
+        context['income'] = income
+        context['total'] = income - expenses
+        context['remaining'] = income - expenses - volume
         return context

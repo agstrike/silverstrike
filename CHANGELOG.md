@@ -10,6 +10,7 @@ All notable changes to SilverStrike will be documented here.
 * Support Django version 2.0
 * Support for localization
 * Ability to filter hide inactive accounts in the account index
+* Add badges to the recurrence index
 
 ### Fixed
 * Balance charts now show correct balances
