@@ -1,0 +1,40 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block content_header %}
+<h1>{% trans 'Disabled Recurring Transactions' %}
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Recurrences' %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+<div class="box-header with-border">
+  <h3 class="box-title">{% trans 'Recurrences' %}</h3>
+</div>
+<div class="box-body">
+<table class="table table-striped">
+  <tr>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th>{% trans 'Source Account' %}</th>
+    <th>{% trans 'Destination Account' %}</th>
+  </tr>
+{% for transaction in object_list %}
+<tr>
+  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
+  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
+  <td><a href="{{ transaction.src.get_absolute_url }}">{{ transaction.src }}</a></td>
+  <td><a href="{{ transaction.dst.get_absolute_url }}">{{ transaction.dst }}</a></td>
+{% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

@@ -67,6 +67,8 @@ urlpatterns = [
          recurrence_views.RecurringTransactionIndex.as_view(), name='recurrences'),
     path('recurrences/create/',
          recurrence_views.RecurrenceCreateView.as_view(), name='recurrence_create'),
+    path('recurrences/disabled/',
+         recurrence_views.DisabledRecurrencesView.as_view(), name='disabled_recurrences'),
     path('recurrences/<int:pk>/', recurrence_views.RecurrenceDetailView.as_view(),
          name='recurrence_detail'),
     path('recurrences/<int:pk>/update/', recurrence_views.RecurrenceUpdateView.as_view(),
