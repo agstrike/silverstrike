@@ -2,7 +2,9 @@
 
 All notable changes to SilverStrike will be documented here.
 
-## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.0...master)
+## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.1...master)
+
+## [0.1.1](https://github.com/agstrike/silverstrike/releases/tag/0.1.1) - 2018-02-03
 
 ### Added
 * Baisc REST API based on django-rest-framework #19
