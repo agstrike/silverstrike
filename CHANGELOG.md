@@ -14,6 +14,7 @@ All notable changes to SilverStrike will be documented here.
 * Ability to filter hide inactive accounts in the account index
 * Add badges to the recurrence index
 * Special view for disabled recurrences
+* Add view to assign categories to multiple splits at once
 
 ### Fixed
 * Balance charts now show correct balances

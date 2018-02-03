@@ -237,3 +237,6 @@ class ExportForm(forms.Form):
     end = forms.DateField()
     accounts = forms.ModelMultipleChoiceField(
         queryset=Account.objects.filter(account_type=Account.PERSONAL))
+
+
+CategoryAssignFormset = forms.modelformset_factory(Split, fields=('category',), extra=0)
