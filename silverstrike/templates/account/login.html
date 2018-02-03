@@ -1,7 +1,7 @@
 {% extends "_plain.html" %}
 {% load staticfiles %}
 {% load i18n %}
-{% load account socialaccount %}
+{% load account %}
 {% load widget_tweaks %}
 
   {% block title %}SilverStrike | Log in{% endblock %}
@@ -12,28 +12,8 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  {% get_providers as socialaccount_providers %}
-  {% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-  <div class="login-or">{% trans 'or' %}</div>
-
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
 <p class="login-box-msg">{% blocktrans %}If you have not created an account yet, then please
 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
 
     <form action="" method="post">
       {% csrf_token %}

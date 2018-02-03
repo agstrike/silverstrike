@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'silverstrike',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'rest_framework',
     'rest_framework.authtoken'
 ]
