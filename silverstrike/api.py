@@ -63,6 +63,9 @@ def category_spending(request, dstart, dend):
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
     res = Split.objects.expense().past().date_range(dstart, dend).order_by('category').values(
         'category__name').annotate(spent=models.Sum('amount'))
-    res = [(e['category__name'] or 'No category', abs(e['spent'])) for e in res if e['spent']]
-    categories, spent = zip(*res)
+    if res:
+        res = [(e['category__name'] or 'No category', abs(e['spent'])) for e in res if e['spent']]
+        categories, spent = zip(*res)
+    else:
+        categories, spent = [], []
     return JsonResponse({'categories': categories, 'spent': spent})
