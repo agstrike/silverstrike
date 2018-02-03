@@ -213,8 +213,8 @@ class ReconcilationForm(forms.ModelForm):
 
     def clean(self):
         super().clean()
-        if self.cleaned_data['current_balance'] == Account.objects.get(pk=self.account).balance:
-            self.add_error('current_balance', 'You provided the same balance!')
+        if self.cleaned_data['balance'] == Account.objects.get(pk=self.account).balance:
+            self.add_error('balance', 'You provided the same balance!')
 
 
 class SplitForm(forms.ModelForm):

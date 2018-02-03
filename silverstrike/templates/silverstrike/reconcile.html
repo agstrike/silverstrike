@@ -40,7 +40,7 @@
         </label>
         <div class="col-sm-8">
           {{ form.balance|add_class:"form-control" }}
-          <span class="help-block">Current balance: {{ account.balance }}</span>
+          <span class="help-block">Current balance: {{ account.balance }} &bull; Difference: <span id="amount-difference"></span></span>
           {% for error in form.balance.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
@@ -71,7 +71,12 @@
 <script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
 
 <script>
+  var changeEvent = null;
 $(function() {
+  $('#{{ form.balance.id_for_label }}').change(function(e) {
+    changeEvent = e;
+    $('#amount-difference').text({{ account.balance }} - e.target.value);
+  });
   $('#id_date').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
