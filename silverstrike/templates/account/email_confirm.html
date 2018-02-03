@@ -1,4 +1,4 @@
-{% extends "account/base.html" %}
+{% extends "_plain.html" %}
 
 {% load i18n %}
 {% load account %}
@@ -7,6 +7,7 @@
 
 
 {% block content %}
+<div class="login-box">
 <h1>{% trans "Confirm E-mail Address" %}</h1>
 
 {% if confirmation %}
@@ -27,5 +28,5 @@
 <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
 
 {% endif %}
-
+</div>
 {% endblock %}

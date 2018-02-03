@@ -1,20 +1,20 @@
 {% extends "socialaccount/base.html" %}
-
 {% load i18n %}
 
 {% block head_title %}{% trans "Account Connections" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Account Connections" %}</h1>
-
+<div class="box">
+	<div class="box-header">
+		<h3 class="box-title">{% trans "Account Connections" %}</h3>
+	</div>
+	<div class="box-body">
 {% if form.accounts %}
 <p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
 
 
 <form method="post" action="{% url 'socialaccount_connections' %}">
 {% csrf_token %}
-
-<fieldset>
 {% if form.non_field_errors %}
 <div id="errorMsg">{{ form.non_field_errors }}</div>
 {% endif %}
@@ -34,21 +34,23 @@
 <div>
 <button type="submit">{% trans 'Remove' %}</button>
 </div>
-
-</fieldset>
-
 </form>
 
 {% else %}
 <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
 {% endif %}
+</div>
+</div>
+<div class="box">
+	<div class="box-header">
+		<h3 class="box-title">{% trans 'Add a 3rd Party Account' %}</h3>
+	</div>
+	<div class="box-body">
+		<ul class="socialaccount_providers">
+		{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+		</ul>
 
-<h2>{% trans 'Add a 3rd Party Account' %}</h2>
-
-<ul class="socialaccount_providers">
-{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-</ul>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
+		{% include "socialaccount/snippets/login_extra.html" %}
+	</div>
+</div>
 {% endblock %}
