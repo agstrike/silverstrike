@@ -18,6 +18,7 @@ All notable changes to SilverStrike will be documented here.
 * Upcoming transactions on the dashboard are only displayed once
 * Merging accounts correctly updates recurring transactions #44
 * Inactive accounts are no longer showed in the charts view #45
+* Fix server error in category_spending api call when not enough data is available #32
 
 ### Removed
 * Support for all Django versions below 2.0
