@@ -11,6 +11,7 @@ All notable changes to SilverStrike will be documented here.
 * Support for localization
 * Ability to filter hide inactive accounts in the account index
 * Add badges to the recurrence index
+* Special view for disabled recurrences
 
 ### Fixed
 * Balance charts now show correct balances
@@ -20,6 +21,7 @@ All notable changes to SilverStrike will be documented here.
 
 ### Removed
 * Support for all Django versions below 2.0
+* Ability to sign up using social accounts
 
 ## [0.1.0](https://github.com/agstrike/silverstrike/releases/tag/0.1.0) - 2017-12-09
 
