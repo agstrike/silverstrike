@@ -52,7 +52,6 @@
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{% trans 'Recurrences' %}</h3>
-    <a href="{% url 'recurrence_create' %}" class="btn btn-primary btn-xs pull-right">{% trans 'Create' %}</a>
 </div>
 <div class="box-body">
 <table class="table table-striped">
@@ -75,36 +74,9 @@
 {% endfor %}
 </table>
 </div>
-<div class="box-footer text-center">
-{% if is_paginated %}
-<ul class="pagination">
-{% if page_obj.has_previous %}
-<li><a href="{{ request.path }}?page={{ page_obj.previous_page_number}}"><i class="force-parent-lh fa fa-chevron-left" aria-hidden="true"></i>
-</a>
-{% endif %}
-</li>
-<li>
-  <select class="form-control">
-    {% for _ in ''|center:page_obj.paginator.num_pages %}
-    {% if forloop.counter == page_obj.number %}
-    <option selected="">
-    {{ page_obj.number }}
-    </option>
-    {% else %}
-    <option>
-    {{ forloop.counter }}
-    </option>
-    {% endif %}
-    {% endfor %}
-  </select>
-</li>
-{% if page_obj.has_next %}
-<li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right" aria-hidden="true"></i>
-</a></li>
-{% endif %}
-</ul>
-
-{% endif %}
+<div class="box-footer">
+  <a href="{% url 'recurrence_create' %}" class="btn btn-primary">{% trans 'Create' %}</a>
+  <a href="{% url 'disabled_recurrences' %}" class="btn btn-default">{% trans 'Show disabled recurrences' %}</a>
 </div>
 </div>
 {% endblock %}

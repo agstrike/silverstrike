@@ -76,18 +76,25 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/recurring_transactions.html'
     context_object_name = 'transactions'
     model = RecurringTransaction
-    paginate_by = 50
+
+    def get_queryset(self):
+        return super(RecurringTransactionIndex, self).get_queryset().exclude(recurrence=RecurringTransaction.DISABLED)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'recurrences'
         income = 0
         expenses = 0
+        today = date.today()
         for t in context['transactions']:
-            if t.transaction_type == Transaction.WITHDRAW:
-                expenses += t.amount
-            elif t.transaction_type == Transaction.DEPOSIT:
-                income += t.amount
+            if t.recurrence == RecurringTransaction.DISABLED:
+                continue
+            if t.recurrence == RecurringTransaction.MONTHLY or (
+                t.recurrence == RecurringTransaction.YEARLY and t.date.month == today.month and t.date.year == today.year):
+                if t.transaction_type == Transaction.WITHDRAW:
+                    expenses += t.amount
+                elif t.transaction_type == Transaction.DEPOSIT:
+                    income += t.amount
         volume = Split.objects.past().filter(date__gte=date.today().replace(day=1)).exclude(
             transaction__recurrence=None).personal().aggregate(Sum('amount'))['amount__sum'] or 0
         context['expenses'] = expenses
@@ -95,3 +102,9 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         context['total'] = income - expenses
         context['remaining'] = income - expenses - volume
         return context
+
+
+class DisabledRecurrencesView(LoginRequiredMixin, generic.ListView):
+    template_name = 'silverstrike/disabled_recurrences.html'
+    queryset = RecurringTransaction.objects.filter(recurrence=RecurringTransaction.DISABLED)
+    paginate_by = 20
