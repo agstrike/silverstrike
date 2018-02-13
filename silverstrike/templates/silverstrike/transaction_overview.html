@@ -21,19 +21,21 @@
 <div class="box-body">
 <table class="table table-striped">
   <tr>
-    <th>Title</th>
-    <th class="hidden-xs">Type</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th class="hidden-xs">Account</th>
-    <th class="hidden-xs">Opposing Account</th>
-    <th class="hidden-xs">Category</th>
+    <th>{% trans 'Title' %}</th>
+    <th class="hidden-xs">{% trans 'Type' %}</th>
+    <th>{% trans 'Date' %}</th>
+    <th class="hidden-xs">{% trans 'Booking Date' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th class="hidden-xs">{% trans 'Account' %}</th>
+    <th class="hidden-xs">{% trans 'Opposing Account' %}</th>
+    <th class="hidden-xs">{% trans 'Category' %}</th>
   </tr>
 {% for transaction in transactions %}
 <tr>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.transaction.title }}</a></td>
   <td class="hidden-xs">{{ transaction.transaction.get_transaction_type_str }}</td>
   <td>{{ transaction.transaction.date }}</td>
+  <td class="hidden-xs">{{ transaction.date }}</td>
   <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">
     {% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}
   </td>
