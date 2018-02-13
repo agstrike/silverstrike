@@ -69,6 +69,7 @@
   <tr>
     <th>{% trans 'Title' %}</th>
     <th>{% trans 'Date' %}</th>
+    <th class="hidden-xs">{% trans 'Booking date' %}</th>
     <th>{% trans 'Amount' %}</th>
     <th class="hidden-xs">{% trans 'Account' %}</th>
     <th class="hidden-xs">{% trans 'Category' %}</th>
@@ -77,6 +78,7 @@
 <tr>
   <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
   <td>{{ transaction.transaction.date }}</td>
+  <td class="hidden-xs">{{ transaction.date }}</td>
   <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
   <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">
