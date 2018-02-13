@@ -17,7 +17,9 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
+      {% blocktrans %}
       Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
+      {% endblocktrans %}
     </div>
   </div>
 </div>
@@ -25,7 +27,7 @@
   <div class="col-md-4 col-md-push-8">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Overview</h3>
+        <h3 class="box-title">{% trans 'Overview' %}</h3>
       </div>
       <div class="box-content">
         <table class="table">

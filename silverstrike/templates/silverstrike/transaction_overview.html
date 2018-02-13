@@ -4,12 +4,10 @@
 {% load tags %}
 
 {% block content_header %}
-<h1>Transactions
-  <small>{{ account.name }} {{ start_date|date:'F Y'}}</small>
-</h1>
+<h1>{% trans 'Transactions' %}</h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Transactions</li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Transactions' %}</li>
 </ol>
 {% endblock %}
 
