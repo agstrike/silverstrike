@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import Http404
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext as _
 from django.views import generic
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
@@ -75,8 +76,11 @@ class AccountView(LoginRequiredMixin, generic.ListView):
             self.dstart = None
             self.dend = None
         elif self.kwargs['period'] == 'custom':
-            self.dstart = datetime.strptime(kwargs.pop('dstart'), '%Y-%m-%d').date()
-            self.dend = datetime.strptime(kwargs.pop('dend'), '%Y-%m-%d').date()
+            try:
+                self.dstart = datetime.strptime(kwargs.pop('dstart'), '%Y-%m-%d').date()
+                self.dend = datetime.strptime(kwargs.pop('dend'), '%Y-%m-%d').date()
+            except ValueError:
+                raise Http404(_('Nothing here...'))
         else:
             self.dend = date.today()
             self.dstart = self.dend - timedelta(days=30)
