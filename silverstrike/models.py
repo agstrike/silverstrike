@@ -393,7 +393,6 @@ class RecurringTransaction(models.Model):
         for r, name in self.RECCURENCE_OPTIONS:
             if r == self.recurrence:
                 return name
-        return ''
 
     @property
     def signed_amount(self):
