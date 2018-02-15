@@ -5,9 +5,11 @@ from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
+from silverstrike.forms import CategoryAssignFormset
 from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Category, Split
 
@@ -71,6 +73,21 @@ class InactiveCategoriesView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return super(InactiveCategoriesView, self).get_queryset().filter(active=False)
+
+
+def assign_categories(request):
+    queryset = Split.objects.expense().filter(category=None)
+    formset = CategoryAssignFormset(queryset=queryset)
+    if request.method == 'POST':
+        formset = CategoryAssignFormset(request.POST)
+        if formset.is_valid():
+            for f in formset:
+                if f.has_changed():
+                    f.save()
+            return redirect('category_assign')
+    results = zip(queryset, formset.forms)
+    return render(request, 'silverstrike/category_assign.html',
+                  {'formset': formset, 'results': results})
 
 
 class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
