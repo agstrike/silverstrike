@@ -87,7 +87,7 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         remaining = 0
         for t in context['transactions']:
             if t.recurrence == RecurringTransaction.MONTHLY or (
-                    t.recurrence == RecurringTransaction.YEARLY and
+                    t.recurrence == RecurringTransaction.ANNUALLY and
                     t.date.month == today.month and t.date.year == today.year):
                 if t.transaction_type == Transaction.WITHDRAW:
                     expenses += t.amount

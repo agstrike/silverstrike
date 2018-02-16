@@ -4,6 +4,15 @@ All notable changes to SilverStrike will be documented here.
 
 ## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.1...master)
 
+### Added
+* Add view to assign categories to multiple splits at once
+* Add quarterly and biannual recurrences
+
+### Removed
+* Weekly recurrences
+
+
+
 ## [0.1.1](https://github.com/agstrike/silverstrike/releases/tag/0.1.1) - 2018-02-03
 
 ### Added
@@ -14,7 +23,6 @@ All notable changes to SilverStrike will be documented here.
 * Ability to filter hide inactive accounts in the account index
 * Add badges to the recurrence index
 * Special view for disabled recurrences
-* Add view to assign categories to multiple splits at once
 
 ### Fixed
 * Balance charts now show correct balances

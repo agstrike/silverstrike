@@ -336,14 +336,17 @@ class RecurringTransactionManager(models.Manager):
 
 class RecurringTransaction(models.Model):
     DISABLED = 0
-    WEEKLY = 1
-    MONTHLY = 2
-    YEARLY = 3
+    MONTHLY = 1
+    QUARTERLY = 2
+    BIANNUALLY = 3
+    ANNUALLY = 4
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
-        (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
-        (YEARLY, _('Yearly')))
+        (QUARTERLY, _('Quarterly')),
+        (BIANNUALLY, _('Biannually')),
+        (ANNUALLY, _('Annually'))
+        )
 
     class Meta:
         ordering = ['date']
@@ -372,11 +375,13 @@ class RecurringTransaction(models.Model):
         return date.today() >= self.date
 
     def update_date(self):
-        if self.recurrence == self.WEEKLY:
-            self.date += timedelta(days=7)
-        elif self.recurrence == self.MONTHLY:
+        if self.recurrence == self.MONTHLY:
             self.date += relativedelta(months=+1)
-        else:
+        elif self.recurrence == self.QUARTERLY:
+            self.date += relativedelta(months=+3)
+        elif self.recurrence == self.BIANNUALLY:
+            self.date += relativedelta(months=+6)
+        elif self.recurrence == self.ANNUALLY:
             self.date += relativedelta(years=+1)
 
     @property
@@ -388,7 +393,6 @@ class RecurringTransaction(models.Model):
         for r, name in self.RECCURENCE_OPTIONS:
             if r == self.recurrence:
                 return name
-        return ''
 
     @property
     def signed_amount(self):
