@@ -6,20 +6,21 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.tests import create_transaction
 
 
 class RecurrenceTests(TestCase):
     def setUp(self):
-        personal = Account.objects.create(name='personal')
-        foreign = Account.objects.create(name='foreign', account_type=Account.FOREIGN)
+        self.personal = Account.objects.create(name='personal')
+        self.foreign = Account.objects.create(name='foreign', account_type=Account.FOREIGN)
 
         self.date = date(2018, 1, 1)
         self.recurrence = RecurringTransaction.objects.create(
             title='some recurrence',
             amount=25,
             date=self.date,
-            src=personal,
-            dst=foreign,
+            src=self.personal,
+            dst=self.foreign,
             recurrence=RecurringTransaction.MONTHLY,
             transaction_type=Transaction.WITHDRAW)
 
@@ -91,9 +92,21 @@ class RecurrenceTests(TestCase):
         self.assertTrue(self.recurrence.is_deposit)
         self.assertFalse(self.recurrence.is_withdraw)
 
-    def test_average_amount(self):
-        # TODO add a test
-        pass
+    def test_average_amount_for_withdrawls(self):
+        for i in range(1, 11):
+            t = create_transaction('meh', self.personal, self.foreign, i * 10, Transaction.WITHDRAW)
+            t.recurrence = self.recurrence
+            t.save()
+        self.assertEquals(self.recurrence.average_amount, -sum([i * 10 for i in range(1, 11)]) / 10)
+
+    def test_average_amount_for_withdrawls(self):
+        for i in range(1, 11):
+            t = create_transaction('meh', self.foreign, self.personal, i * 10, Transaction.DEPOSIT)
+            t.recurrence = self.recurrence
+            t.save()
+        self.recurrence.transaction_type = Transaction.DEPOSIT
+        self.recurrence.save()
+        self.assertEquals(self.recurrence.average_amount, sum([i * 10 for i in range(1, 11)]) / 10)
 
     def test_outstanding_sum(self):
         # TODO add a test
