@@ -26,12 +26,6 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = RecurringTransaction
     success_url = reverse_lazy('recurrences')
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['src'] = self.object.src
-        initial['dst'] = self.object.dst
-        return initial
-
 
 class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Transaction
