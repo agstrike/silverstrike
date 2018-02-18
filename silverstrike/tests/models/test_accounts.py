@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 
-from silverstrike.models import Account
+from silverstrike.models import Account, Split
 
 
 class AccountQuerysetTests(TestCase):
@@ -36,3 +37,47 @@ class AccountQuerysetTests(TestCase):
 
         queryset = Account.objects.inactive()
         self.assertEquals(queryset.count(), 1)
+
+
+class AccountModelTests(TestCase):
+    def test_account_str_method(self):
+        account = Account.objects.create(name='some_account')
+        self.assertEqual(str(account), account.name)
+        User.objects.create_superuser(username='admin', email='admin@example.com', password='pass')
+        self.client.login(username='admin', password='pass')
+        response = self.client.get(account.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['account'], account)
+
+    def test_account_type_str_method(self):
+        account = Account.objects.create(name='first')
+        self.assertEqual(account.account_type_str, 'Personal')
+        account.account_type = Account.FOREIGN
+        self.assertEqual(account.account_type_str, 'Foreign')
+        account.account_type = Account.SYSTEM
+        self.assertEqual(account.account_type_str, 'System')
+
+    def test_account_transaction_number(self):
+        account = Account.objects.create(name='foo')
+        self.assertEqual(account.transaction_num, 0)
+        account.set_initial_balance(50)
+        self.assertEqual(account.transaction_num, 1)
+
+    def test_set_initial_balance(self):
+        account = Account.objects.create(name='foo')
+        self.assertEqual(account.balance, 0)
+        account.set_initial_balance(50)
+        self.assertEqual(account.balance, 50)
+        # repeated calls to set initial balance keep adding to it
+        account.set_initial_balance(50)
+        self.assertEqual(account.balance, 100)
+
+    def test_account_balance_with_no_transactions(self):
+        account = Account.objects.create(name='some_account')
+        self.assertEqual(account.balance, 0)
+
+    def test_initial_balance_is_system(self):
+        account = Account.objects.create(name='foo')
+        account.set_initial_balance(10)
+        split = Split.objects.first()
+        self.assertTrue(split.is_system)
