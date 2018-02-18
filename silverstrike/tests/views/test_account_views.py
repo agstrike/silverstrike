@@ -58,6 +58,53 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         self.assertEqual(context['difference'], 50)
         self.assertEqual(context['balance'], 50)
 
+    def test_display_all_transactions(self):
+        create_transaction('meh', self.revenue, self.account, 500, Transaction.DEPOSIT,
+                           date=datetime.date(2017, 1, 1))
+        create_transaction('meh', self.account, self.expense, 100, Transaction.WITHDRAW,
+                           date=datetime.date(2018, 1, 1))
+        context = self.client.get(reverse('account_detail_all', args=[self.account.id])).context
+        self.assertEqual(context['dstart'], datetime.date(2017, 1, 1))
+        self.assertEqual(context['dend'], datetime.date(2018, 1, 1))
+        self.assertEqual(context['out'], -100)
+        self.assertEqual(context['in'], 500)
+        self.assertEqual(context['difference'], 400)
+        self.assertEqual(context['balance'], 400)
+
+    def test_display_custom_range(self):
+        create_transaction('meh', self.revenue, self.account, 500, Transaction.DEPOSIT,
+                           date=datetime.date(2017, 1, 1))
+        create_transaction('meh', self.account, self.expense, 100, Transaction.WITHDRAW,
+                           date=datetime.date(2018, 1, 1))
+        context = self.client.get(reverse('account_detail', args=[
+            self.account.id, datetime.date(2017, 6, 1), datetime.date(2018, 2, 1)])).context
+        self.assertEqual(context['dstart'], datetime.date(2017, 6, 1))
+        self.assertEqual(context['dend'], datetime.date(2018, 2, 1))
+        self.assertEqual(context['out'], -100)
+        self.assertEqual(context['in'], 0)
+        self.assertEqual(context['difference'], -100)
+        self.assertEqual(context['balance'], 400)
+
+    def test_invalid_custom_range_results_in_404(self):
+        response = self.client.get(reverse('account_detail', args=[
+            self.account.id, 'asdf', datetime.date(2018, 2, 1)]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_future_transaction_does_not_affect_calculations(self):
+        create_transaction('meh', self.revenue, self.account, 500, Transaction.DEPOSIT,
+                           date=datetime.date(2017, 1, 1))
+        create_transaction('meh', self.account, self.expense, 100, Transaction.WITHDRAW,
+                           date=datetime.date(2018, 1, 1))
+        create_transaction('meh', self.account, self.expense, 50, Transaction.WITHDRAW,
+                           date=datetime.date(2200, 1, 1))
+        context = self.client.get(reverse('account_detail_all', args=[self.account.id])).context
+        self.assertEqual(context['dstart'], datetime.date(2017, 1, 1))
+        self.assertEqual(context['dend'], datetime.date(2200, 1, 1))
+        self.assertEqual(context['out'], -100)
+        self.assertEqual(context['in'], 500)
+        self.assertEqual(context['difference'], 400)
+        self.assertEqual(context['balance'], 400)
+
     def test_dataset_for_personal_accounts(self):
         """
         TODO Not sure how to test that...
