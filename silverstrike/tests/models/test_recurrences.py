@@ -99,7 +99,7 @@ class RecurrenceTests(TestCase):
             t.save()
         self.assertEquals(self.recurrence.average_amount, -sum([i * 10 for i in range(1, 11)]) / 10)
 
-    def test_average_amount_for_withdrawls(self):
+    def test_average_amount_for_deposits(self):
         for i in range(1, 11):
             t = create_transaction('meh', self.foreign, self.personal, i * 10, Transaction.DEPOSIT)
             t.recurrence = self.recurrence
