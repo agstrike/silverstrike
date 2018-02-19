@@ -64,6 +64,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                 models.Sum('amount'))['amount__sum'] or 0)
         context['previous_difference'] = context['previous_income'] - context['previous_expenses']
         context['today'] = date.today()
+        context['last_month'] = previous_first
         context['past'] = date.today() - timedelta(days=60)
         return context
 
