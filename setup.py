@@ -4,12 +4,14 @@ from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
+
 def get_version():
     """
     Return package version as listed in `__version__` in `init.py`.
     """
     init_py = open(path.join(here, 'silverstrike', '__init__.py')).read()
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
 
 version = get_version()
 long_description = """SilverStrike is a Django based webapp to help you

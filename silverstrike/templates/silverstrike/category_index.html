@@ -70,7 +70,7 @@
     $( "select option:selected" ).each(function() {
       window.location.href = "{{ request.path }}?page=" + $(this).val();
     });
-  })
+  });
   var colors =
     ['#357ca5',
      '#008d4c',
@@ -96,8 +96,8 @@ var myChart = new Chart(ctx, {
     options: {
       responsive: false,
       legend: {
-        position: 'none',
-      },
+        position: 'none'
+      }
     },
     data: {
         labels: [
@@ -115,7 +115,7 @@ var myChart = new Chart(ctx, {
       {{ category.2 }},
       {% endif %}
       {% endfor %}
-    ],
+    ]
         }]
     }
 });

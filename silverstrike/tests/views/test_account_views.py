@@ -31,7 +31,7 @@ class AccountDetailViewTests(AbstractAccountViewTests):
     def test_view_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_view', args=[system.id]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     def test_correct_income(self):
         create_transaction('meh', self.revenue, self.account, 100, Transaction.DEPOSIT)
@@ -88,7 +88,7 @@ class AccountDetailViewTests(AbstractAccountViewTests):
     def test_invalid_custom_range_results_in_404(self):
         response = self.client.get(reverse('account_detail', args=[
             self.account.id, 'asdf', datetime.date(2018, 2, 1)]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 400)
 
     def test_future_transaction_does_not_affect_calculations(self):
         create_transaction('meh', self.revenue, self.account, 500, Transaction.DEPOSIT,
@@ -104,6 +104,19 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         self.assertEqual(context['in'], 500)
         self.assertEqual(context['difference'], 400)
         self.assertEqual(context['balance'], 400)
+
+    def test_account_with_no_transactions(self):
+        response = self.client.get(reverse('account_view', args=[self.account.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_account_with_no_transaction_view_all(self):
+        response = self.client.get(reverse('account_detail_all', args=[self.account.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_account_with_no_transaction_custom_range(self):
+        response = self.client.get(reverse('account_detail', args=[
+            self.account.id, datetime.date(2017, 6, 1), datetime.date(2018, 2, 1)]))
+        self.assertEqual(response.status_code, 200)
 
     def test_dataset_for_personal_accounts(self):
         """
@@ -168,7 +181,7 @@ class AccountUpdateTests(AbstractAccountViewTests):
     def test_system_AccountUpdateView(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_update', args=[system.id]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
 
 class AccountDeleteTests(AbstractAccountViewTests):
@@ -180,7 +193,7 @@ class AccountDeleteTests(AbstractAccountViewTests):
     def test_delete_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_delete', args=[system.id]))
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(response.status_code, 403)
 
 
 class AccountReconcileView(AbstractAccountViewTests):
@@ -192,16 +205,16 @@ class AccountReconcileView(AbstractAccountViewTests):
 
     def test_revenue_account(self):
         response = self.client.get(reverse('account_reconcile', args=[self.revenue.id]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     def test_expense_account(self):
         response = self.client.get(reverse('account_reconcile', args=[self.expense.id]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     def test_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_reconcile', args=[system.id]))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     def test_post_valid(self):
         pass

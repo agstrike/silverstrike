@@ -90,7 +90,7 @@
     $( "select option:selected" ).each(function() {
       window.location.href = "{{ request.path }}?page=" + $(this).val();
     });
-  })
+  });
   var colors =
     ['#357ca5',
      '#008d4c',
@@ -116,8 +116,8 @@
       options: {
         responsive: false,
         legend: {
-          position: 'none',
-        },
+          position: 'none'
+        }
       },
       data: {
           labels: [
@@ -131,7 +131,7 @@
                 {% for account, spent in account_spending.items %}
                 {{ spent }},
                 {% endfor %}
-      ],
+      ]
           }]
       }
   });
@@ -142,8 +142,8 @@
       options: {
         responsive: false,
         legend: {
-          position: 'none',
-        },
+          position: 'none'
+        }
       },
       data: {
           labels: [
@@ -157,7 +157,7 @@
                 {% for account, spent in destination_spending.items %}
                 {{ spent }},
                 {% endfor %}
-      ],
+      ]
           }]
       }
   });
@@ -169,12 +169,12 @@
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true,
+                    beginAtZero: true
                 }
             }]
         },
         legend: {
-          position: 'none',
+          position: 'none'
         }
       },
       data: {
@@ -182,7 +182,7 @@
 
           datasets: [{
               backgroundColor: colors[0],
-              data: [{{ sum_two_months_ago }}, {{ sum_last_month }}, {{ sum_this_month }}],
+              data: [{{ sum_two_months_ago }}, {{ sum_last_month }}, {{ sum_this_month }}]
           }]
       }
   });

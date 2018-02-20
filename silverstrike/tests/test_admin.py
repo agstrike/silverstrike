@@ -20,7 +20,7 @@ class MockSuperUser:
 class MockedAdmin(AccountAdmin):
     messages = []
 
-    def message_user(self, request, message, message_type=None):
+    def message_user(self, request, message, message_type=None, **kwargs):
         self.messages.append(message)
 
 

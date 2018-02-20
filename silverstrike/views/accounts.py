@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
-from django.http import Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
@@ -26,9 +26,19 @@ class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Account
     fields = ['name', 'active', 'show_on_dashboard']
 
-    def get_form_class(self):
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if self.object.account_type == Account.SYSTEM:
-            raise Http404("You aren't allowed to edit this account")
+            return HttpResponse(_('You are not allowed to edit this account'), status=403)
+        return generic.edit.ProcessFormView.post(self, request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.account_type == Account.SYSTEM:
+            return HttpResponse(_('You are not allowed to edit this account'), status=403)
+        return generic.edit.ProcessFormView.get(self, request, *args, **kwargs)
+
+    def get_form_class(self):
         if self.object.account_type != Account.PERSONAL:
             self.fields = ['name']
         return super(AccountUpdate, self).get_form_class()
@@ -38,10 +48,19 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     model = Account
     success_url = reverse_lazy('accounts')
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if self.object.account_type == Account.SYSTEM:
-            raise Http404("You are not allowed to delete this account")
-        return super(AccountDelete, self).get_context_data(**kwargs)
+            return HttpResponse(_('You are not allowed to delete this account'), status=403)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.account_type == Account.SYSTEM:
+            return HttpResponse(_('You are not allowed to delete this account'), status=403)
+        self.object.delete()
+        return HttpResponseRedirect(self.success_url)
 
 
 class AccountIndex(LoginRequiredMixin, generic.TemplateView):
@@ -71,7 +90,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     def dispatch(self, request, *args, **kwargs):
         self.account = Account.objects.get(pk=self.kwargs['pk'])
         if self.account.account_type == Account.SYSTEM:
-            raise Http404('Account not accessible')
+            return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
             self.dstart = None
             self.dend = None
@@ -80,7 +99,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
                 self.dstart = datetime.strptime(kwargs.pop('dstart'), '%Y-%m-%d').date()
                 self.dend = datetime.strptime(kwargs.pop('dend'), '%Y-%m-%d').date()
             except ValueError:
-                raise Http404(_('Nothing here...'))
+                return HttpResponse(_('Nothing here...'), status=400)
         else:
             self.dend = date.today()
             self.dstart = self.dend - timedelta(days=30)
@@ -121,8 +140,6 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         context['in'] = income
         context['out'] = expenses
         context['difference'] = context['in'] + context['out']
-
-        context['dataset'] = self.account.get_data_points(self.dstart, self.dend)
         context['balance'] = self.account.balance
         return context
 
@@ -132,11 +149,15 @@ class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
     form_class = ReconcilationForm
     model = Transaction
 
+    def dispatch(self, request, *args, **kwargs):
+        self.account = Account.objects.get(pk=kwargs['pk'])
+        if self.account.account_type != Account.PERSONAL:
+            return HttpResponse(_('You can not reconcile this account'), status=403)
+        return super(ReconcileView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['account'] = Account.objects.get(pk=self.kwargs['pk'])
-        if context['account'].account_type != Account.PERSONAL:
-            raise Http404("You can't reconcile this account")
+        context['account'] = self.account
         return context
 
     def get_form_kwargs(self):

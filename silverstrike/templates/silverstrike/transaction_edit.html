@@ -124,9 +124,9 @@ $(function() {
   $('.date-input').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
-  orientation: 'bottom',
+  orientation: 'bottom'
 
-  })
+  });
   if ($('input#id_source_account').length > 0) {
       $.getJSON('{% url 'api_accounts' 'FOREIGN' %}').done(function (data) {
           $('#id_source_account').typeahead({source: data});

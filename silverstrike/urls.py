@@ -5,7 +5,7 @@ from rest_framework import routers
 
 from silverstrike import api
 from silverstrike.rest import views as rest_views
-from silverstrike.views import account as account_views
+from silverstrike.views import accounts as account_views
 from silverstrike.views import budgets as budget_views
 from silverstrike.views import categories as category_views
 from silverstrike.views import charts as chart_views
@@ -106,6 +106,8 @@ urlpatterns = [
 
     path('api/accounts/<account_type>/', api.get_accounts, name='api_accounts'),
     path('api/balance/<dstart>/<dend>/', api.get_balances, name='api_balance'),
+    path('api/account/<int:account_id>/balance/<dstart>/<dend>/',
+         api.get_account_balance, name='api_account_balance'),
     path('api/accounts_balance/<dstart>/<dend>/',
          api.get_accounts_balance, name='api_accounts_balance'),
     path('api/category_spending/<dstart>/<dend>/',

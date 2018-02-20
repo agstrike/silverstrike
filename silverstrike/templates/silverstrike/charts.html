@@ -83,19 +83,19 @@ var accountChart = null;
 var categoryChart = null;
 var drawChart = function(res) {
   var ctx = document.getElementById("myChart").getContext('2d');
-  data = {
+  var data = {
       labels: res.labels,
       datasets: []
-  }
-  for (i = 0; i < res.dataset.length; i++) {
-    dataset = {
+  };
+  for (var i = 0; i < res.dataset.length; i++) {
+    var dataset = {
       label: res.dataset[i].name,
       fill: false,
       pointRadius: 2,
       backgroundColor: colors[i],
       borderColor: colors[i],
-      data: res.dataset[i].data,
-    }
+      data: res.dataset[i].data
+    };
     data.datasets.push(dataset);
   }
   accountChart = new Chart(ctx, {
@@ -106,32 +106,32 @@ var drawChart = function(res) {
             mode: 'index',
             position: 'nearest',
             intersect: false,
-            caretPadding: 5,
+            caretPadding: 5
           },
           scales: {
               yAxes: [{
                   ticks: {
-                      beginAtZero: true,
+                      beginAtZero: true
                   }
               }]
-          },
+          }
       }
   });
-}
+};
 var drawBalances = function(res) {
   var ctx = document.getElementById("balanceChart").getContext('2d');
-  data = {
+  var data = {
       labels: res.labels,
       datasets: []
-  }
-  dataset = {
+  };
+  var dataset = {
     label: 'Balance',
     fill: false,
     pointRadius: 2,
     backgroundColor: '#357ca5',
     borderColor: '#357ca5',
-    data: res.data,
-  }
+    data: res.data
+  };
   data.datasets.push(dataset);
   balanceChart = new Chart(ctx, {
       type: 'line',
@@ -141,21 +141,21 @@ var drawBalances = function(res) {
               mode: 'index',
               position: 'nearest',
               intersect: false,
-              caretPadding: 5,
+              caretPadding: 5
           },
           legend: {
-            position: 'none',
+            position: 'none'
           },
           scales: {
               yAxes: [{
                   ticks: {
-                      beginAtZero: true,
+                      beginAtZero: true
                   }
               }]
-          },
+          }
       }
   });
-}
+};
 
 var drawCategorieChart = function (res) {
   var ctx = document.getElementById("categoryChart").getContext('2d');
@@ -164,39 +164,39 @@ var drawCategorieChart = function (res) {
       options: {
         responsive: false,
         legend: {
-          position: 'none',
-        },
+          position: 'none'
+        }
       },
       data: {
           labels: res.categories,
           datasets: [{
               backgroundColor: colors,
-              data: res.spent,
+              data: res.spent
           }]
       }
   });
-}
+};
 
 var updateBalanceChart = function(chartData) {
   balanceChart.data.labels = chartData.labels;
   balanceChart.data.datasets[0].data = chartData.data;
   balanceChart.update();
-}
+};
 
 var updateAccountChart = function(chartData) {
   accountChart.data.labels = chartData.labels;
-  for (i = 0; i < chartData.dataset.length; i++) {
+  for (var i = 0; i < chartData.dataset.length; i++) {
     accountChart.data.datasets[i].data = chartData.dataset[i].data;
 
   }
   accountChart.update();
-}
+};
 
 var updateCategoryChart = function(chartData) {
   categoryChart.data.labels = chartData.categories;
   categoryChart.data.datasets[0].data = chartData.spent;
   categoryChart.update();
-}
+};
 
 var one_month = 0;
 var three_months = 1;

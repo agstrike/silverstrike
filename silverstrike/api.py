@@ -33,6 +33,15 @@ def get_accounts_balance(request, dstart, dend):
 
 
 @login_required
+def get_account_balance(request, account_id, dstart, dend):
+    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    account = Account.objects.get(pk=account_id)
+    labels, data = zip(*account.get_data_points(dstart, dend))
+    return JsonResponse({'data': data, 'labels': labels})
+
+
+@login_required
 def get_balances(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()

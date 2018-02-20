@@ -17,13 +17,17 @@
 <div class="box">
   <div class="box-body">
     <div class="text-center">
+      {% if dstart and dend %}
       {% blocktrans %}
       Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
       {% endblocktrans %}
+      {% else %}
+      <b>{% trans 'No data to show!' %}</b>
+      {% endif %}
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row row-eq-height">
   <div class="col-md-4 col-md-push-8">
     <div class="box">
       <div class="box-header">
@@ -55,10 +59,10 @@
     </div>
   </div>
 <div class="col-md-8 col-md-pull-4">
-<div class="box">
-  <div class="box-body">
-  <canvas id="myChart" width="400" height="200"></canvas>
-</div>
+<div class="box" style="height: calc(100% - 20px);">
+  <div class="box-body" id="balance-chart">
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </div>
 </div>
 </div>
 </div>
@@ -85,7 +89,7 @@
   <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">
     {% if transaction.category %}
-    <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}
+        <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>
     {% endif %}
   </td>
   </tr>
@@ -96,42 +100,42 @@
 {% endblock %}
 
 {% block scripts %}
+{% if dstart and dend %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script type="text/javascript">
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    options: {
-        legend: {
-          position: 'none',
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                }
-            }]
-        },
-    },
-    data: {
-        labels: [
-  {% for label, value in dataset %}
-  "{{ label|date }}",
-  {% endfor %}
-  ],
-        datasets: [{
-            label: 'Balance',
-            fill: false,
-            pointRadius: 2,
-            borderColor: '#357ca5',
-            backgroundColor: '#357ca5',
-            data: [
-      {% for label, value in dataset %}
-      {{ value }},
-      {% endfor %}
-    ],
-        }]
-    }
+$.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      options: {
+          legend: {
+            position: 'none'
+          },
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      },
+      data: {
+          labels: res.labels,
+          datasets: [{
+              label: 'Balance',
+              fill: false,
+              pointRadius: 2,
+              borderColor: '#357ca5',
+              backgroundColor: '#357ca5',
+              data: res.data
+          }]
+      }
+    });
   });
 </script>
+{% else %}
+<script type="text/javascript">
+  document.getElementById("balance-chart").innerHTML = "<b>{% trans 'Not enough data to show a chart' %}</b>";
+</script>
+{% endif %}
 {% endblock %}

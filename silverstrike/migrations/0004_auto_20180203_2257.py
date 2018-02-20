@@ -14,7 +14,6 @@ def migrate_recurrence_types(apps, schema_editor):
     RecurringTransaction.objects.filter(recurrence=3).update(recurrence=4)
 
 
-
 class Migration(migrations.Migration):
 
     dependencies = [

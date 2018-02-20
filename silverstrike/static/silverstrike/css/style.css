@@ -4,7 +4,7 @@
 .pagination select {
     display:inline-block;
     width:120px;
-    border-radius:0px;
+    border-radius:0;
     float: left;
     vertical-align: top;
     margin-left: -1px;
@@ -18,4 +18,10 @@
   .skin-blue-light .main-header .navbar .dropdown-menu li a {
     color: unset !important;
   }
+}
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 }
