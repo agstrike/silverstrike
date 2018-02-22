@@ -57,11 +57,12 @@ urlpatterns = [
          name='account_view'),
     path('accounts/<int:pk>/reconcile/',
          account_views.ReconcileView.as_view(), name='account_reconcile'),
-
+    path('accounts/foreign/',
+         account_views.ForeignAccountIndex.as_view(), name='foreign_accounts'),
+    path('accounts/foreign/create/',
+         account_views.ForeignAccountCreate.as_view(), name='foreign_account_new'),
     path('accounts/new/', account_views.AccountCreate.as_view(), name='account_new'),
-
-    path('accounts/',
-         account_views.AccountIndex.as_view(), name='accounts'),
+    path('accounts/', account_views.AccountIndex.as_view(), name='accounts'),
 
     path('recurrences/',
          recurrence_views.RecurringTransactionIndex.as_view(), name='recurrences'),

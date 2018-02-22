@@ -138,6 +138,19 @@ class AccountCreateViewTests(AbstractAccountViewTests):
         pass
 
 
+class ForeignAccountCreateViewTests(TestCase):
+    def test_account_created_is_foreign(self):
+        User.objects.create_superuser(username='admin', email='email@example.com', password='pass')
+        self.client.login(username='admin', password='pass')
+        self.assertEqual(Account.objects.count(), 1)
+        response = self.client.post(reverse('foreign_account_new'), {'name': 'foobar'})
+        self.assertRedirects(response, reverse('foreign_accounts'))
+        self.assertEqual(Account.objects.count(), 2)
+        account = Account.objects.last()
+        self.assertEqual(account.account_type, Account.FOREIGN)
+        self.assertEqual(account.name, 'foobar')
+
+
 class AccountIndexViewTests(AbstractAccountViewTests):
     def test_context_with_no_transactions(self):
         context = self.client.get(reverse('accounts')).context

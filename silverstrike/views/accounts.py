@@ -22,6 +22,17 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
         return context
 
 
+class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
+    model = Account
+    fields = ['name']
+
+    def form_valid(self, form):
+        account = form.save(commit=False)
+        account.account_type = Account.FOREIGN
+        account.save()
+        return HttpResponseRedirect(reverse_lazy('foreign_accounts'))
+
+
 class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Account
     fields = ['name', 'active', 'show_on_dashboard']
@@ -80,6 +91,12 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
                     a['balance'] = b['amount__sum']
         context['accounts'] = accounts
         return context
+
+
+class ForeignAccountIndex(LoginRequiredMixin, generic.ListView):
+    template_name = 'silverstrike/foreign_accounts.html'
+    queryset = Account.objects.foreign()
+    paginate_by = 20
 
 
 class AccountView(LoginRequiredMixin, generic.ListView):

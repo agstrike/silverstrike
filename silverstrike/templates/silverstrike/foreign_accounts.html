@@ -1,0 +1,79 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>{% trans 'Accounts' %}
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Accounts' %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Foreign Accounts' %}</h3>
+  </div>
+  <div class="box-body no-padding">
+    <table class="table table-striped">
+      <tr>
+        <th>{% trans 'Name' %}</th>
+        <th>{% trans 'Balance' %}</th>
+        <th></th>
+      </tr>
+      {% for account in object_list %}
+      <tr>
+        <td><a href="{% url 'account_view' account.id %}">{{ account.name }}</a></td>
+        <td>{{ account.balance }}</td>
+        <td><a href="{% url 'account_update' account.id %}">{% trans 'Edit' %}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="text-center">
+{% if is_paginated %}
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li><a href="{{ request.path }}?page={{ page_obj.previous_page_number}}"><i class="force-parent-lh fa fa-chevron-left" aria-hidden="true"></i>
+</a>
+{% endif %}
+</li>
+<li>
+  <select class="form-control">
+    {% for _ in ''|center:page_obj.paginator.num_pages %}
+    {% if forloop.counter == page_obj.number %}
+    <option selected="">
+      {{ page_obj.number }}
+    </option>
+    {% else %}
+    <option>
+      {{ forloop.counter }}
+    </option>
+    {% endif %}
+    {% endfor %}
+  </select>
+</li>
+{% if page_obj.has_next %}
+<li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right" aria-hidden="true"></i>
+</a></li>
+{% endif %}
+</ul>
+
+{% endif %}
+</div>
+  </div>
+  <div class="box-footer">
+    <a class="btn btn-primary" href="{% url 'foreign_account_new' %}">{% trans 'Create Foreign Account' %}</a>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+  $('select').change(function() {
+    $( "select option:selected" ).each(function() {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  })
+</script>
+{% endblock %}
