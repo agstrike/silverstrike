@@ -134,7 +134,7 @@ class SplitCreate(LoginRequiredMixin, generic.edit.CreateView):
             if formset.is_valid():
                 transaction.save()
                 formset.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(reverse_lazy('transaction_detail', args=[transaction.id]))
         return self.render_to_response(self.get_context_data(form=form))
 
 
@@ -162,7 +162,7 @@ class SplitUpdate(LoginRequiredMixin, generic.edit.UpdateView):
                 if split_sums == 0:
                     transaction.save()
                     formset.save()
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect(reverse_lazy('transaction_detail', args=[transaction.id]))
                 else:
                     form.add_error(
                         '',
