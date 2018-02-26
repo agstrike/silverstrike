@@ -196,17 +196,49 @@ class AccountUpdateTests(AbstractAccountViewTests):
         response = self.client.get(reverse('account_update', args=[system.id]))
         self.assertEqual(response.status_code, 403)
 
+    def test_post_system_AccountUpdateView(self):
+        system = Account.objects.get(account_type=Account.SYSTEM)
+        response = self.client.post(reverse('account_update', args=[system.id]), {})
+        self.assertEqual(response.status_code, 403)
+
+    def test_post_personal_account(self):
+        response = self.client.post(reverse('account_update', args=[self.account.id]), {'name': 'new_name'})
+        self.assertRedirects(response, reverse('account_view', args=[self.account.id]))
+        self.account.refresh_from_db()
+        self.assertEqual(self.account.name, 'new_name')
+
+    def test_post_expense_account(self):
+        response = self.client.post(reverse('account_update', args=[self.expense.id]), {'name': 'new_name'})
+        self.assertRedirects(response, reverse('account_view', args=[self.expense.id]))
+        self.expense.refresh_from_db()
+        self.assertEqual(self.expense.name, 'new_name')
+
+    def test_post_personal_account(self):
+        response = self.client.post(reverse('account_update', args=[self.revenue.id]), {'name': 'new_name'})
+        self.assertRedirects(response, reverse('account_view', args=[self.revenue.id]))
+        self.revenue.refresh_from_db()
+        self.assertEqual(self.revenue.name, 'new_name')
+
 
 class AccountDeleteTests(AbstractAccountViewTests):
     def test_delete_personal_account(self):
         response = self.client.get(reverse('account_delete', args=[self.account.id]))
         self.assertEqual(200, response.status_code)
         self.assertEqual(self.account, response.context['object'])
+        self.assertEqual(Account.objects.personal().count(), 2)
+        response = self.client.post(reverse('account_delete', args=[self.account.id]), {})
+        self.assertRedirects(response, reverse('accounts'))
+        self.assertEqual(Account.objects.personal().count(), 1)
+
 
     def test_delete_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
         response = self.client.get(reverse('account_delete', args=[system.id]))
         self.assertEqual(response.status_code, 403)
+        self.assertEqual(Account.objects.get(pk=system.id), system)
+        response = self.client.post(reverse('account_delete', args=[system.id]))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(Account.objects.get(pk=system.id), system)
 
 
 class AccountReconcileView(AbstractAccountViewTests):

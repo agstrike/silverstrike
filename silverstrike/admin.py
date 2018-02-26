@@ -69,12 +69,6 @@ class AccountAdmin(admin.ModelAdmin):
 class SplitInline(admin.TabularInline):
     model = Split
 
-    def get_extra(self, request, obj=None, **kwargs):
-        if obj:
-            return 0
-        else:
-            return 4
-
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
