@@ -202,19 +202,22 @@ class AccountUpdateTests(AbstractAccountViewTests):
         self.assertEqual(response.status_code, 403)
 
     def test_post_personal_account(self):
-        response = self.client.post(reverse('account_update', args=[self.account.id]), {'name': 'new_name'})
+        response = self.client.post(reverse('account_update', args=[self.account.id]),
+                                    {'name': 'new_name'})
         self.assertRedirects(response, reverse('account_view', args=[self.account.id]))
         self.account.refresh_from_db()
         self.assertEqual(self.account.name, 'new_name')
 
     def test_post_expense_account(self):
-        response = self.client.post(reverse('account_update', args=[self.expense.id]), {'name': 'new_name'})
+        response = self.client.post(reverse('account_update', args=[self.expense.id]),
+                                    {'name': 'new_name'})
         self.assertRedirects(response, reverse('account_view', args=[self.expense.id]))
         self.expense.refresh_from_db()
         self.assertEqual(self.expense.name, 'new_name')
 
-    def test_post_personal_account(self):
-        response = self.client.post(reverse('account_update', args=[self.revenue.id]), {'name': 'new_name'})
+    def test_post_revenue_account(self):
+        response = self.client.post(reverse('account_update', args=[self.revenue.id]),
+                                    {'name': 'new_name'})
         self.assertRedirects(response, reverse('account_view', args=[self.revenue.id]))
         self.revenue.refresh_from_db()
         self.assertEqual(self.revenue.name, 'new_name')
@@ -229,7 +232,6 @@ class AccountDeleteTests(AbstractAccountViewTests):
         response = self.client.post(reverse('account_delete', args=[self.account.id]), {})
         self.assertRedirects(response, reverse('accounts'))
         self.assertEqual(Account.objects.personal().count(), 1)
-
 
     def test_delete_system_account(self):
         system = Account.objects.get(account_type=Account.SYSTEM)
