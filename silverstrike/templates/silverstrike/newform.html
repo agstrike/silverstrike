@@ -38,11 +38,15 @@
           <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
           </label>
           <div class="col-sm-8">
-          {{ field|add_class:"form-control" }}
-          {% for error in field.errors %}
-          <span class="help-block">{{ error }}</span>
-          {% endfor %}
-        </div>
+            {% if field|widget_type == 'dateinput' %}
+            {{ field|add_class:"form-control dateinput" }}
+            {% else %}
+            {{ field|add_class:"form-control" }}
+            {% endif %}
+            {% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+            {% endfor %}
+          </div>
         </div>
       {% endfor %}
       <br>
@@ -67,8 +71,8 @@
         </td>
         {% else %}
         <td class="form-group{% if field.errors %} has-error{% endif %}">
-          {% if 'account' in field.name %}
-          {{ field|add_class:"form-control account-input" }}
+          {% if field|widget_type == 'dateinput' %}
+          {{ field|add_class:"form-control dateinput" }}
           {% else %}
           {{ field|add_class:"form-control" }}
           {% endif %}
@@ -97,41 +101,46 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-function cloneMore(selector, type) {
+function cloneMore(selector) {
     var newElement = $(selector).clone(true);
-    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+    var total = $('#id_splits-TOTAL_FORMS').val();
     newElement.find(':input').each(function() {
-        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var name = $(this).attr('name').replace('-' + (total - 1) + '-','-' + total + '-');
         var id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
     });
+    newElement.find('.dateinput').each(function() {
+        $(this).attr("id", "").removeData().off();
+        $(this).find('.add-on').removeData().off();
+        $(this).find('input').removeData().off();
+        $(this).datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            disableTouchKeyboard: true
+          });
+    });
     newElement.find('label').each(function() {
-        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        var newFor = $(this).attr('for').replace('-' + (total - 1) + '-','-' + total + '-');
         $(this).attr('for', newFor);
     });
-    total++;
-    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $('#id_splits-TOTAL_FORMS').val(++total);
     $(selector).after(newElement);
 }
 $(function() {
-  $('#id_date').datepicker({
-  autoclose: true,
-  format: 'yyyy-mm-dd',
-  endDate: '0d',
-  orientation: 'bottom'
+  $('.dateinput').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    disableTouchKeyboard: true
   });
-  $('#id_date').attr('autocomplete', 'off');
+  $('.dateinput').attr('autocomplete', 'off');
   $('#add-split').click(function() {
-    cloneMore('#formset tr:last', 'split');
-
+    cloneMore('#formset tr:last');
   });
 });
 
