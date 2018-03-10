@@ -3,139 +3,214 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1>{{ account.name }}
-  <small>{{ month|date:'F Y'}}</small>
-</h1>
-<ol class="breadcrumb">
-  <li><a href="/">{% trans 'Home' %}</a></li>
-  <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
-  <li class="active">{{ account }}</li>
-</ol>
+    <h1>{{ account.name }}
+        <small>{{ month|date:'F Y' }}</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans 'Home' %}</a></li>
+        <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
+        <li class="active">{{ account }}</li>
+    </ol>
 {% endblock %}
 
 {% block content %}
-<div class="box">
-  <div class="box-body">
-    <div class="text-center">
-      {% if dstart and dend %}
-      {% blocktrans %}
-      Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
-      {% endblocktrans %}
-      {% else %}
-      <b>{% trans 'No data to show!' %}</b>
-      {% endif %}
-    </div>
-  </div>
-</div>
-<div class="row row-eq-height">
-  <div class="col-md-4 col-md-push-8">
     <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">{% trans 'Overview' %}</h3>
-      </div>
-      <div class="box-content">
-        <table class="table">
-          <tr>
-          <th>{% trans 'Current Balance' %}</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'In' %}</th><td>{{ in }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'Out' %}</th><td class="text-red">{{ out }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
-        </tr>
-        </table>
-      </div>
-      <div class="box-footer">
-          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-          {% if account.is_personal %}
-          <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
-          {% endif %}
-          <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
-      </div>
+        <div class="box-body">
+            <div class="text-center">
+                {% blocktrans %}
+                    Showing Data from <input type="text" name="daterange" id="daterange"/>
+                {% endblocktrans %}
+
+                {#                {% if dstart and dend %}#}
+
+                {#                    {% blocktrans %}#}
+                {#                        Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>#}
+                {#                    {% endblocktrans %}#}
+                {#                {% else %}#}
+                {#                    <b>{% trans 'No data to show!' %}</b>#}
+                {#                {% endif %}#}
+            </div>
+        </div>
     </div>
-  </div>
-<div class="col-md-8 col-md-pull-4">
-<div class="box" style="height: calc(100% - 20px);">
-  <div class="box-body" id="balance-chart">
-    <canvas id="myChart" width="400" height="200"></canvas>
-  </div>
-</div>
-</div>
-</div>
-<div class="box">
-<div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Transaction list' %}</h3>
-</div>
-<div class="box-body">
-<table class="table table-striped">
-  <tr>
-    <th>{% trans 'Title' %}</th>
-    <th>{% trans 'Date' %}</th>
-    <th class="hidden-xs">{% trans 'Booking date' %}</th>
-    <th>{% trans 'Amount' %}</th>
-    <th class="hidden-xs">{% trans 'Account' %}</th>
-    <th class="hidden-xs">{% trans 'Category' %}</th>
-  </tr>
-{% for transaction in transactions %}
-<tr>
-  <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
-  <td>{{ transaction.transaction.date }}</td>
-  <td class="hidden-xs">{{ transaction.date }}</td>
-  <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
-  <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
-  <td class="hidden-xs">
-    {% if transaction.category %}
-        <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>
-    {% endif %}
-  </td>
-  </tr>
-{% endfor %}
-</table>
-</div>
-</div>
+    <div class="row row-eq-height">
+        <div class="col-md-4 col-md-push-8">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">{% trans 'Overview' %}</h3>
+                </div>
+                <div class="box-content">
+                    <table class="table">
+                        <tr>
+                            <th>{% trans 'Current Balance' %}</th>
+                            <td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'In' %}</th>
+                            <td>{{ in }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Out' %}</th>
+                            <td class="text-red">{{ out }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Difference' %}</th>
+                            <td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+                    {% if account.is_personal %}
+                        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+                    {% endif %}
+                    <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-pull-4">
+            <div class="box" style="height: calc(100% - 20px);">
+                <div class="box-body" id="balance-chart">
+                    <canvas id="myChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">{% trans 'Transaction list' %}</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>{% trans 'Title' %}</th>
+                    <th>{% trans 'Date' %}</th>
+                    <th class="hidden-xs">{% trans 'Booking date' %}</th>
+                    <th>{% trans 'Amount' %}</th>
+                    <th class="hidden-xs">{% trans 'Account' %}</th>
+                    <th class="hidden-xs">{% trans 'Category' %}</th>
+                </tr>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
+                        <td>{{ transaction.transaction.date }}</td>
+                        <td class="hidden-xs">{{ transaction.date }}</td>
+                        <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %}
+                                                           class="text-green"{% endif %}>{{ transaction.amount }}</td>
+                        <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}
+                            <a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
+                        <td class="hidden-xs">
+                            {% if transaction.category %}
+                                <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-{% if dstart and dend %}
-<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
-<script type="text/javascript">
-$.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
-  var ctx = document.getElementById("myChart").getContext('2d');
-  var myChart = new Chart(ctx, {
-      type: 'line',
-      options: {
-          legend: {
-            position: 'none'
-          },
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          }
-      },
-      data: {
-          labels: res.labels,
-          datasets: [{
-              label: 'Balance',
-              fill: false,
-              pointRadius: 2,
-              borderColor: '#357ca5',
-              backgroundColor: '#357ca5',
-              data: res.data
-          }]
-      }
-    });
-  });
-</script>
-{% else %}
-<script type="text/javascript">
-  document.getElementById("balance-chart").innerHTML = "<b>{% trans 'Not enough data to show a chart' %}</b>";
-</script>
-{% endif %}
+    {% if dstart and dend %}
+        <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+        <script type="text/javascript">
+
+            var start_date = moment(new Date("{{ dstart }}"));
+            var end_date = moment(new Date("{{ dend }}"));
+
+            get_account_balance(start_date, end_date);
+
+            $('#daterange').daterangepicker({
+                "ranges": {
+                    "Today": [
+                        moment(),
+                        moment()
+                    ],
+                    "Last 7 Days": [
+                        moment().subtract('7', 'days'),
+                        moment()
+                    ],
+                    "Last 30 Days": [
+                        moment().subtract('30', 'days'),
+                        moment()
+                    ],
+                    "This Month": [
+                        moment().startOf('month'),
+                        moment()
+                    ],
+                    "Last 6 Months": [
+                        moment().subtract('6', 'months'),
+                        moment()
+                    ],
+                    "Last Year": [
+                        moment().subtract('1', 'years'),
+                        moment()
+                    ],
+                    "Current Year": [
+                        moment().startOf('year'),
+                        moment()
+                    ]
+                },
+                "startDate": start_date,
+                "endDate": end_date,
+                "locale": {
+                    "format": 'DD-MM-YYYY'
+                }
+            }, function (new_start_date, new_end_date, label) {
+
+                // Check if start date is in the future
+                start_date = new_start_date > moment() ? moment() : new_start_date;
+                this.setStartDate(start_date);
+
+                // Check if end date is in the future
+                end_date = new_end_date > moment() ? moment() : new_end_date;
+                this.setEndDate(end_date);
+
+                get_account_balance(start_date, end_date);
+            });
+
+            function get_account_balance(start_date, end_date) {
+                start_date = start_date.format('YYYY-MM-DD');
+                end_date = end_date.format('YYYY-MM-DD');
+
+                var url_mask = "{% url 'api_account_balance' account.id 'js_start_date' 'js_end_date' %}"
+                    .replace('js_start_date', start_date)
+                    .replace('js_end_date', end_date);
+
+                $.getJSON(url_mask, {}, function (res, status) {
+                    var ctx = document.getElementById("myChart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        options: {
+                            legend: {
+                                position: 'none'
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        },
+                        data: {
+                            labels: res.labels,
+                            datasets: [{
+                                label: 'Balance',
+                                fill: false,
+                                pointRadius: 2,
+                                borderColor: '#357ca5',
+                                backgroundColor: '#357ca5',
+                                data: res.data
+                            }]
+                        }
+                    });
+                });
+            }
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            document.getElementById("balance-chart").innerHTML = "<b>{% trans 'Not enough data to show a chart' %}</b>";
+        </script>
+    {% endif %}
 {% endblock %}
