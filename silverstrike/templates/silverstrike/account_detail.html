@@ -50,11 +50,22 @@
         </table>
       </div>
       <div class="box-footer">
-          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-          {% if account.is_personal %}
-          <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
-          {% endif %}
-          <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+        <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+        {% if account.is_personal %}
+        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+        {% endif %}
+        <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+        <li class="dropdown btn btn-primary">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FFF;">{% trans 'Date Range' %}</a>
+          <ul class="dropdown-menu">
+            {% for date_range in date_ranges %}
+            <li class="header">
+              <a href="{% url 'account_detail' account.pk date_range.dstart date_range.dend %}">{% trans date_range.name %}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+
       </div>
     </div>
   </div>
