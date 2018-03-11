@@ -2,15 +2,19 @@
 {% load i18n %}
 {% load staticfiles %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'vendor/css/daterangepicker.css' %}">
+{% endblock %}
+
 {% block content_header %}
-<h1>{{ account.name }}
-  <small>{{ month|date:'F Y'}}</small>
-</h1>
-<ol class="breadcrumb">
-  <li><a href="/">{% trans 'Home' %}</a></li>
-  <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
-  <li class="active">{{ account }}</li>
-</ol>
+    <h1>{{ account.name }}
+        <small>{{ month|date:'F Y' }}</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans 'Home' %}</a></li>
+        <li><a href="{% url 'accounts' %}">{% trans 'Accounts' %}</a></li>
+        <li class="active">{{ account }}</li>
+    </ol>
 {% endblock %}
 
 {% block content %}
@@ -48,59 +52,62 @@
         </table>
       </div>
       <div class="box-footer">
-          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-          {% if account.is_personal %}
-          <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
-          {% endif %}
-          <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+        <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+        {% if account.is_personal %}
+        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+        {% endif %}
+        <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+        <div class="form-group">
+          <div class="input-group">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+              <span>
+                <i class="fa fa-calendar"></i> Date Range Picker
+              </span>
+              <i class="fa fa-caret-down"></i>
+            </button>
+          </div>
+        </div>
       </div>
+
     </div>
-  </div>
-<div class="col-md-8 col-md-pull-4">
-<div class="box" style="height: calc(100% - 20px);">
-  <div class="box-body" id="balance-chart">
-    <canvas id="myChart" width="400" height="200"></canvas>
-  </div>
-</div>
-</div>
-</div>
-<div class="box">
-<div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Transaction list' %}</h3>
-</div>
-<div class="box-body">
-<table class="table table-striped">
-  <tr>
-    <th>{% trans 'Title' %}</th>
-    <th>{% trans 'Date' %}</th>
-    <th class="hidden-xs">{% trans 'Booking date' %}</th>
-    <th>{% trans 'Amount' %}</th>
-    <th class="hidden-xs">{% trans 'Account' %}</th>
-    <th class="hidden-xs">{% trans 'Category' %}</th>
-  </tr>
-{% for transaction in transactions %}
-<tr>
-  <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
-  <td>{{ transaction.transaction.date }}</td>
-  <td class="hidden-xs">{{ transaction.date }}</td>
-  <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
-  <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
-  <td class="hidden-xs">
-    {% if transaction.category %}
-        <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>
-    {% endif %}
-  </td>
-  </tr>
-{% endfor %}
-</table>
-</div>
-</div>
 {% endblock %}
 
 {% block scripts %}
 {% if dstart and dend %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/js/moment.js' %}"></script>
+<script src="{% static 'vendor/js/daterangepicker.js' %}"></script>
 <script type="text/javascript">
+update_daterangepicker(moment(new Date("{{ dstart }}")), moment(new Date("{{ dend }}")));
+
+// Select Ranges to use
+var range_dates = {};
+range_dates[moment().format('MMMM') + ', ' + moment().format('YYYY')] = [moment().startOf('month'), moment()];
+range_dates['Last 30 days'] = [moment().subtract(30, 'day'), moment()];
+range_dates[moment().subtract(1, 'month').format('MMMM') + ', ' + moment().subtract(1, 'month').format('YYYY')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+range_dates[moment().subtract(2, 'month').format('MMMM') + ', ' + moment().subtract(2, 'month').format('YYYY')] = [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')];
+range_dates['Last 6 months'] = [moment().subtract(6, 'month'), moment()];
+range_dates['Last year'] = [moment().subtract(1, 'year'), moment()];
+
+// Date range as a button
+$('#daterange-btn').daterangepicker(
+  {
+    ranges: range_dates,
+    startDate: moment(new Date("{{ dstart }}")),
+    endDate  : moment(new Date("{{ dend }}"))
+  }, function (startDate, endDate) {
+    update_daterangepicker(startDate, endDate);
+
+    window.location.href = "{% url 'account_detail' account.pk 'dstart' 'dend' %}"
+        .replace('dstart', startDate.format('YYYY-MM-DD'))
+        .replace('dend', endDate.format('YYYY-MM-DD'));
+  }
+);
+
+function update_daterangepicker(startDate, endDate) {
+    $('#daterange-btn span').html(startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY'))
+};
+
 $.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx, {
