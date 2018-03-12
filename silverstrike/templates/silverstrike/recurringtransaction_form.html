@@ -6,15 +6,14 @@
 {% block content_header %}
 <h1>
   {% if object %}
-  Edit {{ object.title }}
+  {% blocktrans with object_name=object.title %}Edit {{ object_namee }}{% endblocktrans %}
   {% else %}
   {% trans 'New Recurring Transaction' %}
   {% endif %}
-
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'recurrences' %}">Recurrences</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'recurrences' %}">{% trans 'Recurrences' %}</a></li>
   <li class="active">{% if object %}{{ object.title|title }}{% else %}{% trans 'New' %}{% endif %}</li>
 </ol>
 {% endblock %}
@@ -56,21 +55,15 @@
 
 {% block scripts %}
 <script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
-<script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
-
 <script>
 $(function() {
   $('#id_date').datepicker({
-  autoclose: true,
-  format: 'yyyy-mm-dd',
-  startDate: '0d',
-  orientation: 'bottom'
-  });
-  $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
-      $('#id_src').typeahead({source: data});
-      $('#id_dst').typeahead({source: data});
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    startDate: '0d',
+    orientation: 'bottom'
   });
   $('#id_date').attr('autocomplete', 'off');
-  })
+})
 </script>
 {% endblock %}

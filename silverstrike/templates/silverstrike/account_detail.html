@@ -18,9 +18,7 @@
   <div class="box-body">
     <div class="text-center">
       {% if dstart and dend %}
-      {% blocktrans %}
-      Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
-      {% endblocktrans %}
+      {% blocktrans %}Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>{% endblocktrans %}
       {% else %}
       <b>{% trans 'No data to show!' %}</b>
       {% endif %}

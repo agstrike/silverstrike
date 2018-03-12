@@ -6,8 +6,8 @@
 {% block content_header %}
 <h1>{{ recurrence.title|title }}</h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="{% url 'recurrences' %}">Recurrences</a></li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'recurrences' %}">{% trans 'Recurrences' %}</a></li>
   <li class="active">{{ recurrence.title|title }}</li>
 </ol>
 {% endblock %}
@@ -23,7 +23,7 @@
 <table class="table">
   <tr><th>{% trans 'Recurrence' %}</th><td>{{ recurrence.get_recurrence }}</td></tr>
   <tr>
-    <th>Next expected ocurrence</th><td>{{ recurrence.date }}</td>
+    <th>{% trans 'Next expected ocurrence' %}</th><td>{{ recurrence.date }}</td>
   </tr>
   <tr>
     <th>{% trans 'Source' %}</th><td><a href="{{ recurrence.src.get_absolute_url }}">{{ recurrence.src }}</a></td>
@@ -49,7 +49,7 @@
 </div>
 <div class="box-footer">
   <div class="btn-bar">
-    <a class="btn btn-success" href="{% url 'recurrence_transaction_create' recurrence.pk %}">Create Transaction</a>
+    <a class="btn btn-success" href="{% url 'recurrence_transaction_create' recurrence.pk %}">{% trans 'Create Transaction' %}</a>
     <a class="btn btn-default" href="{% url 'recurrence_update' recurrence.pk %}">{% trans 'Edit' %}</a>
     <a class="btn btn-danger" href="{% url 'recurrence_delete' recurrence.pk %}">{% trans 'Delete' %}</a>
   </div>
@@ -62,9 +62,9 @@
 <div class="box-body">
 <table class="table">
   <tr>
-  <th>Title</th>
-  <th>Amount</th>
-  <th>Date</th>
+  <th>{% trans 'Title' %}</th>
+  <th>{% trans 'Amount' %}</th>
+  <th>{% trans 'Date' %}</th>
   </tr>
   {% for transaction in recurrence.recurrences.last_10 %}
   <tr>

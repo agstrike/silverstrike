@@ -5,7 +5,7 @@
 {% block content_header %}
 <h1>{% trans 'Accounts' %}
   {% if object %}
-  <small>{% blocktrans %}Update {{ object.name }}{% endblocktrans %}</small>
+  <small>{% blocktrans with object_name=object.name %}Update {{ object_name }}{% endblocktrans %}</small>
   {% else %}
   <small>{% trans 'Create new account' %}</small>
   {% endif %}
@@ -14,7 +14,7 @@
   <li><a href="/">{% trans 'Home' %}</a></li>
   <li><a href="#">{% trans 'Accounts' %}</a></li>
   {% if object %}
-  <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
   <li class="active">{% trans 'Update' %}</li>
   {% else %}
   <li class="active">{% trans 'New' %}</li>
