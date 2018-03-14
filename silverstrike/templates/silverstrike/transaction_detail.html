@@ -7,8 +7,8 @@
 {% block content_header %}
 <h1>{{ transaction.title }}</h1>
 <ol class="breadcrumb">
-<li><a href="/">Home</a></li>
-<li><a href="{% url 'transactions' %}">Transactions</a></li>
+<li><a href="/">{% trans 'Home' %}</a></li>
+<li><a href="{% url 'transactions' %}">{% trans 'Transactions' %}</a></li>
 <li class="active">{{ transaction }}</li>
 </ol>
 {% endblock %}
@@ -22,7 +22,7 @@
 <table class="table">
   <tr><th>{% trans 'Transaction Type' %}</th><td>{{ transaction.get_transaction_type_str }}</td></tr>
   <tr>
-    <th>Date</th><td>{{ transaction.date }}</td>
+    <th>{% trans 'Date' %}</th><td>{{ transaction.date }}</td>
   </tr>
   <tr>
     <th>{% trans 'Total amount' %}</th><td{% if transaction.is_withdraw %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
@@ -52,12 +52,12 @@
 <div class="box-body table-responsive">
 <table class="table">
   <tr>
-  <th>Title</th>
-  <th>Account</th>
-  <th>Opposing Account</th>
-  <th>Amount</th>
-  <th>Date</th>
-  <th>Category</th>
+  <th>{% trans 'Title' %}</th>
+  <th>{% trans 'Account' %}</th>
+  <th>{% trans 'Opposing Account' %}</th>
+  <th>{% trans 'Amount' %}</th>
+  <th>{% trans 'Date' %}</th>
+  <th>{% trans 'Category' %}</th>
   </tr>
   {% for split in transaction.splits.transfers_once %}
   <tr>
@@ -68,7 +68,7 @@
       {% if split.is_transfer %}{{ split.amount|negate }}{% else %}{{ split.amount }}{% endif %}
     </td>
     <td>{{ split.date }}</td>
-    <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% else %}None{% endif %}</td>
+    <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% endif %}</td>
   </tr>
   {% endfor %}
 </table>

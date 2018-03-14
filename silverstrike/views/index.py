@@ -28,14 +28,9 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                 models.Sum('amount'))['amount__sum'] or 0)
         context['difference'] = context['income'] - context['expenses']
 
-        context['accounts'] = Account.objects.filter(account_type=Account.PERSONAL,
-                                                     show_on_dashboard=True)
+        context['accounts'] = Account.objects.personal().shown_on_dashboard()
         upcoming = Split.objects.personal().upcoming().transfers_once()
         recurrences = RecurringTransaction.objects.due_in_month()
-        for recurrence in recurrences:
-            if recurrence.is_due:
-                context['overdue_transactions'] = True
-                break
 
         context['upcoming_transactions'] = upcoming
         context['upcoming_recurrences'] = recurrences
@@ -49,6 +44,8 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                 outstanding -= r.amount
             elif r.transaction_type == Transaction.DEPOSIT:
                 outstanding += r.amount
+            if r.is_due:
+                context['overdue_transactions'] = True
 
         context['outstanding'] = outstanding
         context['expected_balance'] = context['balance'] + outstanding

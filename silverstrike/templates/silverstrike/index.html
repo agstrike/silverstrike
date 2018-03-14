@@ -16,7 +16,7 @@
   <div class="col-md-3">
     <div class="small-box bg-green">
       <div class="inner">
-        <h4>Current Balance</h4>
+        <h4>{% trans 'Current Balance' %}</h4>
         <h3>{{ balance }}</h3>
       </div>
     </div>
@@ -24,7 +24,7 @@
   <div class="col-md-3">
     <div class="small-box bg-yellow">
       <div class="inner">
-        <h4>Change</h4>
+        <h4>{% trans 'Balance Change' %}</h4>
         <h3>{{ difference }}</h3>
       </div>
     </div>
@@ -32,7 +32,7 @@
   <div class="col-md-3">
     <div class="small-box bg-red">
       <div class="inner">
-        <h4>Outstanding Recurrences</h4>
+        <h4>{% trans 'Outstanding Recurrences' %}</h4>
         <h3>{{ outstanding }}</h3>
       </div>
     </div>
@@ -40,7 +40,7 @@
   <div class="col-md-3">
     <div class="small-box bg-blue">
       <div class="inner">
-        <h4>End of Month Balance</h4>
+        <h4>{% trans 'End of Month Balance' %}</h4>
         <h3>{{ expected_balance }}</h3>
       </div>
     </div>
@@ -142,7 +142,7 @@
             <td>{{ transaction.date }}</td>
             <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
             <td>
-              <a class="btn btn-xs {% if transaction.is_due %}btn-danger{% else %}btn-primary{% endif %}" href="{% url 'recurrence_transaction_create' transaction.pk %}">Create Transaction</a>
+              <a class="btn btn-xs {% if transaction.is_due %}btn-danger{% else %}btn-primary{% endif %}" href="{% url 'recurrence_transaction_create' transaction.pk %}">{% trans 'Create Transaction' %}</a>
             </td>
           </tr>
           {% endfor %}
@@ -180,7 +180,7 @@
             <td>{{ transaction.date|date:'d.m.Y' }}</td>
             <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>
             <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
-            <td class="hidden-xs">{% if transaction.is_system %}None{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
+            <td class="hidden-xs">{% if not transaction.is_system %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
             <td class="hidden-xs">
               {% if transaction.category %}
               <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>

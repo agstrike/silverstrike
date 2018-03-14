@@ -1,0 +1,144 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content_header %}
+<h1>Transactions
+  <small>
+    {% if object %}
+    {% blocktrans with object_name=object.title %}Edit {{ object.title }}{% endblocktrans %}
+    {% else %}
+    {% blocktrans %}Add new {{ submenu }}{% endblocktrans %}
+    {% endif %}
+  </small>
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li><a href="{% url 'transactions' %}">{% trans 'Transactions' %}</a></li>
+  {% if object %}
+  <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  <li class="active">{% trans 'Edit' %}</li>
+  {% else %}
+  <li class="active">{% trans 'Create' %}</li>
+  {% endif %}
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Transaction Details' %}</h3>
+  </div>
+  <div class="box-body">
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+          <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
+          </label>
+          <div class="col-sm-8">
+            {% if field|widget_type == 'dateinput' %}
+            {{ field|add_class:"form-control dateinput" }}
+            {% else %}
+            {{ field|add_class:"form-control" }}
+            {% endif %}
+            {% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+      <br>
+      {% for error in form.non_field_errors %}
+      {{ error }}
+      {% endfor %}
+      {{ formset.management_form }}
+      <table id="formset" class="table">
+        {% for split in formset %}
+        {% if forloop.first %}
+        <tr>
+          {% for field in split.visible_fields %}
+          <th>{{ field.label }}</th>
+          {% endfor %}
+        </tr>
+        {% endif %}
+        <tr>
+          {% for field in split.visible_fields %}
+          {% if field|widget_type == 'checkboxinput' %}
+          <td class="text-center">{{ field }}</td>
+          {% else %}
+          <td class="form-group{% if field.errors %} has-error{% endif %}">
+            {% if field|widget_type == 'dateinput' %}
+            {{ field|add_class:"form-control dateinput" }}
+            {% else %}
+            {{ field|add_class:"form-control" }}
+            {% endif %}
+          </td>
+          {% endif %}
+          {% endfor %}
+          {% for field in split.hidden_fields %}
+          {{ field }}
+          {% endfor %}
+        </tr>
+        {% if split.errors %}
+        <tr>
+          {% for error in split.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+      <button type="submit" class="btn btn-primary col-md-offset-2">{% if object %}{% trans 'Update' %}{% else %}{% trans 'Create' %}{% endif %}</button>
+      <a id="add-split" class="btn btn-info">{% trans 'Add Split' %}</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
+<script>
+function cloneMore(selector) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_splits-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total - 1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('.dateinput').each(function() {
+        $(this).attr("id", "").removeData().off();
+        $(this).find('.add-on').removeData().off();
+        $(this).find('input').removeData().off();
+        $(this).datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            disableTouchKeyboard: true
+          });
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total - 1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    $('#id_splits-TOTAL_FORMS').val(++total);
+    $(selector).after(newElement);
+}
+$(function() {
+  $('.dateinput').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    disableTouchKeyboard: true
+  });
+  $('.dateinput').attr('autocomplete', 'off');
+  $('#add-split').click(function() {
+    cloneMore('#formset tr:last');
+  });
+});
+</script>
+{% endblock %}

@@ -35,7 +35,7 @@
         </a>
         <nav class="navbar navbar-static-top">
           <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">{% trans 'Toggle navigation' %}</span>
           </a>
 
           <div class="navbar-custom-menu">
@@ -133,7 +133,7 @@
             <li class="treeview{% if menu == "settings" %} active{% endif %}">
               <a href="#">
                 <i class="fa fa-file-o fa-fw"></i>
-                <span>{% trans 'Import & Export' %}</span>
+                <span>{% trans 'Import &amp; Export' %}</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -162,7 +162,7 @@
       </div>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          {% blocktrans with version="0.1.0" %}<b>Version</b> {{ version }}{% endblocktrans %}
+          {% blocktrans with version="0.1.1" %}<b>Version</b> {{ version }}{% endblocktrans %}
         </div>
         <strong><a href="https://github.com/agstrike/silverstrike">SilverStrike</a></strong>
       </footer>

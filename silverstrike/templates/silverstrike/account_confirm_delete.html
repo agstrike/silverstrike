@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Delete '{{ object.name }}' account</h1>
+<h1>{% blocktrans with object_name=object.name%} Delete '{{ object_name }}' account{% endblocktrans %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="box-body">
       {% csrf_token %}
         <p>
-          {% blocktrans %}Are you sure you want to delete the account along with {{ object.transaction_num }} transactions?{% endblocktrans %}
+          {% blocktrans with transaction_num=object.transaction_num %}Are you sure you want to delete the account along with {{ transaction_num }} transactions?{% endblocktrans %}
         </p>
         <div class="text-center">
         <a href="{{ object.get_absolute_url }}" class="btn btn-default">{% trans 'Cancel' %}</a>

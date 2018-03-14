@@ -8,8 +8,8 @@
 <h1>Uncategorized expenses
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Transactions</li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Transactions' %}</li>
 </ol>
 {% endblock %}
 
@@ -25,10 +25,10 @@
     <div class="box-body">
       <table class="table table-striped">
         <tr>
-          <th>Title</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Category</th>
+          <th>{% trans 'Title' %}</th>
+          <th>{% trans 'Date' %}</th>
+          <th>{% trans 'Amount' %}</th>
+          <th>{% trans 'Category' %}</th>
         </tr>
       {% for object, form in results %}
         <tr>
@@ -41,11 +41,11 @@
       </table>
     </div>
     <div class="box-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
     </div>
   </form>
   {% else %}
-  <div class="box-body">No uncategorized expenses available</div>
+  <div class="box-body">{% trans 'No uncategorized expenses available' %}</div>
   {% endif %}
 </div>
 {% endblock %}

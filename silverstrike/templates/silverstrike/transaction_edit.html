@@ -6,22 +6,22 @@
 {% block content_header %}
 <h1>Transactions
   <small>
-  {% if object %}
-  Edit {{ object.title }}
-  {% else %}
-  Add new {{ submenu }}
-  {% endif %}
+    {% if object %}
+    {% blocktrans with object_name=object.title %}Edit {{ object.title }}{% endblocktrans %}
+    {% else %}
+    {% blocktrans %}Add new {{ submenu }}{% endblocktrans %}
+    {% endif %}
   </small>
 </h1>
 <ol class="breadcrumb">
-<li><a href="/">Home</a></li>
-<li><a href="{% url 'transactions' %}">Transactions</a></li>
-{% if object %}
-<li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
-<li class="active">Edit</li>
-{% else %}
-<li class="active">Create</li>
-{% endif %}
+  <li><a href="/">Home</a></li>
+  <li><a href="{% url 'transactions' %}">{% trans 'Transactions' %}</a></li>
+  {% if object %}
+  <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  <li class="active">{% trans 'Edit' %}</li>
+  {% else %}
+  <li class="active">{% trans 'Create' %}</li>
+  {% endif %}
 </ol>
 {% endblock %}
 

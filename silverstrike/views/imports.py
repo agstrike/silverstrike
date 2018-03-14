@@ -100,7 +100,6 @@ class ExportView(LoginRequiredMixin, generic.edit.FormView):
         splits = Split.objects.date_range(
             form.cleaned_data['start'], form.cleaned_data['end']).transfers_once()
         splits = splits.filter(account__in=form.cleaned_data['accounts'])
-
         csv_writer = csv.writer(response, delimiter=';')
         headers = [
             'account',
@@ -111,7 +110,7 @@ class ExportView(LoginRequiredMixin, generic.edit.FormView):
             ]
         csv_writer.writerow(headers)
         for split in splits.values_list('account__name', 'opposing_account__name',
-                                        'date', 'amount', 'category'):
+                                        'date', 'amount', 'category__name'):
             csv_writer.writerow(split)
 
         response['Content-Disposition'] = 'attachment; filename=export.csv'

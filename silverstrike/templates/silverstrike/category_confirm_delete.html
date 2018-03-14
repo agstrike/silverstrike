@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content_header %}
-<h1>Delete '{{ object.name }}' category</h1>
+<h1>{% blocktrans with object_name=object.name %}Delete '{{ object_name }}' category{% endblocktrans %}</h1>
 {% endblock %}
 
 {% block content %}

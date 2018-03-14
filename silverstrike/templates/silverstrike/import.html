@@ -5,9 +5,8 @@
 {% block content_header %}
 <h1>Import</h1>
 <ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="#">Settings</a></li>
-  <li class="active">Import</li>
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Import' %}</li>
 </ol>
 {% endblock %}
 
@@ -15,11 +14,11 @@
 <div class="col-md-10">
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">Import methods</h3>
+    <h3 class="box-title">{% trans 'Import methods' %}</h3>
   </div>
     <div class="box-body">
     <a href="{% url 'import_firefly' %}" class="btn btn-app">Firefly III</a>
-    <a href="{% url 'import_generic' %}" class="btn btn-app disabled">Generic CSV</a>
+    <a href="{% url 'import_generic' %}" class="btn btn-app disabled">{% trans 'Generic CSV' %}</a>
     </div>
 </div>
 </div>
