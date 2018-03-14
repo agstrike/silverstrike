@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
-from dateutil.relativedelta import relativedelta
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.models import Account, Split, Transaction
