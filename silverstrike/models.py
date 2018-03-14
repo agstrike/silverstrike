@@ -21,6 +21,9 @@ class AccountQuerySet(models.QuerySet):
     def inactive(self):
         return self.filter(active=False)
 
+    def shown_on_dashboard(self):
+        return self.filter(show_on_dashboard=True)
+
 
 class Account(models.Model):
     PERSONAL = 1

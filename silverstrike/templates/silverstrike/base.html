@@ -37,9 +37,15 @@
             <span class="logo-lg"><b>Silver</b>strike</span>
         </a>
         <nav class="navbar navbar-static-top">
+<<<<<<< HEAD
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+=======
+          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">{% trans 'Toggle navigation' %}</span>
+          </a>
+>>>>>>> f9d78f126a22eb9a1355b937d68c25a88853b08e
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -166,7 +172,7 @@
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            {% blocktrans with version="0.1.0" %}<b>Version</b> {{ version }}{% endblocktrans %}
+          {% blocktrans with version="0.1.1" %}<b>Version</b> {{ version }}{% endblocktrans %}
         </div>
         <strong><a href="https://github.com/agstrike/silverstrike">SilverStrike</a></strong>
     </footer>
