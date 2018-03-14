@@ -52,21 +52,20 @@
         </table>
       </div>
       <div class="box-footer">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" id="daterange-btn">Action</button>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'account_detail_all' account.pk %}">{% trans 'Show all' %}</a></li>
+          </ul>
+        </div>
         <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
         {% if account.is_personal %}
-        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-danger">{% trans 'Reconcile' %}</a>
         {% endif %}
-        <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
-        <div class="form-group">
-          <div class="input-group">
-            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-              <span>
-                <i class="fa fa-calendar"></i> Date Range Picker
-              </span>
-              <i class="fa fa-caret-down"></i>
-            </button>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -75,38 +74,46 @@
 {% block scripts %}
 {% if dstart and dend %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
-<script src="{% static 'vendor/js/moment.js' %}"></script>
+<script src="{% static 'vendor/js/moment-with-locales.min.js' %}"></script>
 <script src="{% static 'vendor/js/daterangepicker.js' %}"></script>
 <script type="text/javascript">
-update_daterangepicker(moment(new Date("{{ dstart }}")), moment(new Date("{{ dend }}")));
+{% get_current_language as LANGUAGE_CODE %}
+moment.locale('{{ LANGUAGE_CODE }}')
+update_daterangepicker(moment(new Date("{{ dstart|date:'Y-m-d' }}")), moment(new Date("{{ dend|date:'Y-m-d' }}")));
 
 // Select Ranges to use
 var range_dates = {};
-range_dates[moment().format('MMMM') + ', ' + moment().format('YYYY')] = [moment().startOf('month'), moment()];
-range_dates['Last 30 days'] = [moment().subtract(30, 'day'), moment()];
-range_dates[moment().subtract(1, 'month').format('MMMM') + ', ' + moment().subtract(1, 'month').format('YYYY')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
-range_dates[moment().subtract(2, 'month').format('MMMM') + ', ' + moment().subtract(2, 'month').format('YYYY')] = [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')];
-range_dates['Last 6 months'] = [moment().subtract(6, 'month'), moment()];
-range_dates['Last year'] = [moment().subtract(1, 'year'), moment()];
+range_dates["{% trans 'Last 30 days' %}"] = [moment().subtract(30, 'day'), moment()];
+range_dates[moment().format('MMM YYYY')] = [moment().startOf('month'), moment()];
+range_dates[moment().subtract(1, 'month').format('MMM YYYY')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+range_dates[moment().subtract(2, 'month').format('MMM YYYY')] = [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')];
+range_dates["{% trans 'Last 6 months' %}"] = [moment().subtract(6, 'month'), moment()];
+range_dates["{% trans 'Last year' %}"] = [moment().subtract(1, 'year'), moment()];
 
 // Date range as a button
 $('#daterange-btn').daterangepicker(
   {
-    ranges: range_dates,
-    startDate: moment(new Date("{{ dstart }}")),
-    endDate  : moment(new Date("{{ dend }}"))
+    'ranges': range_dates,
+    'opens': 'left',
+    'locale': {
+      'applyLabel': "{% trans 'Apply' %}",
+      'cancelLabel': "{% trans 'Cancel' %}",
+      'customRangeLabel': "{% trans 'Custom Range' %}",
+    },
+    'startDate': moment(new Date("{{ dstart|date:'Y-m-d' }}")),
+    'endDate'  : moment(new Date("{{ dend|date:'Y-m-d' }}"))
   }, function (startDate, endDate) {
     update_daterangepicker(startDate, endDate);
 
-    window.location.href = "{% url 'account_detail' account.pk 'dstart' 'dend' %}"
-        .replace('dstart', startDate.format('YYYY-MM-DD'))
-        .replace('dend', endDate.format('YYYY-MM-DD'));
+    window.location.href = "{% url 'account_detail' account.pk '__dstart__' '__dend__' %}"
+        .replace('__dstart__', startDate.format('YYYY-MM-DD'))
+        .replace('__dend__', endDate.format('YYYY-MM-DD'));
   }
 );
 
 function update_daterangepicker(startDate, endDate) {
-    $('#daterange-btn span').html(startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY'))
-};
+  $('#daterange-btn').html(startDate.format('ll') + ' - ' + endDate.format('ll'))
+}
 
 $.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
   var ctx = document.getElementById("myChart").getContext('2d');
