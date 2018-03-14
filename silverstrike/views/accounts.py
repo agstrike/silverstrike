@@ -1,5 +1,4 @@
 from datetime import date, datetime, timedelta
-from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
@@ -7,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
+from dateutil.relativedelta import relativedelta
 
 from silverstrike.forms import AccountCreateForm, ReconcilationForm
 from silverstrike.models import Account, Split, Transaction
@@ -155,41 +155,6 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         self.dstart = self.dstart or first_date
         context['dstart'] = self.dstart
         context['dend'] = self.dend
-        today = date.today()
-        one_month_ago = today - relativedelta(months=1)
-        two_months_ago = today - relativedelta(months=2)
-        context['date_ranges'] = [
-            {
-                'name': 'Last Week',
-                'dstart': (today - timedelta(7)).strftime("%Y-%m-%d"),
-                'dend': today.strftime("%Y-%m-%d")
-            },
-            {
-                'name': today.strftime("%B") + ', ' + today.strftime("%Y"),  # Gives current month name as string
-                'dstart': today.replace(day=1).strftime("%Y-%m-%d"),  # Gives 1st day of current month
-                'dend': today.strftime("%Y-%m-%d")
-            },
-            {
-                'name': one_month_ago.strftime("%B") + ', ' + one_month_ago.strftime("%Y"),  # Gives last month name as string
-                'dstart': one_month_ago.replace(day=1).strftime("%Y-%m-%d"),  # Gives 1st day of last month
-                'dend': (date(today.year, today.month, 1) - relativedelta(days=1)).strftime("%Y-%m-%d")  # Gives last day of last month
-            },
-            {
-                'name': two_months_ago.strftime("%B") + ', ' + two_months_ago.strftime("%Y"),  # Gives 2 last months ago month name as string
-                'dstart': two_months_ago.replace(day=1).strftime("%Y-%m-%d"),  # Gives 1st day of 2 months ago month
-                'dend': (date(one_month_ago.year, one_month_ago.month, 1) - relativedelta(days=1)).strftime("%Y-%m-%d")  # Gives last day of 2 months ago month
-            },
-            {
-                'name': 'Last 6 months',
-                'dstart': (today - relativedelta(months=6)).strftime("%Y-%m-%d"),  # Gives 1st day of 2 months ago month
-                'dend': today.strftime("%Y-%m-%d")
-            },
-            {
-                'name': 'Last year',
-                'dstart': (today - relativedelta(year=1)).strftime("%Y-%m-%d"),  # Gives 1st day of 2 months ago month
-                'dend': today.strftime("%Y-%m-%d")
-            }
-        ]
         context['in'] = income
         context['out'] = expenses
         context['difference'] = context['in'] + context['out']

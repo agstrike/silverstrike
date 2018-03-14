@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load staticfiles %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'vendor/css/daterangepicker.css' %}">
+{% endblock %}
+
 {% block content_header %}
 <h1>{{ account.name }}
   <small>{{ month|date:'F Y'}}</small>
@@ -55,17 +59,16 @@
         <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
         {% endif %}
         <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
-        <li class="dropdown btn btn-primary">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FFF;">{% trans 'Date Range' %}</a>
-          <ul class="dropdown-menu">
-            {% for date_range in date_ranges %}
-            <li class="header">
-              <a href="{% url 'account_detail' account.pk date_range.dstart date_range.dend %}">{% trans date_range.name %}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </li>
-
+        <div class="form-group">
+          <div class="input-group">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+              <span>
+                <i class="fa fa-calendar"></i> Date Range Picker
+              </span>
+              <i class="fa fa-caret-down"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -113,7 +116,39 @@
 {% block scripts %}
 {% if dstart and dend %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/js/moment.js' %}"></script>
+<script src="{% static 'vendor/js/daterangepicker.js' %}"></script>
 <script type="text/javascript">
+update_daterangepicker(moment(new Date("{{ dstart }}")), moment(new Date("{{ dend }}")));
+
+// Select Ranges to use
+var range_dates = {};
+range_dates[moment().format('MMMM') + ', ' + moment().format('YYYY')] = [moment().startOf('month'), moment()];
+range_dates['Last 30 days'] = [moment().subtract(30, 'day'), moment()];
+range_dates[moment().subtract(1, 'month').format('MMMM') + ', ' + moment().subtract(1, 'month').format('YYYY')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+range_dates[moment().subtract(2, 'month').format('MMMM') + ', ' + moment().subtract(2, 'month').format('YYYY')] = [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')];
+range_dates['Last 6 months'] = [moment().subtract(6, 'month'), moment()];
+range_dates['Last year'] = [moment().subtract(1, 'year'), moment()];
+
+// Date range as a button
+$('#daterange-btn').daterangepicker(
+  {
+    ranges: range_dates,
+    startDate: moment(new Date("{{ dstart }}")),
+    endDate  : moment(new Date("{{ dend }}"))
+  }, function (startDate, endDate) {
+    update_daterangepicker(startDate, endDate);
+
+    window.location.href = "{% url 'account_detail' account.pk 'dstart' 'dend' %}"
+        .replace('dstart', startDate.format('YYYY-MM-DD'))
+        .replace('dend', endDate.format('YYYY-MM-DD'));
+  }
+);
+
+function update_daterangepicker(startDate, endDate) {
+    $('#daterange-btn span').html(startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY'))
+};
+
 $.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx, {
