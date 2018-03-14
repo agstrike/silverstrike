@@ -22,16 +22,14 @@
   <div class="box-body">
     <div class="text-center">
       {% if dstart and dend %}
-      {% blocktrans %}
-      Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>
-      {% endblocktrans %}
+      {% blocktrans %}Showing Data from <b>{{ dstart }}</b> to <b>{{ dend }}</b>{% endblocktrans %}
       {% else %}
       <b>{% trans 'No data to show!' %}</b>
       {% endif %}
     </div>
   </div>
 </div>
-<div class="row row-eq-height">
+<div class="row">
   <div class="col-md-4 col-md-push-8">
     <div class="box">
       <div class="box-header">
@@ -54,21 +52,21 @@
         </table>
       </div>
       <div class="box-footer">
-        <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
-        {% if account.is_personal %}
-        <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
-        {% endif %}
-        <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
-        <div class="form-group">
-          <div class="input-group">
-            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-              <span>
-                <i class="fa fa-calendar"></i> Date Range Picker
-              </span>
-              <i class="fa fa-caret-down"></i>
-            </button>
+          <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
+          {% if account.is_personal %}
+          <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-default">{% trans 'Reconcile' %}</a>
+          {% endif %}
+          <a href="{% url 'account_detail_all' account.pk %}" class="btn btn-primary">{% trans 'Show all' %}</a>
+          <div class="form-group">
+            <div class="input-group">
+              <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                <span>
+                  <i class="fa fa-calendar"></i> Date Range Picker
+                </span>
+                <i class="fa fa-caret-down"></i>
+              </button>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -119,6 +117,7 @@
 <script src="{% static 'vendor/js/moment.js' %}"></script>
 <script src="{% static 'vendor/js/daterangepicker.js' %}"></script>
 <script type="text/javascript">
+
 update_daterangepicker(moment(new Date("{{ dstart }}")), moment(new Date("{{ dend }}")));
 
 // Select Ranges to use
@@ -147,7 +146,7 @@ $('#daterange-btn').daterangepicker(
 
 function update_daterangepicker(startDate, endDate) {
     $('#daterange-btn span').html(startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY'))
-};
+}
 
 $.getJSON("{% url 'api_account_balance' account.id dstart dend %}", {}, function(res, status) {
   var ctx = document.getElementById("myChart").getContext('2d');
