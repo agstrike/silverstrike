@@ -68,6 +68,7 @@
       </div>
 
     </div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -77,7 +78,7 @@
 <script src="{% static 'vendor/js/daterangepicker.min.js' %}"></script>
 <script type="text/javascript">
 {% get_current_language as LANGUAGE_CODE %}
-moment.locale('{{ LANGUAGE_CODE }}')
+moment.locale('{{ LANGUAGE_CODE }}');
 update_daterangepicker(moment(new Date("{{ dstart|date:'Y-m-d' }}")), moment(new Date("{{ dend|date:'Y-m-d' }}")));
 
 // Select Ranges to use
@@ -97,7 +98,7 @@ $('#daterange-btn').daterangepicker(
     'locale': {
       'applyLabel': "{% trans 'Apply' %}",
       'cancelLabel': "{% trans 'Cancel' %}",
-      'customRangeLabel': "{% trans 'Custom Range' %}",
+      'customRangeLabel': "{% trans 'Custom Range' %}"
     },
     'startDate': moment(new Date("{{ dstart|date:'Y-m-d' }}")),
     'endDate'  : moment(new Date("{{ dend|date:'Y-m-d' }}"))

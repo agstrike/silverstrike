@@ -180,7 +180,11 @@
             <td>{{ transaction.date|date:'d.m.Y' }}</td>
             <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>
             <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
-            <td class="hidden-xs">{% if not transaction.is_system %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
+            <td class="hidden-xs">
+              {% if not transaction.is_system %}
+              <a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>
+              {% endif %}
+            </td>
             <td class="hidden-xs">
               {% if transaction.category %}
               <a href="{{ transaction.category.get_absolute_url }}">{{ transaction.category }}</a>
@@ -198,6 +202,24 @@
 {% block scripts %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script type="text/javascript">
+Chart.plugins.register({
+  afterDatasetsDraw: function(chart) {
+
+    if (chart.data.datasets.length === 0) {
+      var ctx = chart.chart.ctx;
+      var width = chart.chart.width;
+      var height = chart.chart.height;
+
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = "16px normal 'Helvetica Nueue'";
+      ctx.fillText('No data to display', width / 2, height / 2);
+      ctx.restore();
+    }
+  }
+});
+
 var drawChart = function(res) {
   var ctx = document.getElementById("myChart").getContext('2d');
   var data = {
@@ -212,7 +234,9 @@ var drawChart = function(res) {
     borderColor: '#357ca5',
     data: res.data
   };
-  data.datasets.push(dataset);
+  if (res.data > '0') {
+      data.datasets.push(dataset);
+  }
   var myChart = new Chart(ctx, {
       type: 'line',
       data: data,
