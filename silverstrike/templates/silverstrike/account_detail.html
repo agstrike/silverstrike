@@ -74,7 +74,7 @@
 {% if dstart and dend %}
 <script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
 <script src="{% static 'vendor/js/moment-with-locales.min.js' %}"></script>
-<script src="{% static 'vendor/js/daterangepicker.js' %}"></script>
+<script src="{% static 'vendor/js/daterangepicker.min.js' %}"></script>
 <script type="text/javascript">
 {% get_current_language as LANGUAGE_CODE %}
 moment.locale('{{ LANGUAGE_CODE }}')
