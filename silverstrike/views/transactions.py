@@ -140,7 +140,7 @@ class SplitCreate(LoginRequiredMixin, generic.edit.CreateView):
 
 class SplitUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = Transaction
-    template_name = 'silverstrike/newform.html'
+    template_name = 'silverstrike/transaction_split_form.html'
     formset_class = TransactionFormSet
     fields = '__all__'
 
