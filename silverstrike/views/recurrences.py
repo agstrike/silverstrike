@@ -69,7 +69,10 @@ class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
 class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/recurring_transactions.html'
     context_object_name = 'transactions'
-    queryset = RecurringTransaction.objects.exclude(recurrence=RecurringTransaction.DISABLED)
+    model = RecurringTransaction
+
+    def get_queryset(self):
+        return super().get_queryset().household(self.request.user).exclude(recurrence=RecurringTransaction.DISABLED)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -100,5 +103,9 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
 
 class DisabledRecurrencesView(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/disabled_recurrences.html'
-    queryset = RecurringTransaction.objects.filter(recurrence=RecurringTransaction.DISABLED)
+    model = RecurringTransaction
     paginate_by = 20
+
+    def get_queryset(self):
+        return super().get_queryset().household(self.request.user).filter(recurrence=RecurringTransaction.DISABLED)
+

@@ -4,10 +4,12 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext as _
 
 
-from .models import (Account, Category, ImportConfiguration,
-                     RecurringTransaction, Split, Transaction)
+from .models import (Account, Category, HouseHold, ImportConfiguration,
+                     Profile, RecurringTransaction, Split, Transaction)
 
 admin.site.register(ImportConfiguration)
+admin.site.register(HouseHold)
+admin.site.register(Profile)
 
 
 @admin.register(Category)

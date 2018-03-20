@@ -28,7 +28,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                 models.Sum('amount'))['amount__sum'] or 0)
         context['difference'] = context['income'] - context['expenses']
 
-        context['accounts'] = Account.objects.personal().shown_on_dashboard()
+        context['accounts'] = Account.objects.personal().household(self.request.user).shown_on_dashboard()
         upcoming = Split.objects.personal().upcoming().transfers_once()
         recurrences = RecurringTransaction.objects.due_in_month()
 

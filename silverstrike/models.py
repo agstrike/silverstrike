@@ -3,12 +3,40 @@ from datetime import date, timedelta
 
 from dateutil.relativedelta import relativedelta
 
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 
+class HouseHold(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
+class Profile(models.Model):
+    user = user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    household = models.ForeignKey(HouseHold, models.CASCADE)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
 class AccountQuerySet(models.QuerySet):
+    def household(self, user):
+        return self.filter(household_id=user.profile.household_id)
+
     def personal(self):
         return self.filter(account_type=Account.PERSONAL)
 
@@ -40,6 +68,7 @@ class Account(models.Model):
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
+    household = models.ForeignKey(HouseHold, models.CASCADE)
 
     objects = AccountQuerySet.as_manager()
 
@@ -253,10 +282,18 @@ class Split(models.Model):
         return self.transaction.get_absolute_url()
 
 
+class CategoryQuerySet(models.QuerySet):
+    def household(self, user):
+        return self.filter(household_id=user.profile.household_id)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=64)
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
+    household = models.ForeignKey(HouseHold, models.CASCADE)
+
+    objects = CategoryQuerySet.as_manager()
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -285,6 +322,7 @@ class Budget(models.Model):
     month = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     last_modified = models.DateTimeField(auto_now=True)
+    household = models.ForeignKey(HouseHold, models.CASCADE)
 
     objects = BudgetQuerySet.as_manager()
 
@@ -327,14 +365,16 @@ class ImportConfiguration(models.Model):
         return self.name
 
 
-class RecurringTransactionManager(models.Manager):
+class RecurringTransactionQueryset(models.QuerySet):
+    def household(self, user):
+        return self.filter(household_id=user.profile.household_id)
+    
     def due_in_month(self, month=None):
         from .lib import last_day_of_month
         if not month:
             month = date.today()
         month = last_day_of_month(month)
-        queryset = self.get_queryset().filter(date__lte=month)
-        return queryset.exclude(recurrence=RecurringTransaction.DISABLED)
+        return self.filter(date__lte=month).exclude(recurrence=RecurringTransaction.DISABLED)
 
 
 class RecurringTransaction(models.Model):
@@ -354,7 +394,7 @@ class RecurringTransaction(models.Model):
     class Meta:
         ordering = ['date']
 
-    objects = RecurringTransactionManager()
+    objects = RecurringTransactionQueryset.as_manager()
 
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -366,6 +406,7 @@ class RecurringTransaction(models.Model):
     transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
+    household = models.ForeignKey(HouseHold, models.CASCADE)
 
     def __str__(self):
         return self.title

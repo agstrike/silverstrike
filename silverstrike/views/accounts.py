@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
 
@@ -14,12 +14,17 @@ from silverstrike.models import Account, Split, Transaction
 class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
     form_class = AccountCreateForm
-    success_url = reverse_lazy('accounts')
 
     def get_context_data(self, **kwargs):
         context = super(AccountCreate, self).get_context_data(**kwargs)
         context['menu'] = 'accounts'
         return context
+
+    def form_valid(self, form):
+        account = form.save(commit=False)
+        account.household_id = self.request.user.profile.household_id
+        account.save()
+        return HttpResponseRedirect(reverse('accounts'))
 
 
 class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -29,8 +34,9 @@ class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     def form_valid(self, form):
         account = form.save(commit=False)
         account.account_type = Account.FOREIGN
+        account.household_id = self.request.user.profile.household_id
         account.save()
-        return HttpResponseRedirect(reverse_lazy('foreign_accounts'))
+        return HttpResponseRedirect(reverse('foreign_accounts'))
 
 
 class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
@@ -39,13 +45,13 @@ class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.SYSTEM or self.object.household_id != request.user.profile.household_id:
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.post(self, request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.SYSTEM or self.object.household_id != request.user.profile.household_id:
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.get(self, request, *args, **kwargs)
 
@@ -61,42 +67,39 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.SYSTEM or self.object.household_id != request.user.profile.household_id:
             return HttpResponse(_('You are not allowed to delete this account'), status=403)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.SYSTEM or self.object.household_id != request.user.profile.household_id:
             return HttpResponse(_('You are not allowed to delete this account'), status=403)
         self.object.delete()
         return HttpResponseRedirect(self.success_url)
 
 
-class AccountIndex(LoginRequiredMixin, generic.TemplateView):
+class AccountIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/accounts.html'
+    model = Account
+    context_object_name = 'accounts'
+
+    def get_queryset(self):
+        return super().get_queryset().household(self.request.user).personal()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        balances = Split.objects.personal().past().order_by('account_id').values(
-            'account_id').annotate(Sum('amount'))
-        accounts = list(Account.objects.personal().values('id', 'name', 'active'))
-        for a in accounts:
-            a['balance'] = 0
-        for b in balances:
-            for a in accounts:
-                if a['id'] == b['account_id']:
-                    a['balance'] = b['amount__sum']
-        context['accounts'] = accounts
         return context
 
 
 class ForeignAccountIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/foreign_accounts.html'
-    queryset = Account.objects.foreign()
     paginate_by = 20
+
+    def get_queryset(self):
+        return super().get_queryset().household(self.requst.user).foreign()
 
 
 class AccountView(LoginRequiredMixin, generic.ListView):
@@ -106,7 +109,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
 
     def dispatch(self, request, *args, **kwargs):
         self.account = Account.objects.get(pk=self.kwargs['pk'])
-        if self.account.account_type == Account.SYSTEM:
+        if self.account.account_type == Account.SYSTEM or self.account.household_id != request.user.profile.household_id:
             return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
             self.dstart = None
@@ -168,7 +171,7 @@ class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.account = Account.objects.get(pk=kwargs['pk'])
-        if self.account.account_type != Account.PERSONAL:
+        if self.account.account_type != Account.PERSONAL or self.account.household_id != request.user.profile.household_id:
             return HttpResponse(_('You can not reconcile this account'), status=403)
         return super(ReconcileView, self).dispatch(request, *args, **kwargs)
 
