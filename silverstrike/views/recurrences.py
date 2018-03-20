@@ -72,7 +72,7 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     model = RecurringTransaction
 
     def get_queryset(self):
-        return super().get_queryset().household(self.request.user).exclude(recurrence=RecurringTransaction.DISABLED)
+        return super().get_queryset().household(self.request.user).active()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -107,5 +107,4 @@ class DisabledRecurrencesView(LoginRequiredMixin, generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return super().get_queryset().household(self.request.user).filter(recurrence=RecurringTransaction.DISABLED)
-
+        return super().get_queryset().household(self.request.user).disabled()

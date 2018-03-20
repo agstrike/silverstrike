@@ -286,6 +286,9 @@ class CategoryQuerySet(models.QuerySet):
     def household(self, user):
         return self.filter(household_id=user.profile.household_id)
 
+    def active(self):
+        return self.filter(active=True)
+
 
 class Category(models.Model):
     name = models.CharField(max_length=64)
@@ -368,6 +371,12 @@ class ImportConfiguration(models.Model):
 class RecurringTransactionQueryset(models.QuerySet):
     def household(self, user):
         return self.filter(household_id=user.profile.household_id)
+
+    def disabled(self):
+        return self.filter(recurrence=RecurringTransaction.DISABLED)
+
+    def active(self):
+        return self.exclude(recurrence=RecurringTransaction.DISABLED)
     
     def due_in_month(self, month=None):
         from .lib import last_day_of_month
