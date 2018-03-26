@@ -39,6 +39,8 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         outstanding = 0
         for t in upcoming:
             outstanding += t.amount
+        context['working_balance'] = outstanding
+        outstanding = 0
         for r in recurrences:
             if r.transaction_type == Transaction.WITHDRAW:
                 outstanding -= r.amount
@@ -48,7 +50,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
                 context['overdue_transactions'] = True
 
         context['outstanding'] = outstanding
-        context['expected_balance'] = context['balance'] + outstanding
+        context['expected_balance'] = context['working_balance'] + outstanding
 
         # last month
         previous_last = dstart - timedelta(days=1)
