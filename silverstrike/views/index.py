@@ -39,7 +39,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         outstanding = 0
         for t in upcoming:
             outstanding += t.amount
-        context['working_balance'] = outstanding
+        context['working_balance'] = context['balance'] + outstanding
         outstanding = 0
         for r in recurrences:
             if r.transaction_type == Transaction.WITHDRAW:
