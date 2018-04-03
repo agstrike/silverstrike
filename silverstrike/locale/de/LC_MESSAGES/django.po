@@ -795,7 +795,7 @@ msgid "Spending by category"
 msgstr "Ausgaben nach Kategorie"
 
 #: templates/silverstrike/index.html:8
-msgid "All imporant stuff"
+msgid "All important stuff"
 msgstr "Alle wichtige Sachen"
 
 #: templates/silverstrike/index.html:19

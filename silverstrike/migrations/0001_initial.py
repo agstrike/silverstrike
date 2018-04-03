@@ -9,7 +9,7 @@ import uuid
 
 def create_system_account(apps, schema_editor):
     Account = apps.get_model('silverstrike', 'Account')
-    Account.objects.create(name='Sytem Account', account_type=3)
+    Account.objects.create(name='System Account', account_type=3)
 
 
 class Migration(migrations.Migration):

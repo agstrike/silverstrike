@@ -795,8 +795,8 @@ msgid "Spending by category"
 msgstr "Dépenses par catégorie"
 
 #: templates/silverstrike/index.html:8
-msgid "All imporant stuff"
-msgstr "Tous les trucs imporant"
+msgid "All important stuff"
+msgstr "Tous les trucs important"
 
 #: templates/silverstrike/index.html:19
 msgid "Quick Overview"

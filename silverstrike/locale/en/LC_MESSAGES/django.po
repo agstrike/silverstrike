@@ -738,7 +738,7 @@ msgid "Inactive Categories"
 msgstr ""
 
 #: templates/silverstrike/index.html:8
-msgid "All imporant stuff"
+msgid "All important stuff"
 msgstr ""
 
 #: templates/silverstrike/index.html:19

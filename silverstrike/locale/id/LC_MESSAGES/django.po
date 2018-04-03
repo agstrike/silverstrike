@@ -800,7 +800,7 @@ msgid "Spending by category"
 msgstr "Pengeluaran menurut kategori"
 
 #: templates/silverstrike/index.html:8
-msgid "All imporant stuff"
+msgid "All important stuff"
 msgstr "Semua barang penting"
 
 #: templates/silverstrike/index.html:19
