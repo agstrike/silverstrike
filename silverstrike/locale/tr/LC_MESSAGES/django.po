@@ -793,7 +793,7 @@ msgid "Spending by category"
 msgstr "Kategoriye göre harcama"
 
 #: templates/silverstrike/index.html:8
-msgid "All imporant stuff"
+msgid "All important stuff"
 msgstr "Tüm önemli şeyler"
 
 #: templates/silverstrike/index.html:19

@@ -22,7 +22,7 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         transfer = form.save()
         self.assertIsInstance(transfer, Transaction)
-        self.assertEqual(len(Account.objects.all()), 3)  # Sytem account is also present
+        self.assertEqual(len(Account.objects.all()), 3)  # System account is also present
         self.assertEqual(len(Transaction.objects.all()), 1)
         self.assertEqual(len(Split.objects.all()), 2)
         self.assertEqual(Split.objects.all().aggregate(
