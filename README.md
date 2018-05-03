@@ -1,3 +1,7 @@
+<p align="center"><img src="silverstrike/static/silverstrike/img/horizontal.png" alt="silverstrike" height="150px"></p>
+
+
+
 # SilverStrike
 [![Build Status](https://travis-ci.org/agstrike/silverstrike.svg?branch=master)](https://travis-ci.org/agstrike/silverstrike)
 [![codecov](https://codecov.io/gh/agstrike/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/agstrike/silverstrike)
