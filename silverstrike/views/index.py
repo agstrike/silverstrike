@@ -38,7 +38,8 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
             'account', 'opposing_account', 'category', 'transaction')[:10]
         outstanding = 0
         for t in upcoming:
-            outstanding += t.amount
+            if t.transaction.transaction_type != Transaction.TRANSFER:
+                outstanding += t.amount
         context['working_balance'] = context['balance'] + outstanding
         outstanding = 0
         for r in recurrences:
