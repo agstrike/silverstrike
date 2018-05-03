@@ -4,14 +4,14 @@
   "short_name": "AgStrike",
   "icons": [
     {
-      "src": "{% static 'silverstrike/img/icon-192.png' %}",
+      "src": "{% static 'silverstrike/img/android-chrome-192x192.png' %}",
       "sizes": "192x192",
       "type": "image\/png",
       "density": 4
     },
     {
-      "src": "{% static 'silverstrike/img/icon.png' %}",
-      "sizes": "1024x1024",
+      "src": "{% static 'silverstrike/img/android-chrome-512x512.png' %}",
+      "sizes": "512x512",
       "type": "image\/png"
     }
   ],
