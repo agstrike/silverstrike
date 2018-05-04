@@ -3,22 +3,22 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-04 13:59-0400\n"
+"PO-Revision-Date: 2018-05-04 14:00-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
-"Language-Team: German\n"
-"Language: de_DE\n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: silverstrike\n"
-"X-Crowdin-Language: de\n"
+"X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
-msgstr "Sie müssen mehr als ein Konto auswählen, um diese zusammenzuführen."
+msgstr "Debe seleccionar más de una cuenta para fusionarlas."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, \"{}\" isn't."
@@ -26,61 +26,61 @@ msgstr ""
 
 #: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
-msgstr "Ein Konto in <a href={}>{}</a> vermschmolzen."
+msgstr "Se fusionó una cuenta en <a href={}>{}</a>."
 
 #: admin.py:63
 msgid "Merged {} accounts into <a href={}>{}</a>."
-msgstr "{} Konten in <a href={}>{}</a> zusammengeführt."
+msgstr "Las cuentas fusionadas {} en <a href={}>{}</a>."
 
 #: forms.py:125
 msgid "Debitor"
-msgstr "Debitor"
+msgstr "Deudor"
 
 #: forms.py:140
 msgid "Creditor"
-msgstr "Gläubiger"
+msgstr "Acreedor"
 
 #: forms.py:163
 msgid "Amount has to be positive"
-msgstr "Betrag muss positiv sein"
+msgstr "La cantidad debe ser positiva"
 
 #: forms.py:179
 msgid "You are trying to create a transaction between two foreign accounts"
-msgstr "Sie versuchen, eine Transaktion zwischen zwei fremden Konten zu erstellen"
+msgstr "Usted está intentando realizar una transacción entre dos cuentas extranjeras"
 
 #: forms.py:194
 msgid "Actual balance"
-msgstr "Tatsächlicher Kontostand"
+msgstr "Balance real"
 
 #: models.py:33
 msgid "Personal"
-msgstr "Privat"
+msgstr "Personal"
 
 #: models.py:34
 msgid "Foreign"
-msgstr "Fremd"
+msgstr "Extranjero"
 
 #: models.py:35
 msgid "System"
-msgstr "System"
+msgstr "Sistema"
 
 #: models.py:103
 msgid "Initial Balance"
-msgstr "Anfangs-Kontostand"
+msgstr "Balance inicial"
 
 #: models.py:308
 msgid "Do not use"
-msgstr "Nicht verwenden"
+msgstr "No usar"
 
 #: models.py:309 templates/silverstrike/disabled_recurrences.html:27
 #: templates/silverstrike/recurring_transactions.html:62
 msgid "Source Account"
-msgstr "Abbuchungskonto"
+msgstr "Cuenta de Origen"
 
 #: models.py:310 templates/silverstrike/disabled_recurrences.html:28
 #: templates/silverstrike/recurring_transactions.html:63
 msgid "Destination Account"
-msgstr "Zielkonto"
+msgstr "Cuenta Destino"
 
 #: models.py:311 templates/silverstrike/account_detail.html:90
 #: templates/silverstrike/category_assign.html:30
@@ -94,7 +94,7 @@ msgstr "Zielkonto"
 #: templates/silverstrike/transaction_detail.html:58
 #: templates/silverstrike/transaction_overview.html:26
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Cantidad"
 
 #: models.py:312 templates/silverstrike/account_detail.html:88
 #: templates/silverstrike/category_assign.html:29
@@ -107,12 +107,12 @@ msgstr "Betrag"
 #: templates/silverstrike/transaction_detail.html:59
 #: templates/silverstrike/transaction_overview.html:24
 msgid "Date"
-msgstr "Datum"
+msgstr "Fecha"
 
 #: models.py:313 templates/silverstrike/recurringtransaction_detail.html:46
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr "Notizen"
+msgstr "Notas"
 
 #: models.py:314 templates/silverstrike/account_detail.html:92
 #: templates/silverstrike/category_assign.html:31
@@ -121,7 +121,7 @@ msgstr "Notizen"
 #: templates/silverstrike/transaction_detail.html:60
 #: templates/silverstrike/transaction_overview.html:29
 msgid "Category"
-msgstr "Kategorie"
+msgstr "Categoría"
 
 #: models.py:315 templates/silverstrike/account_detail.html:87
 #: templates/silverstrike/category_assign.html:28
@@ -134,19 +134,19 @@ msgstr "Kategorie"
 #: templates/silverstrike/transaction_detail.html:55
 #: templates/silverstrike/transaction_overview.html:22
 msgid "Title"
-msgstr "Titel"
+msgstr "Título"
 
 #: models.py:319
 msgid "First line contains headers"
-msgstr "Erste Zeile enthält Header"
+msgstr "La primera linea contiene encabezados"
 
 #: models.py:347
 msgid "Disabled"
-msgstr "Deaktiviert"
+msgstr "Desactivado"
 
 #: models.py:348
 msgid "Monthly"
-msgstr "Monatlich"
+msgstr "Mensualmente"
 
 #: models.py:349
 msgid "Quarterly"
@@ -163,15 +163,15 @@ msgstr ""
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:14
 msgid "Account Inactive"
-msgstr "Konto inaktiv"
+msgstr "Cuenta inactiva"
 
 #: templates/account/account_inactive.html:15
 msgid "This account is inactive."
-msgstr "Dieses Konto ist inaktiv"
+msgstr "Esta cuenta está inactiva."
 
 #: templates/account/email.html:6
 msgid "E-mail Addresses"
-msgstr "Email Adressen"
+msgstr "Dirección de correo electrónico"
 
 #: templates/account/email.html:10
 msgid "Manage E-mail Addresses"
@@ -179,84 +179,84 @@ msgstr ""
 
 #: templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "Die folgenden E-Mail-Adressen sind mit Ihrem Konto verknüpft:"
+msgstr "Las siguientes dirección de correo electrónico están asociadas a su cuenta:"
 
 #: templates/account/email.html:27
 msgid "Verified"
-msgstr "Verifiziert"
+msgstr "Verificado"
 
 #: templates/account/email.html:29
 msgid "Unverified"
-msgstr "Nicht verifiziert"
+msgstr "Sin verificar"
 
 #: templates/account/email.html:31
 msgid "Primary"
-msgstr "Primär"
+msgstr "Primario"
 
 #: templates/account/email.html:38
 msgid "Make Primary"
-msgstr "Primär machen"
+msgstr "Hacerlo principal"
 
 #: templates/account/email.html:39
 msgid "Re-send Verification"
-msgstr "Bestätigungs-E-Mail erneut versenden"
+msgstr "Reenviar verificación"
 
 #: templates/account/email.html:40
 msgid "Remove"
-msgstr "Entfernen"
+msgstr "Remover"
 
 #: templates/account/email.html:45
 msgid "Add E-mail Address"
-msgstr "E-Mail-Adresse hinzufügen"
+msgstr "Agregue una dirección de correo electrónico"
 
 #: templates/account/email.html:58
 msgid "Add E-mail"
-msgstr "E-Mail-Adresse hinzufügen"
+msgstr "Agregue correo electrónico"
 
 #: templates/account/email.html:68
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr "Möchten Sie die ausgewählte E-Mail-Adresse wirklich entfernen?"
+msgstr "¿Está seguro que desea borrar las direcciones de correo electrónico seleccionadas?"
 
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:11
 msgid "Confirm E-mail Address"
-msgstr "E-Mail-Adresse bestätigen"
+msgstr "Confirme su dirección de correo electrónico"
 
 #: templates/account/email_confirm.html:17
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr "Bitte bestätigen Sie, dass <a href=\"mailto:%(email)s\">%(email)s</a> eine e-Mail-Adresse für Benutzer %(user_display)s."
+msgstr "Por favor confirme que <a href=\"mailto:%(email)s\">%(email)s</a> es una dirección de correo electrónico del usuario %(user_display)s."
 
 #: templates/account/email_confirm.html:21
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "Confirmar"
 
 #: templates/account/email_confirm.html:28
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr "Dieser e-Mail-Bestätigungslink abgelaufen oder ungültig ist. Bitte <a href=\"%(email_url)s\">issue eine neue e-Mail-Bestätigung request</a>."
+msgstr "El enlace de este correo de confirmación ha caducado o no es válido. Por favor <a href=\"%(email_url)s\">envíe un nuevo correo correo de confirmación</a>."
 
 #: templates/account/login.html:15
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "Wenn Sie noch kein Konto erstellt haben, dann bitte<a href=\"%(signup_url)s\">sign up</a> zuerst."
+msgstr "Si no has creado una cuenta todavía, entonces <a href=\"%(signup_url)s\">regístrese</a> primero, por favor."
 
 #: templates/account/login.html:45
 msgid "Sign In"
-msgstr "Anmelden"
+msgstr "Ingresar"
 
 #: templates/account/login.html:51
 msgid "Forgot Password?"
-msgstr "Passwort vergessen?"
+msgstr "¿olvidó su contraseña?"
 
 #: templates/account/logout.html:13
 msgid "Are you sure you want to sign out?"
-msgstr "Möchtest Sie sich wirklich abmelden?"
+msgstr "¿Está seguro de que quiere cerrar sesión?"
 
 #: templates/account/logout.html:19
 msgid "Sign Out"
-msgstr "Abmelden"
+msgstr "Cerrar sesión"
 
 #: templates/account/password_change.html:6
 #: templates/account/password_change.html:12
@@ -267,84 +267,84 @@ msgstr "Abmelden"
 #: templates/account/password_reset_from_key_done.html:8
 #: templates/silverstrike/profile.html:29
 msgid "Change Password"
-msgstr "Passwort ändern"
+msgstr "Cambiar contraseña"
 
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:12
 #: templates/account/password_reset_done.html:6
 #: templates/account/password_reset_done.html:11
 msgid "Password Reset"
-msgstr "Passwort zurücksetzen"
+msgstr "Restablecer contraseña"
 
 #: templates/account/password_reset.html:20
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr "Vergessen Ihr Passwort? Gib unten deine E-Mail-Adresse ein und wir senden Ihnen eine E-mail, so dass Sie es zurücksetzen können."
+msgstr "¿Olvidó su contraseña? Entre a su dirección de correo electrónico abajo, y le enviaremos un correo permitiéndole restablecerla."
 
 #: templates/account/password_reset.html:31
 msgid "Reset My Password"
-msgstr "Mein Passwort zurücksetzen"
+msgstr "Reestablecer mi contraseña"
 
 #: templates/account/password_reset.html:34
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr "Bitte kontaktieren Sie uns, wenn Sie irgendwelche Probleme beim Zurücksetzen Ihres Kennworts."
+msgstr "Por favor contáctenos si tiene algún problema restableciendo su contraseña."
 
 #: templates/account/password_reset_done.html:16
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
-msgstr "Wir haben Ihnen eine E-mail geschickt. Bitte kontaktieren Sie uns, wenn Sie sie nicht innerhalb weniger Minuten erhalten."
+msgstr "Le hemos enviado un correo electrónico. Por favor contáctenos si no lo recibe en pocos minutos."
 
 #: templates/account/password_reset_from_key.html:7
 msgid "Bad Token"
-msgstr "Schlechte Zeichen"
+msgstr "Símbolo erróneo"
 
 #: templates/account/password_reset_from_key.html:11
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr "Der Link zum Zurücksetzen des Kennworts war möglicherweise ungültig, da es bereits verwendet wurde.  Bitte fordern Sie ein <a href=\"%(passwd_reset_url)s\">new Passwort reset</a>."
+msgstr "El link para restablecer la contraseña era inválido, posiblemente porque ya fue usado. Por favor solicite un <a href=\"%(passwd_reset_url)s\">nuevo restablecimiento de contraseña</a>."
 
 #: templates/account/password_reset_from_key.html:17
 msgid "change password"
-msgstr "Passwort ändern"
+msgstr "cambiar contraseña"
 
 #: templates/account/password_reset_from_key.html:20
 #: templates/account/password_reset_from_key_done.html:9
 msgid "Your password is now changed."
-msgstr "Ihr Passwort wurde geändert."
+msgstr "Su contraseña ha sido cambiada."
 
 #: templates/account/password_set.html:5 templates/account/password_set.html:8
 #: templates/account/password_set.html:13
 msgid "Set Password"
-msgstr "Kennwort festlegen"
+msgstr "Configurar contraseña"
 
 #: templates/account/signup.html:5
 msgid "Signup"
-msgstr "Signup"
+msgstr "Ingresar"
 
 #: templates/account/signup.html:15
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "Sie haben bereits ein Konto? Dann bitte <a href=\"%(login_url)s\">sign in</a>."
+msgstr "¿Ya tiene una cuenta? entonces <a href=\"%(login_url)s\">ingrese</a> por favor."
 
 #: templates/account/signup.html:30
 msgid "Sign up"
-msgstr "Anmelden"
+msgstr "Regitrarse"
 
 #: templates/account/signup_closed.html:5
 #: templates/account/signup_closed.html:14
 msgid "Sign Up Closed"
-msgstr "Melden Sie sich geschlossen"
+msgstr "Registro cerrado"
 
 #: templates/account/signup_closed.html:16
 msgid "We are sorry, but the sign up is currently closed."
-msgstr "Wir sind traurig, aber die Anmeldung ist derzeit geschlossen."
+msgstr "Lo sentimos, pero el registro se encuentra cerrado por los momentos."
 
 #: templates/account/verification_sent.html:5
 #: templates/account/verification_sent.html:9
 msgid "Verify Your E-mail Address"
-msgstr "Überprüfen Sie Ihre e-Mail-Adresse"
+msgstr "Verifique su dirección de correo electrónico"
 
 #: templates/account/verification_sent.html:12
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr "Wir haben eine E-mail an Sie zur Überprüfung gesendet. Folgen Sie dem Link um den Registrierungsvorgang abzuschließen. Bitte kontaktieren Sie uns, wenn Sie es nicht innerhalb weniger Minuten erhalten."
+msgstr "Le hemos enviado un correo electrónico de verificación. Vaya al link en él para finalizar el proceso de registro. Por favor contáctenos si no lo recibe en los próximos minutos."
 
 #: templates/silverstrike/account_confirm_delete.html:6
 #, python-format
@@ -365,7 +365,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:22
 #: templates/silverstrike/transaction_confirm_delete.html:23
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Cancelar"
 
 #: templates/silverstrike/account_confirm_delete.html:20
 #: templates/silverstrike/account_form.html:61
@@ -376,7 +376,7 @@ msgstr "Abbrechen"
 #: templates/silverstrike/transaction_confirm_delete.html:24
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
-msgstr "Löschen"
+msgstr "Borrar"
 
 #: templates/silverstrike/account_detail.html:14
 #: templates/silverstrike/account_form.html:14
@@ -403,7 +403,7 @@ msgstr "Löschen"
 #: templates/silverstrike/transaction_overview.html:9
 #: templates/silverstrike/transaction_split_form.html:17
 msgid "Home"
-msgstr "Startseite"
+msgstr "Inicio"
 
 #: templates/silverstrike/account_detail.html:15
 #: templates/silverstrike/account_form.html:6
@@ -416,7 +416,7 @@ msgstr "Startseite"
 #: templates/silverstrike/index.html:74
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
-msgstr "Konten"
+msgstr "Cuentas"
 
 #: templates/silverstrike/account_detail.html:25
 #, python-format
@@ -430,30 +430,30 @@ msgstr ""
 #: templates/silverstrike/account_detail.html:36
 #: templates/silverstrike/category_detail.html:30
 msgid "Overview"
-msgstr "Übersicht"
+msgstr "Resumen"
 
 #: templates/silverstrike/account_detail.html:41
 #: templates/silverstrike/index.html:19
 msgid "Current Balance"
-msgstr "Aktueller Kontostand"
+msgstr "Saldo actual"
 
 #: templates/silverstrike/account_detail.html:44
 msgid "In"
-msgstr "In"
+msgstr "Entrada"
 
 #: templates/silverstrike/account_detail.html:47
 msgid "Out"
-msgstr "Aus"
+msgstr "Salida"
 
 #: templates/silverstrike/account_detail.html:50
 #: templates/silverstrike/index.html:67
 msgid "Difference"
-msgstr "Unterschied"
+msgstr "Diferencia"
 
 #: templates/silverstrike/account_detail.html:61
 #: templates/silverstrike/recurringtransaction_detail.html:79
 msgid "Show all"
-msgstr "Alle anzeigen"
+msgstr "Mostrar todos"
 
 #: templates/silverstrike/account_detail.html:64
 #: templates/silverstrike/accounts.html:32
@@ -465,18 +465,18 @@ msgstr "Alle anzeigen"
 #: templates/silverstrike/transaction_edit.html:21
 #: templates/silverstrike/transaction_split_form.html:21
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "Editar"
 
 #: templates/silverstrike/account_detail.html:66
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
-msgstr "In Einklang zu bringen"
+msgstr "Conciliar"
 
 #: templates/silverstrike/account_detail.html:82
 #: templates/silverstrike/transaction_overview.html:17
 msgid "Transaction list"
-msgstr "Transaktionsliste"
+msgstr "Lista de transacciones"
 
 #: templates/silverstrike/account_detail.html:89
 msgid "Booking date"
@@ -488,11 +488,11 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:56
 #: templates/silverstrike/transaction_overview.html:27
 msgid "Account"
-msgstr "Konto"
+msgstr "Cuenta"
 
 #: templates/silverstrike/account_detail.html:100
 msgid "Reconcilation"
-msgstr "Abgleichung"
+msgstr "Conciliación"
 
 #: templates/silverstrike/account_detail.html:125
 msgid "Last 30 days"
@@ -505,7 +505,7 @@ msgstr ""
 #: templates/silverstrike/account_detail.html:130
 #: templates/silverstrike/charts.html:18
 msgid "Last year"
-msgstr "Letztes Jahr"
+msgstr "El año pasado"
 
 #: templates/silverstrike/account_detail.html:138
 msgid "Apply"
@@ -527,7 +527,7 @@ msgstr ""
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
-msgstr "Neues Konto erstellen"
+msgstr "Crear cuenta nueva"
 
 #: templates/silverstrike/account_form.html:18
 #: templates/silverstrike/account_form.html:59
@@ -538,18 +538,18 @@ msgstr "Neues Konto erstellen"
 #: templates/silverstrike/transaction_edit.html:108
 #: templates/silverstrike/transaction_split_form.html:93
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "Actualizar"
 
 #: templates/silverstrike/account_form.html:20
 #: templates/silverstrike/base.html:45
 #: templates/silverstrike/category_form.html:20
 #: templates/silverstrike/recurringtransaction_form.html:17
 msgid "New"
-msgstr "Neu"
+msgstr "Nuevo"
 
 #: templates/silverstrike/account_form.html:28
 msgid "Account Details"
-msgstr "Kontodetails"
+msgstr "Detalles de la cuenta"
 
 #: templates/silverstrike/account_form.html:63
 #: templates/silverstrike/category_form.html:63
@@ -562,7 +562,7 @@ msgstr "Kontodetails"
 #: templates/silverstrike/transaction_split_form.html:23
 #: templates/silverstrike/transaction_split_form.html:93
 msgid "Create"
-msgstr "Erstellen"
+msgstr "Crear"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
@@ -570,18 +570,18 @@ msgstr "Erstellen"
 #: templates/silverstrike/foreign_accounts.html:22
 #: templates/silverstrike/inactive_categories.html:22
 msgid "Name"
-msgstr "Name"
+msgstr "Nombre"
 
 #: templates/silverstrike/accounts.html:23
 #: templates/silverstrike/charts.html:30
 #: templates/silverstrike/foreign_accounts.html:23
 #: templates/silverstrike/index.html:80 templates/silverstrike/index.html:95
 msgid "Balance"
-msgstr "Kontostand"
+msgstr "Saldo"
 
 #: templates/silverstrike/accounts.html:24
 msgid "Active"
-msgstr "Aktiv"
+msgstr "Activo"
 
 #: templates/silverstrike/accounts.html:38
 msgid "Create Account"
@@ -606,33 +606,33 @@ msgstr ""
 
 #: templates/silverstrike/base.html:48
 msgid "New Withdrawl"
-msgstr "Neue Auszahlung"
+msgstr "Retiro nuevo"
 
 #: templates/silverstrike/base.html:51
 msgid "New Deposit"
-msgstr "Neue Einzahlung"
+msgstr "Nuevo depósito"
 
 #: templates/silverstrike/base.html:54
 msgid "New Transfer"
-msgstr "Neue Umbuchung"
+msgstr "Nueva transferencia"
 
 #: templates/silverstrike/base.html:57
 msgid "New Split Transaction"
-msgstr "Geteilte Transaktion"
+msgstr "Nueva transacción dividida"
 
 #: templates/silverstrike/base.html:79 templates/silverstrike/profile.html:7
 #: templates/silverstrike/profile.html:12
 #: templates/silverstrike/profile.html:18
 msgid "Profile"
-msgstr "Profil"
+msgstr "Perfil"
 
 #: templates/silverstrike/base.html:82
 msgid "Sign out"
-msgstr "Abmelden"
+msgstr "Cerrar sesión"
 
 #: templates/silverstrike/base.html:94
 msgid "MAIN NAVIGATION"
-msgstr "MAIN NAVIGATION"
+msgstr "NAVEGACIÓN PRINCIPAL"
 
 #: templates/silverstrike/base.html:109
 #: templates/silverstrike/category_assign.html:12
@@ -644,7 +644,7 @@ msgstr "MAIN NAVIGATION"
 #: templates/silverstrike/transaction_overview.html:10
 #: templates/silverstrike/transaction_split_form.html:18
 msgid "Transactions"
-msgstr "Transaktionen"
+msgstr "Transacciones"
 
 #: templates/silverstrike/base.html:114
 #: templates/silverstrike/disabled_recurrences.html:13
@@ -654,7 +654,7 @@ msgstr "Transaktionen"
 #: templates/silverstrike/recurringtransaction_detail.html:10
 #: templates/silverstrike/recurringtransaction_form.html:16
 msgid "Recurrences"
-msgstr "Wiederkehrende Zahlungen"
+msgstr "Recurrencias"
 
 #: templates/silverstrike/base.html:120
 #: templates/silverstrike/category_detail.html:11
@@ -663,18 +663,18 @@ msgstr "Wiederkehrende Zahlungen"
 #: templates/silverstrike/category_index.html:9
 #: templates/silverstrike/category_index.html:37
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "Categorías"
 
 #: templates/silverstrike/base.html:126
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
-msgstr "Budgets"
+msgstr "Presupuestos"
 
 #: templates/silverstrike/base.html:132 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
-msgstr "Diagramme"
+msgstr "Gráficos"
 
 #: templates/silverstrike/base.html:137
 msgid "Import &amp; Export"
@@ -682,12 +682,12 @@ msgstr ""
 
 #: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
 msgid "Import"
-msgstr "Import"
+msgstr "Importar"
 
 #: templates/silverstrike/base.html:147 templates/silverstrike/export.html:10
 #: templates/silverstrike/export.html:17 templates/silverstrike/export.html:37
 msgid "Export"
-msgstr "Export"
+msgstr "Exportar"
 
 #: templates/silverstrike/base.html:166
 #, python-format
@@ -698,13 +698,13 @@ msgstr "<b>Version</b> %(version)s"
 #: templates/silverstrike/category_detail.html:20
 #: templates/silverstrike/category_index.html:17
 msgid "Previous"
-msgstr "Zurück"
+msgstr "Anterior"
 
 #: templates/silverstrike/budget_index.html:20
 #: templates/silverstrike/category_detail.html:22
 #: templates/silverstrike/category_index.html:19
 msgid "Next"
-msgstr "Nächste"
+msgstr "Siguiente"
 
 #: templates/silverstrike/budget_index.html:29
 #, python-format
@@ -713,26 +713,26 @@ msgstr ""
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
-msgstr "Zugewiesen"
+msgstr "Asignado"
 
 #: templates/silverstrike/budget_index.html:37
 #: templates/silverstrike/category_index.html:43
 msgid "Money spent"
-msgstr "Ausgegeben"
+msgstr "Dinero gastado"
 
 #: templates/silverstrike/budget_index.html:38
 msgid "Left"
-msgstr "Übrig"
+msgstr "Izquierda"
 
 #: templates/silverstrike/budget_index.html:65
 #: templates/silverstrike/category_assign.html:44
 msgid "Save"
-msgstr "Speichern"
+msgstr "Guardar"
 
 #: templates/silverstrike/category_assign.html:19
 #: templates/silverstrike/index.html:64
 msgid "Expenses"
-msgstr "Ausgaben"
+msgstr "Gastos"
 
 #: templates/silverstrike/category_assign.html:48
 msgid "No uncategorized expenses available"
@@ -753,27 +753,27 @@ msgstr ""
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
-msgstr "Alle Transaktionen anzeigen"
+msgstr "Mostrar todas las transacciones"
 
 #: templates/silverstrike/category_detail.html:68
 msgid "Distribution by Source"
-msgstr "Verteilung nach Ursprung"
+msgstr "Distribuir por fuente"
 
 #: templates/silverstrike/category_detail.html:76
 msgid "Distribution by Destination"
-msgstr "Verteilung nach Ziel"
+msgstr "Distribuir por destino"
 
 #: templates/silverstrike/category_form.html:10
 msgid "Create new category"
-msgstr "Neue Kategorie erstellen"
+msgstr "Crear una nueva categoría"
 
 #: templates/silverstrike/category_form.html:28
 msgid "Category Details"
-msgstr "Kategoriedetails"
+msgstr "Detalles de la categoría"
 
 #: templates/silverstrike/category_index.html:27
 msgid "Distribution by category"
-msgstr "Verteilung nach Kategorie"
+msgstr "Distribución por categoría"
 
 #: templates/silverstrike/category_index.html:59
 msgid "Categorize expenses"
@@ -781,31 +781,27 @@ msgstr ""
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
-msgstr "weil es Spaß macht!"
+msgstr "¡Porque son divertidos!"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
-msgstr "Letzten 6 Monate"
+msgstr "Últimos 6 meses"
 
 #: templates/silverstrike/charts.html:20
 msgid "Last 3 Months"
-msgstr "Letzten 3 Monate"
+msgstr "Últimos 3 meses"
 
 #: templates/silverstrike/charts.html:21
 msgid "Current Month"
-msgstr "Aktueller Monat"
+msgstr "Mes en curso"
 
 #: templates/silverstrike/charts.html:38
 msgid "Personal Accounts"
-msgstr "Persönliche Konten"
+msgstr "Cuentas personales"
 
 #: templates/silverstrike/charts.html:48
 msgid "Spending by category"
-msgstr "Ausgaben nach Kategorie"
-
-#: templates/silverstrike/index.html:8
-msgid "All important stuff"
-msgstr "Alle wichtige Sachen"
+msgstr "Gastos por categoría"
 
 #: templates/silverstrike/disabled_recurrences.html:9
 msgid "Disabled Recurring Transactions"
@@ -827,7 +823,11 @@ msgstr ""
 #: templates/silverstrike/inactive_categories.html:10
 #: templates/silverstrike/inactive_categories.html:17
 msgid "Inactive Categories"
-msgstr "Inaktive Kategorien"
+msgstr ""
+
+#: templates/silverstrike/index.html:8
+msgid "All important stuff"
+msgstr ""
 
 #: templates/silverstrike/index.html:27
 msgid "Working Balance"
@@ -843,19 +843,19 @@ msgstr ""
 
 #: templates/silverstrike/index.html:53
 msgid "You have recurrences that are overdue!"
-msgstr "Sie haben fällige wiederkehrende Zahlungen!"
+msgstr "¡Tiene recurrencias caducadas!"
 
 #: templates/silverstrike/index.html:61
 msgid "Income"
-msgstr "Einkommen"
+msgstr "Ingreso"
 
 #: templates/silverstrike/index.html:104
 msgid "Upcoming Transactions"
-msgstr "Anstehende Transaktionen"
+msgstr "Próximas transacciones"
 
 #: templates/silverstrike/index.html:128
 msgid "Upcoming Recurrences"
-msgstr "Anstehende wiederkehrende Zahlungen"
+msgstr "Próximas recurrencias"
 
 #: templates/silverstrike/index.html:145
 #: templates/silverstrike/recurringtransaction_detail.html:52
@@ -864,54 +864,54 @@ msgstr ""
 
 #: templates/silverstrike/index.html:152
 msgid "No upcoming recurrences"
-msgstr "Keine anstehenden wiederkehrenden Zahlungen"
+msgstr "No hay recurrencias próximas"
 
 #: templates/silverstrike/index.html:163
 msgid "Recent Transactions"
-msgstr "Letzte Transaktionen"
+msgstr "Transacciones Recientes"
 
 #: templates/silverstrike/index.html:169
 #: templates/silverstrike/transaction_overview.html:23
 msgid "Type"
-msgstr "Typ"
+msgstr "Tipo"
 
 #: templates/silverstrike/index.html:173
 #: templates/silverstrike/transaction_detail.html:57
 #: templates/silverstrike/transaction_overview.html:28
 msgid "Opposing Account"
-msgstr "Gegenkonto"
+msgstr "Cuenta opuesta"
 
 #: templates/silverstrike/profile.html:8
 msgid "Your account details"
-msgstr "Benutzeraccount-Details"
+msgstr ""
 
 #: templates/silverstrike/profile.html:22
 msgid "Username"
-msgstr "Benutzername"
+msgstr ""
 
 #: templates/silverstrike/profile.html:24
 msgid "API auth key"
-msgstr "Authentifizierungsschlüssel"
+msgstr ""
 
 #: templates/silverstrike/profile.html:26
 msgid "Email Addresses"
-msgstr "E-Mail-Adressen"
+msgstr ""
 
 #: templates/silverstrike/profile.html:27
 msgid "Manage Email Addresses"
-msgstr "E-Mail-Adressen verwalten"
+msgstr ""
 
 #: templates/silverstrike/profile.html:28
 msgid "Password"
-msgstr "Passwort"
+msgstr ""
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
-msgstr "Erstellen Sie versöhnen Transaktion"
+msgstr "Crear transacción consiliada"
 
 #: templates/silverstrike/recurring_transactions.html:9
 msgid "Recurring Transactions"
-msgstr "Wiederkehrende Transaktionen"
+msgstr "Transacciones Recurrentes"
 
 #: templates/silverstrike/recurring_transactions.html:22
 msgid "Income this month"
@@ -931,7 +931,7 @@ msgstr ""
 
 #: templates/silverstrike/recurring_transactions.html:64
 msgid "Recurrance"
-msgstr "Recurrance"
+msgstr "Recurrencia"
 
 #: templates/silverstrike/recurring_transactions.html:79
 msgid "Show disabled recurrences"
@@ -951,12 +951,12 @@ msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
-msgstr "Wiederholung-Details"
+msgstr "Datos de recurrencia"
 
 #: templates/silverstrike/recurringtransaction_detail.html:24
 #: templates/silverstrike/transaction_detail.html:34
 msgid "Recurrence"
-msgstr "Wiederholung"
+msgstr "Recurrencia"
 
 #: templates/silverstrike/recurringtransaction_detail.html:26
 msgid "Next expected ocurrence"
@@ -964,19 +964,19 @@ msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
-msgstr "Ursprung"
+msgstr "Fuente"
 
 #: templates/silverstrike/recurringtransaction_detail.html:32
 msgid "Destination"
-msgstr "Ziel"
+msgstr "Destino"
 
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Average amount"
-msgstr "Durchschnittlicher Betrag"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:60
 msgid "Recent ocurrences"
-msgstr "Den letzten Ereignissen"
+msgstr "Las últimas instancias"
 
 #: templates/silverstrike/recurringtransaction_form.html:9
 #, python-format
@@ -985,14 +985,14 @@ msgstr ""
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
-msgstr "Neue regelmäßige Buchung"
+msgstr "Nueva transacción recurrente"
 
 #: templates/silverstrike/recurringtransaction_form.html:24
 #: templates/silverstrike/transaction_detail.html:19
 #: templates/silverstrike/transaction_edit.html:31
 #: templates/silverstrike/transaction_split_form.html:31
 msgid "Transaction Details"
-msgstr "Transaktionsdetails"
+msgstr "Detalles de la transacción"
 
 #: templates/silverstrike/transaction_confirm_delete.html:6
 #, python-format
@@ -1005,19 +1005,19 @@ msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
-msgstr "Buchungsart"
+msgstr "Tipo de Transacción"
 
 #: templates/silverstrike/transaction_detail.html:28
 msgid "Total amount"
-msgstr "Gesamtbetrag"
+msgstr "Monto total"
 
 #: templates/silverstrike/transaction_detail.html:43
 msgid "Edit as Split transaction"
-msgstr "Als Splittbuchung bearbeiten"
+msgstr "Editar como transacciones separadas"
 
 #: templates/silverstrike/transaction_detail.html:50
 msgid "Splits"
-msgstr "Spaltet"
+msgstr "Dividir"
 
 #: templates/silverstrike/transaction_edit.html:10
 #: templates/silverstrike/transaction_split_form.html:10
@@ -1037,7 +1037,7 @@ msgstr ""
 
 #: templates/silverstrike/transaction_split_form.html:94
 msgid "Add Split"
-msgstr "Hinzufügen von Split"
+msgstr "Añadir desglose"
 
 #: views/accounts.py:43 views/accounts.py:49
 msgid "You are not allowed to edit this account"

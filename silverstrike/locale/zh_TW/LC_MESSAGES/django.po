@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-09 20:05+0100\n"
-"PO-Revision-Date: 2017-12-09 14:12-0500\n"
+"POT-Creation-Date: 2018-05-04 19:47+0200\n"
+"PO-Revision-Date: 2018-05-04 14:08-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -21,351 +21,259 @@ msgid "You need to select more than one account to merge them."
 msgstr "您需要選擇多個帳戶來合併它們。"
 
 #: admin.py:43
-msgid "You can only merge foreign accounts, {} isn't."
+msgid "You can only merge foreign accounts, \"{}\" isn't."
 msgstr ""
 
-#: admin.py:54
+#: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
 msgstr ""
 
-#: admin.py:59
+#: admin.py:63
 msgid "Merged {} accounts into <a href={}>{}</a>."
 msgstr ""
 
-#: forms.py:124
+#: forms.py:125
 msgid "Debitor"
 msgstr "債務人"
 
-#: forms.py:139
+#: forms.py:140
 msgid "Creditor"
 msgstr "債權人"
 
-#: forms.py:162
+#: forms.py:163
 msgid "Amount has to be positive"
 msgstr "金額必須是正數"
 
-#: forms.py:178
+#: forms.py:179
 msgid "You are trying to create a transaction between two foreign accounts"
 msgstr "您正嘗試在兩個外國帳戶之間創建交易"
 
-#: forms.py:193
+#: forms.py:194
 msgid "Actual balance"
 msgstr "實際餘額"
 
-#: models.py:16
+#: models.py:33
 msgid "Personal"
 msgstr "個人"
 
-#: models.py:17
+#: models.py:34
 msgid "Foreign"
 msgstr "外國"
 
-#: models.py:18
+#: models.py:35
 msgid "System"
 msgstr "系統"
 
-#: models.py:83
+#: models.py:103
 msgid "Initial Balance"
 msgstr "初始餘額"
 
-#: models.py:274
+#: models.py:308
 msgid "Do not use"
 msgstr "不要使用"
 
-#: models.py:275 templates/silverstrike/recurring_transactions.html:29
+#: models.py:309 templates/silverstrike/disabled_recurrences.html:27
+#: templates/silverstrike/recurring_transactions.html:62
 msgid "Source Account"
 msgstr "源帳戶"
 
-#: models.py:276 templates/silverstrike/recurring_transactions.html:30
+#: models.py:310 templates/silverstrike/disabled_recurrences.html:28
+#: templates/silverstrike/recurring_transactions.html:63
 msgid "Destination Account"
 msgstr "目標帳戶"
 
-#: models.py:277 templates/silverstrike/account_detail.html:83
+#: models.py:311 templates/silverstrike/account_detail.html:90
+#: templates/silverstrike/category_assign.html:30
 #: templates/silverstrike/category_detail.html:49
-#: templates/silverstrike/index.html:109 templates/silverstrike/index.html:133
-#: templates/silverstrike/index.html:166
-#: templates/silverstrike/recurring_transactions.html:28
+#: templates/silverstrike/disabled_recurrences.html:26
+#: templates/silverstrike/index.html:112 templates/silverstrike/index.html:136
+#: templates/silverstrike/index.html:171
+#: templates/silverstrike/recurring_transactions.html:61
 #: templates/silverstrike/recurringtransaction_detail.html:35
+#: templates/silverstrike/recurringtransaction_detail.html:66
+#: templates/silverstrike/transaction_detail.html:58
+#: templates/silverstrike/transaction_overview.html:26
 msgid "Amount"
 msgstr "金額"
 
-#: models.py:278 templates/silverstrike/account_detail.html:82
+#: models.py:312 templates/silverstrike/account_detail.html:88
+#: templates/silverstrike/category_assign.html:29
 #: templates/silverstrike/category_detail.html:48
-#: templates/silverstrike/index.html:107 templates/silverstrike/index.html:132
-#: templates/silverstrike/index.html:165
-#: templates/silverstrike/recurring_transactions.html:27
+#: templates/silverstrike/index.html:110 templates/silverstrike/index.html:135
+#: templates/silverstrike/index.html:170
+#: templates/silverstrike/recurring_transactions.html:60
+#: templates/silverstrike/recurringtransaction_detail.html:67
+#: templates/silverstrike/transaction_detail.html:25
+#: templates/silverstrike/transaction_detail.html:59
+#: templates/silverstrike/transaction_overview.html:24
 msgid "Date"
 msgstr "日期"
 
-#: models.py:279 templates/silverstrike/recurringtransaction_detail.html:43
+#: models.py:313 templates/silverstrike/recurringtransaction_detail.html:46
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
 msgstr "備註"
 
-#: models.py:280 templates/silverstrike/account_detail.html:85
-#: templates/silverstrike/index.html:169
-#: templates/silverstrike/recurringtransaction_detail.html:38
+#: models.py:314 templates/silverstrike/account_detail.html:92
+#: templates/silverstrike/category_assign.html:31
+#: templates/silverstrike/index.html:174
+#: templates/silverstrike/recurringtransaction_detail.html:41
+#: templates/silverstrike/transaction_detail.html:60
+#: templates/silverstrike/transaction_overview.html:29
 msgid "Category"
 msgstr "類型"
 
-#: models.py:281 templates/silverstrike/account_detail.html:81
+#: models.py:315 templates/silverstrike/account_detail.html:87
+#: templates/silverstrike/category_assign.html:28
 #: templates/silverstrike/category_detail.html:47
-#: templates/silverstrike/index.html:106 templates/silverstrike/index.html:131
-#: templates/silverstrike/index.html:163
-#: templates/silverstrike/recurring_transactions.html:26
+#: templates/silverstrike/disabled_recurrences.html:25
+#: templates/silverstrike/index.html:109 templates/silverstrike/index.html:134
+#: templates/silverstrike/index.html:168
+#: templates/silverstrike/recurring_transactions.html:59
+#: templates/silverstrike/recurringtransaction_detail.html:65
+#: templates/silverstrike/transaction_detail.html:55
+#: templates/silverstrike/transaction_overview.html:22
 msgid "Title"
 msgstr "標題"
 
-#: models.py:285
+#: models.py:319
 msgid "First line contains headers"
 msgstr "第一行包含標題"
 
-#: models.py:312
+#: models.py:347
 msgid "Disabled"
 msgstr "已禁用"
 
-#: models.py:313
-msgid "Weekly"
-msgstr "每週"
-
-#: models.py:314
+#: models.py:348
 msgid "Monthly"
 msgstr "每月"
 
-#: models.py:315
-msgid "Yearly"
-msgstr "每年"
+#: models.py:349
+msgid "Quarterly"
+msgstr ""
+
+#: models.py:350
+msgid "Biannually"
+msgstr ""
+
+#: models.py:351
+msgid "Annually"
+msgstr ""
 
 #: templates/account/account_inactive.html:5
-#: templates/account/account_inactive.html:8
+#: templates/account/account_inactive.html:14
 msgid "Account Inactive"
 msgstr "帳戶無效"
 
-#: templates/account/account_inactive.html:10
+#: templates/account/account_inactive.html:15
 msgid "This account is inactive."
 msgstr "此帳戶無效"
 
-#: templates/account/email.html:5 templates/silverstrike/account_detail.html:84
-#: templates/silverstrike/index.html:76 templates/silverstrike/index.html:108
-#: templates/silverstrike/index.html:167
-msgid "Account"
-msgstr "帳戶"
-
-#: templates/account/email.html:8
+#: templates/account/email.html:6
 msgid "E-mail Addresses"
 msgstr "電子郵件地址"
 
 #: templates/account/email.html:10
+msgid "Manage E-mail Addresses"
+msgstr ""
+
+#: templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
 msgstr "以下電子郵件地址與您的帳戶相關聯："
 
-#: templates/account/email.html:24
+#: templates/account/email.html:27
 msgid "Verified"
 msgstr "已認證"
 
-#: templates/account/email.html:26
+#: templates/account/email.html:29
 msgid "Unverified"
 msgstr "未認證"
 
-#: templates/account/email.html:28
+#: templates/account/email.html:31
 msgid "Primary"
 msgstr "主要"
 
-#: templates/account/email.html:34
+#: templates/account/email.html:38
 msgid "Make Primary"
 msgstr "設為主要"
 
-#: templates/account/email.html:35
+#: templates/account/email.html:39
 msgid "Re-send Verification"
 msgstr "重新發送驗證"
 
-#: templates/account/email.html:36 templates/socialaccount/connections.html:35
+#: templates/account/email.html:40
 msgid "Remove"
 msgstr "刪除"
 
-#: templates/account/email.html:43
-msgid "Warning:"
-msgstr "警告："
-
-#: templates/account/email.html:43
-msgid "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "您目前沒有設置任何電子郵件地址。\n"
-"你真的應該添加一個電子郵件地址，\n"
-"以便你可以收到通知，重置密碼等"
-
-#: templates/account/email.html:48
+#: templates/account/email.html:45
 msgid "Add E-mail Address"
 msgstr "添加電子郵件地址"
 
-#: templates/account/email.html:53
+#: templates/account/email.html:58
 msgid "Add E-mail"
 msgstr "添加電子郵件"
 
-#: templates/account/email.html:62
+#: templates/account/email.html:68
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "你真的想刪除所選的電子郵件地址嗎?"
 
-#: templates/account/email/email_confirmation_message.txt:1
-#, python-format
-msgid "Hello from %(site_name)s!\n\n"
-"You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account.\n\n"
-"To confirm this is correct, go to %(activate_url)s\n"
-msgstr "你好，%(site_name)s!\n"
-"您收到此電子郵件是因為用戶 %(user_display)s\n"
-"已將您的電子郵件地址作為連接其帳戶的電子郵件地址。\n\n"
-"要確認這是正確的，請轉到 %(activate_url)s\n"
-
-#: templates/account/email/email_confirmation_message.txt:7
-#, python-format
-msgid "Thank you from %(site_name)s!\n"
-"%(site_domain)s"
-msgstr "謝謝你的 %(site_name)s!\n"
-"%(site_domain)s"
-
-#: templates/account/email/email_confirmation_subject.txt:3
-msgid "Please Confirm Your E-mail Address"
-msgstr "請確認您的電子郵件地址"
-
-#: templates/account/email/password_reset_key_message.txt:1
-#, python-format
-msgid "Hello from %(site_name)s!\n\n"
-"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr "%(site_name)s!\n"
-"向您問好！\n\n"
-"您收到此電子郵件是因為您或其他人已為您的用戶帳戶請求密碼重置。\n"
-"如果您沒有請求密碼重置，則可以安全地忽略它。單擊下面的鏈接以重置您的密碼。"
-
-#: templates/account/email/password_reset_key_message.txt:8
-#, python-format
-msgid "In case you forgot, your username is %(username)s."
-msgstr "萬一你忘了, 你的使用者名是%(username)s。"
-
-#: templates/account/email/password_reset_key_message.txt:10
-#, python-format
-msgid "Thank you for using %(site_name)s!\n"
-"%(site_domain)s"
-msgstr "感謝您使用 %(site_name)s!\n"
-"%(site_domain)s"
-
-#: templates/account/email/password_reset_key_subject.txt:3
-msgid "Password Reset E-mail"
-msgstr "密碼重設電子郵件"
-
 #: templates/account/email_confirm.html:6
-#: templates/account/email_confirm.html:10
+#: templates/account/email_confirm.html:11
 msgid "Confirm E-mail Address"
 msgstr "確認電子郵件地址"
 
-#: templates/account/email_confirm.html:16
+#: templates/account/email_confirm.html:17
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
 msgstr "請確認<a href=\"mailto:%(email)s\">%(email)s</a> 是使用者%(user_display)s 的電子郵件地址。"
 
-#: templates/account/email_confirm.html:20
+#: templates/account/email_confirm.html:21
 msgid "Confirm"
 msgstr "確認"
 
-#: templates/account/email_confirm.html:27
+#: templates/account/email_confirm.html:28
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr "此電子郵件確認連結已過期或無效。\n"
 "請<a href=\"%(email_url)s\">issue 一個新的電子郵件確認 request</a>。"
 
-#: templates/account/login.html:17
-#, python-format
-msgid "Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
-"for a %(site_name)s account and sign in below:"
-msgstr "請使用您現有的協力廠商帳戶之一登錄。\n"
-"或者, <a href=\"%(signup_url)s\">sign up</a> 為%(site_name)s 帳戶並在下面簽名:"
-
-#: templates/account/login.html:27
-msgid "or"
-msgstr "或"
-
-#: templates/account/login.html:34
+#: templates/account/login.html:15
 #, python-format
 msgid "If you have not created an account yet, then please\n"
 "<a href=\"%(signup_url)s\">sign up</a> first."
 msgstr "如果你還沒有創建一個帳戶, 那麼請<a href=\"%(signup_url)s\">sign up</a> 第一。"
 
-#: templates/account/login.html:65
+#: templates/account/login.html:45
 msgid "Sign In"
 msgstr "登錄"
 
-#: templates/account/login.html:71
+#: templates/account/login.html:51
 msgid "Forgot Password?"
 msgstr "忘記密碼?"
 
-#: templates/account/logout.html:15
+#: templates/account/logout.html:13
 msgid "Are you sure you want to sign out?"
 msgstr "確定要登出嗎?"
 
-#: templates/account/logout.html:22
+#: templates/account/logout.html:19
 msgid "Sign Out"
 msgstr "登出"
 
-#: templates/account/messages/cannot_delete_primary_email.txt:2
-#, python-format
-msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr "無法刪除你的\n"
-"主電子郵件地址 (%(email)s)。"
-
-#: templates/account/messages/email_confirmation_sent.txt:2
-#, python-format
-msgid "Confirmation e-mail sent to %(email)s."
-msgstr "發送到%(email)s 的確認電子郵件。"
-
-#: templates/account/messages/email_confirmed.txt:2
-#, python-format
-msgid "You have confirmed %(email)s."
-msgstr "你已經證實了%(email)s"
-
-#: templates/account/messages/email_deleted.txt:2
-#, python-format
-msgid "Removed e-mail address %(email)s."
-msgstr "已 刪除電子 郵件地址 %(email)s。"
-
-#: templates/account/messages/logged_in.txt:4
-#, python-format
-msgid "Successfully signed in as %(name)s."
-msgstr "成功地 簽署了作為 %(name)s。"
-
-#: templates/account/messages/logged_out.txt:2
-msgid "You have signed out."
-msgstr "你已 經簽約了."
-
-#: templates/account/messages/password_changed.txt:2
-msgid "Password successfully changed."
-msgstr "密碼已成功更改。"
-
-#: templates/account/messages/password_set.txt:2
-msgid "Password successfully set."
-msgstr "密碼已成功設置。"
-
-#: templates/account/messages/primary_email_set.txt:2
-msgid "Primary e-mail address set."
-msgstr "主電子郵件地址集。"
-
-#: templates/account/messages/unverified_primary_email.txt:2
-msgid "Your primary e-mail address must be verified."
-msgstr "您的主要電子郵件地址 必須經過 驗證。"
-
-#: templates/account/password_change.html:5
-#: templates/account/password_change.html:8
-#: templates/account/password_change.html:13
+#: templates/account/password_change.html:6
+#: templates/account/password_change.html:12
+#: templates/account/password_change.html:30
 #: templates/account/password_reset_from_key.html:4
 #: templates/account/password_reset_from_key.html:7
 #: templates/account/password_reset_from_key_done.html:4
-#: templates/account/password_reset_from_key_done.html:7
+#: templates/account/password_reset_from_key_done.html:8
+#: templates/silverstrike/profile.html:29
 msgid "Change Password"
 msgstr "更改密碼"
 
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:12
 #: templates/account/password_reset_done.html:6
-#: templates/account/password_reset_done.html:9
+#: templates/account/password_reset_done.html:11
 msgid "Password Reset"
 msgstr "密碼重設"
 
@@ -384,7 +292,7 @@ msgstr "重設密碼"
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr "如果您在重置密碼時遇到任何問題，請與我們聯繫。"
 
-#: templates/account/password_reset_done.html:15
+#: templates/account/password_reset_done.html:16
 msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
 msgstr "我們已經給你發了一封電子郵件。\n"
 "如果您在幾分鐘內沒有收到，請與我們聯繫。"
@@ -404,7 +312,7 @@ msgid "change password"
 msgstr "變更密碼"
 
 #: templates/account/password_reset_from_key.html:20
-#: templates/account/password_reset_from_key_done.html:8
+#: templates/account/password_reset_from_key_done.html:9
 msgid "Your password is now changed."
 msgstr "您的密碼現在已更改。"
 
@@ -413,17 +321,17 @@ msgstr "您的密碼現在已更改。"
 msgid "Set Password"
 msgstr "設置密碼"
 
-#: templates/account/signup.html:6 templates/socialaccount/signup.html:5
+#: templates/account/signup.html:5
 msgid "Signup"
 msgstr "註冊"
 
-#: templates/account/signup.html:16
+#: templates/account/signup.html:15
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr "已經有一個帳戶?\n"
 "那麼請<a href=\"%(login_url)s\">登錄</a>。"
 
-#: templates/account/signup.html:31
+#: templates/account/signup.html:30
 msgid "Sign up"
 msgstr "註冊"
 
@@ -436,164 +344,195 @@ msgstr "註冊關閉"
 msgid "We are sorry, but the sign up is currently closed."
 msgstr "我們很抱歉，但註冊目前已關閉。"
 
-#: templates/account/snippets/already_logged_in.html:5
-msgid "Note"
-msgstr "注意"
-
-#: templates/account/snippets/already_logged_in.html:5
-#, python-format
-msgid "you are already logged in as %(user_display)s."
-msgstr "您已作為%(user_display)s 登錄。"
-
 #: templates/account/verification_sent.html:5
-#: templates/account/verification_sent.html:8
-#: templates/account/verified_email_required.html:5
-#: templates/account/verified_email_required.html:8
+#: templates/account/verification_sent.html:9
 msgid "Verify Your E-mail Address"
 msgstr "驗證您的電子郵件地址"
 
-#: templates/account/verification_sent.html:10
+#: templates/account/verification_sent.html:12
 msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
 msgstr "我們發送了一封電子郵件給您驗證。\n"
 "按照提供的鏈接完成註冊過程。\n"
 "如果您在幾分鐘內沒有收到，請與我們聯繫。"
 
-#: templates/account/verified_email_required.html:12
-msgid "This part of the site requires us to verify that\n"
-"you are who you claim to be. For this purpose, we require that you\n"
-"verify ownership of your e-mail address. "
-msgstr "網站的這一部分要求我們確認你是你自稱的人。\n"
-"為此, 我們要求您驗證您的電子郵件地址的擁有權。 "
-
-#: templates/account/verified_email_required.html:16
-msgid "We have sent an e-mail to you for\n"
-"verification. Please click on the link inside this e-mail. Please\n"
-"contact us if you do not receive it within a few minutes."
-msgstr "我們發了一封電子郵件給你驗證。\n"
-"請點擊這封電子郵件中的鏈接。\n"
-"如果您在幾分鐘內沒有收到，請與我們聯繫。"
-
-#: templates/account/verified_email_required.html:20
+#: templates/silverstrike/account_confirm_delete.html:6
 #, python-format
-msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
-msgstr "<strong>Note:</strong> 你仍然可以<a href=\"%(email_url)s\">change 你的電子郵件 address</a>。"
+msgid " Delete '%(object_name)s' account"
+msgstr ""
 
-#: templates/silverstrike/account_confirm_delete.html:17
+#: templates/silverstrike/account_confirm_delete.html:16
 #, python-format
-msgid "\n"
-"          Are you sure you want to delete the account along with %(object.transaction_num)s transactions?\n"
-"          "
-msgstr "\n"
-"您確定要刪除帳戶以及 %(object.transaction_num)s 的交易嗎？          "
+msgid "Are you sure you want to delete the account along with %(transaction_num)s transactions?"
+msgstr ""
 
-#: templates/silverstrike/account_confirm_delete.html:22
+#: templates/silverstrike/account_confirm_delete.html:19
+#: templates/silverstrike/account_detail.html:139
 #: templates/silverstrike/account_form.html:60
-#: templates/silverstrike/category_confirm_delete.html:21
+#: templates/silverstrike/category_confirm_delete.html:18
 #: templates/silverstrike/category_form.html:59
 #: templates/silverstrike/category_form.html:61
-#: templates/silverstrike/recurringtransaction_confirm_delete.html:18
-#: templates/silverstrike/transaction_confirm_delete.html:24
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:22
+#: templates/silverstrike/transaction_confirm_delete.html:23
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/silverstrike/account_confirm_delete.html:23
-#: templates/silverstrike/account_detail.html:51
-#: templates/silverstrike/category_confirm_delete.html:22
+#: templates/silverstrike/account_confirm_delete.html:20
+#: templates/silverstrike/account_form.html:61
+#: templates/silverstrike/category_confirm_delete.html:19
 #: templates/silverstrike/category_detail.html:37
-#: templates/silverstrike/recurringtransaction_confirm_delete.html:19
-#: templates/silverstrike/recurringtransaction_detail.html:51
-#: templates/silverstrike/transaction_confirm_delete.html:25
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:23
+#: templates/silverstrike/recurringtransaction_detail.html:54
+#: templates/silverstrike/transaction_confirm_delete.html:24
 #: templates/silverstrike/transaction_detail.html:45
 msgid "Delete"
 msgstr "刪除"
 
-#: templates/silverstrike/account_detail.html:10
+#: templates/silverstrike/account_detail.html:14
 #: templates/silverstrike/account_form.html:14
-#: templates/silverstrike/accounts.html:9 templates/silverstrike/base.html:96
+#: templates/silverstrike/accounts.html:9 templates/silverstrike/base.html:97
 #: templates/silverstrike/budget_index.html:9
+#: templates/silverstrike/category_assign.html:11
 #: templates/silverstrike/category_detail.html:10
 #: templates/silverstrike/category_form.html:14
 #: templates/silverstrike/category_index.html:8
-#: templates/silverstrike/charts.html:10 templates/silverstrike/index.html:7
-#: templates/silverstrike/index.html:11
+#: templates/silverstrike/charts.html:10
+#: templates/silverstrike/disabled_recurrences.html:12
+#: templates/silverstrike/export.html:9
+#: templates/silverstrike/foreign_accounts.html:9
+#: templates/silverstrike/import.html:8
+#: templates/silverstrike/inactive_categories.html:9
+#: templates/silverstrike/index.html:7 templates/silverstrike/index.html:11
+#: templates/silverstrike/profile.html:11
 #: templates/silverstrike/reconcile.html:13
 #: templates/silverstrike/recurring_transactions.html:12
+#: templates/silverstrike/recurringtransaction_detail.html:9
+#: templates/silverstrike/recurringtransaction_form.html:15
+#: templates/silverstrike/transaction_confirm_delete.html:8
+#: templates/silverstrike/transaction_detail.html:10
+#: templates/silverstrike/transaction_overview.html:9
+#: templates/silverstrike/transaction_split_form.html:17
 msgid "Home"
 msgstr "主頁"
 
-#: templates/silverstrike/account_detail.html:11
+#: templates/silverstrike/account_detail.html:15
 #: templates/silverstrike/account_form.html:6
 #: templates/silverstrike/account_form.html:15
 #: templates/silverstrike/accounts.html:6
 #: templates/silverstrike/accounts.html:10
-#: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:102
-#: templates/silverstrike/index.html:71
+#: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:103
+#: templates/silverstrike/foreign_accounts.html:6
+#: templates/silverstrike/foreign_accounts.html:10
+#: templates/silverstrike/index.html:74
 #: templates/silverstrike/reconcile.html:14
 msgid "Accounts"
 msgstr "帳戶"
 
-#: templates/silverstrike/account_detail.html:20
-#: templates/silverstrike/budget_index.html:18
-#: templates/silverstrike/category_detail.html:20
-#: templates/silverstrike/category_index.html:17
-msgid "Previous"
-msgstr "上一頁"
+#: templates/silverstrike/account_detail.html:25
+#, python-format
+msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
+msgstr ""
 
-#: templates/silverstrike/account_detail.html:22
-#: templates/silverstrike/budget_index.html:20
-#: templates/silverstrike/category_detail.html:22
-#: templates/silverstrike/category_index.html:19
-msgid "Next"
-msgstr "下一頁"
+#: templates/silverstrike/account_detail.html:27
+msgid "No data to show!"
+msgstr ""
 
 #: templates/silverstrike/account_detail.html:36
+#: templates/silverstrike/category_detail.html:30
+msgid "Overview"
+msgstr "概述"
+
+#: templates/silverstrike/account_detail.html:41
+#: templates/silverstrike/index.html:19
 msgid "Current Balance"
 msgstr "目前餘額"
 
-#: templates/silverstrike/account_detail.html:39
+#: templates/silverstrike/account_detail.html:44
 msgid "In"
 msgstr "在"
 
-#: templates/silverstrike/account_detail.html:42
+#: templates/silverstrike/account_detail.html:47
 msgid "Out"
 msgstr "外"
 
-#: templates/silverstrike/account_detail.html:45
-#: templates/silverstrike/index.html:30 templates/silverstrike/index.html:64
+#: templates/silverstrike/account_detail.html:50
+#: templates/silverstrike/index.html:67
 msgid "Difference"
 msgstr "差分"
 
-#: templates/silverstrike/account_detail.html:50
+#: templates/silverstrike/account_detail.html:61
+#: templates/silverstrike/recurringtransaction_detail.html:79
+msgid "Show all"
+msgstr "顯示全部"
+
+#: templates/silverstrike/account_detail.html:64
+#: templates/silverstrike/accounts.html:32
 #: templates/silverstrike/category_detail.html:36
-#: templates/silverstrike/recurringtransaction_detail.html:50
+#: templates/silverstrike/foreign_accounts.html:30
+#: templates/silverstrike/recurringtransaction_detail.html:53
+#: templates/silverstrike/transaction_confirm_delete.html:11
 #: templates/silverstrike/transaction_detail.html:40
+#: templates/silverstrike/transaction_edit.html:21
+#: templates/silverstrike/transaction_split_form.html:21
 msgid "Edit"
 msgstr "編輯"
 
-#: templates/silverstrike/account_detail.html:53
+#: templates/silverstrike/account_detail.html:66
 #: templates/silverstrike/reconcile.html:7
 #: templates/silverstrike/reconcile.html:16
 msgid "Reconcile"
 msgstr "對帳"
 
-#: templates/silverstrike/account_detail.html:69
-#: templates/silverstrike/transaction_overview.html:19
+#: templates/silverstrike/account_detail.html:82
+#: templates/silverstrike/transaction_overview.html:17
 msgid "Transaction list"
 msgstr "交易"
 
-#: templates/silverstrike/account_detail.html:72
-#: templates/silverstrike/account_detail.html:74
-msgid "Show all"
-msgstr "顯示全部"
+#: templates/silverstrike/account_detail.html:89
+msgid "Booking date"
+msgstr ""
 
-#: templates/silverstrike/account_detail.html:92
+#: templates/silverstrike/account_detail.html:91
+#: templates/silverstrike/index.html:79 templates/silverstrike/index.html:111
+#: templates/silverstrike/index.html:172
+#: templates/silverstrike/transaction_detail.html:56
+#: templates/silverstrike/transaction_overview.html:27
+msgid "Account"
+msgstr "帳戶"
+
+#: templates/silverstrike/account_detail.html:100
 msgid "Reconcilation"
 msgstr "和解"
 
+#: templates/silverstrike/account_detail.html:125
+msgid "Last 30 days"
+msgstr ""
+
+#: templates/silverstrike/account_detail.html:129
+msgid "Last 6 months"
+msgstr ""
+
+#: templates/silverstrike/account_detail.html:130
+#: templates/silverstrike/charts.html:18
+msgid "Last year"
+msgstr "去年"
+
+#: templates/silverstrike/account_detail.html:138
+msgid "Apply"
+msgstr ""
+
+#: templates/silverstrike/account_detail.html:140
+msgid "Custom Range"
+msgstr ""
+
+#: templates/silverstrike/account_detail.html:189
+msgid "Not enough data to show a chart"
+msgstr ""
+
 #: templates/silverstrike/account_form.html:8
+#: templates/silverstrike/category_form.html:8
 #, python-format
-msgid "Update %(object.name)s"
-msgstr "更新 %(object.name)s"
+msgid "Update %(object_name)s"
+msgstr ""
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
@@ -603,17 +542,17 @@ msgstr "建立新帳戶"
 #: templates/silverstrike/account_form.html:59
 #: templates/silverstrike/category_form.html:18
 #: templates/silverstrike/category_form.html:63
-#: templates/silverstrike/newform.html:91
 #: templates/silverstrike/reconcile.html:59
-#: templates/silverstrike/recurringtransaction_form.html:47
+#: templates/silverstrike/recurringtransaction_form.html:46
 #: templates/silverstrike/transaction_edit.html:108
+#: templates/silverstrike/transaction_split_form.html:93
 msgid "Update"
 msgstr "更新"
 
 #: templates/silverstrike/account_form.html:20
-#: templates/silverstrike/accounts.html:36 templates/silverstrike/base.html:44
+#: templates/silverstrike/base.html:45
 #: templates/silverstrike/category_form.html:20
-#: templates/silverstrike/recurringtransaction_form.html:18
+#: templates/silverstrike/recurringtransaction_form.html:17
 msgid "New"
 msgstr "新"
 
@@ -621,26 +560,31 @@ msgstr "新"
 msgid "Account Details"
 msgstr "帳戶詳細資料"
 
-#: templates/silverstrike/account_form.html:62
+#: templates/silverstrike/account_form.html:63
 #: templates/silverstrike/category_form.html:63
 #: templates/silverstrike/category_index.html:58
-#: templates/silverstrike/newform.html:91
 #: templates/silverstrike/reconcile.html:59
-#: templates/silverstrike/recurring_transactions.html:21
-#: templates/silverstrike/recurringtransaction_form.html:47
+#: templates/silverstrike/recurring_transactions.html:78
+#: templates/silverstrike/recurringtransaction_form.html:46
+#: templates/silverstrike/transaction_edit.html:23
 #: templates/silverstrike/transaction_edit.html:108
+#: templates/silverstrike/transaction_split_form.html:23
+#: templates/silverstrike/transaction_split_form.html:93
 msgid "Create"
 msgstr "創建"
 
 #: templates/silverstrike/accounts.html:22
 #: templates/silverstrike/budget_index.html:35
 #: templates/silverstrike/category_index.html:42
+#: templates/silverstrike/foreign_accounts.html:22
+#: templates/silverstrike/inactive_categories.html:22
 msgid "Name"
 msgstr "名稱"
 
 #: templates/silverstrike/accounts.html:23
-#: templates/silverstrike/charts.html:30 templates/silverstrike/index.html:77
-#: templates/silverstrike/index.html:92
+#: templates/silverstrike/charts.html:30
+#: templates/silverstrike/foreign_accounts.html:23
+#: templates/silverstrike/index.html:80 templates/silverstrike/index.html:95
 msgid "Balance"
 msgstr "餘額"
 
@@ -648,46 +592,80 @@ msgstr "餘額"
 msgid "Active"
 msgstr "活動"
 
-#: templates/silverstrike/base.html:47
+#: templates/silverstrike/accounts.html:38
+msgid "Create Account"
+msgstr ""
+
+#: templates/silverstrike/accounts.html:39
+#: templates/silverstrike/foreign_accounts.html:17
+msgid "Foreign Accounts"
+msgstr ""
+
+#: templates/silverstrike/accounts.html:40
+msgid "Show inactive accounts"
+msgstr ""
+
+#: templates/silverstrike/accounts.html:41
+msgid "Hide inactive accounts"
+msgstr ""
+
+#: templates/silverstrike/base.html:39
+msgid "Toggle navigation"
+msgstr ""
+
+#: templates/silverstrike/base.html:48
 msgid "New Withdrawl"
 msgstr "新棄權"
 
-#: templates/silverstrike/base.html:50
+#: templates/silverstrike/base.html:51
 msgid "New Deposit"
 msgstr "新存款"
 
-#: templates/silverstrike/base.html:53
+#: templates/silverstrike/base.html:54
 msgid "New Transfer"
 msgstr "新的轉帳"
 
-#: templates/silverstrike/base.html:56
+#: templates/silverstrike/base.html:57
 msgid "New Split Transaction"
 msgstr "拆分交易"
 
-#: templates/silverstrike/base.html:78
+#: templates/silverstrike/base.html:79 templates/silverstrike/profile.html:7
+#: templates/silverstrike/profile.html:12
+#: templates/silverstrike/profile.html:18
 msgid "Profile"
 msgstr "個人資料"
 
-#: templates/silverstrike/base.html:81
+#: templates/silverstrike/base.html:82
 msgid "Sign out"
 msgstr "登出"
 
-#: templates/silverstrike/base.html:93
+#: templates/silverstrike/base.html:94
 msgid "MAIN NAVIGATION"
 msgstr "主要導航"
 
-#: templates/silverstrike/base.html:108
+#: templates/silverstrike/base.html:109
+#: templates/silverstrike/category_assign.html:12
 #: templates/silverstrike/category_detail.html:42
+#: templates/silverstrike/transaction_confirm_delete.html:9
+#: templates/silverstrike/transaction_detail.html:11
+#: templates/silverstrike/transaction_edit.html:18
+#: templates/silverstrike/transaction_overview.html:7
+#: templates/silverstrike/transaction_overview.html:10
+#: templates/silverstrike/transaction_split_form.html:18
 msgid "Transactions"
 msgstr "交易"
 
-#: templates/silverstrike/base.html:113
+#: templates/silverstrike/base.html:114
+#: templates/silverstrike/disabled_recurrences.html:13
+#: templates/silverstrike/disabled_recurrences.html:20
 #: templates/silverstrike/recurring_transactions.html:13
-#: templates/silverstrike/recurring_transactions.html:20
+#: templates/silverstrike/recurring_transactions.html:54
+#: templates/silverstrike/recurringtransaction_detail.html:10
+#: templates/silverstrike/recurringtransaction_form.html:16
 msgid "Recurrences"
 msgstr "循環"
 
-#: templates/silverstrike/base.html:119
+#: templates/silverstrike/base.html:120
 #: templates/silverstrike/category_detail.html:11
 #: templates/silverstrike/category_form.html:6
 #: templates/silverstrike/category_form.html:15
@@ -696,37 +674,51 @@ msgstr "循環"
 msgid "Categories"
 msgstr "類型"
 
-#: templates/silverstrike/base.html:125
+#: templates/silverstrike/base.html:126
 #: templates/silverstrike/budget_index.html:7
 #: templates/silverstrike/budget_index.html:10
 msgid "Budgets"
 msgstr "預算"
 
-#: templates/silverstrike/base.html:131 templates/silverstrike/charts.html:6
+#: templates/silverstrike/base.html:132 templates/silverstrike/charts.html:6
 #: templates/silverstrike/charts.html:11
 msgid "Charts"
 msgstr "圖表"
 
-#: templates/silverstrike/base.html:136
-msgid "Import & Export"
-msgstr "導入和匯出"
+#: templates/silverstrike/base.html:137
+msgid "Import &amp; Export"
+msgstr ""
 
-#: templates/silverstrike/base.html:143
+#: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
 msgid "Import"
 msgstr "導入"
 
-#: templates/silverstrike/base.html:146
+#: templates/silverstrike/base.html:147 templates/silverstrike/export.html:10
+#: templates/silverstrike/export.html:17 templates/silverstrike/export.html:37
 msgid "Export"
 msgstr "導出"
 
-#: templates/silverstrike/base.html:165
+#: templates/silverstrike/base.html:166
 #, python-format
 msgid "<b>Version</b> %(version)s"
 msgstr ""
 
+#: templates/silverstrike/budget_index.html:18
+#: templates/silverstrike/category_detail.html:20
+#: templates/silverstrike/category_index.html:17
+msgid "Previous"
+msgstr "上一頁"
+
+#: templates/silverstrike/budget_index.html:20
+#: templates/silverstrike/category_detail.html:22
+#: templates/silverstrike/category_index.html:19
+msgid "Next"
+msgstr "下一頁"
+
 #: templates/silverstrike/budget_index.html:29
-msgid "Budget for "
-msgstr "預算為 "
+#, python-format
+msgid "Budget for %(month_str)s"
+msgstr ""
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
@@ -742,22 +734,31 @@ msgid "Left"
 msgstr "左"
 
 #: templates/silverstrike/budget_index.html:65
+#: templates/silverstrike/category_assign.html:44
 msgid "Save"
 msgstr "儲存"
 
-#: templates/silverstrike/category_confirm_delete.html:16
-msgid "\n"
-"      <p>Are you sure you want to delete the category?</p>\n"
-"      <p>All transactions linked to this category won't be deleted but will loose the entry for the category</p>\n"
-"      "
-msgstr "\n"
-"<p>您確定要刪除類別嗎？</p>\n"
-"<p>所有鏈接到這個類別的交易都不會被刪除，\n"
-"但是會丟失類別的輸入。</p>      "
+#: templates/silverstrike/category_assign.html:19
+#: templates/silverstrike/index.html:64
+msgid "Expenses"
+msgstr "支出"
 
-#: templates/silverstrike/category_detail.html:30
-msgid "Overview"
-msgstr "概述"
+#: templates/silverstrike/category_assign.html:48
+msgid "No uncategorized expenses available"
+msgstr ""
+
+#: templates/silverstrike/category_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' category"
+msgstr ""
+
+#: templates/silverstrike/category_confirm_delete.html:15
+msgid "Are you sure you want to delete the category?"
+msgstr ""
+
+#: templates/silverstrike/category_confirm_delete.html:16
+msgid "All transactions linked to this category won't be deleted but will loose the entry for the category"
+msgstr ""
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
@@ -783,13 +784,13 @@ msgstr "類別細節"
 msgid "Distribution by category"
 msgstr "按類別分佈"
 
+#: templates/silverstrike/category_index.html:59
+msgid "Categorize expenses"
+msgstr ""
+
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
 msgstr "因為他們很有趣!"
-
-#: templates/silverstrike/charts.html:18
-msgid "Last year"
-msgstr "去年"
 
 #: templates/silverstrike/charts.html:19
 msgid "Last 6 Months"
@@ -811,76 +812,107 @@ msgstr "個人帳戶"
 msgid "Spending by category"
 msgstr "按類別支出"
 
+#: templates/silverstrike/disabled_recurrences.html:9
+msgid "Disabled Recurring Transactions"
+msgstr ""
+
+#: templates/silverstrike/foreign_accounts.html:67
+msgid "Create Foreign Account"
+msgstr ""
+
+#: templates/silverstrike/import.html:17
+msgid "Import methods"
+msgstr ""
+
+#: templates/silverstrike/import.html:21
+msgid "Generic CSV"
+msgstr ""
+
+#: templates/silverstrike/inactive_categories.html:6
+#: templates/silverstrike/inactive_categories.html:10
+#: templates/silverstrike/inactive_categories.html:17
+msgid "Inactive Categories"
+msgstr ""
+
 #: templates/silverstrike/index.html:8
 msgid "All important stuff"
 msgstr "所有重要的東西"
 
-#: templates/silverstrike/index.html:19
-msgid "Quick Overview"
-msgstr "快速概覽"
+#: templates/silverstrike/index.html:27
+msgid "Working Balance"
+msgstr ""
 
-#: templates/silverstrike/index.html:24 templates/silverstrike/index.html:58
-msgid "Income"
-msgstr "收入"
+#: templates/silverstrike/index.html:35
+msgid "Outstanding Recurrences"
+msgstr ""
 
-#: templates/silverstrike/index.html:27 templates/silverstrike/index.html:61
-msgid "Expenses"
-msgstr "支出"
+#: templates/silverstrike/index.html:43
+msgid "End of Month Balance"
+msgstr ""
 
-#: templates/silverstrike/index.html:33
-msgid "Total Balance"
-msgstr "總計餘額"
-
-#: templates/silverstrike/index.html:37
-msgid "Outstanding"
-msgstr "優秀"
-
-#: templates/silverstrike/index.html:40
-msgid "Expected end of month"
-msgstr "預計月底"
-
-#: templates/silverstrike/index.html:48
+#: templates/silverstrike/index.html:53
 msgid "You have recurrences that are overdue!"
 msgstr "您有逾期的復發!"
 
-#: templates/silverstrike/index.html:53
-msgid "Previous Month"
-msgstr "上個月"
+#: templates/silverstrike/index.html:61
+msgid "Income"
+msgstr "收入"
 
-#: templates/silverstrike/index.html:101
+#: templates/silverstrike/index.html:104
 msgid "Upcoming Transactions"
 msgstr "即將到來的交易"
 
-#: templates/silverstrike/index.html:125
+#: templates/silverstrike/index.html:128
 msgid "Upcoming Recurrences"
 msgstr "即將發生的週期交易"
 
-#: templates/silverstrike/index.html:149
+#: templates/silverstrike/index.html:145
+#: templates/silverstrike/recurringtransaction_detail.html:52
+msgid "Create Transaction"
+msgstr ""
+
+#: templates/silverstrike/index.html:152
 msgid "No upcoming recurrences"
 msgstr "沒有即將發生的週期交易"
 
-#: templates/silverstrike/index.html:158
+#: templates/silverstrike/index.html:163
 msgid "Recent Transactions"
 msgstr "近期交易"
 
-#: templates/silverstrike/index.html:164
+#: templates/silverstrike/index.html:169
+#: templates/silverstrike/transaction_overview.html:23
 msgid "Type"
 msgstr "類型"
 
-#: templates/silverstrike/index.html:168
+#: templates/silverstrike/index.html:173
+#: templates/silverstrike/transaction_detail.html:57
+#: templates/silverstrike/transaction_overview.html:28
 msgid "Opposing Account"
 msgstr "對方帳戶"
 
-#: templates/silverstrike/newform.html:31
-#: templates/silverstrike/recurringtransaction_form.html:25
-#: templates/silverstrike/transaction_detail.html:19
-#: templates/silverstrike/transaction_edit.html:31
-msgid "Transaction Details"
-msgstr "交易記錄詳細資訊"
+#: templates/silverstrike/profile.html:8
+msgid "Your account details"
+msgstr ""
 
-#: templates/silverstrike/newform.html:92
-msgid "Add Split"
-msgstr "添加拆分"
+#: templates/silverstrike/profile.html:22
+msgid "Username"
+msgstr ""
+
+#: templates/silverstrike/profile.html:24
+msgid "API auth key"
+msgstr ""
+
+#: templates/silverstrike/profile.html:26
+msgid "Email Addresses"
+msgstr ""
+
+#: templates/silverstrike/profile.html:27
+msgid "Manage Email Addresses"
+msgstr ""
+
+#: templates/silverstrike/profile.html:28
+msgid "Password"
+msgstr ""
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
@@ -890,9 +922,41 @@ msgstr "創建對賬交易"
 msgid "Recurring Transactions"
 msgstr "週期性交易"
 
-#: templates/silverstrike/recurring_transactions.html:31
+#: templates/silverstrike/recurring_transactions.html:22
+msgid "Income this month"
+msgstr ""
+
+#: templates/silverstrike/recurring_transactions.html:30
+msgid "Expenses this month"
+msgstr ""
+
+#: templates/silverstrike/recurring_transactions.html:38
+msgid "Total change this month"
+msgstr ""
+
+#: templates/silverstrike/recurring_transactions.html:46
+msgid "Remaining change this month"
+msgstr ""
+
+#: templates/silverstrike/recurring_transactions.html:64
 msgid "Recurrance"
 msgstr "週期性"
+
+#: templates/silverstrike/recurring_transactions.html:79
+msgid "Show disabled recurrences"
+msgstr ""
+
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' recurring transaction"
+msgstr ""
+
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:16
+msgid "\n"
+"        Are you sure you want to delete the recurring transaction?\n"
+"        This will not remove the actual transactions.\n"
+"        "
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
@@ -903,6 +967,10 @@ msgstr "週期交易細節"
 msgid "Recurrence"
 msgstr "週期業務"
 
+#: templates/silverstrike/recurringtransaction_detail.html:26
+msgid "Next expected ocurrence"
+msgstr ""
+
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
 msgstr "來源"
@@ -911,13 +979,38 @@ msgstr "來源"
 msgid "Destination"
 msgstr "目的地"
 
-#: templates/silverstrike/recurringtransaction_detail.html:57
+#: templates/silverstrike/recurringtransaction_detail.html:38
+msgid "Average amount"
+msgstr ""
+
+#: templates/silverstrike/recurringtransaction_detail.html:60
 msgid "Recent ocurrences"
 msgstr "近期週期交易"
+
+#: templates/silverstrike/recurringtransaction_form.html:9
+#, python-format
+msgid "Edit %(object_namee)s"
+msgstr ""
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
 msgstr "新週期交易"
+
+#: templates/silverstrike/recurringtransaction_form.html:24
+#: templates/silverstrike/transaction_detail.html:19
+#: templates/silverstrike/transaction_edit.html:31
+#: templates/silverstrike/transaction_split_form.html:31
+msgid "Transaction Details"
+msgstr "交易記錄詳細資訊"
+
+#: templates/silverstrike/transaction_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' transaction"
+msgstr ""
+
+#: templates/silverstrike/transaction_confirm_delete.html:21
+msgid "Are you sure you want to delete the transaction?"
+msgstr ""
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
@@ -935,63 +1028,43 @@ msgstr "編輯拆分交易"
 msgid "Splits"
 msgstr "拆分"
 
-#: templates/socialaccount/authentication_error.html:5
-#: templates/socialaccount/authentication_error.html:8
-msgid "Social Network Login Failure"
-msgstr "社交網絡登錄失敗"
-
-#: templates/socialaccount/authentication_error.html:10
-msgid "An error occurred while attempting to login via your social network account."
-msgstr "嘗試通過您的社交網絡帳戶登錄時發生錯誤。"
-
-#: templates/socialaccount/connections.html:5
-#: templates/socialaccount/connections.html:8
-msgid "Account Connections"
-msgstr "帳戶連接"
-
-#: templates/socialaccount/connections.html:11
-msgid "You can sign in to your account using any of the following third party accounts:"
-msgstr "您可以使用以下任何第三方帳戶登錄您的帳戶："
-
-#: templates/socialaccount/connections.html:43
-msgid "You currently have no social network accounts connected to this account."
-msgstr "您目前沒有連接到此帳戶的社交網絡帳戶。"
-
-#: templates/socialaccount/connections.html:46
-msgid "Add a 3rd Party Account"
-msgstr "添加第三方帳戶"
-
-#: templates/socialaccount/login_cancelled.html:5
-#: templates/socialaccount/login_cancelled.html:9
-msgid "Login Cancelled"
-msgstr "已取消登錄"
-
-#: templates/socialaccount/login_cancelled.html:13
+#: templates/silverstrike/transaction_edit.html:10
+#: templates/silverstrike/transaction_split_form.html:10
 #, python-format
-msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr "您決定使用您的一個現有帳戶取消登錄我們的網站。\n"
-"如果這是一個錯誤，請繼續<a href=\"%(login_url)s\">登錄</a>。"
+msgid "Edit %(object.title)s"
+msgstr ""
 
-#: templates/socialaccount/messages/account_connected.txt:2
-msgid "The social account has been connected."
-msgstr "社交帳戶已關聯。"
-
-#: templates/socialaccount/messages/account_connected_other.txt:2
-msgid "The social account is already connected to a different account."
-msgstr "社交帳戶已經連接到不同的帳戶."
-
-#: templates/socialaccount/messages/account_disconnected.txt:2
-msgid "The social account has been disconnected."
-msgstr "社交帳戶已被斷開."
-
-#: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
-msgid "Sign Up"
-msgstr "注册"
-
-#: templates/socialaccount/signup.html:10
+#: templates/silverstrike/transaction_edit.html:12
+#: templates/silverstrike/transaction_split_form.html:12
 #, python-format
-msgid "You are about to use your %(provider_name)s account to login to\n"
-"%(site_name)s. As a final step, please complete the following form:"
-msgstr "您即將使用您的%(provider_name)s 的帳戶登錄 %(site_name)s.\n"
-"作為最後一步，請填寫以下表格："
+msgid "Add new %(submenu)s"
+msgstr ""
+
+#: templates/silverstrike/transaction_overview.html:25
+msgid "Booking Date"
+msgstr ""
+
+#: templates/silverstrike/transaction_split_form.html:94
+msgid "Add Split"
+msgstr "添加拆分"
+
+#: views/accounts.py:43 views/accounts.py:49
+msgid "You are not allowed to edit this account"
+msgstr ""
+
+#: views/accounts.py:65 views/accounts.py:72
+msgid "You are not allowed to delete this account"
+msgstr ""
+
+#: views/accounts.py:110
+msgid "Account not accessible"
+msgstr ""
+
+#: views/accounts.py:119
+msgid "Nothing here..."
+msgstr ""
+
+#: views/accounts.py:172
+msgid "You can not reconcile this account"
+msgstr ""
 
