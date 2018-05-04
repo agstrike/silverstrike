@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-04 13:59-0400\n"
+"PO-Revision-Date: 2018-05-15 01:50-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Filipino\n"
 "Language: fil_PH\n"
@@ -18,19 +18,19 @@ msgstr ""
 
 #: admin.py:36
 msgid "You need to select more than one account to merge them."
-msgstr ""
+msgstr "Kinakailangan mong pumili ng higit sa isang account upang pagsamahin sila."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, \"{}\" isn't."
-msgstr ""
+msgstr "Maaari mo lamang pagsamahin ang mga dayuhan na account, \"{}\" ay hindi."
 
 #: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
-msgstr ""
+msgstr "Ang Pinagsama na isang account sa <a href={}>{}</a>."
 
 #: admin.py:63
 msgid "Merged {} accounts into <a href={}>{}</a>."
-msgstr ""
+msgstr "Ang Pinagsama {} mga account sa <a href={}>{}</a>."
 
 #: forms.py:125
 msgid "Debitor"
@@ -54,15 +54,15 @@ msgstr ""
 
 #: models.py:33
 msgid "Personal"
-msgstr ""
+msgstr "Ang Personal"
 
 #: models.py:34
 msgid "Foreign"
-msgstr ""
+msgstr "Ang Dayuhan"
 
 #: models.py:35
 msgid "System"
-msgstr ""
+msgstr "Ang Sistema"
 
 #: models.py:103
 msgid "Initial Balance"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: models.py:308
 msgid "Do not use"
-msgstr ""
+msgstr "Huwag gamitin"
 
 #: models.py:309 templates/silverstrike/disabled_recurrences.html:27
 #: templates/silverstrike/recurring_transactions.html:62
@@ -94,7 +94,7 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:58
 #: templates/silverstrike/transaction_overview.html:26
 msgid "Amount"
-msgstr ""
+msgstr "Ang Halaga"
 
 #: models.py:312 templates/silverstrike/account_detail.html:88
 #: templates/silverstrike/category_assign.html:29
@@ -107,12 +107,12 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:59
 #: templates/silverstrike/transaction_overview.html:24
 msgid "Date"
-msgstr ""
+msgstr "Ang Petsa"
 
 #: models.py:313 templates/silverstrike/recurringtransaction_detail.html:46
 #: templates/silverstrike/transaction_detail.html:31
 msgid "Notes"
-msgstr ""
+msgstr "Ang mga Tala"
 
 #: models.py:314 templates/silverstrike/account_detail.html:92
 #: templates/silverstrike/category_assign.html:31
@@ -121,7 +121,7 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:60
 #: templates/silverstrike/transaction_overview.html:29
 msgid "Category"
-msgstr ""
+msgstr "Ang Kategorya"
 
 #: models.py:315 templates/silverstrike/account_detail.html:87
 #: templates/silverstrike/category_assign.html:28
@@ -134,11 +134,11 @@ msgstr ""
 #: templates/silverstrike/transaction_detail.html:55
 #: templates/silverstrike/transaction_overview.html:22
 msgid "Title"
-msgstr ""
+msgstr "Titulo"
 
 #: models.py:319
 msgid "First line contains headers"
-msgstr ""
+msgstr "Ang unang linya ay naglalaman ng mga ulo"
 
 #: models.py:347
 msgid "Disabled"

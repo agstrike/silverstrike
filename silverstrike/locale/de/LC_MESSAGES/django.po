@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-04 13:59-0400\n"
+"PO-Revision-Date: 2018-05-15 16:00-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -22,7 +22,7 @@ msgstr "Sie müssen mehr als ein Konto auswählen, um diese zusammenzuführen."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, \"{}\" isn't."
-msgstr ""
+msgstr "Sie können nur fremde Konten zusammenführen, \"{}\" ist keines."
 
 #: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
@@ -150,15 +150,15 @@ msgstr "Monatlich"
 
 #: models.py:349
 msgid "Quarterly"
-msgstr ""
+msgstr "Vierteljährlich"
 
 #: models.py:350
 msgid "Biannually"
-msgstr ""
+msgstr "Halbjährlich"
 
 #: models.py:351
 msgid "Annually"
-msgstr ""
+msgstr "Jährlich"
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:14
@@ -175,7 +175,7 @@ msgstr "Email Adressen"
 
 #: templates/account/email.html:10
 msgid "Manage E-mail Addresses"
-msgstr ""
+msgstr "E-Mail-Adressen verwalten"
 
 #: templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
@@ -349,12 +349,12 @@ msgstr "Wir haben eine E-mail an Sie zur Überprüfung gesendet. Folgen Sie dem 
 #: templates/silverstrike/account_confirm_delete.html:6
 #, python-format
 msgid " Delete '%(object_name)s' account"
-msgstr ""
+msgstr " '%(object_name)s'-Konto löschen"
 
 #: templates/silverstrike/account_confirm_delete.html:16
 #, python-format
 msgid "Are you sure you want to delete the account along with %(transaction_num)s transactions?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie das Konto zusammen mit %(transaction_num)s Transaktionen löschen möchten?"
 
 #: templates/silverstrike/account_confirm_delete.html:19
 #: templates/silverstrike/account_detail.html:139
@@ -421,11 +421,11 @@ msgstr "Konten"
 #: templates/silverstrike/account_detail.html:25
 #, python-format
 msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
-msgstr ""
+msgstr "Zeigt Daten von <b>%(dstart)s</b> bis <b>%(dend)s</b>"
 
 #: templates/silverstrike/account_detail.html:27
 msgid "No data to show!"
-msgstr ""
+msgstr "Keine Daten zum Anzeigen!"
 
 #: templates/silverstrike/account_detail.html:36
 #: templates/silverstrike/category_detail.html:30
@@ -480,7 +480,7 @@ msgstr "Transaktionsliste"
 
 #: templates/silverstrike/account_detail.html:89
 msgid "Booking date"
-msgstr ""
+msgstr "Buchungsdatum"
 
 #: templates/silverstrike/account_detail.html:91
 #: templates/silverstrike/index.html:79 templates/silverstrike/index.html:111
@@ -496,11 +496,11 @@ msgstr "Abgleichung"
 
 #: templates/silverstrike/account_detail.html:125
 msgid "Last 30 days"
-msgstr ""
+msgstr "Letzte 30 Tage"
 
 #: templates/silverstrike/account_detail.html:129
 msgid "Last 6 months"
-msgstr ""
+msgstr "Letzte 6 Monate"
 
 #: templates/silverstrike/account_detail.html:130
 #: templates/silverstrike/charts.html:18
@@ -509,15 +509,15 @@ msgstr "Letztes Jahr"
 
 #: templates/silverstrike/account_detail.html:138
 msgid "Apply"
-msgstr ""
+msgstr "Anwenden"
 
 #: templates/silverstrike/account_detail.html:140
 msgid "Custom Range"
-msgstr ""
+msgstr "Benutzerdefinierter Bereich"
 
 #: templates/silverstrike/account_detail.html:189
 msgid "Not enough data to show a chart"
-msgstr ""
+msgstr "Nicht genügend Daten für die Darstellung der Diagramme"
 
 #: templates/silverstrike/account_form.html:8
 #: templates/silverstrike/category_form.html:8
@@ -803,10 +803,6 @@ msgstr "Persönliche Konten"
 msgid "Spending by category"
 msgstr "Ausgaben nach Kategorie"
 
-#: templates/silverstrike/index.html:8
-msgid "All important stuff"
-msgstr "Alle wichtige Sachen"
-
 #: templates/silverstrike/disabled_recurrences.html:9
 msgid "Disabled Recurring Transactions"
 msgstr ""
@@ -828,6 +824,10 @@ msgstr ""
 #: templates/silverstrike/inactive_categories.html:17
 msgid "Inactive Categories"
 msgstr "Inaktive Kategorien"
+
+#: templates/silverstrike/index.html:8
+msgid "All important stuff"
+msgstr "Alle wichtige Sachen"
 
 #: templates/silverstrike/index.html:27
 msgid "Working Balance"
