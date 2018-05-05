@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-05 06:00-0400\n"
+"PO-Revision-Date: 2018-05-05 06:10-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -963,7 +963,7 @@ msgstr "Récurrence"
 
 #: templates/silverstrike/recurringtransaction_detail.html:26
 msgid "Next expected ocurrence"
-msgstr ""
+msgstr "Prochaine occurrence attendue"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
@@ -975,7 +975,7 @@ msgstr "Destination"
 
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Average amount"
-msgstr ""
+msgstr "Montant moyen"
 
 #: templates/silverstrike/recurringtransaction_detail.html:60
 msgid "Recent ocurrences"
@@ -1004,7 +1004,7 @@ msgstr ""
 
 #: templates/silverstrike/transaction_confirm_delete.html:21
 msgid "Are you sure you want to delete the transaction?"
-msgstr ""
+msgstr "Êtes vous sûr de vouloir supprimer cette transaction ?"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
@@ -1044,19 +1044,19 @@ msgstr "Ajouter Partage"
 
 #: views/accounts.py:43 views/accounts.py:49
 msgid "You are not allowed to edit this account"
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à modifier ce compte"
 
 #: views/accounts.py:65 views/accounts.py:72
 msgid "You are not allowed to delete this account"
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à supprimer ce compte"
 
 #: views/accounts.py:110
 msgid "Account not accessible"
-msgstr ""
+msgstr "Compte inaccessible"
 
 #: views/accounts.py:119
 msgid "Nothing here..."
-msgstr ""
+msgstr "Il n'y a rien ici..."
 
 #: views/accounts.py:172
 msgid "You can not reconcile this account"
