@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-04 14:00-0400\n"
+"PO-Revision-Date: 2018-05-08 05:20-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -171,11 +171,11 @@ msgstr ""
 
 #: templates/account/email.html:6
 msgid "E-mail Addresses"
-msgstr ""
+msgstr "Адреса электронной почты"
 
 #: templates/account/email.html:10
 msgid "Manage E-mail Addresses"
-msgstr ""
+msgstr "Редактировать адреса электронной почты"
 
 #: templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
@@ -183,31 +183,31 @@ msgstr ""
 
 #: templates/account/email.html:27
 msgid "Verified"
-msgstr ""
+msgstr "Подтверждён"
 
 #: templates/account/email.html:29
 msgid "Unverified"
-msgstr ""
+msgstr "Неподтвержден"
 
 #: templates/account/email.html:31
 msgid "Primary"
-msgstr ""
+msgstr "Основной"
 
 #: templates/account/email.html:38
 msgid "Make Primary"
-msgstr ""
+msgstr "Сделать основным"
 
 #: templates/account/email.html:39
 msgid "Re-send Verification"
-msgstr ""
+msgstr "Отправить подтверждение повторно"
 
 #: templates/account/email.html:40
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #: templates/account/email.html:45
 msgid "Add E-mail Address"
-msgstr ""
+msgstr "Добавить электронную почту"
 
 #: templates/account/email.html:58
 msgid "Add E-mail"
@@ -895,11 +895,11 @@ msgstr ""
 
 #: templates/silverstrike/profile.html:26
 msgid "Email Addresses"
-msgstr ""
+msgstr "Адреса электронной почты"
 
 #: templates/silverstrike/profile.html:27
 msgid "Manage Email Addresses"
-msgstr ""
+msgstr "Редактировать адреса электронной почты"
 
 #: templates/silverstrike/profile.html:28
 msgid "Password"
