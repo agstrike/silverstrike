@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-05 06:10-0400\n"
+"PO-Revision-Date: 2018-05-11 14:10-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -355,7 +355,7 @@ msgstr ""
 #: templates/silverstrike/account_confirm_delete.html:16
 #, python-format
 msgid "Are you sure you want to delete the account along with %(transaction_num)s transactions?"
-msgstr ""
+msgstr "Êtes-vous sûr de que vouloir supprimer le compte ainsi que les %(transaction_num)s transactions ?"
 
 #: templates/silverstrike/account_confirm_delete.html:19
 #: templates/silverstrike/account_detail.html:139
@@ -422,7 +422,7 @@ msgstr "Comptes"
 #: templates/silverstrike/account_detail.html:25
 #, python-format
 msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
-msgstr ""
+msgstr "Affiche les données de <b>%(dstart)s</b> à <b>%(dend)s</b>"
 
 #: templates/silverstrike/account_detail.html:27
 msgid "No data to show!"
@@ -514,7 +514,7 @@ msgstr "Appliquer"
 
 #: templates/silverstrike/account_detail.html:140
 msgid "Custom Range"
-msgstr ""
+msgstr "Plage personnalisée"
 
 #: templates/silverstrike/account_detail.html:189
 msgid "Not enough data to show a chart"
@@ -524,7 +524,7 @@ msgstr "Pas assez de données pour afficher un graphique"
 #: templates/silverstrike/category_form.html:8
 #, python-format
 msgid "Update %(object_name)s"
-msgstr ""
+msgstr "Mettre à jour %(object_name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
@@ -710,7 +710,7 @@ msgstr "Suivant"
 #: templates/silverstrike/budget_index.html:29
 #, python-format
 msgid "Budget for %(month_str)s"
-msgstr ""
+msgstr "Budget pour %(month_str)s"
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
@@ -814,7 +814,7 @@ msgstr "Créer un compte à l'étranger"
 
 #: templates/silverstrike/import.html:17
 msgid "Import methods"
-msgstr ""
+msgstr "Méthodes d’importation"
 
 #: templates/silverstrike/import.html:21
 msgid "Generic CSV"
