@@ -2,13 +2,16 @@
 
 All notable changes to SilverStrike will be documented here.
 
-## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.1...master)
+## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.3...master)
+
+## [0.1.3](https://github.com/agstrike/silverstrike/releases/tag/0.1.3) - 2018-05-15
 
 ### Added
 * Add view to assign categories to multiple splits at once
 * Add quarterly and biannual recurrences
 * Add view to list foreign accounts
 * Add view to create new foreign accounts
+* New Logo
 
 ### Removed
 * Weekly recurrences
