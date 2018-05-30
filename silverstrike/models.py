@@ -208,6 +208,9 @@ class Transaction(models.Model):
 
 
 class SplitQuerySet(models.QuerySet):
+    def household(self, user):
+        return self.filter(household=user.profile.household)
+
     def personal(self):
         return self.filter(account__account_type=Account.PERSONAL)
 
@@ -253,6 +256,7 @@ class Split(models.Model):
     transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
                                     blank=True, null=True)
     last_modified = models.DateTimeField(auto_now=True)
+    household = models.ForeignKey(HouseHold, models.CASCADE)
 
     objects = SplitQuerySet.as_manager()
 
@@ -300,6 +304,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'categories'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -316,6 +321,9 @@ class Category(models.Model):
 
 
 class BudgetQuerySet(models.QuerySet):
+    def household(self, user):
+        return self.filter(category__household=user.profile.household)
+
     def for_month(self, month):
         return self.filter(month=month)
 
@@ -377,7 +385,7 @@ class RecurringTransactionQueryset(models.QuerySet):
 
     def active(self):
         return self.exclude(recurrence=RecurringTransaction.DISABLED)
-    
+
     def due_in_month(self, month=None):
         from .lib import last_day_of_month
         if not month:

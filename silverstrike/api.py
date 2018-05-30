@@ -9,7 +9,7 @@ from .models import Account, Split
 
 @login_required
 def get_accounts(request, account_type):
-    accounts = Account.objects.exclude(account_type=Account.SYSTEM)
+    accounts = Account.objects.exclude(account_type=Account.SYSTEM).household(request.user)
     if account_type != 'all':
         account_type = getattr(Account, account_type)
         accounts = accounts.filter(account_type=account_type)
@@ -22,7 +22,7 @@ def get_accounts_balance(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
     dataset = []
-    for account in Account.objects.personal().active():
+    for account in Account.objects.personal().active().household(request.user):
         data = list(zip(*account.get_data_points(dstart, dend)))
         dataset.append({'name': account.name, 'data': data[1]})
     if dataset:
@@ -36,7 +36,7 @@ def get_accounts_balance(request, dstart, dend):
 def get_account_balance(request, account_id, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
-    account = Account.objects.get(pk=account_id)
+    account = Account.objects.get(pk=account_id).household(request.user)
     labels, data = zip(*account.get_data_points(dstart, dend))
     return JsonResponse({'data': data, 'labels': labels})
 
@@ -45,9 +45,9 @@ def get_account_balance(request, account_id, dstart, dend):
 def get_balances(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
-    balance = Split.objects.personal().exclude_transfers().filter(date__lt=dstart).aggregate(
+    balance = Split.objects.personal().exclude_transfers().filter(date__lt=dstart).household(request.user).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
-    splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend).order_by('date')
+    splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend).household(request.user).order_by('date')
     data_points = []
     labels = []
     days = (dend - dstart).days
@@ -70,7 +70,7 @@ def get_balances(request, dstart, dend):
 def category_spending(request, dstart, dend):
     dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
     dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
-    res = Split.objects.expense().past().date_range(dstart, dend).order_by('category').values(
+    res = Split.objects.expense().past().date_range(dstart, dend).household(request.user).order_by('category').values(
         'category__name').annotate(spent=models.Sum('amount'))
     if res:
         res = [(e['category__name'] or 'No category', abs(e['spent'])) for e in res if e['spent']]

@@ -15,6 +15,12 @@ class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = RecurringTransaction
     success_url = reverse_lazy('recurrences')
 
+    def get_form_kwargs(self):
+        kwargs = super(RecurrenceCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+
 
 class RecurrenceDetailView(LoginRequiredMixin, generic.DetailView):
     model = RecurringTransaction
@@ -40,6 +46,11 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         else:
             form_class = TransferForm
         return form_class(**self.get_form_kwargs())
+
+    def get_form_kwargs(self):
+        kwargs = super(RecurrenceTransactionCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_initial(self):
         initial = super().get_initial()

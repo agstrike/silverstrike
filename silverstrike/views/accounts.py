@@ -97,9 +97,10 @@ class AccountIndex(LoginRequiredMixin, generic.ListView):
 class ForeignAccountIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/foreign_accounts.html'
     paginate_by = 20
+    model = Account
 
     def get_queryset(self):
-        return super().get_queryset().household(self.requst.user).foreign()
+        return super().get_queryset().household(self.request.user).foreign()
 
 
 class AccountView(LoginRequiredMixin, generic.ListView):

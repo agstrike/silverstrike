@@ -67,13 +67,20 @@ class TransactionForm(forms.ModelForm):
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
     category = forms.ModelChoiceField(
-        queryset=Category.objects.exclude(active=False).order_by('name'), required=False)
+        queryset=Category.objects.all(), required=False)
     value_date = forms.DateField(required=False)
 
-    source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL, active=True))
-    destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL, active=True))
+    source_account = forms.ModelChoiceField(queryset=Account.objects.all())
+    destination_account = forms.ModelChoiceField(queryset=Account.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(TransactionForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = self.fields['category'].queryset.active().household(self.user)
+        if type(self.fields['source_account']) == forms.ModelChoiceField:
+            self.fields['source_account'].queryset = self.fields['source_account'].queryset.active().personal().household(self.user)
+        if type(self.fields['destination_account']) == forms.ModelChoiceField:
+            self.fields['destination_account'].queryset = self.fields['destination_account'].queryset.active().personal().household(self.user)
 
     def save(self, commit=True):
         transaction = super().save(commit)
@@ -85,12 +92,14 @@ class TransactionForm(forms.ModelForm):
                                        defaults={'amount': -amount, 'account': src,
                                                  'opposing_account': dst, 'date': value_date,
                                                  'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
+                                                 'category': self.cleaned_data['category'],
+                                                 'household': self.user.profile.household})
         Split.objects.update_or_create(transaction=transaction, amount__gt=0,
                                        defaults={'amount': amount, 'account': dst,
                                                  'opposing_account': src, 'date': value_date,
                                                  'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
+                                                 'category': self.cleaned_data['category'],
+                                                 'household': self.user.profile.household})
         return transaction
 
 
@@ -127,7 +136,7 @@ class WithdrawForm(TransactionForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['destination_account'],
-                                                   account_type=Account.FOREIGN)
+                                                   account_type=Account.FOREIGN, household=self.user.profile.household)
         self.cleaned_data['destination_account'] = account
         return super().save(commit)
 
@@ -142,7 +151,7 @@ class DepositForm(TransactionForm):
 
     def save(self, commit=True):
         account, _ = Account.objects.get_or_create(name=self.cleaned_data['source_account'],
-                                                   account_type=Account.FOREIGN)
+                                                   account_type=Account.FOREIGN, household=self.user.profile.household)
         self.cleaned_data['source_account'] = account
         return super().save(commit)
 
@@ -156,6 +165,14 @@ class RecurringTransactionForm(forms.ModelForm):
         model = RecurringTransaction
         fields = ['title', 'date', 'amount',
                   'src', 'dst', 'category', 'recurrence']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(RecurringTransactionForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = self.fields['category'].queryset.active().household(self.user)
+        self.fields['src'].queryset = self.fields['src'].queryset.active().household(self.user)
+        self.fields['dst'].queryset = self.fields['dst'].queryset.active().household(self.user)
+
 
     def clean_amount(self):
         amount = self.cleaned_data['amount']

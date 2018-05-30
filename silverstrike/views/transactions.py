@@ -63,6 +63,11 @@ class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
         self.type = kwargs.pop('type')
         return super(TransactionCreate, self).dispatch(request, *args, **kwargs)
 
+    def get_form_kwargs(self):
+        kwargs = super(TransactionCreate, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_form_class(self):
         if self.type == 'transfer':
             return TransferForm

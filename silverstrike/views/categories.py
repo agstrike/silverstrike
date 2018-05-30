@@ -30,12 +30,12 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         dstart = self.month
         dend = last_day_of_month(dstart)
 
-        categories = Split.objects.personal().past().date_range(dstart, dend).order_by(
+        categories = Split.objects.personal().past().date_range(dstart, dend).household(self.request.user).order_by(
             'category').values('category', 'category__name').annotate(spent=Sum('amount'))
 
         categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
 
-        all_categories = list(Category.objects.exclude(active=False).values_list('id', 'name'))
+        all_categories = list(Category.objects.active().household(self.request.user).values_list('id', 'name'))
         for id, name, spent in categories:
             if id:
                 all_categories.remove((id, name))

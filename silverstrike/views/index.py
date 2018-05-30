@@ -18,7 +18,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         dend = last_day_of_month(dstart)
         context = super().get_context_data(**kwargs)
         context['menu'] = 'home'
-        queryset = Split.objects.personal().past()
+        queryset = Split.objects.personal().past().household(self.request.user)
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         queryset = queryset.date_range(dstart, dend)
@@ -29,12 +29,12 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['difference'] = context['income'] - context['expenses']
 
         context['accounts'] = Account.objects.personal().household(self.request.user).shown_on_dashboard()
-        upcoming = Split.objects.personal().upcoming().transfers_once()
-        recurrences = RecurringTransaction.objects.due_in_month()
+        upcoming = Split.objects.personal().upcoming().transfers_once().household(self.request.user)
+        recurrences = RecurringTransaction.objects.due_in_month().household(self.request.user)
 
         context['upcoming_transactions'] = upcoming
         context['upcoming_recurrences'] = recurrences
-        context['transactions'] = Split.objects.personal().transfers_once().past().select_related(
+        context['transactions'] = Split.objects.personal().transfers_once().past().household(self.request.user).select_related(
             'account', 'opposing_account', 'category', 'transaction')[:10]
         outstanding = 0
         for t in upcoming:
@@ -56,7 +56,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         # last month
         previous_last = dstart - timedelta(days=1)
         previous_first = previous_last.replace(day=1)
-        queryset = Split.objects.personal().date_range(previous_first, previous_last)
+        queryset = Split.objects.personal().date_range(previous_first, previous_last).household(self.request.user)
         context['previous_income'] = abs(queryset.income().aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
