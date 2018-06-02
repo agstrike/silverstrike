@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 11:40-0400\n"
+"PO-Revision-Date: 2018-06-02 11:50-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -836,7 +836,7 @@ msgstr "Bilans roboczy"
 
 #: templates/silverstrike/index.html:35
 msgid "Outstanding Recurrences"
-msgstr ""
+msgstr "Zaległe płatności cykliczne"
 
 #: templates/silverstrike/index.html:43
 msgid "End of Month Balance"
@@ -861,7 +861,7 @@ msgstr "Nadchodzące powtarzające się płatności"
 #: templates/silverstrike/index.html:145
 #: templates/silverstrike/recurringtransaction_detail.html:52
 msgid "Create Transaction"
-msgstr ""
+msgstr "Utwórz transakcję"
 
 #: templates/silverstrike/index.html:152
 msgid "No upcoming recurrences"
@@ -884,27 +884,27 @@ msgstr "Konto przeciwstawne"
 
 #: templates/silverstrike/profile.html:8
 msgid "Your account details"
-msgstr ""
+msgstr "Szczegóły Twojego konta"
 
 #: templates/silverstrike/profile.html:22
 msgid "Username"
-msgstr ""
+msgstr "Nazwa użytkownika"
 
 #: templates/silverstrike/profile.html:24
 msgid "API auth key"
-msgstr ""
+msgstr "Klucz API auth"
 
 #: templates/silverstrike/profile.html:26
 msgid "Email Addresses"
-msgstr ""
+msgstr "Adres e-mail"
 
 #: templates/silverstrike/profile.html:27
 msgid "Manage Email Addresses"
-msgstr ""
+msgstr "Zarządzaj adresami e-mail"
 
 #: templates/silverstrike/profile.html:28
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
@@ -916,11 +916,11 @@ msgstr "Cykliczne transakcje"
 
 #: templates/silverstrike/recurring_transactions.html:22
 msgid "Income this month"
-msgstr ""
+msgstr "Przychód bieżącego miesiąca"
 
 #: templates/silverstrike/recurring_transactions.html:30
 msgid "Expenses this month"
-msgstr ""
+msgstr "Wydatki bieżącego miesiąca"
 
 #: templates/silverstrike/recurring_transactions.html:38
 msgid "Total change this month"
@@ -941,7 +941,7 @@ msgstr ""
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' recurring transaction"
-msgstr ""
+msgstr "Usuń transakcję '%(object_name)s'"
 
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:16
 msgid "\n"
