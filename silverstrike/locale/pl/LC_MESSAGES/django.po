@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 11:50-0400\n"
+"PO-Revision-Date: 2018-06-02 12:00-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -778,7 +778,7 @@ msgstr "Dystrybucja według kategorii"
 
 #: templates/silverstrike/category_index.html:59
 msgid "Categorize expenses"
-msgstr ""
+msgstr "Kategoryzuj wydatki"
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
@@ -806,11 +806,11 @@ msgstr "Wydatki według kategorii"
 
 #: templates/silverstrike/disabled_recurrences.html:9
 msgid "Disabled Recurring Transactions"
-msgstr ""
+msgstr "Zablokowane transakcje cykliczne"
 
 #: templates/silverstrike/foreign_accounts.html:67
 msgid "Create Foreign Account"
-msgstr ""
+msgstr "Utwórz nowe konto"
 
 #: templates/silverstrike/import.html:17
 msgid "Import methods"
@@ -840,7 +840,7 @@ msgstr "Zaległe płatności cykliczne"
 
 #: templates/silverstrike/index.html:43
 msgid "End of Month Balance"
-msgstr ""
+msgstr "Bilans na koniec miesiąca"
 
 #: templates/silverstrike/index.html:53
 msgid "You have recurrences that are overdue!"
@@ -924,11 +924,11 @@ msgstr "Wydatki bieżącego miesiąca"
 
 #: templates/silverstrike/recurring_transactions.html:38
 msgid "Total change this month"
-msgstr ""
+msgstr "Cała Pozostała kwota w tym miesiącu"
 
 #: templates/silverstrike/recurring_transactions.html:46
 msgid "Remaining change this month"
-msgstr ""
+msgstr "Pozostała kwota w tym miesiącu"
 
 #: templates/silverstrike/recurring_transactions.html:64
 msgid "Recurrance"
@@ -936,7 +936,7 @@ msgstr "Powtarzanie"
 
 #: templates/silverstrike/recurring_transactions.html:79
 msgid "Show disabled recurrences"
-msgstr ""
+msgstr "Pokaż zamknięte transakcje cykliczne"
 
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:6
 #, python-format
@@ -1050,11 +1050,11 @@ msgstr ""
 
 #: views/accounts.py:110
 msgid "Account not accessible"
-msgstr ""
+msgstr "Konto niedostępne"
 
 #: views/accounts.py:119
 msgid "Nothing here..."
-msgstr ""
+msgstr "Nic tu nie ma..."
 
 #: views/accounts.py:172
 msgid "You can not reconcile this account"
