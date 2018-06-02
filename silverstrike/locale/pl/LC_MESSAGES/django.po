@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 11:20-0400\n"
+"PO-Revision-Date: 2018-06-02 11:30-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -422,11 +422,11 @@ msgstr "Konta"
 #: templates/silverstrike/account_detail.html:25
 #, python-format
 msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
-msgstr ""
+msgstr "Wyświetlanie danych od <b>%(dstart)s</b> do <b>%(dend)s</b>"
 
 #: templates/silverstrike/account_detail.html:27
 msgid "No data to show!"
-msgstr ""
+msgstr "Brak danych do wyświetlania!"
 
 #: templates/silverstrike/account_detail.html:36
 #: templates/silverstrike/category_detail.html:30
@@ -481,7 +481,7 @@ msgstr "Lista transakcji"
 
 #: templates/silverstrike/account_detail.html:89
 msgid "Booking date"
-msgstr ""
+msgstr "Data księgowania"
 
 #: templates/silverstrike/account_detail.html:91
 #: templates/silverstrike/index.html:79 templates/silverstrike/index.html:111
@@ -497,11 +497,11 @@ msgstr "Uzgodnienie"
 
 #: templates/silverstrike/account_detail.html:125
 msgid "Last 30 days"
-msgstr ""
+msgstr "Ostatnie 30 dni"
 
 #: templates/silverstrike/account_detail.html:129
 msgid "Last 6 months"
-msgstr ""
+msgstr "Ostatnie 6 miesięcy"
 
 #: templates/silverstrike/account_detail.html:130
 #: templates/silverstrike/charts.html:18
@@ -510,21 +510,21 @@ msgstr "Ostatni rok"
 
 #: templates/silverstrike/account_detail.html:138
 msgid "Apply"
-msgstr ""
+msgstr "Zastosuj"
 
 #: templates/silverstrike/account_detail.html:140
 msgid "Custom Range"
-msgstr ""
+msgstr "Niestandardowy zakres"
 
 #: templates/silverstrike/account_detail.html:189
 msgid "Not enough data to show a chart"
-msgstr ""
+msgstr "Za mało danych, aby pokazać wykres"
 
 #: templates/silverstrike/account_form.html:8
 #: templates/silverstrike/category_form.html:8
 #, python-format
 msgid "Update %(object_name)s"
-msgstr ""
+msgstr "Zaktualizuj %(object_name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
@@ -586,20 +586,20 @@ msgstr "Aktywne"
 
 #: templates/silverstrike/accounts.html:38
 msgid "Create Account"
-msgstr ""
+msgstr "Utwórz konto"
 
 #: templates/silverstrike/accounts.html:39
 #: templates/silverstrike/foreign_accounts.html:17
 msgid "Foreign Accounts"
-msgstr ""
+msgstr "Konta zagraniczne"
 
 #: templates/silverstrike/accounts.html:40
 msgid "Show inactive accounts"
-msgstr ""
+msgstr "Pokaż konta nieaktywne"
 
 #: templates/silverstrike/accounts.html:41
 msgid "Hide inactive accounts"
-msgstr ""
+msgstr "Ukryj konta nieaktywne"
 
 #: templates/silverstrike/base.html:39
 msgid "Toggle navigation"
@@ -679,7 +679,7 @@ msgstr "Wykresy"
 
 #: templates/silverstrike/base.html:137
 msgid "Import &amp; Export"
-msgstr ""
+msgstr "Import &amp; Eksport"
 
 #: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
 msgid "Import"
@@ -710,7 +710,7 @@ msgstr "Dalej"
 #: templates/silverstrike/budget_index.html:29
 #, python-format
 msgid "Budget for %(month_str)s"
-msgstr ""
+msgstr "Budżet dla %(month_str)s"
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
@@ -737,16 +737,16 @@ msgstr "Wydatki"
 
 #: templates/silverstrike/category_assign.html:48
 msgid "No uncategorized expenses available"
-msgstr ""
+msgstr "Brak wydatków bez kategorii"
 
 #: templates/silverstrike/category_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' category"
-msgstr ""
+msgstr "Skasować kategorię: '%(object_name)s'"
 
 #: templates/silverstrike/category_confirm_delete.html:15
 msgid "Are you sure you want to delete the category?"
-msgstr ""
+msgstr "Czy na pewno chcesz usunąć tę kategorię?"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "All transactions linked to this category won't be deleted but will loose the entry for the category"
