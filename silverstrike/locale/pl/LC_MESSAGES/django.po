@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 12:50-0400\n"
+"PO-Revision-Date: 2018-06-02 13:00-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -750,7 +750,7 @@ msgstr "Czy na pewno chcesz usunąć tę kategorię?"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "All transactions linked to this category won't be deleted but will loose the entry for the category"
-msgstr ""
+msgstr "Wszystkie transakcje przepisane to tej kategorii zostaną, natomiast wpis z kategorią zostanie usunięty"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
@@ -963,7 +963,7 @@ msgstr "Powtarzanie"
 
 #: templates/silverstrike/recurringtransaction_detail.html:26
 msgid "Next expected ocurrence"
-msgstr ""
+msgstr "Cykliczna transakcja jest przewidywana"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
