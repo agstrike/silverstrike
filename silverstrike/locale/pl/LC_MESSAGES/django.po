@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 12:00-0400\n"
+"PO-Revision-Date: 2018-06-02 12:10-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -973,7 +973,7 @@ msgstr "Cel"
 
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Average amount"
-msgstr ""
+msgstr "Średnia wartość"
 
 #: templates/silverstrike/recurringtransaction_detail.html:60
 msgid "Recent ocurrences"
@@ -982,7 +982,7 @@ msgstr "Ostatnie wydarzenia"
 #: templates/silverstrike/recurringtransaction_form.html:9
 #, python-format
 msgid "Edit %(object_namee)s"
-msgstr ""
+msgstr "Zmodyfikuj %(object_namee)s"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
@@ -998,11 +998,11 @@ msgstr "Szczegóły transakcji"
 #: templates/silverstrike/transaction_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' transaction"
-msgstr ""
+msgstr "Usuń transakcję '%(object_name)s'"
 
 #: templates/silverstrike/transaction_confirm_delete.html:21
 msgid "Are you sure you want to delete the transaction?"
-msgstr ""
+msgstr "Czy na pewno chcesz usunąć tę transakcję?"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
@@ -1024,17 +1024,17 @@ msgstr "Podziały"
 #: templates/silverstrike/transaction_split_form.html:10
 #, python-format
 msgid "Edit %(object.title)s"
-msgstr ""
+msgstr "Zmodyfikuj %(object.title)s"
 
 #: templates/silverstrike/transaction_edit.html:12
 #: templates/silverstrike/transaction_split_form.html:12
 #, python-format
 msgid "Add new %(submenu)s"
-msgstr ""
+msgstr "Dodaj nowe %(submenu)s"
 
 #: templates/silverstrike/transaction_overview.html:25
 msgid "Booking Date"
-msgstr ""
+msgstr "Data księgowania"
 
 #: templates/silverstrike/transaction_split_form.html:94
 msgid "Add Split"
@@ -1042,11 +1042,11 @@ msgstr "Dodaj split"
 
 #: views/accounts.py:43 views/accounts.py:49
 msgid "You are not allowed to edit this account"
-msgstr ""
+msgstr "Nie masz prawa do edycji tego konta"
 
 #: views/accounts.py:65 views/accounts.py:72
 msgid "You are not allowed to delete this account"
-msgstr ""
+msgstr "Nie można usunąć tego konta"
 
 #: views/accounts.py:110
 msgid "Account not accessible"
