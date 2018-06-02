@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-06-02 12:41-0400\n"
+"PO-Revision-Date: 2018-06-02 12:50-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -22,7 +22,7 @@ msgstr "Musisz wybrać więcej niż jedno konto, aby je scalić."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, \"{}\" isn't."
-msgstr ""
+msgstr "Możesz scalić tylko konta zagraniczne, \"{}\" nie jest."
 
 #: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
@@ -603,7 +603,7 @@ msgstr "Ukryj konta nieaktywne"
 
 #: templates/silverstrike/base.html:39
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Przełącz nawigację"
 
 #: templates/silverstrike/base.html:48
 msgid "New Withdrawl"
@@ -892,7 +892,7 @@ msgstr "Nazwa użytkownika"
 
 #: templates/silverstrike/profile.html:24
 msgid "API auth key"
-msgstr "Klucz API auth"
+msgstr "API auth key"
 
 #: templates/silverstrike/profile.html:26
 msgid "Email Addresses"
@@ -948,7 +948,9 @@ msgid "\n"
 "        Are you sure you want to delete the recurring transaction?\n"
 "        This will not remove the actual transactions.\n"
 "        "
-msgstr ""
+msgstr "\n"
+"Czy na pewno chcesz usunąć transakcję cykliczną?\n"
+"Aktualne transakcje nie zostaną usunięte.        "
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
@@ -1058,5 +1060,5 @@ msgstr "Nic tu nie ma..."
 
 #: views/accounts.py:172
 msgid "You can not reconcile this account"
-msgstr ""
+msgstr "Nie możesz uzgadniać tego konta"
 
