@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-04 14:00-0400\n"
-"Last-Translator: simhnna <simhnna@gmail.com>\n"
+"PO-Revision-Date: 2018-06-07 18:39-0500\n"
+"Last-Translator: Sergio Duran <sergioduran@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Crowdin-Project: silverstrike\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
@@ -22,7 +22,7 @@ msgstr "Debe seleccionar más de una cuenta para fusionarlas."
 
 #: admin.py:43
 msgid "You can only merge foreign accounts, \"{}\" isn't."
-msgstr ""
+msgstr "Solo puedes mezclar cuentas extranjeras, \"{}\" no lo es."
 
 #: admin.py:58
 msgid "Merged one account into <a href={}>{}</a>."
@@ -150,15 +150,15 @@ msgstr "Mensualmente"
 
 #: models.py:349
 msgid "Quarterly"
-msgstr ""
+msgstr "Cuatrimestral"
 
 #: models.py:350
 msgid "Biannually"
-msgstr ""
+msgstr "Bianual"
 
 #: models.py:351
 msgid "Annually"
-msgstr ""
+msgstr "Anual"
 
 #: templates/account/account_inactive.html:5
 #: templates/account/account_inactive.html:14
@@ -175,7 +175,7 @@ msgstr "Dirección de correo electrónico"
 
 #: templates/account/email.html:10
 msgid "Manage E-mail Addresses"
-msgstr ""
+msgstr "Administrar Cuentas de E-Mail"
 
 #: templates/account/email.html:14
 msgid "The following e-mail addresses are associated with your account:"
@@ -349,12 +349,12 @@ msgstr "Le hemos enviado un correo electrónico de verificación. Vaya al link e
 #: templates/silverstrike/account_confirm_delete.html:6
 #, python-format
 msgid " Delete '%(object_name)s' account"
-msgstr ""
+msgstr " Borrar la cuenta '%(object_name)s"
 
 #: templates/silverstrike/account_confirm_delete.html:16
 #, python-format
 msgid "Are you sure you want to delete the account along with %(transaction_num)s transactions?"
-msgstr ""
+msgstr "¿Seguro que quiere borrar la cuenta junto con %(transaction_num)s transacciones?"
 
 #: templates/silverstrike/account_confirm_delete.html:19
 #: templates/silverstrike/account_detail.html:139
@@ -421,11 +421,11 @@ msgstr "Cuentas"
 #: templates/silverstrike/account_detail.html:25
 #, python-format
 msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
-msgstr ""
+msgstr "Mostrando Datos de <b>%(dstart)s</b> to <b>%(dend)s</b>"
 
 #: templates/silverstrike/account_detail.html:27
 msgid "No data to show!"
-msgstr ""
+msgstr "¡No hay datos para mostrar!"
 
 #: templates/silverstrike/account_detail.html:36
 #: templates/silverstrike/category_detail.html:30
@@ -480,7 +480,7 @@ msgstr "Lista de transacciones"
 
 #: templates/silverstrike/account_detail.html:89
 msgid "Booking date"
-msgstr ""
+msgstr "Fecha de contabilización"
 
 #: templates/silverstrike/account_detail.html:91
 #: templates/silverstrike/index.html:79 templates/silverstrike/index.html:111
@@ -496,11 +496,11 @@ msgstr "Conciliación"
 
 #: templates/silverstrike/account_detail.html:125
 msgid "Last 30 days"
-msgstr ""
+msgstr "Últimos 30 dias"
 
 #: templates/silverstrike/account_detail.html:129
 msgid "Last 6 months"
-msgstr ""
+msgstr "Últimos 6 meses"
 
 #: templates/silverstrike/account_detail.html:130
 #: templates/silverstrike/charts.html:18
@@ -509,21 +509,21 @@ msgstr "El año pasado"
 
 #: templates/silverstrike/account_detail.html:138
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: templates/silverstrike/account_detail.html:140
 msgid "Custom Range"
-msgstr ""
+msgstr "Rango personalizado"
 
 #: templates/silverstrike/account_detail.html:189
 msgid "Not enough data to show a chart"
-msgstr ""
+msgstr "No hay suficientes datos para mostrar la gráfica"
 
 #: templates/silverstrike/account_form.html:8
 #: templates/silverstrike/category_form.html:8
 #, python-format
 msgid "Update %(object_name)s"
-msgstr ""
+msgstr "Actualizar %(object_name)s"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
@@ -585,24 +585,24 @@ msgstr "Activo"
 
 #: templates/silverstrike/accounts.html:38
 msgid "Create Account"
-msgstr ""
+msgstr "Crear Cuenta"
 
 #: templates/silverstrike/accounts.html:39
 #: templates/silverstrike/foreign_accounts.html:17
 msgid "Foreign Accounts"
-msgstr ""
+msgstr "Cuentas extranjeras"
 
 #: templates/silverstrike/accounts.html:40
 msgid "Show inactive accounts"
-msgstr ""
+msgstr "Mostrar cuentas inactivas"
 
 #: templates/silverstrike/accounts.html:41
 msgid "Hide inactive accounts"
-msgstr ""
+msgstr "Ocultar cuentas inactivas"
 
 #: templates/silverstrike/base.html:39
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Alternar navegación"
 
 #: templates/silverstrike/base.html:48
 msgid "New Withdrawl"
@@ -678,7 +678,7 @@ msgstr "Gráficos"
 
 #: templates/silverstrike/base.html:137
 msgid "Import &amp; Export"
-msgstr ""
+msgstr "Importar &amp; Exportar"
 
 #: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
 msgid "Import"
@@ -709,7 +709,7 @@ msgstr "Siguiente"
 #: templates/silverstrike/budget_index.html:29
 #, python-format
 msgid "Budget for %(month_str)s"
-msgstr ""
+msgstr "Presupuesto para %(month_str)s"
 
 #: templates/silverstrike/budget_index.html:36
 msgid "Allocated"
@@ -736,20 +736,20 @@ msgstr "Gastos"
 
 #: templates/silverstrike/category_assign.html:48
 msgid "No uncategorized expenses available"
-msgstr ""
+msgstr "No hay gastos no categorizados disponibles"
 
 #: templates/silverstrike/category_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' category"
-msgstr ""
+msgstr "Borrar la categoria '%(object_name)s"
 
 #: templates/silverstrike/category_confirm_delete.html:15
 msgid "Are you sure you want to delete the category?"
-msgstr ""
+msgstr "¿Seguro que desea borrar la categoria?"
 
 #: templates/silverstrike/category_confirm_delete.html:16
 msgid "All transactions linked to this category won't be deleted but will loose the entry for the category"
-msgstr ""
+msgstr "Las transacciones vinculadas a esta categoria no seran borradas pero perderan su entrada para la categoria"
 
 #: templates/silverstrike/category_detail.html:61
 msgid "Show all transactions"
@@ -777,7 +777,7 @@ msgstr "Distribución por categoría"
 
 #: templates/silverstrike/category_index.html:59
 msgid "Categorize expenses"
-msgstr ""
+msgstr "Categorizar gastos"
 
 #: templates/silverstrike/charts.html:7
 msgid "because they are fun!"
@@ -805,41 +805,41 @@ msgstr "Gastos por categoría"
 
 #: templates/silverstrike/disabled_recurrences.html:9
 msgid "Disabled Recurring Transactions"
-msgstr ""
+msgstr "Transacciones Recurrentes Desactivadas"
 
 #: templates/silverstrike/foreign_accounts.html:67
 msgid "Create Foreign Account"
-msgstr ""
+msgstr "Crear una Cuenta Extranjera"
 
 #: templates/silverstrike/import.html:17
 msgid "Import methods"
-msgstr ""
+msgstr "Importar metodos"
 
 #: templates/silverstrike/import.html:21
 msgid "Generic CSV"
-msgstr ""
+msgstr "CSV Generico"
 
 #: templates/silverstrike/inactive_categories.html:6
 #: templates/silverstrike/inactive_categories.html:10
 #: templates/silverstrike/inactive_categories.html:17
 msgid "Inactive Categories"
-msgstr ""
+msgstr "Categorias inactivas"
 
 #: templates/silverstrike/index.html:8
 msgid "All important stuff"
-msgstr ""
+msgstr "Todo lo importante"
 
 #: templates/silverstrike/index.html:27
 msgid "Working Balance"
-msgstr ""
+msgstr "Balance en curso"
 
 #: templates/silverstrike/index.html:35
 msgid "Outstanding Recurrences"
-msgstr ""
+msgstr "Recurrencias pendientes"
 
 #: templates/silverstrike/index.html:43
 msgid "End of Month Balance"
-msgstr ""
+msgstr "Balance de Fin del Mes"
 
 #: templates/silverstrike/index.html:53
 msgid "You have recurrences that are overdue!"
@@ -860,7 +860,7 @@ msgstr "Próximas recurrencias"
 #: templates/silverstrike/index.html:145
 #: templates/silverstrike/recurringtransaction_detail.html:52
 msgid "Create Transaction"
-msgstr ""
+msgstr "Crear Transacción"
 
 #: templates/silverstrike/index.html:152
 msgid "No upcoming recurrences"
@@ -883,27 +883,27 @@ msgstr "Cuenta opuesta"
 
 #: templates/silverstrike/profile.html:8
 msgid "Your account details"
-msgstr ""
+msgstr "Los detalles de tu cuenta"
 
 #: templates/silverstrike/profile.html:22
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: templates/silverstrike/profile.html:24
 msgid "API auth key"
-msgstr ""
+msgstr "Llave de authenticación API"
 
 #: templates/silverstrike/profile.html:26
 msgid "Email Addresses"
-msgstr ""
+msgstr "Direcciones de E-Mail"
 
 #: templates/silverstrike/profile.html:27
 msgid "Manage Email Addresses"
-msgstr ""
+msgstr "Administrar direcciones de E-Mail"
 
 #: templates/silverstrike/profile.html:28
 msgid "Password"
-msgstr ""
+msgstr "Clave"
 
 #: templates/silverstrike/reconcile.html:23
 msgid "Create reconcile transaction"
@@ -915,19 +915,19 @@ msgstr "Transacciones Recurrentes"
 
 #: templates/silverstrike/recurring_transactions.html:22
 msgid "Income this month"
-msgstr ""
+msgstr "Ingresos de este mes"
 
 #: templates/silverstrike/recurring_transactions.html:30
 msgid "Expenses this month"
-msgstr ""
+msgstr "Gastos de este mes"
 
 #: templates/silverstrike/recurring_transactions.html:38
 msgid "Total change this month"
-msgstr ""
+msgstr "Total de cambio de este mes"
 
 #: templates/silverstrike/recurring_transactions.html:46
 msgid "Remaining change this month"
-msgstr ""
+msgstr "Cambio restante este mes"
 
 #: templates/silverstrike/recurring_transactions.html:64
 msgid "Recurrance"
@@ -935,19 +935,22 @@ msgstr "Recurrencia"
 
 #: templates/silverstrike/recurring_transactions.html:79
 msgid "Show disabled recurrences"
-msgstr ""
+msgstr "Mostrar recurrencias desactivadas"
 
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' recurring transaction"
-msgstr ""
+msgstr "Borrar la transacción recurrente '%(object_name)s'"
 
 #: templates/silverstrike/recurringtransaction_confirm_delete.html:16
 msgid "\n"
 "        Are you sure you want to delete the recurring transaction?\n"
 "        This will not remove the actual transactions.\n"
 "        "
-msgstr ""
+msgstr "\n"
+"        ¿Seguro que deseas eliminar la transacción recurrente?\n"
+"        Esto no eliminara las transacciones en si.\n"
+"        "
 
 #: templates/silverstrike/recurringtransaction_detail.html:20
 msgid "Recurrence Details"
@@ -960,7 +963,7 @@ msgstr "Recurrencia"
 
 #: templates/silverstrike/recurringtransaction_detail.html:26
 msgid "Next expected ocurrence"
-msgstr ""
+msgstr "Siguiente ocurrencia esperada"
 
 #: templates/silverstrike/recurringtransaction_detail.html:29
 msgid "Source"
@@ -972,7 +975,7 @@ msgstr "Destino"
 
 #: templates/silverstrike/recurringtransaction_detail.html:38
 msgid "Average amount"
-msgstr ""
+msgstr "Cantidad promedio"
 
 #: templates/silverstrike/recurringtransaction_detail.html:60
 msgid "Recent ocurrences"
@@ -981,7 +984,7 @@ msgstr "Las últimas instancias"
 #: templates/silverstrike/recurringtransaction_form.html:9
 #, python-format
 msgid "Edit %(object_namee)s"
-msgstr ""
+msgstr "Editar %(object_namee)s"
 
 #: templates/silverstrike/recurringtransaction_form.html:11
 msgid "New Recurring Transaction"
@@ -997,11 +1000,11 @@ msgstr "Detalles de la transacción"
 #: templates/silverstrike/transaction_confirm_delete.html:6
 #, python-format
 msgid "Delete '%(object_name)s' transaction"
-msgstr ""
+msgstr "Eliminar la transacción '%(object_name)s'"
 
 #: templates/silverstrike/transaction_confirm_delete.html:21
 msgid "Are you sure you want to delete the transaction?"
-msgstr ""
+msgstr "¿Seguro que deseas borrar la transacción?"
 
 #: templates/silverstrike/transaction_detail.html:23
 msgid "Transaction Type"
@@ -1023,17 +1026,17 @@ msgstr "Dividir"
 #: templates/silverstrike/transaction_split_form.html:10
 #, python-format
 msgid "Edit %(object.title)s"
-msgstr ""
+msgstr "Editar %(object.title)s"
 
 #: templates/silverstrike/transaction_edit.html:12
 #: templates/silverstrike/transaction_split_form.html:12
 #, python-format
 msgid "Add new %(submenu)s"
-msgstr ""
+msgstr "Agregar nuevo %(submenu)s"
 
 #: templates/silverstrike/transaction_overview.html:25
 msgid "Booking Date"
-msgstr ""
+msgstr "Fecha de contabilización"
 
 #: templates/silverstrike/transaction_split_form.html:94
 msgid "Add Split"
@@ -1041,21 +1044,20 @@ msgstr "Añadir desglose"
 
 #: views/accounts.py:43 views/accounts.py:49
 msgid "You are not allowed to edit this account"
-msgstr ""
+msgstr "No tienes permiso para editar esta cuenta"
 
 #: views/accounts.py:65 views/accounts.py:72
 msgid "You are not allowed to delete this account"
-msgstr ""
+msgstr "No tienes permiso de eliminar esta cuenta"
 
 #: views/accounts.py:110
 msgid "Account not accessible"
-msgstr ""
+msgstr "Cuenta inaccesible"
 
 #: views/accounts.py:119
 msgid "Nothing here..."
-msgstr ""
+msgstr "No hay nada aqui..."
 
 #: views/accounts.py:172
 msgid "You can not reconcile this account"
-msgstr ""
-
+msgstr "No puedes reconciliar esta cuenta"
