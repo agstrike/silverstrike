@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: silverstrike\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 19:47+0200\n"
-"PO-Revision-Date: 2018-05-15 16:00-0400\n"
+"PO-Revision-Date: 2018-06-09 05:56-0400\n"
 "Last-Translator: simhnna <simhnna@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -523,7 +523,7 @@ msgstr "Nicht genügend Daten für die Darstellung der Diagramme"
 #: templates/silverstrike/category_form.html:8
 #, python-format
 msgid "Update %(object_name)s"
-msgstr ""
+msgstr "%(object_name)s aktualisieren"
 
 #: templates/silverstrike/account_form.html:10
 msgid "Create new account"
@@ -585,7 +585,7 @@ msgstr "Aktiv"
 
 #: templates/silverstrike/accounts.html:38
 msgid "Create Account"
-msgstr ""
+msgstr "Konto erstellen"
 
 #: templates/silverstrike/accounts.html:39
 #: templates/silverstrike/foreign_accounts.html:17
@@ -594,15 +594,15 @@ msgstr ""
 
 #: templates/silverstrike/accounts.html:40
 msgid "Show inactive accounts"
-msgstr ""
+msgstr "Deaktivierte Konten anzeigen"
 
 #: templates/silverstrike/accounts.html:41
 msgid "Hide inactive accounts"
-msgstr ""
+msgstr "Deaktivierte Konten ausblenden"
 
 #: templates/silverstrike/base.html:39
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Navigation umschalten"
 
 #: templates/silverstrike/base.html:48
 msgid "New Withdrawl"
@@ -678,7 +678,7 @@ msgstr "Diagramme"
 
 #: templates/silverstrike/base.html:137
 msgid "Import &amp; Export"
-msgstr ""
+msgstr "Import &amp; Export"
 
 #: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
 msgid "Import"
@@ -860,7 +860,7 @@ msgstr "Anstehende wiederkehrende Zahlungen"
 #: templates/silverstrike/index.html:145
 #: templates/silverstrike/recurringtransaction_detail.html:52
 msgid "Create Transaction"
-msgstr ""
+msgstr "Transaktion erstellen"
 
 #: templates/silverstrike/index.html:152
 msgid "No upcoming recurrences"
