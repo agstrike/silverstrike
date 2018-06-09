@@ -1,0 +1,1061 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: silverstrike\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-04 19:47+0200\n"
+"PO-Revision-Date: 2018-06-09 05:40-0400\n"
+"Last-Translator: simhnna <simhnna@gmail.com>\n"
+"Language-Team: Latin\n"
+"Language: la_LA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: silverstrike\n"
+"X-Crowdin-Language: la-LA\n"
+"X-Crowdin-File: /master/silverstrike/locale/en/LC_MESSAGES/django.po\n"
+
+#: admin.py:36
+msgid "You need to select more than one account to merge them."
+msgstr "crwdns194:0crwdne194:0"
+
+#: admin.py:43
+msgid "You can only merge foreign accounts, \"{}\" isn't."
+msgstr "crwdns221:0crwdne221:0"
+
+#: admin.py:58
+msgid "Merged one account into <a href={}>{}</a>."
+msgstr "crwdns201:0crwdne201:0"
+
+#: admin.py:63
+msgid "Merged {} accounts into <a href={}>{}</a>."
+msgstr "crwdns202:0crwdne202:0"
+
+#: forms.py:125
+msgid "Debitor"
+msgstr "crwdns1:0crwdne1:0"
+
+#: forms.py:140
+msgid "Creditor"
+msgstr "crwdns2:0crwdne2:0"
+
+#: forms.py:163
+msgid "Amount has to be positive"
+msgstr "crwdns3:0crwdne3:0"
+
+#: forms.py:179
+msgid "You are trying to create a transaction between two foreign accounts"
+msgstr "crwdns4:0crwdne4:0"
+
+#: forms.py:194
+msgid "Actual balance"
+msgstr "crwdns5:0crwdne5:0"
+
+#: models.py:33
+msgid "Personal"
+msgstr "crwdns6:0crwdne6:0"
+
+#: models.py:34
+msgid "Foreign"
+msgstr "crwdns7:0crwdne7:0"
+
+#: models.py:35
+msgid "System"
+msgstr "crwdns8:0crwdne8:0"
+
+#: models.py:103
+msgid "Initial Balance"
+msgstr "crwdns9:0crwdne9:0"
+
+#: models.py:308
+msgid "Do not use"
+msgstr "crwdns10:0crwdne10:0"
+
+#: models.py:309 templates/silverstrike/disabled_recurrences.html:27
+#: templates/silverstrike/recurring_transactions.html:62
+msgid "Source Account"
+msgstr "crwdns11:0crwdne11:0"
+
+#: models.py:310 templates/silverstrike/disabled_recurrences.html:28
+#: templates/silverstrike/recurring_transactions.html:63
+msgid "Destination Account"
+msgstr "crwdns12:0crwdne12:0"
+
+#: models.py:311 templates/silverstrike/account_detail.html:90
+#: templates/silverstrike/category_assign.html:30
+#: templates/silverstrike/category_detail.html:49
+#: templates/silverstrike/disabled_recurrences.html:26
+#: templates/silverstrike/index.html:112 templates/silverstrike/index.html:136
+#: templates/silverstrike/index.html:171
+#: templates/silverstrike/recurring_transactions.html:61
+#: templates/silverstrike/recurringtransaction_detail.html:35
+#: templates/silverstrike/recurringtransaction_detail.html:66
+#: templates/silverstrike/transaction_detail.html:58
+#: templates/silverstrike/transaction_overview.html:26
+msgid "Amount"
+msgstr "crwdns13:0crwdne13:0"
+
+#: models.py:312 templates/silverstrike/account_detail.html:88
+#: templates/silverstrike/category_assign.html:29
+#: templates/silverstrike/category_detail.html:48
+#: templates/silverstrike/index.html:110 templates/silverstrike/index.html:135
+#: templates/silverstrike/index.html:170
+#: templates/silverstrike/recurring_transactions.html:60
+#: templates/silverstrike/recurringtransaction_detail.html:67
+#: templates/silverstrike/transaction_detail.html:25
+#: templates/silverstrike/transaction_detail.html:59
+#: templates/silverstrike/transaction_overview.html:24
+msgid "Date"
+msgstr "crwdns14:0crwdne14:0"
+
+#: models.py:313 templates/silverstrike/recurringtransaction_detail.html:46
+#: templates/silverstrike/transaction_detail.html:31
+msgid "Notes"
+msgstr "crwdns15:0crwdne15:0"
+
+#: models.py:314 templates/silverstrike/account_detail.html:92
+#: templates/silverstrike/category_assign.html:31
+#: templates/silverstrike/index.html:174
+#: templates/silverstrike/recurringtransaction_detail.html:41
+#: templates/silverstrike/transaction_detail.html:60
+#: templates/silverstrike/transaction_overview.html:29
+msgid "Category"
+msgstr "crwdns16:0crwdne16:0"
+
+#: models.py:315 templates/silverstrike/account_detail.html:87
+#: templates/silverstrike/category_assign.html:28
+#: templates/silverstrike/category_detail.html:47
+#: templates/silverstrike/disabled_recurrences.html:25
+#: templates/silverstrike/index.html:109 templates/silverstrike/index.html:134
+#: templates/silverstrike/index.html:168
+#: templates/silverstrike/recurring_transactions.html:59
+#: templates/silverstrike/recurringtransaction_detail.html:65
+#: templates/silverstrike/transaction_detail.html:55
+#: templates/silverstrike/transaction_overview.html:22
+msgid "Title"
+msgstr "crwdns17:0crwdne17:0"
+
+#: models.py:319
+msgid "First line contains headers"
+msgstr "crwdns18:0crwdne18:0"
+
+#: models.py:347
+msgid "Disabled"
+msgstr "crwdns19:0crwdne19:0"
+
+#: models.py:348
+msgid "Monthly"
+msgstr "crwdns21:0crwdne21:0"
+
+#: models.py:349
+msgid "Quarterly"
+msgstr "crwdns222:0crwdne222:0"
+
+#: models.py:350
+msgid "Biannually"
+msgstr "crwdns223:0crwdne223:0"
+
+#: models.py:351
+msgid "Annually"
+msgstr "crwdns224:0crwdne224:0"
+
+#: templates/account/account_inactive.html:5
+#: templates/account/account_inactive.html:14
+msgid "Account Inactive"
+msgstr "crwdns23:0crwdne23:0"
+
+#: templates/account/account_inactive.html:15
+msgid "This account is inactive."
+msgstr "crwdns24:0crwdne24:0"
+
+#: templates/account/email.html:6
+msgid "E-mail Addresses"
+msgstr "crwdns26:0crwdne26:0"
+
+#: templates/account/email.html:10
+msgid "Manage E-mail Addresses"
+msgstr "crwdns225:0crwdne225:0"
+
+#: templates/account/email.html:14
+msgid "The following e-mail addresses are associated with your account:"
+msgstr "crwdns27:0crwdne27:0"
+
+#: templates/account/email.html:27
+msgid "Verified"
+msgstr "crwdns28:0crwdne28:0"
+
+#: templates/account/email.html:29
+msgid "Unverified"
+msgstr "crwdns29:0crwdne29:0"
+
+#: templates/account/email.html:31
+msgid "Primary"
+msgstr "crwdns30:0crwdne30:0"
+
+#: templates/account/email.html:38
+msgid "Make Primary"
+msgstr "crwdns31:0crwdne31:0"
+
+#: templates/account/email.html:39
+msgid "Re-send Verification"
+msgstr "crwdns32:0crwdne32:0"
+
+#: templates/account/email.html:40
+msgid "Remove"
+msgstr "crwdns33:0crwdne33:0"
+
+#: templates/account/email.html:45
+msgid "Add E-mail Address"
+msgstr "crwdns36:0crwdne36:0"
+
+#: templates/account/email.html:58
+msgid "Add E-mail"
+msgstr "crwdns37:0crwdne37:0"
+
+#: templates/account/email.html:68
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr "crwdns38:0crwdne38:0"
+
+#: templates/account/email_confirm.html:6
+#: templates/account/email_confirm.html:11
+msgid "Confirm E-mail Address"
+msgstr "crwdns46:0crwdne46:0"
+
+#: templates/account/email_confirm.html:17
+#, python-format
+msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
+msgstr "crwdns47:0%(email)scrwdnd47:0%(email)scrwdnd47:0%(user_display)scrwdne47:0"
+
+#: templates/account/email_confirm.html:21
+msgid "Confirm"
+msgstr "crwdns48:0crwdne48:0"
+
+#: templates/account/email_confirm.html:28
+#, python-format
+msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr "crwdns49:0%(email_url)scrwdne49:0"
+
+#: templates/account/login.html:15
+#, python-format
+msgid "If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+msgstr "crwdns52:0%(signup_url)scrwdne52:0"
+
+#: templates/account/login.html:45
+msgid "Sign In"
+msgstr "crwdns53:0crwdne53:0"
+
+#: templates/account/login.html:51
+msgid "Forgot Password?"
+msgstr "crwdns54:0crwdne54:0"
+
+#: templates/account/logout.html:13
+msgid "Are you sure you want to sign out?"
+msgstr "crwdns55:0crwdne55:0"
+
+#: templates/account/logout.html:19
+msgid "Sign Out"
+msgstr "crwdns56:0crwdne56:0"
+
+#: templates/account/password_change.html:6
+#: templates/account/password_change.html:12
+#: templates/account/password_change.html:30
+#: templates/account/password_reset_from_key.html:4
+#: templates/account/password_reset_from_key.html:7
+#: templates/account/password_reset_from_key_done.html:4
+#: templates/account/password_reset_from_key_done.html:8
+#: templates/silverstrike/profile.html:29
+msgid "Change Password"
+msgstr "crwdns67:0crwdne67:0"
+
+#: templates/account/password_reset.html:7
+#: templates/account/password_reset.html:12
+#: templates/account/password_reset_done.html:6
+#: templates/account/password_reset_done.html:11
+msgid "Password Reset"
+msgstr "crwdns68:0crwdne68:0"
+
+#: templates/account/password_reset.html:20
+msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
+msgstr "crwdns69:0crwdne69:0"
+
+#: templates/account/password_reset.html:31
+msgid "Reset My Password"
+msgstr "crwdns70:0crwdne70:0"
+
+#: templates/account/password_reset.html:34
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr "crwdns71:0crwdne71:0"
+
+#: templates/account/password_reset_done.html:16
+msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
+msgstr "crwdns72:0crwdne72:0"
+
+#: templates/account/password_reset_from_key.html:7
+msgid "Bad Token"
+msgstr "crwdns73:0crwdne73:0"
+
+#: templates/account/password_reset_from_key.html:11
+#, python-format
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr "crwdns74:0%(passwd_reset_url)scrwdne74:0"
+
+#: templates/account/password_reset_from_key.html:17
+msgid "change password"
+msgstr "crwdns75:0crwdne75:0"
+
+#: templates/account/password_reset_from_key.html:20
+#: templates/account/password_reset_from_key_done.html:9
+msgid "Your password is now changed."
+msgstr "crwdns76:0crwdne76:0"
+
+#: templates/account/password_set.html:5 templates/account/password_set.html:8
+#: templates/account/password_set.html:13
+msgid "Set Password"
+msgstr "crwdns77:0crwdne77:0"
+
+#: templates/account/signup.html:5
+msgid "Signup"
+msgstr "crwdns78:0crwdne78:0"
+
+#: templates/account/signup.html:15
+#, python-format
+msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr "crwdns79:0%(login_url)scrwdne79:0"
+
+#: templates/account/signup.html:30
+msgid "Sign up"
+msgstr "crwdns80:0crwdne80:0"
+
+#: templates/account/signup_closed.html:5
+#: templates/account/signup_closed.html:14
+msgid "Sign Up Closed"
+msgstr "crwdns81:0crwdne81:0"
+
+#: templates/account/signup_closed.html:16
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "crwdns82:0crwdne82:0"
+
+#: templates/account/verification_sent.html:5
+#: templates/account/verification_sent.html:9
+msgid "Verify Your E-mail Address"
+msgstr "crwdns85:0crwdne85:0"
+
+#: templates/account/verification_sent.html:12
+msgid "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
+msgstr "crwdns86:0crwdne86:0"
+
+#: templates/silverstrike/account_confirm_delete.html:6
+#, python-format
+msgid " Delete '%(object_name)s' account"
+msgstr "crwdns226:0%(object_name)scrwdne226:0"
+
+#: templates/silverstrike/account_confirm_delete.html:16
+#, python-format
+msgid "Are you sure you want to delete the account along with %(transaction_num)s transactions?"
+msgstr "crwdns227:0%(transaction_num)scrwdne227:0"
+
+#: templates/silverstrike/account_confirm_delete.html:19
+#: templates/silverstrike/account_detail.html:139
+#: templates/silverstrike/account_form.html:60
+#: templates/silverstrike/category_confirm_delete.html:18
+#: templates/silverstrike/category_form.html:59
+#: templates/silverstrike/category_form.html:61
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:22
+#: templates/silverstrike/transaction_confirm_delete.html:23
+msgid "Cancel"
+msgstr "crwdns91:0crwdne91:0"
+
+#: templates/silverstrike/account_confirm_delete.html:20
+#: templates/silverstrike/account_form.html:61
+#: templates/silverstrike/category_confirm_delete.html:19
+#: templates/silverstrike/category_detail.html:37
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:23
+#: templates/silverstrike/recurringtransaction_detail.html:54
+#: templates/silverstrike/transaction_confirm_delete.html:24
+#: templates/silverstrike/transaction_detail.html:45
+msgid "Delete"
+msgstr "crwdns92:0crwdne92:0"
+
+#: templates/silverstrike/account_detail.html:14
+#: templates/silverstrike/account_form.html:14
+#: templates/silverstrike/accounts.html:9 templates/silverstrike/base.html:97
+#: templates/silverstrike/budget_index.html:9
+#: templates/silverstrike/category_assign.html:11
+#: templates/silverstrike/category_detail.html:10
+#: templates/silverstrike/category_form.html:14
+#: templates/silverstrike/category_index.html:8
+#: templates/silverstrike/charts.html:10
+#: templates/silverstrike/disabled_recurrences.html:12
+#: templates/silverstrike/export.html:9
+#: templates/silverstrike/foreign_accounts.html:9
+#: templates/silverstrike/import.html:8
+#: templates/silverstrike/inactive_categories.html:9
+#: templates/silverstrike/index.html:7 templates/silverstrike/index.html:11
+#: templates/silverstrike/profile.html:11
+#: templates/silverstrike/reconcile.html:13
+#: templates/silverstrike/recurring_transactions.html:12
+#: templates/silverstrike/recurringtransaction_detail.html:9
+#: templates/silverstrike/recurringtransaction_form.html:15
+#: templates/silverstrike/transaction_confirm_delete.html:8
+#: templates/silverstrike/transaction_detail.html:10
+#: templates/silverstrike/transaction_overview.html:9
+#: templates/silverstrike/transaction_split_form.html:17
+msgid "Home"
+msgstr "crwdns93:0crwdne93:0"
+
+#: templates/silverstrike/account_detail.html:15
+#: templates/silverstrike/account_form.html:6
+#: templates/silverstrike/account_form.html:15
+#: templates/silverstrike/accounts.html:6
+#: templates/silverstrike/accounts.html:10
+#: templates/silverstrike/accounts.html:17 templates/silverstrike/base.html:103
+#: templates/silverstrike/foreign_accounts.html:6
+#: templates/silverstrike/foreign_accounts.html:10
+#: templates/silverstrike/index.html:74
+#: templates/silverstrike/reconcile.html:14
+msgid "Accounts"
+msgstr "crwdns94:0crwdne94:0"
+
+#: templates/silverstrike/account_detail.html:25
+#, python-format
+msgid "Showing Data from <b>%(dstart)s</b> to <b>%(dend)s</b>"
+msgstr "crwdns228:0%(dstart)scrwdnd228:0%(dend)scrwdne228:0"
+
+#: templates/silverstrike/account_detail.html:27
+msgid "No data to show!"
+msgstr "crwdns229:0crwdne229:0"
+
+#: templates/silverstrike/account_detail.html:36
+#: templates/silverstrike/category_detail.html:30
+msgid "Overview"
+msgstr "crwdns137:0crwdne137:0"
+
+#: templates/silverstrike/account_detail.html:41
+#: templates/silverstrike/index.html:19
+msgid "Current Balance"
+msgstr "crwdns97:0crwdne97:0"
+
+#: templates/silverstrike/account_detail.html:44
+msgid "In"
+msgstr "crwdns98:0crwdne98:0"
+
+#: templates/silverstrike/account_detail.html:47
+msgid "Out"
+msgstr "crwdns99:0crwdne99:0"
+
+#: templates/silverstrike/account_detail.html:50
+#: templates/silverstrike/index.html:67
+msgid "Difference"
+msgstr "crwdns100:0crwdne100:0"
+
+#: templates/silverstrike/account_detail.html:61
+#: templates/silverstrike/recurringtransaction_detail.html:79
+msgid "Show all"
+msgstr "crwdns104:0crwdne104:0"
+
+#: templates/silverstrike/account_detail.html:64
+#: templates/silverstrike/accounts.html:32
+#: templates/silverstrike/category_detail.html:36
+#: templates/silverstrike/foreign_accounts.html:30
+#: templates/silverstrike/recurringtransaction_detail.html:53
+#: templates/silverstrike/transaction_confirm_delete.html:11
+#: templates/silverstrike/transaction_detail.html:40
+#: templates/silverstrike/transaction_edit.html:21
+#: templates/silverstrike/transaction_split_form.html:21
+msgid "Edit"
+msgstr "crwdns101:0crwdne101:0"
+
+#: templates/silverstrike/account_detail.html:66
+#: templates/silverstrike/reconcile.html:7
+#: templates/silverstrike/reconcile.html:16
+msgid "Reconcile"
+msgstr "crwdns102:0crwdne102:0"
+
+#: templates/silverstrike/account_detail.html:82
+#: templates/silverstrike/transaction_overview.html:17
+msgid "Transaction list"
+msgstr "crwdns103:0crwdne103:0"
+
+#: templates/silverstrike/account_detail.html:89
+msgid "Booking date"
+msgstr "crwdns230:0crwdne230:0"
+
+#: templates/silverstrike/account_detail.html:91
+#: templates/silverstrike/index.html:79 templates/silverstrike/index.html:111
+#: templates/silverstrike/index.html:172
+#: templates/silverstrike/transaction_detail.html:56
+#: templates/silverstrike/transaction_overview.html:27
+msgid "Account"
+msgstr "crwdns25:0crwdne25:0"
+
+#: templates/silverstrike/account_detail.html:100
+msgid "Reconcilation"
+msgstr "crwdns105:0crwdne105:0"
+
+#: templates/silverstrike/account_detail.html:125
+msgid "Last 30 days"
+msgstr "crwdns231:0crwdne231:0"
+
+#: templates/silverstrike/account_detail.html:129
+msgid "Last 6 months"
+msgstr "crwdns232:0crwdne232:0"
+
+#: templates/silverstrike/account_detail.html:130
+#: templates/silverstrike/charts.html:18
+msgid "Last year"
+msgstr "crwdns145:0crwdne145:0"
+
+#: templates/silverstrike/account_detail.html:138
+msgid "Apply"
+msgstr "crwdns233:0crwdne233:0"
+
+#: templates/silverstrike/account_detail.html:140
+msgid "Custom Range"
+msgstr "crwdns234:0crwdne234:0"
+
+#: templates/silverstrike/account_detail.html:189
+msgid "Not enough data to show a chart"
+msgstr "crwdns235:0crwdne235:0"
+
+#: templates/silverstrike/account_form.html:8
+#: templates/silverstrike/category_form.html:8
+#, python-format
+msgid "Update %(object_name)s"
+msgstr "crwdns236:0%(object_name)scrwdne236:0"
+
+#: templates/silverstrike/account_form.html:10
+msgid "Create new account"
+msgstr "crwdns107:0crwdne107:0"
+
+#: templates/silverstrike/account_form.html:18
+#: templates/silverstrike/account_form.html:59
+#: templates/silverstrike/category_form.html:18
+#: templates/silverstrike/category_form.html:63
+#: templates/silverstrike/reconcile.html:59
+#: templates/silverstrike/recurringtransaction_form.html:46
+#: templates/silverstrike/transaction_edit.html:108
+#: templates/silverstrike/transaction_split_form.html:93
+msgid "Update"
+msgstr "crwdns108:0crwdne108:0"
+
+#: templates/silverstrike/account_form.html:20
+#: templates/silverstrike/base.html:45
+#: templates/silverstrike/category_form.html:20
+#: templates/silverstrike/recurringtransaction_form.html:17
+msgid "New"
+msgstr "crwdns109:0crwdne109:0"
+
+#: templates/silverstrike/account_form.html:28
+msgid "Account Details"
+msgstr "crwdns110:0crwdne110:0"
+
+#: templates/silverstrike/account_form.html:63
+#: templates/silverstrike/category_form.html:63
+#: templates/silverstrike/category_index.html:58
+#: templates/silverstrike/reconcile.html:59
+#: templates/silverstrike/recurring_transactions.html:78
+#: templates/silverstrike/recurringtransaction_form.html:46
+#: templates/silverstrike/transaction_edit.html:23
+#: templates/silverstrike/transaction_edit.html:108
+#: templates/silverstrike/transaction_split_form.html:23
+#: templates/silverstrike/transaction_split_form.html:93
+msgid "Create"
+msgstr "crwdns111:0crwdne111:0"
+
+#: templates/silverstrike/accounts.html:22
+#: templates/silverstrike/budget_index.html:35
+#: templates/silverstrike/category_index.html:42
+#: templates/silverstrike/foreign_accounts.html:22
+#: templates/silverstrike/inactive_categories.html:22
+msgid "Name"
+msgstr "crwdns112:0crwdne112:0"
+
+#: templates/silverstrike/accounts.html:23
+#: templates/silverstrike/charts.html:30
+#: templates/silverstrike/foreign_accounts.html:23
+#: templates/silverstrike/index.html:80 templates/silverstrike/index.html:95
+msgid "Balance"
+msgstr "crwdns113:0crwdne113:0"
+
+#: templates/silverstrike/accounts.html:24
+msgid "Active"
+msgstr "crwdns114:0crwdne114:0"
+
+#: templates/silverstrike/accounts.html:38
+msgid "Create Account"
+msgstr "crwdns237:0crwdne237:0"
+
+#: templates/silverstrike/accounts.html:39
+#: templates/silverstrike/foreign_accounts.html:17
+msgid "Foreign Accounts"
+msgstr "crwdns238:0crwdne238:0"
+
+#: templates/silverstrike/accounts.html:40
+msgid "Show inactive accounts"
+msgstr "crwdns239:0crwdne239:0"
+
+#: templates/silverstrike/accounts.html:41
+msgid "Hide inactive accounts"
+msgstr "crwdns240:0crwdne240:0"
+
+#: templates/silverstrike/base.html:39
+msgid "Toggle navigation"
+msgstr "crwdns241:0crwdne241:0"
+
+#: templates/silverstrike/base.html:48
+msgid "New Withdrawl"
+msgstr "crwdns115:0crwdne115:0"
+
+#: templates/silverstrike/base.html:51
+msgid "New Deposit"
+msgstr "crwdns116:0crwdne116:0"
+
+#: templates/silverstrike/base.html:54
+msgid "New Transfer"
+msgstr "crwdns117:0crwdne117:0"
+
+#: templates/silverstrike/base.html:57
+msgid "New Split Transaction"
+msgstr "crwdns118:0crwdne118:0"
+
+#: templates/silverstrike/base.html:79 templates/silverstrike/profile.html:7
+#: templates/silverstrike/profile.html:12
+#: templates/silverstrike/profile.html:18
+msgid "Profile"
+msgstr "crwdns119:0crwdne119:0"
+
+#: templates/silverstrike/base.html:82
+msgid "Sign out"
+msgstr "crwdns120:0crwdne120:0"
+
+#: templates/silverstrike/base.html:94
+msgid "MAIN NAVIGATION"
+msgstr "crwdns121:0crwdne121:0"
+
+#: templates/silverstrike/base.html:109
+#: templates/silverstrike/category_assign.html:12
+#: templates/silverstrike/category_detail.html:42
+#: templates/silverstrike/transaction_confirm_delete.html:9
+#: templates/silverstrike/transaction_detail.html:11
+#: templates/silverstrike/transaction_edit.html:18
+#: templates/silverstrike/transaction_overview.html:7
+#: templates/silverstrike/transaction_overview.html:10
+#: templates/silverstrike/transaction_split_form.html:18
+msgid "Transactions"
+msgstr "crwdns122:0crwdne122:0"
+
+#: templates/silverstrike/base.html:114
+#: templates/silverstrike/disabled_recurrences.html:13
+#: templates/silverstrike/disabled_recurrences.html:20
+#: templates/silverstrike/recurring_transactions.html:13
+#: templates/silverstrike/recurring_transactions.html:54
+#: templates/silverstrike/recurringtransaction_detail.html:10
+#: templates/silverstrike/recurringtransaction_form.html:16
+msgid "Recurrences"
+msgstr "crwdns123:0crwdne123:0"
+
+#: templates/silverstrike/base.html:120
+#: templates/silverstrike/category_detail.html:11
+#: templates/silverstrike/category_form.html:6
+#: templates/silverstrike/category_form.html:15
+#: templates/silverstrike/category_index.html:9
+#: templates/silverstrike/category_index.html:37
+msgid "Categories"
+msgstr "crwdns124:0crwdne124:0"
+
+#: templates/silverstrike/base.html:126
+#: templates/silverstrike/budget_index.html:7
+#: templates/silverstrike/budget_index.html:10
+msgid "Budgets"
+msgstr "crwdns125:0crwdne125:0"
+
+#: templates/silverstrike/base.html:132 templates/silverstrike/charts.html:6
+#: templates/silverstrike/charts.html:11
+msgid "Charts"
+msgstr "crwdns126:0crwdne126:0"
+
+#: templates/silverstrike/base.html:137
+msgid "Import &amp; Export"
+msgstr "crwdns242:0crwdne242:0"
+
+#: templates/silverstrike/base.html:144 templates/silverstrike/import.html:9
+msgid "Import"
+msgstr "crwdns128:0crwdne128:0"
+
+#: templates/silverstrike/base.html:147 templates/silverstrike/export.html:10
+#: templates/silverstrike/export.html:17 templates/silverstrike/export.html:37
+msgid "Export"
+msgstr "crwdns129:0crwdne129:0"
+
+#: templates/silverstrike/base.html:166
+#, python-format
+msgid "<b>Version</b> %(version)s"
+msgstr "crwdns203:0%(version)scrwdne203:0"
+
+#: templates/silverstrike/budget_index.html:18
+#: templates/silverstrike/category_detail.html:20
+#: templates/silverstrike/category_index.html:17
+msgid "Previous"
+msgstr "crwdns95:0crwdne95:0"
+
+#: templates/silverstrike/budget_index.html:20
+#: templates/silverstrike/category_detail.html:22
+#: templates/silverstrike/category_index.html:19
+msgid "Next"
+msgstr "crwdns96:0crwdne96:0"
+
+#: templates/silverstrike/budget_index.html:29
+#, python-format
+msgid "Budget for %(month_str)s"
+msgstr "crwdns243:0%(month_str)scrwdne243:0"
+
+#: templates/silverstrike/budget_index.html:36
+msgid "Allocated"
+msgstr "crwdns132:0crwdne132:0"
+
+#: templates/silverstrike/budget_index.html:37
+#: templates/silverstrike/category_index.html:43
+msgid "Money spent"
+msgstr "crwdns133:0crwdne133:0"
+
+#: templates/silverstrike/budget_index.html:38
+msgid "Left"
+msgstr "crwdns134:0crwdne134:0"
+
+#: templates/silverstrike/budget_index.html:65
+#: templates/silverstrike/category_assign.html:44
+msgid "Save"
+msgstr "crwdns135:0crwdne135:0"
+
+#: templates/silverstrike/category_assign.html:19
+#: templates/silverstrike/index.html:64
+msgid "Expenses"
+msgstr "crwdns154:0crwdne154:0"
+
+#: templates/silverstrike/category_assign.html:48
+msgid "No uncategorized expenses available"
+msgstr "crwdns244:0crwdne244:0"
+
+#: templates/silverstrike/category_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' category"
+msgstr "crwdns245:0%(object_name)scrwdne245:0"
+
+#: templates/silverstrike/category_confirm_delete.html:15
+msgid "Are you sure you want to delete the category?"
+msgstr "crwdns205:0crwdne205:0"
+
+#: templates/silverstrike/category_confirm_delete.html:16
+msgid "All transactions linked to this category won't be deleted but will loose the entry for the category"
+msgstr "crwdns219:0crwdne219:0"
+
+#: templates/silverstrike/category_detail.html:61
+msgid "Show all transactions"
+msgstr "crwdns138:0crwdne138:0"
+
+#: templates/silverstrike/category_detail.html:68
+msgid "Distribution by Source"
+msgstr "crwdns139:0crwdne139:0"
+
+#: templates/silverstrike/category_detail.html:76
+msgid "Distribution by Destination"
+msgstr "crwdns140:0crwdne140:0"
+
+#: templates/silverstrike/category_form.html:10
+msgid "Create new category"
+msgstr "crwdns141:0crwdne141:0"
+
+#: templates/silverstrike/category_form.html:28
+msgid "Category Details"
+msgstr "crwdns142:0crwdne142:0"
+
+#: templates/silverstrike/category_index.html:27
+msgid "Distribution by category"
+msgstr "crwdns143:0crwdne143:0"
+
+#: templates/silverstrike/category_index.html:59
+msgid "Categorize expenses"
+msgstr "crwdns246:0crwdne246:0"
+
+#: templates/silverstrike/charts.html:7
+msgid "because they are fun!"
+msgstr "crwdns144:0crwdne144:0"
+
+#: templates/silverstrike/charts.html:19
+msgid "Last 6 Months"
+msgstr "crwdns146:0crwdne146:0"
+
+#: templates/silverstrike/charts.html:20
+msgid "Last 3 Months"
+msgstr "crwdns147:0crwdne147:0"
+
+#: templates/silverstrike/charts.html:21
+msgid "Current Month"
+msgstr "crwdns148:0crwdne148:0"
+
+#: templates/silverstrike/charts.html:38
+msgid "Personal Accounts"
+msgstr "crwdns149:0crwdne149:0"
+
+#: templates/silverstrike/charts.html:48
+msgid "Spending by category"
+msgstr "crwdns150:0crwdne150:0"
+
+#: templates/silverstrike/disabled_recurrences.html:9
+msgid "Disabled Recurring Transactions"
+msgstr "crwdns247:0crwdne247:0"
+
+#: templates/silverstrike/foreign_accounts.html:67
+msgid "Create Foreign Account"
+msgstr "crwdns248:0crwdne248:0"
+
+#: templates/silverstrike/import.html:17
+msgid "Import methods"
+msgstr "crwdns249:0crwdne249:0"
+
+#: templates/silverstrike/import.html:21
+msgid "Generic CSV"
+msgstr "crwdns250:0crwdne250:0"
+
+#: templates/silverstrike/inactive_categories.html:6
+#: templates/silverstrike/inactive_categories.html:10
+#: templates/silverstrike/inactive_categories.html:17
+msgid "Inactive Categories"
+msgstr "crwdns207:0crwdne207:0"
+
+#: templates/silverstrike/index.html:8
+msgid "All important stuff"
+msgstr "crwdns220:0crwdne220:0"
+
+#: templates/silverstrike/index.html:27
+msgid "Working Balance"
+msgstr "crwdns251:0crwdne251:0"
+
+#: templates/silverstrike/index.html:35
+msgid "Outstanding Recurrences"
+msgstr "crwdns252:0crwdne252:0"
+
+#: templates/silverstrike/index.html:43
+msgid "End of Month Balance"
+msgstr "crwdns253:0crwdne253:0"
+
+#: templates/silverstrike/index.html:53
+msgid "You have recurrences that are overdue!"
+msgstr "crwdns199:0crwdne199:0"
+
+#: templates/silverstrike/index.html:61
+msgid "Income"
+msgstr "crwdns153:0crwdne153:0"
+
+#: templates/silverstrike/index.html:104
+msgid "Upcoming Transactions"
+msgstr "crwdns159:0crwdne159:0"
+
+#: templates/silverstrike/index.html:128
+msgid "Upcoming Recurrences"
+msgstr "crwdns160:0crwdne160:0"
+
+#: templates/silverstrike/index.html:145
+#: templates/silverstrike/recurringtransaction_detail.html:52
+msgid "Create Transaction"
+msgstr "crwdns254:0crwdne254:0"
+
+#: templates/silverstrike/index.html:152
+msgid "No upcoming recurrences"
+msgstr "crwdns162:0crwdne162:0"
+
+#: templates/silverstrike/index.html:163
+msgid "Recent Transactions"
+msgstr "crwdns163:0crwdne163:0"
+
+#: templates/silverstrike/index.html:169
+#: templates/silverstrike/transaction_overview.html:23
+msgid "Type"
+msgstr "crwdns164:0crwdne164:0"
+
+#: templates/silverstrike/index.html:173
+#: templates/silverstrike/transaction_detail.html:57
+#: templates/silverstrike/transaction_overview.html:28
+msgid "Opposing Account"
+msgstr "crwdns165:0crwdne165:0"
+
+#: templates/silverstrike/profile.html:8
+msgid "Your account details"
+msgstr "crwdns208:0crwdne208:0"
+
+#: templates/silverstrike/profile.html:22
+msgid "Username"
+msgstr "crwdns209:0crwdne209:0"
+
+#: templates/silverstrike/profile.html:24
+msgid "API auth key"
+msgstr "crwdns210:0crwdne210:0"
+
+#: templates/silverstrike/profile.html:26
+msgid "Email Addresses"
+msgstr "crwdns211:0crwdne211:0"
+
+#: templates/silverstrike/profile.html:27
+msgid "Manage Email Addresses"
+msgstr "crwdns212:0crwdne212:0"
+
+#: templates/silverstrike/profile.html:28
+msgid "Password"
+msgstr "crwdns213:0crwdne213:0"
+
+#: templates/silverstrike/reconcile.html:23
+msgid "Create reconcile transaction"
+msgstr "crwdns168:0crwdne168:0"
+
+#: templates/silverstrike/recurring_transactions.html:9
+msgid "Recurring Transactions"
+msgstr "crwdns169:0crwdne169:0"
+
+#: templates/silverstrike/recurring_transactions.html:22
+msgid "Income this month"
+msgstr "crwdns255:0crwdne255:0"
+
+#: templates/silverstrike/recurring_transactions.html:30
+msgid "Expenses this month"
+msgstr "crwdns256:0crwdne256:0"
+
+#: templates/silverstrike/recurring_transactions.html:38
+msgid "Total change this month"
+msgstr "crwdns257:0crwdne257:0"
+
+#: templates/silverstrike/recurring_transactions.html:46
+msgid "Remaining change this month"
+msgstr "crwdns258:0crwdne258:0"
+
+#: templates/silverstrike/recurring_transactions.html:64
+msgid "Recurrance"
+msgstr "crwdns170:0crwdne170:0"
+
+#: templates/silverstrike/recurring_transactions.html:79
+msgid "Show disabled recurrences"
+msgstr "crwdns259:0crwdne259:0"
+
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' recurring transaction"
+msgstr "crwdns260:0%(object_name)scrwdne260:0"
+
+#: templates/silverstrike/recurringtransaction_confirm_delete.html:16
+msgid "\n"
+"        Are you sure you want to delete the recurring transaction?\n"
+"        This will not remove the actual transactions.\n"
+"        "
+msgstr "crwdns261:0crwdne261:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:20
+msgid "Recurrence Details"
+msgstr "crwdns171:0crwdne171:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:24
+#: templates/silverstrike/transaction_detail.html:34
+msgid "Recurrence"
+msgstr "crwdns172:0crwdne172:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:26
+msgid "Next expected ocurrence"
+msgstr "crwdns262:0crwdne262:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:29
+msgid "Source"
+msgstr "crwdns173:0crwdne173:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:32
+msgid "Destination"
+msgstr "crwdns174:0crwdne174:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:38
+msgid "Average amount"
+msgstr "crwdns216:0crwdne216:0"
+
+#: templates/silverstrike/recurringtransaction_detail.html:60
+msgid "Recent ocurrences"
+msgstr "crwdns175:0crwdne175:0"
+
+#: templates/silverstrike/recurringtransaction_form.html:9
+#, python-format
+msgid "Edit %(object_namee)s"
+msgstr "crwdns263:0%(object_namee)scrwdne263:0"
+
+#: templates/silverstrike/recurringtransaction_form.html:11
+msgid "New Recurring Transaction"
+msgstr "crwdns176:0crwdne176:0"
+
+#: templates/silverstrike/recurringtransaction_form.html:24
+#: templates/silverstrike/transaction_detail.html:19
+#: templates/silverstrike/transaction_edit.html:31
+#: templates/silverstrike/transaction_split_form.html:31
+msgid "Transaction Details"
+msgstr "crwdns166:0crwdne166:0"
+
+#: templates/silverstrike/transaction_confirm_delete.html:6
+#, python-format
+msgid "Delete '%(object_name)s' transaction"
+msgstr "crwdns264:0%(object_name)scrwdne264:0"
+
+#: templates/silverstrike/transaction_confirm_delete.html:21
+msgid "Are you sure you want to delete the transaction?"
+msgstr "crwdns265:0crwdne265:0"
+
+#: templates/silverstrike/transaction_detail.html:23
+msgid "Transaction Type"
+msgstr "crwdns177:0crwdne177:0"
+
+#: templates/silverstrike/transaction_detail.html:28
+msgid "Total amount"
+msgstr "crwdns178:0crwdne178:0"
+
+#: templates/silverstrike/transaction_detail.html:43
+msgid "Edit as Split transaction"
+msgstr "crwdns179:0crwdne179:0"
+
+#: templates/silverstrike/transaction_detail.html:50
+msgid "Splits"
+msgstr "crwdns180:0crwdne180:0"
+
+#: templates/silverstrike/transaction_edit.html:10
+#: templates/silverstrike/transaction_split_form.html:10
+#, python-format
+msgid "Edit %(object.title)s"
+msgstr "crwdns266:0%(object.title)scrwdne266:0"
+
+#: templates/silverstrike/transaction_edit.html:12
+#: templates/silverstrike/transaction_split_form.html:12
+#, python-format
+msgid "Add new %(submenu)s"
+msgstr "crwdns267:0%(submenu)scrwdne267:0"
+
+#: templates/silverstrike/transaction_overview.html:25
+msgid "Booking Date"
+msgstr "crwdns268:0crwdne268:0"
+
+#: templates/silverstrike/transaction_split_form.html:94
+msgid "Add Split"
+msgstr "crwdns167:0crwdne167:0"
+
+#: views/accounts.py:43 views/accounts.py:49
+msgid "You are not allowed to edit this account"
+msgstr "crwdns269:0crwdne269:0"
+
+#: views/accounts.py:65 views/accounts.py:72
+msgid "You are not allowed to delete this account"
+msgstr "crwdns270:0crwdne270:0"
+
+#: views/accounts.py:110
+msgid "Account not accessible"
+msgstr "crwdns271:0crwdne271:0"
+
+#: views/accounts.py:119
+msgid "Nothing here..."
+msgstr "crwdns272:0crwdne272:0"
+
+#: views/accounts.py:172
+msgid "You can not reconcile this account"
+msgstr "crwdns273:0crwdne273:0"
+
