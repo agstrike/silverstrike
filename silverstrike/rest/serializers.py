@@ -15,6 +15,18 @@ class AccountSerializer(serializers.ModelSerializer):
         return value
 
 
+class AccountNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id', 'name', 'account_type')
+
+
+class RecurrenceNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecurringTransaction
+        fields = ('id', 'title')
+
+
 class SplitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Split

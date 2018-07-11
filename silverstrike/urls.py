@@ -2,6 +2,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 from rest_framework import routers
+from rest_framework.authtoken import views as drf_views
 
 from silverstrike import api
 from silverstrike.rest import views as rest_views
@@ -127,7 +128,12 @@ urlpatterns = [
 
     path('export/', import_views.ExportView.as_view(), name='export'),
 
+    path('rest/account_names', rest_views.AccountNameView.as_view()),
+    path('rest/recurrence_names', rest_views.RecurrenceNameView.as_view()),
+    path('rest/accounts/personal', rest_views.PersonalAccountsView.as_view()),
+    path('rest/accounts/foreign', rest_views.ForeignAccountsView.as_view()),
     path('rest/', include(router.urls)),
+    path('api-token-auth/', drf_views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]

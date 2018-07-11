@@ -34,6 +34,7 @@ setup(
         'django-widgets-improved',
         'django-allauth',
         'python-dateutil',
+        'django-cors-headers',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
