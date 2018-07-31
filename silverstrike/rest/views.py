@@ -1,13 +1,13 @@
-from rest_framework import viewsets, views
+from rest_framework import views, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
+from silverstrike.rest import serializers
 from silverstrike.rest.permissions import ProtectSystemAccount
 from silverstrike.rest.serializers import (AccountSerializer, CategorySerializer,
                                            RecurringTransactionSerializer,
                                            SplitSerializer, TransactionSerializer)
-from silverstrike.rest import serializers
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -48,17 +48,23 @@ class AccountNameView(views.APIView):
         serializer = serializers.AccountNameSerializer(Account.objects.all(), many=True)
         return Response(serializer.data)
 
+
 class RecurrenceNameView(views.APIView):
     def get(self, request, format=None):
-        serializer = serializers.RecurrenceNameSerializer(RecurringTransaction.objects.all(), many=True)
+        serializer = serializers.RecurrenceNameSerializer(
+            RecurringTransaction.objects.all(), many=True)
         return Response(serializer.data)
+
 
 class PersonalAccountsView(views.APIView):
     def get(self, request, format=None):
-        serializer = serializers.AccountSerializer(Account.objects.filter(account_type=Account.PERSONAL), many=True)
+        serializer = serializers.AccountSerializer(
+            Account.objects.filter(account_type=Account.PERSONAL), many=True)
         return Response(serializer.data)
+
 
 class ForeignAccountsView(views.APIView):
     def get(self, request, format=None):
-        serializer = serializers.AccountSerializer(Account.objects.filter(account_type=Account.FOREIGN), many=True)
+        serializer = serializers.AccountSerializer(
+            Account.objects.filter(account_type=Account.FOREIGN), many=True)
         return Response(serializer.data)
