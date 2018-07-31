@@ -1,10 +1,10 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block content_header %}
-<h1>{% trans 'Accounts' %}
-</h1>
+<h1>{% trans 'Accounts' %}</h1>
 <ol class="breadcrumb">
   <li><a href="/">{% trans 'Home' %}</a></li>
   <li class="active">{% trans 'Accounts' %}</li>
@@ -26,7 +26,7 @@
       {% for account in object_list %}
       <tr>
         <td><a href="{% url 'account_view' account.id %}">{{ account.name }}</a></td>
-        <td>{{ account.balance }}</td>
+        <td>{{ account.balance|intcomma }}</td>
         <td><a href="{% url 'account_update' account.id %}">{% trans 'Edit' %}</a></td>
       </tr>
       {% endfor %}

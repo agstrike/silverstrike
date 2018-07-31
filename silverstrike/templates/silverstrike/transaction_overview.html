@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load tags %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>{% trans 'Transactions' %}</h1>
@@ -35,7 +36,7 @@
   <td>{{ transaction.transaction.date }}</td>
   <td class="hidden-xs">{{ transaction.date }}</td>
   <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">
-    {% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}
+    {% if transaction.is_transfer %}{{ transaction.amount|negate|intcomma }}{% else %}{{ transaction.amount|intcomma }}{% endif %}
   </td>
   <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
   <td class="hidden-xs">{% if not transaction.is_system %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>

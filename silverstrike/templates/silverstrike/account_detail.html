@@ -1,6 +1,7 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'vendor/css/daterangepicker.css' %}">
@@ -38,16 +39,16 @@
       <div class="box-content">
         <table class="table">
           <tr>
-          <th>{% trans 'Current Balance' %}</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance }}</td>
+          <th>{% trans 'Current Balance' %}</th><td class="text-{% if balance < 0 %}red{% else %}green{% endif %}">{{ balance|intcomma }}</td>
         </tr>
         <tr>
-          <th>{% trans 'In' %}</th><td>{{ in }}</td>
+          <th>{% trans 'In' %}</th><td>{{ in|intcomma }}</td>
         </tr>
         <tr>
-          <th>{% trans 'Out' %}</th><td class="text-red">{{ out }}</td>
+          <th>{% trans 'Out' %}</th><td class="text-red">{{ out|intcomma }}</td>
         </tr>
         <tr>
-          <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td>
+          <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference|intcomma }}</td>
         </tr>
         </table>
       </div>
@@ -96,7 +97,7 @@
   <td><a href="{% url 'transaction_detail' transaction.transaction.pk %}">{{ transaction.transaction.title }}</a></td>
   <td>{{ transaction.transaction.date }}</td>
   <td class="hidden-xs">{{ transaction.date }}</td>
-  <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount }}</td>
+  <td{% if transaction.amount < 0 %} class="text-red"{% elif transaction.is_deposit %} class="text-green"{% endif %}>{{ transaction.amount|intcomma }}</td>
   <td class="hidden-xs">{% if transaction.is_system %}{% trans 'Reconcilation' %}{% else %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
   <td class="hidden-xs">
     {% if transaction.category %}

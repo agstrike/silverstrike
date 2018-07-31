@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load tags %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>{% trans 'Home' %}
@@ -17,7 +18,7 @@
     <div class="small-box bg-green">
       <div class="inner">
         <h4>{% trans 'Current Balance' %}</h4>
-        <h3>{{ balance }}</h3>
+        <h3>{{ balance|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -25,7 +26,7 @@
     <div class="small-box bg-yellow">
       <div class="inner">
         <h4>{% trans 'Working Balance' %}</h4>
-        <h3>{{ working_balance}}</h3>
+        <h3>{{ working_balance|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -33,7 +34,7 @@
     <div class="small-box bg-red">
       <div class="inner">
         <h4>{% trans 'Outstanding Recurrences' %}</h4>
-        <h3>{{ outstanding }}</h3>
+        <h3>{{ outstanding|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -41,7 +42,7 @@
     <div class="small-box bg-blue">
       <div class="inner">
         <h4>{% trans 'End of Month Balance' %}</h4>
-        <h3>{{ expected_balance }}</h3>
+        <h3>{{ expected_balance|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -58,13 +59,13 @@
         <table class="table">
           <tr><th></th><th>{{ today|date:"F" }}</th><th>{{ last_month|date:"F" }}</th></tr>
           <tr>
-            <th>{% trans 'Income' %}</th><td>{{ income }}</td><td>{{ previous_income }}</td>
+            <th>{% trans 'Income' %}</th><td>{{ income|intcomma }}</td><td>{{ previous_income|intcomma }}</td>
           </tr>
           <tr>
-            <th>{% trans 'Expenses' %}</th><td class="text-red">{{ expenses }}</td><td class="text-red">{{ previous_expenses }}</td>
+            <th>{% trans 'Expenses' %}</th><td class="text-red">{{ expenses|intcomma }}</td><td class="text-red">{{ previous_expenses|intcomma }}</td>
           </tr>
           <tr>
-            <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference }}</td><td{% if previous_difference < 0 %} class="text-red"{% endif %}>{{ previous_difference }}</td>
+            <th>{% trans 'Difference' %}</th><td{% if difference < 0 %} class="text-red"{% endif %}>{{ difference|intcomma }}</td><td{% if previous_difference < 0 %} class="text-red"{% endif %}>{{ previous_difference|intcomma }}</td>
           </tr>
         </table>
       </div>
@@ -82,7 +83,7 @@
         {% for account in accounts %}
         <tr>
           <td><a href="{{ account.get_absolute_url }}">{{ account.name }}</a></td>
-          <td {% if account.balance < 0 %} class="text-red"{% endif %}>{{ account.balance }}</td>
+          <td {% if account.balance < 0 %} class="text-red"{% endif %}>{{ account.balance|intcomma }}</td>
         </tr>
         {% endfor %}
         </table>
@@ -116,7 +117,7 @@
             <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
             <td>{{ transaction.date }}</td>
             <td><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
-            <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.amount }}</td>
+            <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.amount|intcomma }}</td>
           </tr>
           {% endfor %}
         </table>
@@ -140,7 +141,7 @@
           <tr>
             <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
             <td>{{ transaction.date }}</td>
-            <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
+            <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount|intcomma }}</td>
             <td>
               <a class="btn btn-xs {% if transaction.is_due %}btn-danger{% else %}btn-primary{% endif %}" href="{% url 'recurrence_transaction_create' transaction.pk %}">{% trans 'Create Transaction' %}</a>
             </td>
@@ -178,7 +179,7 @@
             <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
             <td class="hidden-xs">{{ transaction.transaction.get_transaction_type_str }}</td>
             <td>{{ transaction.date|date:'d.m.Y' }}</td>
-            <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate }}{% else %}{{ transaction.amount }}{% endif %}</td>
+            <td class="text-{% if transaction.is_deposit %}green{% elif transaction.is_withdraw %}red{% endif %}">{% if transaction.is_transfer %}{{ transaction.amount|negate|intcomma }}{% else %}{{ transaction.amount|intcomma }}{% endif %}</td>
             <td class="hidden-xs"><a href="{{ transaction.account.get_absolute_url }}">{{ transaction.account }}</a></td>
             <td class="hidden-xs">{% if not transaction.is_system %}<a href="{{ transaction.opposing_account.get_absolute_url }}">{{ transaction.opposing_account }}</a>{% endif %}</td>
             <td class="hidden-xs">

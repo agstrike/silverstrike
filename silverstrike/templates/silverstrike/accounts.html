@@ -1,6 +1,7 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>{% trans 'Accounts' %}
@@ -27,7 +28,7 @@
       {% for account in accounts %}
       <tr{% if not account.active %} class="inactive-account"{% endif %}>
         <td><a href="{% url 'account_view' account.id %}">{{ account.name }}</a></td>
-        <td>{{ account.balance }}</td>
+        <td>{{ account.balance|intcomma }}</td>
         <td>{% if account.active %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-close"></i>{% endif %}</td>
         <td><a href="{% url 'account_update' account.id %}">{% trans 'Edit' %}</a></td>
       </tr>

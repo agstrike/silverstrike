@@ -1,6 +1,7 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
 {% load static %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>Categories</h1>
@@ -48,7 +49,7 @@
         <td>
           <a href="{% url 'category_detail' category.0 %}" >{{ category.1 }}</a>
         </td>
-        <td>{{ category.2 }}</td>
+        <td>{{ category.2|intcomma }}</td>
       </tr>
       {% endif %}
       {% endfor %}

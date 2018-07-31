@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>{% trans 'Reconcile' %}
@@ -40,7 +41,7 @@
         </label>
         <div class="col-sm-8">
           {{ form.balance|add_class:"form-control" }}
-          <span class="help-block">Current balance: {{ account.balance }} &bull; Difference: <span id="amount-difference"></span></span>
+          <span class="help-block">Current balance: {{ account.balance|intcomma }} &bull; Difference: <span id="amount-difference"></span></span>
           {% for error in form.balance.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}

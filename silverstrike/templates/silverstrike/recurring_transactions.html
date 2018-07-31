@@ -1,9 +1,6 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
-
-{% block stylesheets %}
-{% endblock %}
-
+{% load humanize %}
 
 {% block content_header %}
 <h1>{% trans 'Recurring Transactions' %}
@@ -20,7 +17,7 @@
     <div class="small-box bg-green">
       <div class="inner">
         <h4>{% trans 'Income this month' %}</h4>
-        <h3>{{ income }}</h3>
+        <h3>{{ income|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -28,7 +25,7 @@
     <div class="small-box bg-red">
       <div class="inner">
         <h4>{% trans 'Expenses this month' %}</h4>
-        <h3>{{ expenses }}</h3>
+        <h3>{{ expenses|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -36,7 +33,7 @@
     <div class="small-box bg-blue">
       <div class="inner">
         <h4>{% trans 'Total change this month' %}</h4>
-        <h3>{{ total }}</h3>
+        <h3>{{ total|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -44,7 +41,7 @@
     <div class="small-box bg-yellow">
       <div class="inner">
         <h4>{% trans 'Remaining change this month' %}</h4>
-        <h3>{{ remaining }}</h3>
+        <h3>{{ remaining|intcomma }}</h3>
       </div>
     </div>
   </div>
@@ -67,7 +64,7 @@
 <tr>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
   <td{% if transaction.is_due %} class="text-red"{% endif %}>{{ transaction.date }}</td>
-  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
+  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount|intcomma }}</td>
   <td class="hidden-xs"><a href="{{ transaction.src.get_absolute_url }}">{{ transaction.src }}</a></td>
   <td class="hidden-xs"><a href="{{ transaction.dst.get_absolute_url }}">{{ transaction.dst }}</a></td>
   <td class="hidden-xs">{{ transaction.get_recurrence }}</td>

@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load tags %}
 {% load widget_tweaks %}
+{% load humanize %}
 
 {% block content_header %}
 <h1>Uncategorized expenses
@@ -34,7 +35,7 @@
         <tr>
         <td>{{ object.title }}</td>
         <td>{{ object.date }}</td>
-        <td>{{ object.amount }}</td>
+        <td>{{ object.amount|intcomma }}</td>
         <td>{{ form.id }}{{ form.category|add_class:"form-control" }}</td>
         </tr>
       {% endfor %}
