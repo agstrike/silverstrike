@@ -11,6 +11,6 @@ def import_csv(csv_path):
                 line[1], # bookDate
                 line[3], # account
                 line[4], # notes
-                line[7].replace(',', '.') # amount
+                line[7].replace('.', '').replace(',', '.') # amount
                 ])
     return lines

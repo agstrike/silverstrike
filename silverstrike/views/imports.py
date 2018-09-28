@@ -55,9 +55,7 @@ class ImportProcessDKB(LoginRequiredMixin, generic.TemplateView):
         for i in range(1, len(data)):
             title = request.POST.get('title-{}'.format(i), '')
             account = request.POST.get('account-{}'.format(i), '')
-            recurrence = request.POST.get('recurrence-{}'.format(i), '')
-            if recurrence:
-                recurrence = int(recurrence)
+            recurrence = int(request.POST.get('recurrence-{}'.format(i), '-1'))
             date = datetime.datetime.strptime(data[i][1], '%d.%m.%Y')
             if not (title or account):
                 continue
@@ -77,7 +75,7 @@ class ImportProcessDKB(LoginRequiredMixin, generic.TemplateView):
             transaction.title = title
             transaction.date = date
             transaction.transaction_type = transaction_type
-            if recurrence:
+            if recurrence > 0:
                 transaction.recurrence_id = recurrence
             transaction.save()
 
