@@ -1,0 +1,72 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>Import</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">DKB</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">{% trans 'Import statements' %}</h3>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="box-body">
+                <table class="table">
+                {% for datum in data %}
+                <tr>
+                    {% if forloop.first %}
+                    <th>{{ datum.0 }}</th>
+                    <th>{% trans 'Account' %}</th>
+                    <th>{{ datum.2 }}</th>
+                    <th>{% trans 'Title' %}</th>
+                    <th>{{ datum.3 }}</th>
+                    <th>{% trans 'Recurrence' %}</th>
+                    <th>{{ datum.4 }}</th>
+                    {% else %}
+                    <td>{{ datum.0 }}</td>
+                    <td><input class="account-input" type="text" name="account-{{forloop.counter0}}"></td>
+                    <td>{{ datum.2 }}</td>
+                    <td><input type="text" name="title-{{forloop.counter0}}"></td>
+                    <td>{{ datum.3 }}</td>
+                    <td>
+                        <select name="recurrence-{{forloop.counter0}}">
+                            <option value="-1"></option>
+                            {% for recurrence in recurrences %}
+                            <option value="{{ recurrence.id }}">{{ recurrence.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>{{ datum.4 }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <button class="btn" type="submit">{% trans 'Import' %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
+
+<script>
+$(function() {
+  $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
+      $('.account-input').typeahead({source: data});
+  });
+})
+</script>
+{% endblock %}
