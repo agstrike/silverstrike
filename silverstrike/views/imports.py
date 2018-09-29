@@ -56,7 +56,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             if amount == 0:
                 continue
             account = models.Account.objects.get(name=account)
-            if not account.iban and data[i].iban:
+            if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()
             transaction_type = -1
