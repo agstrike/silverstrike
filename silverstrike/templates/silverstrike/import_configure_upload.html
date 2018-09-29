@@ -19,24 +19,26 @@
         </div>
         <form method="post">
             {% csrf_token %}
-            <div class="box-body">
-                <table class="table">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-responsive">
+                    <tr>
+                        <th>{% trans 'Document Date' %}</th>
+                        <th>{% trans 'Book Date' %}</th>
+                        <th>{% trans 'Account' %}</th>
+                        <th>{% trans 'Account' %}</th>
+                        <th>{% trans 'Title' %}</th>
+                        <th>{% trans 'Notes' %}</th>
+                        <th>{% trans 'Recurrence' %}</th>
+                        <th>{% trans 'Amount' %}</th>
+                    </tr>
                 {% for datum in data %}
                 <tr>
-                    {% if forloop.first %}
-                    <th>{{ datum.0 }}</th>
-                    <th>{% trans 'Account' %}</th>
-                    <th>{{ datum.2 }}</th>
-                    <th>{% trans 'Title' %}</th>
-                    <th>{{ datum.3 }}</th>
-                    <th>{% trans 'Recurrence' %}</th>
-                    <th>{{ datum.4 }}</th>
-                    {% else %}
-                    <td>{{ datum.0 }}</td>
+                    <td>{{ datum.documentDate }}</td>
+                    <td>{{ datum.bookDate }}</td>
                     <td><input class="account-input" type="text" name="account-{{forloop.counter0}}"></td>
-                    <td>{{ datum.2 }}</td>
+                    <td>{{ datum.account }}</td>
                     <td><input type="text" name="title-{{forloop.counter0}}"></td>
-                    <td>{{ datum.3 }}</td>
+                    <td>{{ datum.notes }}</td>
                     <td>
                         <select name="recurrence-{{forloop.counter0}}">
                             <option value="-1"></option>
@@ -45,8 +47,7 @@
                             {% endfor %}
                         </select>
                     </td>
-                    <td>{{ datum.4 }}</td>
-                    {% endif %}
+                    <td>{{ datum.amount }}</td>
                 </tr>
                 {% endfor %}
                 </table>

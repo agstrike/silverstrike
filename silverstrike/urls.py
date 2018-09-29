@@ -119,15 +119,15 @@ urlpatterns = [
          name='manifest'),
 
     path('import/', import_views.ImportView.as_view(), name='import'),
-    path('import/firefly/', import_views.ImportFireflyView.as_view(), name='import_firefly'),
+    path('import/upload/', import_views.ImportUploadView.as_view(), name='import_upload'),
+    path('import/process/<uuid:uuid>/<int:account>/<int:importer>/',
+         import_views.ImportProcessView.as_view(), name='import_process'),
+
     path('import/dkb/<int:account>/', import_views.ImportDKBView.as_view(), name='import_dkb'),
     path('import/dkb/<uuid:uuid>/<int:account>/', import_views.ImportProcessDKB.as_view(),
          name='import_process_dkb'),
-    #path('import/generic/', import_views.GenericUploadView.as_view(), name='import_generic'),
-    #path('import/generic/<uuid:uuid>/<int:config_pk>', import_views.ImportConfigureView.as_view(),
-    #     name='import_configure'),
-    path('import/generic/<uuid:uuid>/process/<int:config_pk>/',
-         import_views.ImportProcessView.as_view(), name='import_process'),
+
+    path('import/firefly/', import_views.ImportFireflyView.as_view(), name='import_firefly'),
 
     path('export/', import_views.ExportView.as_view(), name='export'),
 

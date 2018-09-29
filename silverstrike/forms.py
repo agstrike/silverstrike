@@ -1,16 +1,17 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import (Account, Budget, Category, ImportConfiguration, ImportFile,
+from .models import (Account, Budget, Category, ImportFile,
                      RecurringTransaction, Split, Transaction)
+from silverstrike import importers
 
 
 class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = ImportFile
         fields = ['file']
-    configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(),
-                                           required=False)
+    account = forms.ModelChoiceField(queryset=Account.objects.personal())
+    importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
 
 
 class AccountCreateForm(forms.ModelForm):
@@ -53,10 +54,6 @@ class BudgetForm(forms.Form):
 
 
 BudgetFormSet = forms.formset_factory(BudgetForm, extra=0)
-
-
-class CSVDefinitionForm(forms.Form):
-    field_type = forms.ChoiceField(choices=ImportConfiguration.FIELD_TYPES)
 
 
 class TransactionForm(forms.ModelForm):

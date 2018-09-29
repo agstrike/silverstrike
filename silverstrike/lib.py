@@ -1,59 +1,12 @@
 import csv
 import datetime
 
-from silverstrike.models import Account, Category, ImportConfiguration, Split, Transaction
+from silverstrike.models import Account, Category, Split, Transaction
 
 
 def last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)
     return next_month - datetime.timedelta(days=next_month.day)
-
-
-def import_csv(path, config):
-    data = []
-    col_types = [int(x) for x in config.config.split(' ')]
-    with open(path) as csv_file:
-        for line in csv.reader(csv_file):
-            entry = dict()
-            for i in range(len(line)):
-                if col_types[i] == ImportConfiguration.SOURCE_ACCOUNT:
-                    entry['src'] = line[i]
-                elif col_types[i] == ImportConfiguration.DESTINATION_ACCOUNT:
-                    entry['dst'] = line[i]
-                elif col_types[i] == ImportConfiguration.AMOUNT:
-                    entry['amount'] = line[i]
-                elif col_types[i] == ImportConfiguration.DATE:
-                    entry['date'] = line[i]
-                elif col_types[i] == ImportConfiguration.NOTES:
-                    entry['notes'] = line[i]
-                elif col_types[i] == ImportConfiguration.CATEGORY:
-                    entry['category'] = line[i]
-                elif col_types[i] == ImportConfiguration.TITLE:
-                    entry['title'] = line[i]
-            data.append(entry)
-
-    if config.headers:
-        del data[0]
-    accounts = dict()
-    for name, id in Account.objects.all().values_list('name', 'id'):
-        accounts[name] = id
-
-    # create objects
-    for e in data:
-        if e['src'] in accounts:
-            e['src'] = accounts[e['src']]
-        else:
-            e['src'] = Account.objects.create(name=e['src']).id
-        if e['dst'] in accounts:
-            e['dst'] = accounts[e['dst']]
-        else:
-            e['dst'] = Account.objects.create(name=e['src']).id
-
-        j = Transaction.objects.create(title=e['title'], date=e['date'], notes=e['notes'])
-        Split.objects.create(account=e['src'], opposing_account=e['dst'],
-                             transaction=j, amount=e['amount'], date=e['date'])
-        Split.objects.create(account=e['dst'], opposing_account=e['src'],
-                             transaction=j, amount=-float(e['amount']), date=e['date'])
 
 
 def import_firefly(csv_path):

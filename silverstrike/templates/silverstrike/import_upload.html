@@ -25,10 +25,14 @@
           {{ form.file }}
         </div>
       </div>
+      {% for field in form %}
+      {% if field.name != 'file' %}
       <div class="form-group">
-        <label class="control-label col-sm-2" for="{{ form.configuration.id_for_label }}">{{ form.configuration.label }}</label>
-        <div class="col-sm-8">{{ form.configuration|add_class:"form-control" }}</div>
+        <label class="text-right col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="col-sm-8">{{ field|add_class:"form-control" }}</div>
       </div>
+      {% endif %}
+      {% endfor %}
     </div>
     <div class="box-footer">
       <div class="col-sm-offset-2">
