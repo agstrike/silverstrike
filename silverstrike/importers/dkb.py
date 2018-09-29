@@ -2,6 +2,7 @@ import csv
 
 from silverstrike.importers.import_statement import ImportStatement
 
+
 def import_csv(csv_path):
     lines = []
     with open(csv_path, encoding='latin-1') as csv_file:

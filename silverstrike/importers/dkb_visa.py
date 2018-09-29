@@ -1,5 +1,7 @@
-from silverstrike.importers.import_statement import ImportStatement
 import csv
+
+from silverstrike.importers.import_statement import ImportStatement
+
 
 def import_csv(csv_path):
     lines = []

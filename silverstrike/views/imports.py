@@ -2,33 +2,21 @@ import csv
 import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import formset_factory
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.utils.translation import ugettext as _
 from django.views import generic
 
 from silverstrike import forms
-from silverstrike.forms import ExportForm, ImportUploadForm
-from silverstrike.lib import import_firefly
-from silverstrike.models import ImportFile, Split
-from silverstrike import models
 from silverstrike import importers
-from silverstrike.importers import dkb
+from silverstrike import models
 
 
-class ImportView(LoginRequiredMixin, generic.edit.FormView):
+class ImportView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'silverstrike/import.html'
-    form_class = forms.ImporterChooseForm
-
-    def form_valid(self, form):
-        account = form.cleaned_data['account']
-        importer = form.cleaned_data['importer']
-        return HttpResponseRedirect(reverse('import_upload'))
 
 
 class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
-    model = ImportFile
+    model = models.ImportFile
     form_class = forms.ImportUploadForm
     template_name = 'silverstrike/import_upload.html'
 
@@ -37,7 +25,8 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
         account = form.cleaned_data['account']
         importer = form.cleaned_data['importer']
         print(importer)
-        return HttpResponseRedirect(reverse('import_process', args=[self.object.pk, account.pk, importer]))
+        return HttpResponseRedirect(
+            reverse('import_process', args=[self.object.pk, account.pk, importer]))
 
 
 class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
@@ -45,14 +34,15 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ImportProcessView, self).get_context_data(**kwargs)
-        file = ImportFile.objects.get(uuid=self.kwargs['uuid'])
+        file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
         importer = self.kwargs['importer']
         context['data'] = importers.IMPORTERS[importer].import_csv(file.file.path)
-        context['recurrences'] = models.RecurringTransaction.objects.exclude(recurrence=models.RecurringTransaction.DISABLED)
+        context['recurrences'] = models.RecurringTransaction.objects.exclude(
+            recurrence=models.RecurringTransaction.DISABLED)
         return context
 
     def post(self, request, *args, **kwargs):
-        file = ImportFile.objects.get(uuid=self.kwargs['uuid'])
+        file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
         importer = self.kwargs['importer']
         data = importers.IMPORTERS[importer].import_csv(file.file.path)
         for i in range(len(data)):
@@ -85,7 +75,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 transaction.recurrence_id = recurrence
             transaction.save()
 
-            s1 = models.Split.objects.create(
+            models.Split.objects.create(
                 title=title,
                 amount=amount,
                 date=date,
@@ -93,7 +83,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 account_id=self.kwargs['account'],
                 opposing_account=account
                 )
-            s2 = models.Split.objects.create(
+            models.Split.objects.create(
                 title=title,
                 amount=-amount,
                 date=date,
@@ -105,24 +95,24 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
 
 
 class ImportFireflyView(LoginRequiredMixin, generic.edit.CreateView):
-    model = ImportFile
+    model = models.ImportFile
     fields = ['file']
     template_name = 'silverstrike/import_upload.html'
 
     def form_valid(self, form):
         self.object = form.save()
-        import_firefly(self.object.file.path)
+        importers.firefly.import_firefly(self.object.file.path)
         return HttpResponseRedirect(reverse('index'))
 
 
 class ExportView(LoginRequiredMixin, generic.edit.FormView):
     template_name = 'silverstrike/export.html'
-    form_class = ExportForm
+    form_class = forms.ExportForm
 
     def form_valid(self, form):
         response = HttpResponse(content_type='text/csv')
 
-        splits = Split.objects.date_range(
+        splits = models.Split.objects.date_range(
             form.cleaned_data['start'], form.cleaned_data['end']).transfers_once()
         splits = splits.filter(account__in=form.cleaned_data['accounts'])
         csv_writer = csv.writer(response, delimiter=';')

@@ -123,10 +123,6 @@ urlpatterns = [
     path('import/process/<uuid:uuid>/<int:account>/<int:importer>/',
          import_views.ImportProcessView.as_view(), name='import_process'),
 
-    path('import/dkb/<int:account>/', import_views.ImportDKBView.as_view(), name='import_dkb'),
-    path('import/dkb/<uuid:uuid>/<int:account>/', import_views.ImportProcessDKB.as_view(),
-         name='import_process_dkb'),
-
     path('import/firefly/', import_views.ImportFireflyView.as_view(), name='import_firefly'),
 
     path('export/', import_views.ExportView.as_view(), name='export'),
