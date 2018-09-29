@@ -223,7 +223,7 @@ class SplitForm(forms.ModelForm):
         fields = ['title', 'account', 'opposing_account', 'date', 'amount', 'category']
     account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
         account_type=models.Account.SYSTEM))
-    opposing_account = forms.ModelChoiceField(queryset=models.eAccount.objects.exclude(
+    opposing_account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
         account_type=models.Account.SYSTEM))
 
 
