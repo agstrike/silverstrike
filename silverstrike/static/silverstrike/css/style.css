@@ -1,6 +1,7 @@
 #navbar-user {
     height: unset;
 }
+
 .pagination select {
     display:inline-block;
     width:120px;
@@ -9,6 +10,23 @@
     vertical-align: top;
     margin-left: -1px;
 }
+
+.flash-message {
+    right: 1rem;
+    margin-top: 1rem;
+    position: absolute;
+    z-index: 10;
+}
+
+.flash-message > .alert {
+    background-color: #323232;
+    color: white;
+}
+
+.flash-message > .alert > button {
+    color: white;
+}
+
 .force-parent-lh {
   line-height: inherit !important;
 }
