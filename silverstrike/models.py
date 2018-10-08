@@ -339,12 +339,16 @@ class RecurringTransactionManager(models.Manager):
 
 class RecurringTransaction(models.Model):
     DISABLED = 0
-    MONTHLY = 1
-    QUARTERLY = 2
-    BIANNUALLY = 3
-    ANNUALLY = 4
+    WEEKLY = 1
+    BIWEEKLY = 2
+    MONTHLY = 3
+    QUARTERLY = 4
+    BIANNUALLY = 5
+    ANNUALLY = 6
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
+        (WEEKLY, _('Weekly')),
+        (BIWEEKLY, _('Biweekly')),
         (MONTHLY, _('Monthly')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
@@ -378,7 +382,11 @@ class RecurringTransaction(models.Model):
         return date.today() >= self.date
 
     def update_date(self):
-        if self.recurrence == self.MONTHLY:
+        if self.recurrence == self.WEEKLY:
+            self.date += relativedelta(weeks=+1)
+        elif self.recurrence == self.BIWEEKLY:
+            self.date += relativedelta(weeks=+2)
+        elif self.recurrence == self.MONTHLY:
             self.date += relativedelta(months=+1)
         elif self.recurrence == self.QUARTERLY:
             self.date += relativedelta(months=+3)
