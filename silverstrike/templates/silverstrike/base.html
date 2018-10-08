@@ -20,13 +20,10 @@
     <link rel="stylesheet" href="{% static 'vendor/css/AdminLTE.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/skin-blue-light.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-
     <title>SilverStrike</title>
   </head>
   <body class="hold-transition skin-blue-light sidebar-mini">
     <div class="wrapper">
-
       <header class="main-header">
         <a href="/" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -61,8 +58,7 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-user" aria-hidden="true"></i>
-                  <span class="hidden-xs">{% user_display user %}
-</span>
+                  <span class="hidden-xs">{% user_display user %}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="user-header" id="navbar-user">
@@ -152,6 +148,14 @@
         </section>
       </aside>
       <div class="content-wrapper">
+          <div class="flash-message">
+              {% for message in messages %}
+              <div class="alert alert-dismissable">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              </div>
+              {% endfor %}
+          </div>
         <section class="content-header">
           {% block content_header %}
           {% endblock %}
@@ -174,9 +178,14 @@
     {% block scripts %}
     {% endblock %}
     <script>
-      $(document).ready(function () {
-        $('.sidebar-menu').tree()
-      })
+        $(document).ready(function () {
+            $('.sidebar-menu').tree()
+            window.setTimeout(function() {
+                $(".flash-message").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove();
+                });
+            }, 4000);
+        })
     </script>
   </body>
 </html>
