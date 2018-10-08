@@ -68,6 +68,7 @@ class AccountAdmin(admin.ModelAdmin):
 
 class SplitInline(admin.TabularInline):
     model = Split
+    extra = 0
 
 
 @admin.register(Transaction)
