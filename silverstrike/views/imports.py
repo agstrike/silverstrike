@@ -49,13 +49,16 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             title = request.POST.get('title-{}'.format(i), '')
             account = request.POST.get('account-{}'.format(i), '')
             recurrence = int(request.POST.get('recurrence-{}'.format(i), '-1'))
-            date = datetime.datetime.strptime(data[i].bookDate, '%d.%m.%Y')
+            book_date = data[i].book_date
+            date = data[i].transaction_date
             if not (title or account):
                 continue
             amount = float(data[i].amount)
             if amount == 0:
                 continue
-            account = models.Account.objects.get(name=account)
+            account, _ = models.Account.objects.get_or_create(
+                name=account,
+                defaults={'account_type': models.Account.FOREIGN})
             if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()
@@ -78,7 +81,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             models.Split.objects.create(
                 title=title,
                 amount=amount,
-                date=date,
+                date=book_date,
                 transaction=transaction,
                 account_id=self.kwargs['account'],
                 opposing_account=account

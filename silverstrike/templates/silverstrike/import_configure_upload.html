@@ -22,7 +22,7 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-responsive">
                     <tr>
-                        <th>{% trans 'Document Date' %}</th>
+                        <th>{% trans 'Transaction Date' %}</th>
                         <th>{% trans 'Book Date' %}</th>
                         <th>{% trans 'Account' %}</th>
                         <th>{% trans 'Account' %}</th>
@@ -33,8 +33,8 @@
                     </tr>
                 {% for datum in data %}
                 <tr>
-                    <td>{{ datum.documentDate }}</td>
-                    <td>{{ datum.bookDate }}</td>
+                    <td><input type="date" value="{{ datum.transaction_date|date:'Y-m-d' }}" name="date-{{forloop.counter0}}"></td>
+                    <td>{{ datum.book_date|date:"SHORT_DATE_FORMAT" }}</td>
                     <td><input class="account-input" type="text" name="account-{{forloop.counter0}}"></td>
                     <td>{{ datum.account }}</td>
                     <td><input type="text" name="title-{{forloop.counter0}}"></td>

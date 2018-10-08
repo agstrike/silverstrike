@@ -1,4 +1,5 @@
 import csv
+import datetime
 
 from silverstrike.importers.import_statement import ImportStatement
 
@@ -9,10 +10,14 @@ def import_csv(csv_path):
         for line in csv.reader(csv_file, delimiter=';'):
             if len(line) < 6:
                 continue
-            lines.append(ImportStatement(
-                bookDate=line[1],
-                documentDate=line[2],
-                notes=line[3],
-                amount=line[4].replace('.', '').replace(',', '.')
-                ))
+            try:
+                lines.append(ImportStatement(
+                    book_date=datetime.datetime.strptime(line[1], '%d.%m.%Y'),
+                    transaction_date=datetime.datetime.strptime(line[2], '%d.%m.%Y'),
+                    notes=line[3],
+                    amount=float(line[4].replace('.', '').replace(',', '.'))
+                    ))
+            except ValueError:
+                # first line contains headers
+                pass
     return lines[1:]
