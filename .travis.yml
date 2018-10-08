@@ -9,12 +9,10 @@ before_script:
 
 matrix:
   include:
-  - env: TOXENV=django2.0,flake,codecov
+  - env: TOXENV=django2.1,django2.0,flake,codecov
   - env: TOXENV=djangolatest
   - python: "3.5"
-    env: TOXENV=django2.0
-  - python: "3.4"
-    env: TOXENV=django2.0
+    env: TOXENV=django2.1,django2.0
   allow_failures:
   - env: TOXENV=djangolatest
 
