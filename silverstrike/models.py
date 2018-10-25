@@ -314,13 +314,15 @@ class RecurringTransaction(models.Model):
     BIANNUALLY = 3
     ANNUALLY = 4
     WEEKLY = 5
+    DAILY = 6
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
         (MONTHLY, _('Monthly')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
         (ANNUALLY, _('Annually')),
-        (WEEKLY, _('Weekly'))
+        (WEEKLY, _('Weekly')),
+        (DAILY, _('Daily')),
         )
 
     SAME_DAY = 0
@@ -376,6 +378,8 @@ class RecurringTransaction(models.Model):
             delta = relativedelta(years=1)
         elif self.recurrence == self.WEEKLY:
             delta = relativedelta(weeks=1)
+        elif self.recurrence == self.DAILY:
+            delta = relativedelta(days=1)
         else:
             return
         delta *= self.skip + 1
