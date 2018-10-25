@@ -351,9 +351,8 @@ class RecurringTransaction(models.Model):
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-
     skip = models.PositiveIntegerField(default=0)
-    last_weekday_in_month = models.BooleanField(default=False)
+    last_day_in_month = models.BooleanField(default=False)
     weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
 
     def __str__(self):
@@ -382,7 +381,7 @@ class RecurringTransaction(models.Model):
             return
         delta *= self.skip + 1
         self.date += delta
-        if self.last_weekday_in_month:
+        if self.last_day_in_month:
             self.date = last_day_of_month(self.date)
         if self.date.weekday() > 4:
             if self.weekend_handling == self.NEXT_WEEKDAY:
