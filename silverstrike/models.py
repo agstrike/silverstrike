@@ -7,6 +7,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
+from silverstrike.lib import last_day_of_month
+
 
 class AccountQuerySet(models.QuerySet):
     def personal(self):
@@ -312,13 +314,26 @@ class RecurringTransaction(models.Model):
     QUARTERLY = 2
     BIANNUALLY = 3
     ANNUALLY = 4
+    WEEKLY = 5
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
         (MONTHLY, _('Monthly')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
-        (ANNUALLY, _('Annually'))
+        (ANNUALLY, _('Annually')),
+        (WEEKLY, _('Weekly'))
         )
+
+    SAME_DAY = 0
+    PREVIOUS_WEEKDAY = 1
+    NEXT_WEEKDAY = 2
+    SKIP = 3
+    WEEKEND_SKIPPING = (
+        (SKIP, _('Skip recurrence')),
+        (SAME_DAY, _('Same day')),
+        (PREVIOUS_WEEKDAY, _('Previous weekday')),
+        (NEXT_WEEKDAY, _('Next weekday'))
+    )
 
     class Meta:
         ordering = ['date']
@@ -336,6 +351,11 @@ class RecurringTransaction(models.Model):
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
 
+
+    skip = models.PositiveIntegerField(default=0)
+    last_weekday_in_month = models.BooleanField(default=False)
+    weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
+
     def __str__(self):
         return self.title
 
@@ -347,14 +367,28 @@ class RecurringTransaction(models.Model):
         return date.today() >= self.date
 
     def update_date(self):
+        delta = None
         if self.recurrence == self.MONTHLY:
-            self.date += relativedelta(months=+1)
+            delta = relativedelta(months=1)
         elif self.recurrence == self.QUARTERLY:
-            self.date += relativedelta(months=+3)
+            delta = relativedelta(months=3)
         elif self.recurrence == self.BIANNUALLY:
-            self.date += relativedelta(months=+6)
+            delta = relativedelta(months=6)
         elif self.recurrence == self.ANNUALLY:
-            self.date += relativedelta(years=+1)
+            delta = relativedelta(years=1)
+        elif self.recurrence == self.WEEKLY:
+            delta = relativedelta(weeks=1)
+        else:
+            return
+        delta *= self.skip + 1
+        self.date += delta
+        if self.last_weekday_in_month:
+            self.date = last_day_of_month(self.date)
+        if self.date.weekday() > 4:
+            if self.weekend_handling == NEXT_WEEKDAY:
+                self.date += relativedelta(days=7 - self.date.weekday())
+            elif self.weekend_handling == PREVIOUS_WEEKDAY:
+                self.date -= relativedelta(days=self.date.weekday() - 4)
 
     @property
     def is_disabled(self):

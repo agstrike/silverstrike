@@ -155,7 +155,7 @@ class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = models.RecurringTransaction
         fields = ['title', 'date', 'amount',
-                  'src', 'dst', 'category', 'recurrence']
+                  'src', 'dst', 'category', 'recurrence', 'skip', 'weekend_handling', 'last_weekday_in_month']
 
     def clean_amount(self):
         amount = self.cleaned_data['amount']

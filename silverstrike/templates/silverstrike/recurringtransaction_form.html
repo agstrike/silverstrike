@@ -33,10 +33,21 @@
       {% csrf_token %}
       {% for field in form %}
         <div class="form-group{% if field.errors %} has-error{% endif %}">
+          {% if field|widget_type != "checkboxinput" %}
           <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}
           </label>
           <div class="col-sm-8">
           {{ field|add_class:"form-control" }}
+          {% else %}
+          <div class="col-sm-offset-2 col-sm-8 ">
+            <div class="checkbox">
+              <label>
+                {{ field }}
+                {{ field.label }}
+              </label>
+            </div>
+          </div>
+          {% endif %}
           {% for error in field.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
