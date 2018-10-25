@@ -385,9 +385,9 @@ class RecurringTransaction(models.Model):
         if self.last_weekday_in_month:
             self.date = last_day_of_month(self.date)
         if self.date.weekday() > 4:
-            if self.weekend_handling == NEXT_WEEKDAY:
+            if self.weekend_handling == self.NEXT_WEEKDAY:
                 self.date += relativedelta(days=7 - self.date.weekday())
-            elif self.weekend_handling == PREVIOUS_WEEKDAY:
+            elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
                 self.date -= relativedelta(days=self.date.weekday() - 4)
 
     @property
