@@ -14,13 +14,13 @@ class SplitQuerySetTests(TestCase):
         self.foreign = Account.objects.create(name='foreign', account_type=Account.FOREIGN)
 
         self.transfer_transaction = create_transaction(
-            'meh', self.personal, self.savings, 100, Transaction.TRANSFER, date(2017, 1, 1))
+            'transfer', self.personal, self.savings, 100, Transaction.TRANSFER, date(2017, 1, 1))
         self.deposit_transaction = create_transaction(
-            'meh', self.foreign, self.personal, 100, Transaction.DEPOSIT, date(2017, 6, 1))
+            'deposit', self.foreign, self.personal, 100, Transaction.DEPOSIT, date(2017, 6, 1))
         self.withdraw_transaction = create_transaction(
-            'meh', self.personal, self.foreign, 100, Transaction.WITHDRAW, date(2017, 12, 1))
+            'withdraw', self.personal, self.foreign, 100, Transaction.WITHDRAW, date(2017, 12, 1))
         self.upcoming_transaction = create_transaction(
-            'meh', self.personal, self.foreign, 100, Transaction.WITHDRAW, date(2200, 1, 1))
+            'upcoming', self.personal, self.foreign, 100, Transaction.WITHDRAW, date(2200, 1, 1))
 
     def test_personal(self):
         queryset = Split.objects.personal()
@@ -28,7 +28,7 @@ class SplitQuerySetTests(TestCase):
         self.assertEqual(queryset.count(), 5)
 
     def test_transfers_once(self):
-        queryset = Split.objects.personal().transfers_once()
+        queryset = Split.objects.transfers_once()
         # this time we should get exactly 4.
         self.assertEqual(queryset.count(), 4)
 
