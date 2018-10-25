@@ -1,0 +1,73 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1>Import</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">DKB</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">{% trans 'Import statements' %}</h3>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-responsive">
+                    <tr>
+                        <th>{% trans 'Transaction Date' %}</th>
+                        <th>{% trans 'Book Date' %}</th>
+                        <th>{% trans 'Account' %}</th>
+                        <th>{% trans 'Account' %}</th>
+                        <th>{% trans 'Title' %}</th>
+                        <th>{% trans 'Notes' %}</th>
+                        <th>{% trans 'Recurrence' %}</th>
+                        <th>{% trans 'Amount' %}</th>
+                    </tr>
+                {% for datum in data %}
+                <tr>
+                    <td><input type="date" value="{{ datum.transaction_date|date:'Y-m-d' }}" name="date-{{forloop.counter0}}"></td>
+                    <td>{{ datum.book_date|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td><input class="account-input" type="text" name="account-{{forloop.counter0}}"></td>
+                    <td>{{ datum.account }}</td>
+                    <td><input type="text" name="title-{{forloop.counter0}}"></td>
+                    <td>{{ datum.notes }}</td>
+                    <td>
+                        <select name="recurrence-{{forloop.counter0}}">
+                            <option value="-1"></option>
+                            {% for recurrence in recurrences %}
+                            <option value="{{ recurrence.id }}">{{ recurrence.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>{{ datum.amount }}</td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <button class="btn" type="submit">{% trans 'Import' %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
+
+<script>
+$(function() {
+  $.getJSON('{% url 'api_accounts' 'all' %}').done(function (data) {
+      $('.account-input').typeahead({source: data});
+  });
+})
+</script>
+{% endblock %}

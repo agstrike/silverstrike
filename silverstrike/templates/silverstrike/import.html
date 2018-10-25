@@ -17,8 +17,12 @@
     <h3 class="box-title">{% trans 'Import methods' %}</h3>
   </div>
     <div class="box-body">
-    <a href="{% url 'import_firefly' %}" class="btn btn-app">Firefly III</a>
-    <a href="{% url 'import_generic' %}" class="btn btn-app disabled">{% trans 'Generic CSV' %}</a>
+      <h3>Bank Statements</h3>
+      <hr>
+      <a href="{% url 'import_upload' %}" class="btn btn-app">{% trans 'CSV' %}</a>
+      <h3>Export from other MoneyManagement Software</h3>
+      <hr>
+      <a href="{% url 'import_firefly' %}" class="btn btn-app">Firefly III</a>
     </div>
 </div>
 </div>

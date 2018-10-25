@@ -40,6 +40,7 @@ class Account(models.Model):
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
+    iban = models.CharField(max_length=34, blank=True, null=True)
 
     objects = AccountQuerySet.as_manager()
 
@@ -292,39 +293,6 @@ class Budget(models.Model):
 class ImportFile(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(upload_to='imports')
-
-
-class ImportConfiguration(models.Model):
-    DO_NOT_USE = 0
-    SOURCE_ACCOUNT = 1
-    DESTINATION_ACCOUNT = 2
-    AMOUNT = 3
-    DATE = 4
-    NOTES = 5
-    CATEGORY = 6
-    TITLE = 7
-
-    FIELD_TYPES = (
-        (DO_NOT_USE, _('Do not use')),
-        (SOURCE_ACCOUNT, _('Source Account')),
-        (DESTINATION_ACCOUNT, _('Destination Account')),
-        (AMOUNT, _('Amount')),
-        (DATE, _('Date')),
-        (NOTES, _('Notes')),
-        (CATEGORY, _('Category')),
-        (TITLE, _('Title')),
-        )
-
-    name = models.CharField(max_length=64)
-    headers = models.BooleanField(help_text=_('First line contains headers'))
-    default_account = models.ForeignKey(Account, models.SET_NULL,
-                                        limit_choices_to={'account_type': Account.PERSONAL},
-                                        null=True, blank=True)
-    dateformat = models.CharField(max_length=32)
-    config = models.TextField()
-
-    def __str__(self):
-        return self.name
 
 
 class RecurringTransactionManager(models.Manager):

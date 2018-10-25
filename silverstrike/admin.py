@@ -3,26 +3,22 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import ugettext as _
 
-
-from .models import (Account, Category, ImportConfiguration,
-                     RecurringTransaction, Split, Transaction)
-
-admin.site.register(ImportConfiguration)
+from silverstrike import models
 
 
-@admin.register(Category)
+@admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
-@admin.register(RecurringTransaction)
+@admin.register(models.RecurringTransaction)
 class RecurringTransactionAdmin(admin.ModelAdmin):
     search_fields = ['title']
     list_display = ('title', 'recurrence', 'date', 'amount')
     list_filter = ('recurrence',)
 
 
-@admin.register(Account)
+@admin.register(models.Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_filter = ('account_type',)
@@ -38,7 +34,7 @@ class AccountAdmin(admin.ModelAdmin):
             return
         for account in accounts:
             failure = False
-            if account.account_type != Account.FOREIGN:
+            if account.account_type != models.Account.FOREIGN:
                 self.message_user(request, _(
                     'You can only merge foreign accounts, "{}" isn\'t.'.format(account.name)))
                 failure = True
@@ -47,11 +43,12 @@ class AccountAdmin(admin.ModelAdmin):
         base = accounts.pop()
         for account in accounts:
             # update splits
-            Split.objects.filter(account_id=account.id).update(account_id=base.id)
-            Split.objects.filter(opposing_account_id=account.id).update(opposing_account_id=base.id)
+            models.Split.objects.filter(account_id=account.id).update(account_id=base.id)
+            models.Split.objects.filter(opposing_account_id=account.id).update(
+                opposing_account_id=base.id)
             # update recurrences
-            RecurringTransaction.objects.filter(src_id=account.id).update(src_id=base.id)
-            RecurringTransaction.objects.filter(dst_id=account.id).update(dst_id=base.id)
+            models.RecurringTransaction.objects.filter(src_id=account.id).update(src_id=base.id)
+            models.RecurringTransaction.objects.filter(dst_id=account.id).update(dst_id=base.id)
             account.delete()
         if len(accounts) == 1:
             self.message_user(request, format_html(
@@ -67,11 +64,11 @@ class AccountAdmin(admin.ModelAdmin):
 
 
 class SplitInline(admin.TabularInline):
-    model = Split
+    model = models.Split
     extra = 0
 
 
-@admin.register(Transaction)
+@admin.register(models.Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     inlines = [SplitInline]
     date_hierarchy = 'date'

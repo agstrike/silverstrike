@@ -2,7 +2,7 @@ import os
 
 from django.test import TestCase
 
-from silverstrike.lib import import_firefly
+from silverstrike.importers.firefly import import_firefly
 
 
 class FireFlyImportTests(TestCase):

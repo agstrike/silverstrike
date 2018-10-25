@@ -1,21 +1,20 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import (Account, Budget, Category, ImportConfiguration, ImportFile,
-                     RecurringTransaction, Split, Transaction)
+from silverstrike import importers, models
 
 
 class ImportUploadForm(forms.ModelForm):
     class Meta:
-        model = ImportFile
+        model = models.ImportFile
         fields = ['file']
-    configuration = forms.ModelChoiceField(queryset=ImportConfiguration.objects.all(),
-                                           required=False)
+    account = forms.ModelChoiceField(queryset=models.Account.objects.personal())
+    importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
 
 
 class AccountCreateForm(forms.ModelForm):
     class Meta:
-        model = Account
+        model = models.Account
         fields = ['name', 'initial_balance', 'active', 'show_on_dashboard']
 
     initial_balance = forms.DecimalField(max_digits=10, decimal_places=2, initial=0)
@@ -40,40 +39,36 @@ class BudgetForm(forms.Form):
         if self.cleaned_data['budget_id'] == -1:
             if self.cleaned_data['amount'] != 0:
                 # new budget
-                Budget.objects.create(
+                models.Budget.objects.create(
                     category_id=self.cleaned_data['category_id'],
                     month=self.cleaned_data['month'],
                     amount=self.cleaned_data['amount'])
         elif self.cleaned_data['amount'] != 0:
-            Budget.objects.update_or_create(id=self.cleaned_data['budget_id'], defaults={
+            models.Budget.objects.update_or_create(id=self.cleaned_data['budget_id'], defaults={
                 'amount': self.cleaned_data['amount']
             })
         else:
-            Budget.objects.get(id=self.cleaned_data['budget_id']).delete()
+            models.Budget.objects.get(id=self.cleaned_data['budget_id']).delete()
 
 
 BudgetFormSet = forms.formset_factory(BudgetForm, extra=0)
 
 
-class CSVDefinitionForm(forms.Form):
-    field_type = forms.ChoiceField(choices=ImportConfiguration.FIELD_TYPES)
-
-
 class TransactionForm(forms.ModelForm):
     class Meta:
-        model = Transaction
+        model = models.Transaction
         fields = ['title', 'source_account', 'destination_account',
                   'amount', 'date', 'value_date', 'category', 'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
     category = forms.ModelChoiceField(
-        queryset=Category.objects.exclude(active=False).order_by('name'), required=False)
+        queryset=models.Category.objects.exclude(active=False).order_by('name'), required=False)
     value_date = forms.DateField(required=False)
 
-    source_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL, active=True))
-    destination_account = forms.ModelChoiceField(queryset=Account.objects.filter(
-        account_type=Account.PERSONAL, active=True))
+    source_account = forms.ModelChoiceField(queryset=models.Account.objects.filter(
+        account_type=models.Account.PERSONAL, active=True))
+    destination_account = forms.ModelChoiceField(queryset=models.Account.objects.filter(
+        account_type=models.Account.PERSONAL, active=True))
 
     def save(self, commit=True):
         transaction = super().save(commit)
@@ -81,16 +76,18 @@ class TransactionForm(forms.ModelForm):
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
         value_date = self.cleaned_data.get('value_date') or transaction.date
-        Split.objects.update_or_create(transaction=transaction, amount__lt=0,
-                                       defaults={'amount': -amount, 'account': src,
-                                                 'opposing_account': dst, 'date': value_date,
-                                                 'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
-        Split.objects.update_or_create(transaction=transaction, amount__gt=0,
-                                       defaults={'amount': amount, 'account': dst,
-                                                 'opposing_account': src, 'date': value_date,
-                                                 'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
+        models.Split.objects.update_or_create(
+            transaction=transaction, amount__lt=0,
+            defaults={'amount': -amount, 'account': src,
+                      'opposing_account': dst, 'date': value_date,
+                      'title': transaction.title,
+                      'category': self.cleaned_data['category']})
+        models.Split.objects.update_or_create(
+            transaction=transaction, amount__gt=0,
+            defaults={'amount': amount, 'account': dst,
+                      'opposing_account': src, 'date': value_date,
+                      'title': transaction.title,
+                      'category': self.cleaned_data['category']})
         return transaction
 
 
@@ -100,21 +97,23 @@ class TransferForm(TransactionForm):
         src = self.cleaned_data['source_account']
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
-        Split.objects.update_or_create(transaction=transaction, amount__lt=0,
-                                       defaults={'amount': -amount, 'account': src,
-                                                 'opposing_account': dst, 'date': transaction.date,
-                                                 'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
-        Split.objects.update_or_create(transaction=transaction, amount__gt=0,
-                                       defaults={'amount': amount, 'account': dst,
-                                                 'opposing_account': src, 'date': transaction.date,
-                                                 'title': transaction.title,
-                                                 'category': self.cleaned_data['category']})
+        models.Split.objects.update_or_create(
+            transaction=transaction, amount__lt=0,
+            defaults={'amount': -amount, 'account': src,
+                      'opposing_account': dst, 'date': transaction.date,
+                      'title': transaction.title,
+                      'category': self.cleaned_data['category']})
+        models.Split.objects.update_or_create(
+            transaction=transaction, amount__gt=0,
+            defaults={'amount': amount, 'account': dst,
+                      'opposing_account': src, 'date': transaction.date,
+                      'title': transaction.title,
+                      'category': self.cleaned_data['category']})
         return transaction
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Transaction.TRANSFER
+        self.instance.transaction_type = models.Transaction.TRANSFER
         if self.cleaned_data['source_account'] == self.cleaned_data['destination_account']:
             error = 'source and destination account have to be different'
             self.add_error('destination_account', error)
@@ -126,14 +125,15 @@ class WithdrawForm(TransactionForm):
                                           widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
     def save(self, commit=True):
-        account, _ = Account.objects.get_or_create(name=self.cleaned_data['destination_account'],
-                                                   account_type=Account.FOREIGN)
+        account, _ = models.Account.objects.get_or_create(
+            name=self.cleaned_data['destination_account'],
+            account_type=models.Account.FOREIGN)
         self.cleaned_data['destination_account'] = account
         return super().save(commit)
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Transaction.WITHDRAW
+        self.instance.transaction_type = models.Transaction.WITHDRAW
 
 
 class DepositForm(TransactionForm):
@@ -141,19 +141,19 @@ class DepositForm(TransactionForm):
                                      widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
     def save(self, commit=True):
-        account, _ = Account.objects.get_or_create(name=self.cleaned_data['source_account'],
-                                                   account_type=Account.FOREIGN)
+        account, _ = models.Account.objects.get_or_create(name=self.cleaned_data['source_account'],
+                                                          account_type=models.Account.FOREIGN)
         self.cleaned_data['source_account'] = account
         return super().save(commit)
 
     def clean(self):
         super().clean()
-        self.instance.transaction_type = Transaction.DEPOSIT
+        self.instance.transaction_type = models.Transaction.DEPOSIT
 
 
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
-        model = RecurringTransaction
+        model = models.RecurringTransaction
         fields = ['title', 'date', 'amount',
                   'src', 'dst', 'category', 'recurrence']
 
@@ -167,13 +167,13 @@ class RecurringTransactionForm(forms.ModelForm):
         super(RecurringTransactionForm, self).clean()
         src = self.cleaned_data['src']
         dst = self.cleaned_data['dst']
-        if src.account_type == Account.PERSONAL:
-            if dst.account_type == Account.PERSONAL:
-                self.transaction_type = Transaction.TRANSFER
+        if src.account_type == models.Account.PERSONAL:
+            if dst.account_type == models.Account.PERSONAL:
+                self.transaction_type = models.Transaction.TRANSFER
             else:
-                self.transaction_type = Transaction.WITHDRAW
-        elif dst.account_type == Account.PERSONAL:
-            self.transaction_type = Transaction.DEPOSIT
+                self.transaction_type = models.Transaction.WITHDRAW
+        elif dst.account_type == models.Account.PERSONAL:
+            self.transaction_type = models.Transaction.DEPOSIT
         else:
             raise forms.ValidationError(
                 _('You are trying to create a transaction between two foreign accounts'))
@@ -187,7 +187,7 @@ class RecurringTransactionForm(forms.ModelForm):
 
 class ReconcilationForm(forms.ModelForm):
     class Meta:
-        model = Transaction
+        model = models.Transaction
         fields = ['title', 'balance', 'notes']
 
     balance = forms.DecimalField(max_digits=10, decimal_places=2, required=True,
@@ -199,36 +199,36 @@ class ReconcilationForm(forms.ModelForm):
 
     def save(self, commit=True):
         transaction = super().save(False)
-        transaction.transaction_type = Transaction.SYSTEM
+        transaction.transaction_type = models.Transaction.SYSTEM
         transaction.save()
-        src = Account.objects.get(account_type=Account.SYSTEM).pk
-        dst = Account.objects.get(pk=self.account)
+        src = models.Account.objects.get(account_type=models.Account.SYSTEM).pk
+        dst = models.Account.objects.get(pk=self.account)
         balance = self.cleaned_data['balance']
         amount = balance - dst.balance
-        Split.objects.create(transaction=transaction, amount=-amount,
-                             account_id=src, opposing_account=dst, title=transaction.title)
-        Split.objects.create(transaction=transaction, amount=amount,
-                             account=dst, opposing_account_id=src, title=transaction.title)
+        models.Split.objects.create(transaction=transaction, amount=-amount,
+                                    account_id=src, opposing_account=dst, title=transaction.title)
+        models.Split.objects.create(transaction=transaction, amount=amount,
+                                    account=dst, opposing_account_id=src, title=transaction.title)
         return transaction
 
     def clean(self):
         super().clean()
-        if self.cleaned_data['balance'] == Account.objects.get(pk=self.account).balance:
+        if self.cleaned_data['balance'] == models.Account.objects.get(pk=self.account).balance:
             self.add_error('balance', 'You provided the same balance!')
 
 
 class SplitForm(forms.ModelForm):
     class Meta:
-        model = Split
+        model = models.Split
         fields = ['title', 'account', 'opposing_account', 'date', 'amount', 'category']
-    account = forms.ModelChoiceField(queryset=Account.objects.exclude(
-        account_type=Account.SYSTEM))
-    opposing_account = forms.ModelChoiceField(queryset=Account.objects.exclude(
-        account_type=Account.SYSTEM))
+    account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
+        account_type=models.Account.SYSTEM))
+    opposing_account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
+        account_type=models.Account.SYSTEM))
 
 
 TransactionFormSet = forms.models.inlineformset_factory(
-    Transaction, Split, form=SplitForm, extra=1
+    models.Transaction, models.Split, form=SplitForm, extra=1
     )
 
 
@@ -236,7 +236,7 @@ class ExportForm(forms.Form):
     start = forms.DateField()
     end = forms.DateField()
     accounts = forms.ModelMultipleChoiceField(
-        queryset=Account.objects.filter(account_type=Account.PERSONAL))
+        queryset=models.Account.objects.personal())
 
 
-CategoryAssignFormset = forms.modelformset_factory(Split, fields=('category',), extra=0)
+CategoryAssignFormset = forms.modelformset_factory(models.Split, fields=('category',), extra=0)
