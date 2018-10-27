@@ -5,7 +5,7 @@
 Webapp based on Django to manage personal finances
 
 ## Demo
-There is a [demo](https://demo.silverstrike.tk/) available.
+There is a [demo](https://demo.silverstrike.org/) available.
 It is regularly updated from the master branch.
 
 ## Get your own instance
@@ -16,7 +16,7 @@ Setup instructions can be found in the [wiki](https://github.com/agstrike/silver
 
 You can contribute in several ways. If you know how to code or are a designer, you are welcome to contribute using pull requests.  
 If you speak languages other than english, you are welcome to help translate SilverStrike using [crowdin](https://crowdin.com/project/silverstrike).
-There is a [dedicated instance](https://trans.silverstrike.tk) of the demo that can be used to translate inline. You will still need an account at crowdin, but translation should be easier,
+There is a [dedicated instance](https://trans.silverstrike.org) of the demo that can be used to translate inline. You will still need an account at crowdin, but translation should be easier,
 because of the context. 
 
 If nothing of the above suits you, you can still contribute by opening issues about defects and things that could be improved or request entirely new features that you think would help others.
