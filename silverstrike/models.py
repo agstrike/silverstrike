@@ -305,7 +305,7 @@ class RecurringTransactionManager(models.Manager):
             month = date.today()
         month = last_day_of_month(month)
         queryset = self.get_queryset().filter(date__lte=month)
-        return queryset.exclude(recurrence=RecurringTransaction.DISABLED)
+        return queryset.exclude(interval=RecurringTransaction.DISABLED)
 
 
 class RecurringTransaction(models.Model):
@@ -316,9 +316,11 @@ class RecurringTransaction(models.Model):
     ANNUALLY = 4
     WEEKLY = 5
     DAILY = 6
+    END_OF_MONTH = 7
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
-        (MONTHLY, _('Monthly')),
+        (MONTHLY, _('Monthly same date')),
+        (END_OF_MONTH, _('Monthly (last day)')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
         (ANNUALLY, _('Annually')),
@@ -348,13 +350,12 @@ class RecurringTransaction(models.Model):
     src = models.ForeignKey(Account, models.CASCADE)
     dst = models.ForeignKey(Account, models.CASCADE,
                             related_name='opposing_recurring_transactions')
-    recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+    interval = models.IntegerField(choices=RECCURENCE_OPTIONS)
     transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-    skip = models.PositiveIntegerField(default=0)
-    last_day_in_month = models.BooleanField(default=False)
+    multiplier = models.PositiveIntegerField(default=1)
     weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
 
     def __str__(self):
@@ -367,40 +368,49 @@ class RecurringTransaction(models.Model):
     def is_due(self):
         return date.today() >= self.date
 
-    def update_date(self):
+    def update_date(self, date=None, save=False):
         delta = None
-        if self.recurrence == self.MONTHLY:
+        if not date:
+            date = self.date
+        if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
             delta = relativedelta(months=1)
-        elif self.recurrence == self.QUARTERLY:
+        elif self.interval == self.QUARTERLY:
             delta = relativedelta(months=3)
-        elif self.recurrence == self.BIANNUALLY:
+        elif self.interval == self.BIANNUALLY:
             delta = relativedelta(months=6)
-        elif self.recurrence == self.ANNUALLY:
+        elif self.interval == self.ANNUALLY:
             delta = relativedelta(years=1)
-        elif self.recurrence == self.WEEKLY:
+        elif self.interval == self.WEEKLY:
             delta = relativedelta(weeks=1)
-        elif self.recurrence == self.DAILY:
+        elif self.interval == self.DAILY:
             delta = relativedelta(days=1)
         else:
             return
-        delta *= self.skip + 1
-        self.date += delta
-        if self.last_day_in_month:
-            self.date = last_day_of_month(self.date)
-        if self.date.weekday() > 4:
-            if self.weekend_handling == self.NEXT_WEEKDAY:
-                self.date += relativedelta(days=7 - self.date.weekday())
-            elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
-                self.date -= relativedelta(days=self.date.weekday() - 4)
+        delta *= self.multiplier
+        while True:
+            date += delta
+            if self.interval == self.END_OF_MONTH:
+                date = last_day_of_month(date)
+            if date.weekday() > 4:
+                if self.weekend_handling == self.SKIP:
+                    continue
+                elif self.weekend_handling == self.NEXT_WEEKDAY:
+                    date += relativedelta(days=7 - date.weekday())
+                elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
+                    date -= relativedelta(days=date.weekday() - 4)
+            if save:
+                self.date = date
+                self.save()
+            return date
 
     @property
     def is_disabled(self):
-        return self.recurrence == self.DISABLED
+        return self.interval == self.DISABLED
 
     @property
     def get_recurrence(self):
         for r, name in self.RECCURENCE_OPTIONS:
-            if r == self.recurrence:
+            if r == self.interval:
                 return name
 
     @property
