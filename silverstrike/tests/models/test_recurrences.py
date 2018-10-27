@@ -21,7 +21,7 @@ class RecurrenceTests(TestCase):
             date=self.date,
             src=self.personal,
             dst=self.foreign,
-            recurrence=RecurringTransaction.MONTHLY,
+            interval=RecurringTransaction.MONTHLY,
             transaction_type=Transaction.WITHDRAW)
 
     def test_str_method(self):
@@ -43,38 +43,38 @@ class RecurrenceTests(TestCase):
         self.assertFalse(self.recurrence.is_due)
 
     def test_update_monthly(self):
-        self.recurrence.update_date()
+        date = self.recurrence.update_date(save=True)
         self.assertEquals(self.recurrence.date, self.date + relativedelta(months=1))
 
     def test_update_quarterly(self):
-        self.recurrence.recurrence = RecurringTransaction.QUARTERLY
-        self.recurrence.update_date()
+        self.recurrence.interval = RecurringTransaction.QUARTERLY
+        self.recurrence.update_date(save=True)
         self.assertEquals(self.recurrence.date, self.date + relativedelta(months=3))
 
     def test_update_biannually(self):
-        self.recurrence.recurrence = RecurringTransaction.BIANNUALLY
-        self.recurrence.update_date()
+        self.recurrence.interval = RecurringTransaction.BIANNUALLY
+        self.recurrence.update_date(save=True)
         self.assertEquals(self.recurrence.date, self.date + relativedelta(months=6))
 
     def test_update_annually(self):
-        self.recurrence.recurrence = RecurringTransaction.ANNUALLY
-        self.recurrence.update_date()
+        self.recurrence.interval = RecurringTransaction.ANNUALLY
+        self.recurrence.update_date(save=True)
         self.assertEquals(self.recurrence.date, self.date + relativedelta(months=12))
 
     def test_update_disabled_recurrences(self):
-        self.recurrence.recurrence = RecurringTransaction.DISABLED
-        self.recurrence.update_date()
+        self.recurrence.interval = RecurringTransaction.DISABLED
+        self.recurrence.update_date(save=True)
         self.assertEquals(self.recurrence.date, self.date)
 
     def test_active_recurrences_are_not_disabled(self):
         self.assertFalse(self.recurrence.is_disabled)
 
     def test_disabled_recurrences_are_disabled(self):
-        self.recurrence.recurrence = RecurringTransaction.DISABLED
+        self.recurrence.interval = RecurringTransaction.DISABLED
         self.assertTrue(self.recurrence.is_disabled)
 
     def test_recurrence_string(self):
-        self.assertEquals(self.recurrence.get_recurrence, 'Monthly')
+        self.assertEquals(self.recurrence.get_recurrence, 'Monthly same date')
 
     def test_signed_amount_for_withdraws(self):
         self.assertEquals(self.recurrence.signed_amount, -25)

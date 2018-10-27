@@ -8,8 +8,8 @@ class RecurringTransactionFormTests(TestCase):
     def test_available_form_fields(self):
         form = RecurringTransactionForm()
         fields = ['title', 'date', 'amount',
-                  'src', 'dst', 'category', 'recurrence',
-                  'skip', 'weekend_handling', 'last_day_in_month']
+                  'src', 'dst', 'category', 'interval',
+                  'multiplier', 'weekend_handling']
         self.assertEqual(len(form.fields), len(fields))
         for field in fields:
             self.assertIn(field, form.fields)
@@ -18,8 +18,8 @@ class RecurringTransactionFormTests(TestCase):
         personal = Account.objects.create(name='foo')
         other = Account.objects.create(name='bar')
         form = RecurringTransactionForm({
-            'amount': -100, 'date': '2100-01-01', 'skip': 0,
-            'src': personal.id, 'dst': other.id, 'recurrence': RecurringTransaction.MONTHLY,
+            'amount': -100, 'date': '2100-01-01', 'multiplier': 1,
+            'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
@@ -29,17 +29,17 @@ class RecurringTransactionFormTests(TestCase):
         personal = Account.objects.create(name='foo')
         other = Account.objects.create(name='bar')
         form = RecurringTransactionForm({
-            'amount': 100, 'skip': 0, 'weekend_handling': RecurringTransaction.SKIP,
+            'amount': 100, 'multiplier': 1, 'weekend_handling': RecurringTransaction.SKIP,
             'src': personal.id, 'dst': other.id, 'date': '2016-01-01',
-            'recurrence': RecurringTransaction.MONTHLY, 'title': 'foo'})
+            'interval': RecurringTransaction.MONTHLY, 'title': 'foo'})
         self.assertTrue(form.is_valid())
 
     def test_transfer(self):
         personal = Account.objects.create(name='foo')
         other = Account.objects.create(name='bar')
         form = RecurringTransactionForm({
-            'amount': 100, 'date': '2100-01-01', 'skip': 0,
-            'src': personal.id, 'dst': other.id, 'recurrence': RecurringTransaction.MONTHLY,
+            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
+            'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertTrue(form.is_valid())
         transaction = form.save()
@@ -50,8 +50,8 @@ class RecurringTransactionFormTests(TestCase):
         personal = Account.objects.create(name='foo')
         other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
         form = RecurringTransactionForm({
-            'amount': 100, 'date': '2100-01-01', 'skip': 0,
-            'src': personal.id, 'dst': other.id, 'recurrence': RecurringTransaction.MONTHLY,
+            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
+            'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertTrue(form.is_valid())
         transaction = form.save()
@@ -62,8 +62,8 @@ class RecurringTransactionFormTests(TestCase):
         personal = Account.objects.create(name='foo')
         other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
         form = RecurringTransactionForm({
-            'amount': 100, 'date': '2100-01-01', 'skip': 0,
-            'src': other.id, 'dst': personal.id, 'recurrence': RecurringTransaction.MONTHLY,
+            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
+            'src': other.id, 'dst': personal.id, 'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertTrue(form.is_valid())
         transaction = form.save()
@@ -74,8 +74,8 @@ class RecurringTransactionFormTests(TestCase):
         first = Account.objects.create(name='foo', account_type=Account.FOREIGN)
         other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
         form = RecurringTransactionForm({
-            'amount': 100, 'date': '2100-01-01', 'skip': 0,
-            'src': other.id, 'dst': first.id, 'recurrence': RecurringTransaction.MONTHLY,
+            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
+            'src': other.id, 'dst': first.id, 'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
