@@ -14,8 +14,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(models.RecurringTransaction)
 class RecurringTransactionAdmin(admin.ModelAdmin):
     search_fields = ['title']
-    list_display = ('title', 'recurrence', 'date', 'amount')
-    list_filter = ('recurrence',)
+    list_display = ('title', 'interval', 'date', 'amount')
+    list_filter = ('interval',)
 
 
 @admin.register(models.Account)
