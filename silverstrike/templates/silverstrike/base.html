@@ -122,9 +122,15 @@
                 <span>{% trans 'Budgets' %}</span>
               </a>
             </li>
+            <li{% if menu == "reports" %} class="active"{% endif %}>
+              <a href="{% url 'reports' %}">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span>{% trans 'Reports' %}</span>
+              </a>
+            </li>
             <li{% if menu == "charts" %} class="active"{% endif %}>
               <a href="{% url 'charts' %}">
-                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <i class="fa fa-pie-chart" aria-hidden="true"></i>
                 <span>{% trans 'Charts' %}</span>
               </a>
             <li class="treeview{% if menu == "settings" %} active{% endif %}">

@@ -13,6 +13,7 @@ from silverstrike.views import charts as chart_views
 from silverstrike.views import imports as import_views
 from silverstrike.views import index as general_views
 from silverstrike.views import recurrences as recurrence_views
+from silverstrike.views import reports as report_views
 from silverstrike.views import transactions as transaction_views
 
 
@@ -105,6 +106,10 @@ urlpatterns = [
          budget_views.BudgetIndex.as_view(), name='budget_month'),
 
     path('charts/', chart_views.ChartView.as_view(), name='charts'),
+
+    path('reports/', report_views.ReportView.as_view(), name='reports'),
+    path('reports/income-expense', report_views.IncomeExpenseReport.as_view(),
+         name='income_expense_report'),
 
     path('api/accounts/<account_type>/', api.get_accounts, name='api_accounts'),
     path('api/balance/<dstart>/<dend>/', api.get_balances, name='api_balance'),
