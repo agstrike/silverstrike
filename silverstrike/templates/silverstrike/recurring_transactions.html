@@ -1,10 +1,11 @@
 {% extends 'silverstrike/base.html' %}
 {% load i18n %}
+{% load staticfiles %}
+{% load tags %}
 {% load humanize %}
 
 {% block content_header %}
-<h1>{% trans 'Recurring Transactions' %}
-</h1>
+<h1>{% trans 'Recurrences' %}</h1>
 <ol class="breadcrumb">
   <li><a href="/">{% trans 'Home' %}</a></li>
   <li class="active">{% trans 'Recurrences' %}</li>
@@ -37,7 +38,7 @@
       </div>
     </div>
   </div>
-<div class="col-md-3">
+  <div class="col-md-3">
     <div class="small-box bg-yellow">
       <div class="inner">
         <h4>{% trans 'Remaining change this month' %}</h4>
@@ -47,33 +48,79 @@
   </div>
 </div>
 <div class="box">
-<div class="box-header with-border">
-  <h3 class="box-title">{% trans 'Recurrences' %}</h3>
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Recurrence list' %}</h3>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th>{% trans 'Title' %}</th>
+        <th class="hidden-xs">{% trans 'Type' %}</th>
+        <th>{% trans 'Next Date' %}</th>
+        <th>{% trans 'Amount' %}</th>
+        <th class="hidden-xs">{% trans 'Account' %}</th>
+        <th class="hidden-xs">{% trans 'Opposing Account' %}</th>
+        <th class="hidden-xs">{% trans 'Recurrence' %}</th>
+        <th class="hidden-xs">{% trans 'Skip' %}</th>
+      </tr>
+      {% for recurrence in recurrences %}
+      <tr>
+        <td><a href="{{ recurrence.transaction.get_absolute_url }}">{{ recurrence.transaction.title }}</a></td>
+        <td class="hidden-xs">{{ recurrence.transaction.get_transaction_type_str }}</td>
+        <td class="hidden-xs">{{ recurrence.date }}</td>
+        <td class="text-{% if recurrence.is_deposit %}green{% elif recurrence.is_withdraw %}red{% endif %}">
+          {% if recurrence.is_transfer %}{{ recurrence.transaction.amount|negate|intcomma }}{% else %}{{ recurrence.transaction.amount|intcomma }}{% endif %}
+        </td>
+        <td class="hidden-xs"><a href="{{ recurrence.account.get_absolute_url }}">{{ recurrence.account }}</a></td>
+        <td class="hidden-xs">{% if not recurrence.is_system %}<a href="{{ recurrence.opposing_account.get_absolute_url }}">{{ recurrence.opposing_account }}</a>{% endif %}</td>
+        <td class="hidden-xs">{{ recurrence.transaction.get_recurrence }}</td>
+        <td class="hidden-xs">{{ recurrence.transaction.skip }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="box-footer text-center">
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li><a href="{{ request.path }}?page={{ page_obj.previous_page_number}}"><i class="force-parent-lh fa fa-chevron-left"
+            aria-hidden="true"></i>
+        </a>
+        {% endif %}
+      </li>
+      <li>
+        <select class="form-control">
+          {% for _ in ''|center:page_obj.paginator.num_pages %}
+          {% if forloop.counter == page_obj.number %}
+          <option selected="">
+            {{ page_obj.number }}
+          </option>
+          {% else %}
+          <option>
+            {{ forloop.counter }}
+          </option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </li>
+      {% if page_obj.has_next %}
+      <li><a href="{{ request.path }}?page={{ page_obj.next_page_number }}"><i class="force-parent-lh fa fa-chevron-right"
+            aria-hidden="true"></i>
+        </a></li>
+      {% endif %}
+    </ul>
+
+    {% endif %}
+  </div>
 </div>
-<div class="box-body">
-<table class="table table-striped">
-  <tr>
-    <th>{% trans 'Title' %}</th>
-    <th>{% trans 'Date' %}</th>
-    <th>{% trans 'Amount' %}</th>
-    <th class="hidden-xs">{% trans 'Source Account' %}</th>
-    <th class="hidden-xs">{% trans 'Destination Account' %}</th>
-    <th class="hidden-xs">{% trans 'Recurrance' %}</th>
-  </tr>
-{% for transaction in transactions %}
-<tr>
-  <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
-  <td{% if transaction.is_due %} class="text-red"{% endif %}>{{ transaction.date }}</td>
-  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount|intcomma }}</td>
-  <td class="hidden-xs"><a href="{{ transaction.src.get_absolute_url }}">{{ transaction.src }}</a></td>
-  <td class="hidden-xs"><a href="{{ transaction.dst.get_absolute_url }}">{{ transaction.dst }}</a></td>
-  <td class="hidden-xs">{{ transaction.get_recurrence }}</td>
-{% endfor %}
-</table>
-</div>
-<div class="box-footer">
-  <a href="{% url 'recurrence_create' %}" class="btn btn-primary">{% trans 'Create' %}</a>
-  <a href="{% url 'disabled_recurrences' %}" class="btn btn-default">{% trans 'Show disabled recurrences' %}</a>
-</div>
-</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  $('select').change(function () {
+    $("select option:selected").each(function () {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  })
+</script>
 {% endblock %}

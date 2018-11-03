@@ -43,9 +43,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['working_balance'] = context['balance'] + outstanding
         outstanding = 0
         for r in recurrences:
-            if r.transaction_type == Transaction.WITHDRAW:
-                outstanding -= r.amount
-            elif r.transaction_type == Transaction.DEPOSIT:
+            if r.transaction_type != Transaction.TRANSFER:
                 outstanding += r.amount
             if r.is_due:
                 context['overdue_transactions'] = True

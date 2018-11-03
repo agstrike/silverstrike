@@ -91,7 +91,7 @@ class TransactionForm(forms.ModelForm):
         return transaction
 
 
-class TransferForm(TransactionForm):
+class TransferMixin(forms.ModelForm):
     def save(self, commit=True):
         transaction = super().save(commit)
         src = self.cleaned_data['source_account']
@@ -120,7 +120,11 @@ class TransferForm(TransactionForm):
             self.add_error('source_account', error)
 
 
-class WithdrawForm(TransactionForm):
+class TransferForm(TransferMixin, TransactionForm):
+    pass
+
+
+class WithdrawMixin(forms.ModelForm):
     destination_account = forms.CharField(max_length=64, label=_('Debitor'),
                                           widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
@@ -136,7 +140,11 @@ class WithdrawForm(TransactionForm):
         self.instance.transaction_type = models.Transaction.WITHDRAW
 
 
-class DepositForm(TransactionForm):
+class WithdrawForm(WithdrawMixin, TransactionForm):
+    pass
+
+
+class DepositMixin(forms.ModelForm):
     source_account = forms.CharField(max_length=64, label=_('Creditor'),
                                      widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
@@ -151,38 +159,55 @@ class DepositForm(TransactionForm):
         self.instance.transaction_type = models.Transaction.DEPOSIT
 
 
+class DepositForm(DepositMixin, TransactionForm):
+    pass
+
+
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = models.RecurringTransaction
-        fields = ['title', 'date', 'amount', 'src', 'dst', 'category',
-                  'recurrence', 'skip', 'weekend_handling', 'last_day_in_month']
+        fields = ['title', 'date', 'amount', 'source_account', 'destination_account', 'category', 'recurrence', 'skip', 'weekend_handling', 'last_day_in_month', 'notes']
 
-    def clean_amount(self):
+    amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
+    category = forms.ModelChoiceField(
+        queryset=models.Category.objects.exclude(active=False).order_by('name'), required=False)
+
+    source_account = forms.ModelChoiceField(queryset=models.Account.objects.filter(
+        account_type=models.Account.PERSONAL, active=True))
+    destination_account = forms.ModelChoiceField(queryset=models.Account.objects.filter(
+        account_type=models.Account.PERSONAL, active=True))
+
+    def save(self, commit=True):
+        recurrence = super().save(commit)
+        src = self.cleaned_data['source_account']
+        dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
-        if amount < 0:
-            raise forms.ValidationError(_('Amount has to be positive'))
-        return amount
+        models.RecurringSplit.objects.update_or_create(
+            transaction=recurrence, amount__lt=0,
+            defaults={'amount': -amount, 'account': src,
+                      'opposing_account': dst, 'date': recurrence.date,
+                      'title': recurrence.title,
+                      'category': self.cleaned_data['category']})
+        models.RecurringSplit.objects.update_or_create(
+            transaction=recurrence, amount__gt=0,
+            defaults={'amount': amount, 'account': dst,
+                      'opposing_account': src, 'date': recurrence.date,
+                      'title': recurrence.title,
+                      'category': self.cleaned_data['category']})
 
-    def clean(self):
-        super(RecurringTransactionForm, self).clean()
-        src = self.cleaned_data['src']
-        dst = self.cleaned_data['dst']
-        if src.account_type == models.Account.PERSONAL:
-            if dst.account_type == models.Account.PERSONAL:
-                self.transaction_type = models.Transaction.TRANSFER
-            else:
-                self.transaction_type = models.Transaction.WITHDRAW
-        elif dst.account_type == models.Account.PERSONAL:
-            self.transaction_type = models.Transaction.DEPOSIT
-        else:
-            raise forms.ValidationError(
-                _('You are trying to create a transaction between two foreign accounts'))
-
-    def save(self, commit=False):
-        recurrence = super(RecurringTransactionForm, self).save(commit=False)
-        recurrence.transaction_type = self.transaction_type
-        recurrence.save()
         return recurrence
+
+
+class RecurringTransferForm(TransferMixin, RecurringTransactionForm):
+    pass
+
+
+class RecurringWithdrawForm(WithdrawMixin, RecurringTransactionForm):
+    pass
+
+
+class RecurringDepositForm(DepositMixin, RecurringTransactionForm):
+    pass
 
 
 class ReconcilationForm(forms.ModelForm):
@@ -227,9 +252,19 @@ class SplitForm(forms.ModelForm):
         account_type=models.Account.SYSTEM))
 
 
+class RecurringSplitForm(SplitForm):
+    class Meta(SplitForm.Meta):
+        model = models.RecurringSplit
+
+
 TransactionFormSet = forms.models.inlineformset_factory(
     models.Transaction, models.Split, form=SplitForm, extra=1
     )
+
+
+RecurringTransactionFormSet = forms.models.inlineformset_factory(
+    models.RecurringTransaction, models.RecurringSplit, form=RecurringSplitForm, extra=1
+)
 
 
 class ExportForm(forms.Form):

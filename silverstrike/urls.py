@@ -67,8 +67,12 @@ urlpatterns = [
 
     path('recurrences/',
          recurrence_views.RecurringTransactionIndex.as_view(), name='recurrences'),
-    path('recurrences/create/',
-         recurrence_views.RecurrenceCreateView.as_view(), name='recurrence_create'),
+    path('recurrences/create/transfer/',
+         recurrence_views.RecurrenceCreateView.as_view(), {'type': 'transfer'}, name='recurring_transfer_new'),
+    path('recurrences/create/withdraw/',
+         recurrence_views.RecurrenceCreateView.as_view(), {'type': 'withdraw'}, name='recurring_withdraw_new'),
+    path('recurrences/create/deposit/',
+         recurrence_views.RecurrenceCreateView.as_view(), {'type': 'deposit'}, name='recurring_deposit_new'),
     path('recurrences/disabled/',
          recurrence_views.DisabledRecurrencesView.as_view(), name='disabled_recurrences'),
     path('recurrences/<int:pk>/', recurrence_views.RecurrenceDetailView.as_view(),
@@ -80,6 +84,12 @@ urlpatterns = [
     path('recurrences/<int:pk>/transaction/create/',
          recurrence_views.RecurrenceTransactionCreateView.as_view(),
          name='recurrence_transaction_create'),
+    path('recurrences/<int:pk>/split/create/',
+         recurrence_views.RecurrenceSplitCreateView.as_view(), name='recurrence_split_create'),
+    path('recurrences/create/split/',
+         recurrence_views.RecurringSplitCreate.as_view(), name='recurring_split_create'),
+    path('recurrences/<int:pk>/split/',
+         recurrence_views.RecurringSplitUpdate.as_view(), name='recurring_split_update'),
 
 
     path('categories/', category_views.CategoryIndex.as_view(), name='categories'),

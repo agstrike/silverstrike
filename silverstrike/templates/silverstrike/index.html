@@ -143,7 +143,7 @@
             <td>{{ transaction.date }}</td>
             <td {% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount|intcomma }}</td>
             <td>
-              <a class="btn btn-xs {% if transaction.is_due %}btn-danger{% else %}btn-primary{% endif %}" href="{% url 'recurrence_transaction_create' transaction.pk %}">{% trans 'Create Transaction' %}</a>
+              <a class="btn btn-xs {% if transaction.is_due %}btn-danger{% else %}btn-primary{% endif %}" href="{% if transaction.is_split %}{% url 'recurrence_split_create' transaction.pk %}{% else %}{% url 'recurrence_transaction_create' transaction.pk %}{% endif %}">{% trans 'Create Transaction' %}</a>
             </td>
           </tr>
           {% endfor %}

@@ -61,7 +61,7 @@ class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.type = kwargs.pop('type')
-        return super(TransactionCreate, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_class(self):
         if self.type == 'transfer':
@@ -72,7 +72,7 @@ class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
             return DepositForm
 
     def get_context_data(self, **kwargs):
-        context = super(TransactionCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
         context['submenu'] = self.type
         return context
