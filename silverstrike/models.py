@@ -104,7 +104,7 @@ class Account(models.Model):
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
         transaction = Transaction.objects.create(title=_('Initial Balance'),
-                                                 transaction_type=Transaction.SYSTEM)
+                                                 transaction_type=BaseTransaction.SYSTEM)
         Split.objects.create(transaction=transaction, amount=-amount,
                              account=system, opposing_account=self)
         Split.objects.create(transaction=transaction, amount=amount,
@@ -174,7 +174,7 @@ class Transaction(BaseTransaction):
 
     @property
     def amount(self):
-        if self.transaction_type == Transaction.TRANSFER:
+        if self.transaction_type == BaseTransaction.TRANSFER:
             return abs(
                 self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
         else:
@@ -252,19 +252,19 @@ class Split(BaseSplit):
 
     @property
     def is_transfer(self):
-        return self.transaction.transaction_type == Transaction.TRANSFER
+        return self.transaction.transaction_type == BaseTransaction.TRANSFER
 
     @property
     def is_withdraw(self):
-        return self.transaction.transaction_type == Transaction.WITHDRAW
+        return self.transaction.transaction_type == BaseTransaction.WITHDRAW
 
     @property
     def is_deposit(self):
-        return self.transaction.transaction_type == Transaction.DEPOSIT
+        return self.transaction.transaction_type == BaseTransaction.DEPOSIT
 
     @property
     def is_system(self):
-        return self.transaction.transaction_type == Transaction.SYSTEM
+        return self.transaction.transaction_type == BaseTransaction.SYSTEM
 
 
 class Category(models.Model):
@@ -282,7 +282,7 @@ class Category(models.Model):
     def money_spent(self):
         return abs(Split.objects.filter(
                 category=self, account__account_type=Account.PERSONAL,
-                transaction__transaction_type=Transaction.WITHDRAW).aggregate(
+                transaction__transaction_type=BaseTransaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):
@@ -409,13 +409,6 @@ class RecurringTransaction(BaseTransaction):
                 return name
 
     @property
-    def signed_amount(self):
-        if self.transaction_type == Transaction.WITHDRAW:
-            return -self.amount
-        else:
-            return self.amount
-
-    @property
     def average_amount(self):
         return Split.objects.personal().recurrence(self.id).aggregate(
             models.Avg('amount'))['amount__avg']
@@ -426,7 +419,7 @@ class RecurringTransaction(BaseTransaction):
         outstanding = 0
         dend = last_day_of_month(date.today())
         transactions = cls.objects.due_in_month().exclude(
-            transaction_type=Transaction.TRANSFER)
+            transaction_type=BaseTransaction.TRANSFER)
         for t in transactions:
             while t.date <= dend:
                 outstanding += t.amount
@@ -435,7 +428,7 @@ class RecurringTransaction(BaseTransaction):
 
     @property
     def amount(self):
-        if self.transaction_type == Transaction.TRANSFER:
+        if self.transaction_type == BaseTransaction.TRANSFER:
             return abs(
                 self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
         else:
@@ -452,23 +445,20 @@ class RecurringSplitQuerySet(BaseSplitQuerySet):
 
 
 class RecurringSplit(BaseSplit):
-    transaction = models.ForeignKey(RecurringTransaction, models.CASCADE, related_name='splits',
+    transaction = models.ForeignKey(RecurringTransaction, models.CASCADE, 
+                                    related_name='splits',
                                     blank=True, null=True)
 
     objects = RecurringSplitQuerySet.as_manager()
 
     @property
     def is_transfer(self):
-        return self.transaction.transaction_type == Transaction.TRANSFER
+        return self.transaction.transaction_type == BaseTransaction.TRANSFER
 
     @property
     def is_withdraw(self):
-        return self.transaction.transaction_type == Transaction.WITHDRAW
+        return self.transaction.transaction_type == BaseTransaction.WITHDRAW
 
     @property
     def is_deposit(self):
-        return self.transaction.transaction_type == Transaction.DEPOSIT
-
-    @property
-    def is_system(self):
-        return self.transaction.transaction_type == Transaction.SYSTEM
+        return self.transaction.transaction_type == BaseTransaction.DEPOSIT
