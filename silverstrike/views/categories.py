@@ -37,9 +37,10 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
 
         all_categories = list(Category.objects.exclude(active=False).values_list('id', 'name'))
         context['categorized'] = 0
-        context['expenses'] = 0
+        queryset = Split.objects.personal().expense().exclude_transfers().past().date_range(dstart, dend)
+        context['expenses'] = abs(queryset.expense().aggregate(
+                Sum('amount'))['amount__sum'] or 0)
         for id, name, spent in categories:
-            context['expenses'] += spent
             if id:
                 context['categorized'] += spent
                 all_categories.remove((id, name))
