@@ -36,9 +36,14 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
 
         all_categories = list(Category.objects.exclude(active=False).values_list('id', 'name'))
+        context['categorized'] = 0
+        context['expenses'] = 0
         for id, name, spent in categories:
+            context['expenses'] += spent
             if id:
+                context['categorized'] += spent
                 all_categories.remove((id, name))
+        context['uncategorized'] = context['expenses'] - context['categorized']
         for id, name in all_categories:
             categories.append((id, name, 0))
         context['categories'] = categories
