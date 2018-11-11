@@ -27,7 +27,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
 
     def get_initial(self):
         # assigned categories
-        budgets = Budget.objects.for_month(self.month)
+        self.budgets = Budget.objects.for_month(self.month)
         budget_spending = Split.objects.personal().past().date_range(
             self.month, last_day_of_month(self.month)).values(
                 'category', 'category__name').annotate(spent=Sum('amount'))
@@ -36,7 +36,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
         initial = []
 
         # existing budgets
-        for budget in budgets:
+        for budget in self.budgets:
             initial.append({
                 'budget_id': budget.id,
                 'category_id': budget.category_id,
@@ -47,7 +47,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
                 'month': self.month,
             })
 
-        ids = [budget.category_id for budget in budgets]
+        ids = [budget.category_id for budget in self.budgets]
         for category in Category.objects.exclude(id__in=ids).exclude(active=False):
             initial.append({
                 'budget_id': -1,
@@ -66,6 +66,8 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
         context['month'] = self.month
         context['previous_month'] = self.month - relativedelta(months=1)
         context['next_month'] = self.month + relativedelta(months=1)
+
+        context['allocated'] = sum([x.amount for x in self.budgets])
         return context
 
     def form_valid(self, form):

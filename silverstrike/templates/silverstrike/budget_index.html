@@ -22,6 +22,16 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h4>{% trans 'Allocated' %}</h4>
+        <h3>{{ allocated }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="box">
   <form method="post">
     {% csrf_token %}
