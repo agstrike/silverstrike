@@ -22,6 +22,32 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="small-box bg-yellow">
+      <div class="inner">
+        <h4>{% trans 'Allocated' %}</h4>
+        <h3>{{ allocated }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h4>{% trans 'Spent' %}</h4>
+        <h3>{{ spent }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h4>{% trans 'Left to spend' %}</h4>
+        <h3>{{ left }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="box">
   <form method="post">
     {% csrf_token %}
