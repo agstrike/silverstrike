@@ -32,7 +32,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
             self.month, last_day_of_month(self.month)).values(
                 'category', 'category__name').annotate(spent=Sum('amount'))
 
-        budget_spending = {e['category']: abs(e['spent']) for e in budget_spending}
+        self.budget_spending = {e['category']: abs(e['spent']) for e in budget_spending}
         initial = []
 
         # existing budgets
@@ -41,9 +41,9 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
                 'budget_id': budget.id,
                 'category_id': budget.category_id,
                 'category_name': budget.category.name,
-                'spent': budget_spending.get(budget.category_id, 0),
+                'spent': self.budget_spending.get(budget.category_id, 0),
                 'amount': budget.amount,
-                'left': - budget_spending.get(budget.category_id, 0) + budget.amount,
+                'left': -self.budget_spending.get(budget.category_id, 0) + budget.amount,
                 'month': self.month,
             })
 
@@ -53,9 +53,9 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
                 'budget_id': -1,
                 'category_id': category.id,
                 'category_name': category.name,
-                'spent': budget_spending.get(category.id, 0),
+                'spent': self.budget_spending.get(category.id, 0),
                 'amount': 0,
-                'left': - budget_spending.get(category.id, 0),
+                'left': -self.budget_spending.get(category.id, 0),
                 'month': self.month,
             })
         return initial
@@ -68,6 +68,8 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
         context['next_month'] = self.month + relativedelta(months=1)
 
         context['allocated'] = sum([x.amount for x in self.budgets])
+        context['spent'] = sum([self.budget_spending.get(x.category_id, 0) for x in self.budgets])
+        context['left'] = context['allocated'] - context['spent']
         return context
 
     def form_valid(self, form):

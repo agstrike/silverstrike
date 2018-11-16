@@ -133,6 +133,6 @@ class ViewTests(TestCase):
         self.assertEqual(str(context['form']['date'].value()), '2017-01-01')
 
     def test_context_CategoryIndex(self):
-        context = self.client.get(reverse('categories')).context
+        context = self.client.get(reverse('category_by_month')).context
         self.assertEqual(context['menu'], 'categories')
         self.assertFalse('submenu' in context)

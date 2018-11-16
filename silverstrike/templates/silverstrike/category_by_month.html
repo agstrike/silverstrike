@@ -1,0 +1,178 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load tags %}
+
+{% block content_header %}
+<h1>Categories</h1>
+<ol class="breadcrumb">
+  <li><a href="/">{% trans 'Home' %}</a></li>
+  <li class="active">{% trans 'Categories' %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="box">
+  <div class="box-body">
+    <div class="text-center">
+      <a href="{% url 'categories_month' previous_month.year previous_month.month %}" class="btn btn-xs btn-default">{% trans 'Previous' %}</a>
+      <span>{{ month|date:'F Y'}}</span>
+      <a href="{% url 'categories_month' next_month.year next_month.month %}" class="btn btn-xs btn-default">{% trans 'Next' %}</a>
+    </div>
+  </div>
+</div>
+{% if categories %}
+<div class="row">
+  <div class="col-md-4 col-md-push-8">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">{% trans 'Expenses by category' %}</h3>
+    </div>
+    <div class="box-body">
+      <center><canvas id="expense-chart"></canvas></center>
+    </div>
+  </div>
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">{% trans 'Income by category' %}</h3>
+    </div>
+    <div class="box-body">
+      <center><canvas id="income-chart"></canvas></center>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-8 col-md-pull-4">
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{% trans 'Categories' %}</h3>
+  </div>
+  <div class="box-body no-padding">
+    <table class="table table-striped">
+      <tr>
+        <th>{% trans 'Name' %}</th>
+        <th>{% trans 'Expense' %}</th>
+        <th>{% trans 'Income' %}</th>
+      </tr>
+      {% for category in categories %}
+      <tr>
+        <td>
+          {% if category.id %}
+          <a href="{% url 'category_detail' category.id %}" >{{ category.name }}</a>
+          {% else %}
+          {% trans 'Uncategorized' %}
+          {% endif %}
+        </td>
+        <td class="text-red">{{ category.spent|intcomma }}</td>
+        <td class="text-green">{{ category.income|intcomma }}</td>
+      </tr>
+      {% endfor %}
+      <tr><th>{% trans 'Total' %}</th><th class="text-red">{{ sum_expense }}</th><th class="text-green">{{ sum_income }}</th></tr>
+    </table>
+  </div>
+  <div class="box-footer">
+    <a class="btn btn-primary" href="{% url 'categories' %}">{% trans 'All categories' %}</a>
+    <a class="btn btn-default" href="{% url 'category_assign' %}">{% trans 'Categorize expenses' %}</a>
+  </div>
+</div>
+</div>
+</div>
+{% else %}
+<div class="box">
+  <div class="box-body">
+    {% trans 'No transactions in this month' %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+
+{% block scripts %}
+{% if categories %}
+<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script type="text/javascript">
+  $('select').change(function() {
+    $( "select option:selected" ).each(function() {
+      window.location.href = "{{ request.path }}?page=" + $(this).val();
+    });
+  });
+  var colors =
+    ['#357ca5',
+     '#008d4c',
+     '#db8b0b',
+     '#ca195a',
+     '#555299',
+     '#4285f4',
+     '#db4437',
+     '#f4b400',
+     '#0f9d58',
+     '#ab47bc',
+     '#00acc1',
+     '#ff7043',
+     '#9e9d24',
+     '#5c6bc0',
+     '#f06292',
+     '#00796b',
+     '#c2185b'
+  ];
+var ctx = document.getElementById("expense-chart").getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'pie',
+  options: {
+    responsive: false,
+    legend: {
+      position: 'none'
+    }
+  },
+  data: {
+    labels: [
+      {% for category in categories %}
+      {% if category.id %}
+      "{{ category.name }}",
+      {% else %}
+      "{% trans 'Uncategorized' %}",
+      {% endif %}
+      {% endfor %}
+    ],
+    datasets: [{
+      backgroundColor: colors,
+      data: [
+        {% for category in categories %}
+        "{{ category.spent|negate|intvalue }}",
+        {% endfor %}
+      ]
+    }]
+  }}
+);
+
+var incomeChart = new Chart(document.getElementById("income-chart").getContext('2d'), {
+  type: 'pie',
+  options: {
+    responsive: false,
+    legend: {
+      position: 'none'
+    }
+  },
+  data: {
+    labels: [
+      {% for category in categories %}
+      {% if category.id %}
+      "{{ category.name }}",
+      {% else %}
+      "{% trans 'Uncategorized' %}",
+      {% endif %}
+      {% endfor %}
+    ],
+    datasets: [{
+      backgroundColor: colors,
+      data: [
+        {% for category in categories %}
+        "{{ category.income|intvalue }}",
+        {% endfor %}
+      ]
+    }]
+  }}
+);
+</script>
+{% endif %}
+{% endblock %}

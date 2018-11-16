@@ -83,9 +83,10 @@ urlpatterns = [
 
 
     path('categories/', category_views.CategoryIndex.as_view(), name='categories'),
+    path('categories/month/', category_views.CategoryByMonth.as_view(), name='category_by_month'),
     path('categories/inactive/', category_views.InactiveCategoriesView.as_view(),
          name='inactive_categories'),
-    path('categories/month/<int:year>/<int:month>/', category_views.CategoryIndex.as_view(),
+    path('categories/month/<int:year>/<int:month>/', category_views.CategoryByMonth.as_view(),
          name='categories_month'),
     path('categories/assign/',
          category_views.assign_categories, name='category_assign'),
