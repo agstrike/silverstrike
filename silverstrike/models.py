@@ -340,13 +340,13 @@ class RecurringTransaction(models.Model):
     )
 
     class Meta:
-        ordering = ['date']
+        ordering = ['next_date']
 
     objects = RecurringTransactionManager()
 
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
+    next_date = models.DateField()
     src = models.ForeignKey(Account, models.CASCADE)
     dst = models.ForeignKey(Account, models.CASCADE,
                             related_name='opposing_recurring_transactions')
@@ -366,12 +366,12 @@ class RecurringTransaction(models.Model):
 
     @property
     def is_due(self):
-        return date.today() >= self.date
+        return date.today() >= self.next_date
 
     def update_date(self, date=None, save=False):
         delta = None
         if not date:
-            date = self.date
+            date = self.next_date
         if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
             delta = relativedelta(months=1)
         elif self.interval == self.QUARTERLY:
@@ -399,7 +399,7 @@ class RecurringTransaction(models.Model):
                 elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
                     date -= relativedelta(days=date.weekday() - 4)
             if save:
-                self.date = date
+                self.next_date = date
                 self.save()
             return date
 
@@ -441,7 +441,7 @@ class RecurringTransaction(models.Model):
         transactions = cls.objects.due_in_month().exclude(
             transaction_type=Transaction.TRANSFER)
         for t in transactions:
-            while t.date <= dend:
+            while t.next_date <= dend:
                 if t.transaction_type == Transaction.WITHDRAW:
                     outstanding -= t.amount
                 else:
