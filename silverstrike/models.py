@@ -219,8 +219,10 @@ class BaseSplitQuerySet(models.QuerySet):
 class BaseSplit(models.Model):
     account = models.ForeignKey(Account, models.CASCADE,
                                 related_name='%(app_label)s_%(class)s_incoming_transactions')
-    opposing_account = models.ForeignKey(Account, models.CASCADE,
-                                         related_name='%(app_label)s_%(class)s_outgoing_transactions')
+    opposing_account = models.ForeignKey(
+        Account,
+        models.CASCADE,
+        related_name='%(app_label)s_%(class)s_outgoing_transactions')
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
@@ -281,8 +283,8 @@ class Category(models.Model):
     @property
     def money_spent(self):
         return abs(Split.objects.filter(
-                category=self, account__account_type=Account.PERSONAL,
-                transaction__transaction_type=BaseTransaction.WITHDRAW).aggregate(
+            category=self, account__account_type=Account.PERSONAL,
+            transaction__transaction_type=BaseTransaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):
@@ -337,7 +339,7 @@ class RecurringTransaction(BaseTransaction):
         (ANNUALLY, _('Annually')),
         (WEEKLY, _('Weekly')),
         (DAILY, _('Daily')),
-        )
+    )
 
     SAME_DAY = 0
     PREVIOUS_WEEKDAY = 1
@@ -445,7 +447,7 @@ class RecurringSplitQuerySet(BaseSplitQuerySet):
 
 
 class RecurringSplit(BaseSplit):
-    transaction = models.ForeignKey(RecurringTransaction, models.CASCADE, 
+    transaction = models.ForeignKey(RecurringTransaction, models.CASCADE,
                                     related_name='splits',
                                     blank=True, null=True)
 

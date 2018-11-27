@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.forms import DepositForm, TransferForm, WithdrawForm, RecurringDepositForm, RecurringTransferForm, RecurringWithdrawForm
-from silverstrike.models import Account, Transaction, RecurringTransaction
+from silverstrike.forms import (DepositForm, RecurringDepositForm,
+                                RecurringTransferForm, RecurringWithdrawForm, TransferForm,
+                                WithdrawForm)
+from silverstrike.models import Account, RecurringTransaction, Transaction
 
 
 class ViewTests(TestCase):
@@ -50,19 +52,19 @@ class ViewTests(TestCase):
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.TRANSFER
-            })
+        })
 
         self.assertTrue(form.is_valid())
         transaction = form.save()
         url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
-                    'title': 'transaction_title',
-                    'source_account': self.account.pk,
-                    'destination_account': self.personal.pk,
-                    'amount': 123,
-                    'date': '2017-01-01'},
-                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
+            'title': 'transaction_title',
+            'source_account': self.account.pk,
+            'destination_account': self.personal.pk,
+            'amount': 123,
+            'date': '2017-01-01'},
+            args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -80,19 +82,19 @@ class ViewTests(TestCase):
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.WITHDRAW
-            })
+        })
 
         self.assertTrue(form.is_valid())
         transaction = form.save()
         url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
-                    'title': 'transaction_title',
-                    'source_account': self.account.pk,
-                    'destination_account': self.expense,
-                    'amount': 123,
-                    'date': '2017-01-01'},
-                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
+            'title': 'transaction_title',
+            'source_account': self.account.pk,
+            'destination_account': self.expense,
+            'amount': 123,
+            'date': '2017-01-01'},
+            args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -110,19 +112,19 @@ class ViewTests(TestCase):
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.DEPOSIT
-            })
+        })
 
         self.assertTrue(form.is_valid())
         transaction = form.save()
         url = reverse('transaction_update', args=[transaction.pk])
         context = self.client.get(url).context
         self.assertRedirects(self.client.post(url, {
-                    'title': 'transaction_title',
-                    'source_account': self.revenue,
-                    'destination_account': self.account.pk,
-                    'amount': 123,
-                    'date': '2017-01-01'},
-                    args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
+            'title': 'transaction_title',
+            'source_account': self.revenue,
+            'destination_account': self.account.pk,
+            'amount': 123,
+            'date': '2017-01-01'},
+            args=[transaction.pk]), reverse('transaction_detail', args=[transaction.pk]))
         self.assertEqual(context['menu'], 'transactions')
         self.assertFalse('submenu' in context)
 
@@ -146,7 +148,7 @@ class ViewTests(TestCase):
         context = self.client.get(reverse('recurring_transfer_new')).context
         self.assertEqual(context['menu'], 'transactions')
         self.assertEqual(context['submenu'], 'transfer')
-    
+
     def test_context_RecurringDepositCreate(self):
         context = self.client.get(reverse('recurring_deposit_new')).context
         self.assertEqual(context['menu'], 'transactions')
@@ -160,8 +162,8 @@ class ViewTests(TestCase):
     def test_context_and_initial_RecurringTransferUpdate(self):
         form = RecurringTransferForm({
             'amount': 123, 'date': '2017-01-01', 'skip': 0,
-            'source_account': self.account.pk, 
-            'destination_account': self.personal.pk, 
+            'source_account': self.account.pk,
+            'destination_account': self.personal.pk,
             'recurrence': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
@@ -169,13 +171,18 @@ class ViewTests(TestCase):
         transfer = form.save()
         url = reverse('recurrence_update', args=[transfer.pk])
         context = self.client.get(url).context
-        self.assertRedirects(self.client.post(url, {
-                    'title': 'foo',
-                    'source_account': self.account.pk,
-                    'destination_account': self.personal.pk,
-                    'amount': 123,
-                    'date': '2017-01-01', 'recurrence': RecurringTransaction.MONTHLY, 'weekend_handling': RecurringTransaction.SKIP, 'skip': 0},
-                    args=[transfer.pk]), reverse('recurrence_detail', args=[transfer.pk]))
+        self.assertRedirects(self.client.post(url,
+                                              {'title': 'foo',
+                                               'source_account': self.account.pk,
+                                               'destination_account': self.personal.pk,
+                                               'amount': 123,
+                                               'date': '2017-01-01',
+                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'weekend_handling': RecurringTransaction.SKIP,
+                                               'skip': 0},
+                                              args=[transfer.pk]),
+                             reverse('recurrence_detail',
+                                     args=[transfer.pk]))
         self.assertEqual(context['menu'], 'recurrences')
         self.assertFalse('submenu' in context)
 
@@ -188,8 +195,8 @@ class ViewTests(TestCase):
     def test_context_and_initial_RecurringWithdrawUpdate(self):
         form = RecurringWithdrawForm({
             'amount': 123, 'date': '2017-01-01', 'skip': 0,
-            'source_account': self.account.pk, 
-            'destination_account': self.expense, 
+            'source_account': self.account.pk,
+            'destination_account': self.expense,
             'recurrence': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
@@ -197,13 +204,18 @@ class ViewTests(TestCase):
         withdraw = form.save()
         url = reverse('recurrence_update', args=[withdraw.pk])
         context = self.client.get(url).context
-        self.assertRedirects(self.client.post(url, {
-                    'title': 'foo',
-                    'source_account': self.account.pk,
-                    'destination_account': self.expense,
-                    'amount': 123,
-                    'date': '2017-01-01', 'recurrence': RecurringTransaction.MONTHLY, 'weekend_handling': RecurringTransaction.SKIP, 'skip': 0},
-                    args=[withdraw.pk]), reverse('recurrence_detail', args=[withdraw.pk]))
+        self.assertRedirects(self.client.post(url,
+                                              {'title': 'foo',
+                                               'source_account': self.account.pk,
+                                               'destination_account': self.expense,
+                                               'amount': 123,
+                                               'date': '2017-01-01',
+                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'weekend_handling': RecurringTransaction.SKIP,
+                                               'skip': 0},
+                                              args=[withdraw.pk]),
+                             reverse('recurrence_detail',
+                                     args=[withdraw.pk]))
         self.assertEqual(context['menu'], 'recurrences')
         self.assertFalse('submenu' in context)
 
@@ -216,8 +228,8 @@ class ViewTests(TestCase):
     def test_context_and_initial_RecurringDepositUpdate(self):
         form = RecurringDepositForm({
             'amount': 123, 'date': '2017-01-01', 'skip': 0,
-            'source_account': self.revenue, 
-            'destination_account': self.account.pk, 
+            'source_account': self.revenue,
+            'destination_account': self.account.pk,
             'recurrence': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
@@ -225,13 +237,18 @@ class ViewTests(TestCase):
         deposit = form.save()
         url = reverse('recurrence_update', args=[deposit.pk])
         context = self.client.get(url).context
-        self.assertRedirects(self.client.post(url, {
-                    'title': 'foo',
-                    'source_account': self.revenue,
-                    'destination_account': self.account.pk,
-                    'amount': 123,
-                    'date': '2017-01-01', 'recurrence': RecurringTransaction.MONTHLY, 'weekend_handling': RecurringTransaction.SKIP, 'skip': 0},
-                    args=[deposit.pk]), reverse('recurrence_detail', args=[deposit.pk]))
+        self.assertRedirects(self.client.post(url,
+                                              {'title': 'foo',
+                                               'source_account': self.revenue,
+                                               'destination_account': self.account.pk,
+                                               'amount': 123,
+                                               'date': '2017-01-01',
+                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'weekend_handling': RecurringTransaction.SKIP,
+                                               'skip': 0},
+                                              args=[deposit.pk]),
+                             reverse('recurrence_detail',
+                                     args=[deposit.pk]))
         self.assertEqual(context['menu'], 'recurrences')
         self.assertFalse('submenu' in context)
 

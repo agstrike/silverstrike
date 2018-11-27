@@ -45,7 +45,7 @@ def import_firefly(csv_path):
                 notes = line[notes]
                 continue
             if line[source] in personal_accounts:
-                    line[source] = personal_accounts[line[source]]
+                line[source] = personal_accounts[line[source]]
             else:
                 a = models.Account.objects.create(name=line[source],
                                                   account_type=models.Account.PERSONAL)

@@ -30,7 +30,7 @@ class Command(BaseCommand):
             'date',
             'amount',
             'category'
-            ]
+        ]
         csv_writer.writerow(headers)
         for split in splits.values_list('account__name', 'opposing_account__name',
                                         'date', 'amount', 'category'):

@@ -84,7 +84,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 transaction=transaction,
                 account_id=self.kwargs['account'],
                 opposing_account=account
-                )
+            )
             models.Split.objects.create(
                 title=title,
                 amount=-amount,
@@ -92,7 +92,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 transaction=transaction,
                 account=account,
                 opposing_account_id=self.kwargs['account']
-                )
+            )
         return HttpResponseRedirect('/')
 
 
@@ -124,7 +124,7 @@ class ExportView(LoginRequiredMixin, generic.edit.FormView):
             'date',
             'amount',
             'category'
-            ]
+        ]
         csv_writer.writerow(headers)
         for split in splits.values_list('account__name', 'opposing_account__name',
                                         'date', 'amount', 'category__name'):

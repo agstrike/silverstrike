@@ -54,7 +54,9 @@ class AccountAdmin(admin.ModelAdmin):
                 opposing_account_id=base.id)
             # update recurrences
             models.RecurringSplit.objects.filter(account_id=account.id).update(account_id=base.id)
-            models.RecurringSplit.objects.filter(opposing_account_id=account.id).update(opposing_account_id=base.id)
+            models.RecurringSplit.objects.filter(
+                opposing_account_id=account.id).update(
+                opposing_account_id=base.id)
             account.delete()
         if len(accounts) == 1:
             self.message_user(request, format_html(

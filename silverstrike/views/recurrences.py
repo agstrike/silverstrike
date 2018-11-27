@@ -1,14 +1,17 @@
 from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from silverstrike.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm, RecurringTransferForm, RecurringWithdrawForm, RecurringDepositForm, RecurringTransactionFormSet, TransactionFormSet
+from silverstrike.forms import (DepositForm, RecurringDepositForm,
+                                RecurringTransactionFormSet, RecurringTransferForm,
+                                RecurringWithdrawForm, TransactionFormSet, TransferForm,
+                                WithdrawForm)
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import RecurringTransaction, Transaction, RecurringSplit
+from silverstrike.models import RecurringSplit, RecurringTransaction, Transaction
 from silverstrike.views import transactions
 
 
@@ -41,7 +44,8 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        self.recurrence = RecurringSplit.objects.get(transaction_id=self.kwargs.get('pk'), amount__gt=0)
+        self.recurrence = RecurringSplit.objects.get(
+            transaction_id=self.kwargs.get('pk'), amount__gt=0)
         initial['source_account'] = self.recurrence.opposing_account.pk
         initial['destination_account'] = self.recurrence.account.pk
         if self.object.transaction_type == Transaction.WITHDRAW:
@@ -120,7 +124,8 @@ class RecurrenceSplitCreateView(LoginRequiredMixin, generic.edit.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        formset_initial = self.recurrence.splits.all().values('title', 'date', 'amount', 'account', 'opposing_account', 'category')
+        formset_initial = self.recurrence.splits.all().values(
+            'title', 'date', 'amount', 'account', 'opposing_account', 'category')
         self.formset_class.extra = len(formset_initial)
         context['formset'] = self.formset_class(initial=formset_initial)
         return context
@@ -205,7 +210,10 @@ class RecurringSplitCreate(transactions.SplitCreate):
             if formset.is_valid():
                 recurring_transaction.save()
                 formset.save()
-                return HttpResponseRedirect(reverse('recurrence_detail', args=[recurring_transaction.id]))
+                return HttpResponseRedirect(
+                    reverse(
+                        'recurrence_detail', args=[
+                            recurring_transaction.id]))
         return self.render_to_response(self.get_context_data(form=form))
 
 

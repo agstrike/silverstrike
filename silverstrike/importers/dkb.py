@@ -18,7 +18,7 @@ def import_csv(csv_path):
                     notes=line[4],
                     iban=line[5],
                     amount=float(line[7].replace('.', '').replace(',', '.'))
-                    ))
+                ))
             except ValueError:
                 # first line contains headers
                 pass

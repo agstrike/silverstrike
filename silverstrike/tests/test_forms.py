@@ -17,7 +17,7 @@ class FormTests(TestCase):
             'destination_account': self.personal.pk,
             'amount': 123,
             'date': '2017-01-01'
-            }
+        }
         form = TransferForm(data)
         self.assertTrue(form.is_valid())
         transfer = form.save()
@@ -39,7 +39,7 @@ class FormTests(TestCase):
             'destination_account': self.account.pk,
             'amount': 123,
             'date': '2017-01-01'
-            }
+        }
         for i in range(1, 3):
             form = DepositForm(data)
             self.assertTrue(form.is_valid())
@@ -68,7 +68,7 @@ class FormTests(TestCase):
             'destination_account': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
-            }
+        }
         for i in range(1, 3):
             form = WithdrawForm(data)
             self.assertTrue(form.is_valid())
@@ -98,7 +98,7 @@ class FormTests(TestCase):
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.DEPOSIT,
-            }
+        }
         form = DepositForm(data)
         self.assertTrue(form.is_valid())
         form.save()
@@ -116,7 +116,7 @@ class FormTests(TestCase):
             'destination_account': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
-            }
+        }
         form = WithdrawForm(data)
         self.assertTrue(form.is_valid())
         form.save()
@@ -135,7 +135,7 @@ class FormTests(TestCase):
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.TRANSFER
-            }
+        }
         form = TransferForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 2)

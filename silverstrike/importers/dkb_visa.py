@@ -16,7 +16,7 @@ def import_csv(csv_path):
                     transaction_date=datetime.datetime.strptime(line[2], '%d.%m.%Y'),
                     notes=line[3],
                     amount=float(line[4].replace('.', '').replace(',', '.'))
-                    ))
+                ))
             except ValueError:
                 # first line contains headers
                 pass

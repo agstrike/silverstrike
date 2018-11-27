@@ -4,8 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
-from silverstrike.tests import create_transaction
-from silverstrike.tests import create_recurring_transaction
+from silverstrike.tests import create_recurring_transaction, create_transaction
 
 
 class SplitQuerySetTests(TestCase):
@@ -79,8 +78,12 @@ class SplitQuerySetTests(TestCase):
         self.assertEqual(queryset.count(), 2)
 
     def test_recurrence(self):
-        recurrence = create_recurring_transaction('recurrence', 
-            self.personal, self.foreign, 100, RecurringTransaction.WITHDRAW, 
+        recurrence = create_recurring_transaction(
+            'recurrence',
+            self.personal,
+            self.foreign,
+            100,
+            RecurringTransaction.WITHDRAW,
             RecurringTransaction.MONTHLY)
         self.withdraw_transaction.recurrence = recurrence
         self.withdraw_transaction.save()
@@ -143,11 +146,3 @@ class SplitModelTests(TestCase):
             self.assertFalse(split.is_withdraw)
             self.assertFalse(split.is_deposit)
             self.assertFalse(split.is_transfer)
-
-    def test_is_system(self):
-        self.personal.set_initial_balance(100)
-        transaction = Transaction.objects.first()
-        self.assertFalse(transaction.is_transfer)
-        self.assertFalse(transaction.is_withdraw)
-        self.assertFalse(transaction.is_deposit)
-        self.assertTrue(transaction.is_system)
