@@ -7,10 +7,8 @@ def recurrences(apps, schema_editor):
     RecurringTransaction = apps.get_model('silverstrike', 'RecurringTransaction')
     RecurringSplit = apps.get_model('silverstrike', 'RecurringSplit')
     for recurrence in RecurringTransaction.objects.all():
-        src = recurrence.src
-        dst = recurrence.dst
         RecurringSplit.objects.create(transaction=recurrence, amount=recurrence.amount,
-                                      account=recurrence.src, opposing_account=recurrence.dst,
+                                      account=recurrence.dst, opposing_account=recurrence.src,
                                       date=recurrence.next_date, title=recurrence.title,
                                       category=recurrence.category)
         RecurringSplit.objects.create(transaction=recurrence, amount=-recurrence.amount,                                        account=recurrence.src, opposing_account=recurrence.dst,
