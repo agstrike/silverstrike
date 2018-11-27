@@ -9,7 +9,7 @@ def recurrences(apps, schema_editor):
     for recurrence in RecurringTransaction.objects.all():
         RecurringSplit.objects.create(transaction=recurrence, amount=recurrence.amount,
                                       account=recurrence.dst, opposing_account=recurrence.src,
-                                      date=recurrence.next_date, title=recurrence.title,
+                                      date=recurrence.date, title=recurrence.title,
                                       category=recurrence.category)
         RecurringSplit.objects.create(transaction=recurrence, amount=-recurrence.amount,                                        account=recurrence.src, opposing_account=recurrence.dst,
                                       date=recurrence.date, title=recurrence.title,
