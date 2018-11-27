@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from silverstrike.admin import AccountAdmin
 from silverstrike.models import Account, RecurringTransaction, Split, Transaction
-from silverstrike.tests import create_account, create_transaction
+from silverstrike.tests import create_account, create_transaction, create_recurring_transaction
 
 
 class MockRequest:
@@ -93,14 +93,8 @@ class AccountAdminTests(TestCase):
                       self.modeladmin.messages)
 
     def test_merging_account_updates_recurrence(self):
-        recurrence = RecurringTransaction.objects.create(
-            title='recurrence',
-            amount=50,
-            date=date.today(),
-            src=self.personal,
-            dst=self.first,
-            recurrence=RecurringTransaction.MONTHLY,
-            transaction_type=Transaction.WITHDRAW)
+        recurrence = create_recurring_transaction('recurrence', self.personal, self.first, 50, RecurringTransaction.WITHDRAW, RecurringTransaction.MONTHLY)
         self.modeladmin.merge_accounts(request, Account.objects.foreign().exclude(pk=self.third.pk))
         recurrence.refresh_from_db()
-        self.assertEquals(recurrence.dst, self.second)
+        self.assertEquals(recurrence.splits.expense().first().opposing_account, self.second)
+        

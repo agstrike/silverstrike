@@ -35,7 +35,7 @@ class RecurrenceDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class RecurrenceUpdateView(transactions.TransactionUpdateView):
+class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'silverstrike/recurringtransaction_form.html'
     model = RecurringTransaction
 
@@ -54,6 +54,10 @@ class RecurrenceUpdateView(transactions.TransactionUpdateView):
         initial['recurrence'] = self.recurrence.transaction.recurrence
         initial['skip'] = self.recurrence.transaction.skip
         return initial
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.exclude(transaction_type=Transaction.SYSTEM)
 
     def get_form_class(self):
         if self.object.transaction_type == Transaction.WITHDRAW:
@@ -158,6 +162,7 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'recurrences'
+        context['submenu'] = 'all'
         income = 0
         expenses = 0
         today = date.today()

@@ -97,13 +97,13 @@ class TransferMixin(forms.ModelForm):
         src = self.cleaned_data['source_account']
         dst = self.cleaned_data['destination_account']
         amount = self.cleaned_data['amount']
-        models.Split.objects.update_or_create(
+        transaction.splits.update_or_create(
             transaction=transaction, amount__lt=0,
             defaults={'amount': -amount, 'account': src,
                       'opposing_account': dst, 'date': transaction.date,
                       'title': transaction.title,
                       'category': self.cleaned_data['category']})
-        models.Split.objects.update_or_create(
+        transaction.splits.update_or_create(
             transaction=transaction, amount__gt=0,
             defaults={'amount': amount, 'account': dst,
                       'opposing_account': src, 'date': transaction.date,

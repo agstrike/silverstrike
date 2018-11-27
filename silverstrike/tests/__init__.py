@@ -18,11 +18,13 @@ def create_account(name, account_type=Account.PERSONAL):
 
 
 def create_recurring_transaction(title, src, dst, amount, type, recurrence, 
-      skip=0, date=date.today()):
+      skip=0, date=date.today(), last_day_in_month=False):
       r = RecurringTransaction.objects.create(title=title, date=date,
-            transaction_type=type, recurrence=recurrence, skip=skip)
-      Split.objects.bulk_create([
+            transaction_type=type, recurrence=recurrence, skip=skip, 
+            last_day_in_month=last_day_in_month)
+      RecurringSplit.objects.bulk_create([
             RecurringSplit(title=title, account=src, opposing_account=dst,
                   amount=-amount, transaction=r, date=date),
             RecurringSplit(title=title, account=dst, opposing_account=src,
                   amount=amount, transaction=r, date=date)])
+      return r

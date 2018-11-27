@@ -11,8 +11,14 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
+class RecurringSplitInline(admin.TabularInline):
+    model = models.RecurringSplit
+    extra = 0
+
+
 @admin.register(models.RecurringTransaction)
 class RecurringTransactionAdmin(admin.ModelAdmin):
+    inlines = [RecurringSplitInline]
     search_fields = ['title']
     list_display = ('title', 'recurrence', 'date', 'amount')
     list_filter = ('recurrence',)
@@ -47,8 +53,8 @@ class AccountAdmin(admin.ModelAdmin):
             models.Split.objects.filter(opposing_account_id=account.id).update(
                 opposing_account_id=base.id)
             # update recurrences
-            models.RecurringTransaction.objects.filter(src_id=account.id).update(src_id=base.id)
-            models.RecurringTransaction.objects.filter(dst_id=account.id).update(dst_id=base.id)
+            models.RecurringSplit.objects.filter(account_id=account.id).update(account_id=base.id)
+            models.RecurringSplit.objects.filter(opposing_account_id=account.id).update(opposing_account_id=base.id)
             account.delete()
         if len(accounts) == 1:
             self.message_user(request, format_html(

@@ -451,6 +451,9 @@ class RecurringSplit(BaseSplit):
 
     objects = RecurringSplitQuerySet.as_manager()
 
+    def get_absolute_url(self):
+        return self.transaction.get_absolute_url()
+
     @property
     def is_transfer(self):
         return self.transaction.transaction_type == BaseTransaction.TRANSFER
@@ -462,3 +465,7 @@ class RecurringSplit(BaseSplit):
     @property
     def is_deposit(self):
         return self.transaction.transaction_type == BaseTransaction.DEPOSIT
+
+    @property
+    def is_disabled(self):
+        return self.transaction.recurrence == RecurringTransaction.DISABLED

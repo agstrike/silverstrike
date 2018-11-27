@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
 from silverstrike.tests import create_transaction
+from silverstrike.tests import create_recurring_transaction
 
 
 class SplitQuerySetTests(TestCase):
