@@ -1,0 +1,98 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">{% trans 'Income & Expense Report' %}</h3>
+    </div>
+    <div class="box-body">
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
+<div class="box">
+    <div class="box-body">
+        <table class="table">
+            <tr>
+                <th>{% trans 'Month' %}</th>
+                <th>{% trans 'Income' %}</th>
+                <th>{% trans 'Expense' %}</th>
+                <th>{% trans 'Total' %}</th>
+            </tr>
+            {% for row in result %}
+            <tr>
+                <td>{{ row.month|date:"M Y" }}</td>
+                <td>{{ row.income }}</td>
+                <td>{{ row.expense }}</td>
+                <td>{{ row.total }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'vendor/js/Chart.bundle.min.js' %}"></script>
+<script type="text/javascript">
+var barChartData = {
+            labels: [
+            {% for row in result %}
+            '{{ row.month|date:"M Y" }}',
+            {% endfor %}
+            ],
+            datasets: [{
+                label: '{% trans "Income" %}',
+                backgroundColor: 'green',
+                stack: 'Stack 0',
+                data: [
+                    {% for row in result %}
+                    {{ row.income }},
+                    {% endfor %}
+                ]
+            }, {
+                label: '{% trans "Expense" %}',
+                backgroundColor: 'red',
+                stack: 'Stack 0',
+                data: [
+                    {% for row in result %}
+                    {{ row.expense }},
+                    {% endfor %}
+                ]
+            }, {
+                label: '{% trans "Total" %}',
+                backgroundColor: 'blue',
+                stack: 'Stack 1',
+                data: [
+                    {% for row in result %}
+                    {{ row.total }},
+                    {% endfor %}
+                ]
+            }]
+
+        };
+        window.onload = function() {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+        };
+</script>
+{% endblock %}

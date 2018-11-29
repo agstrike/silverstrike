@@ -1,0 +1,15 @@
+{% extends 'silverstrike/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">{% trans 'Reports' %}</h3>
+    </div>
+    <div class="box-body">
+        <ul>
+            <li><a href="{% url 'income_expense_report' %}">{% trans 'Income & Expense Report' %}</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

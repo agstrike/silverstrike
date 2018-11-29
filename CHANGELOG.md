@@ -3,6 +3,11 @@
 All notable changes to SilverStrike will be documented here.
 
 ## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.3...master)
+### Added
+* Format large numbers to make them easier to read
+* Add DKB and Volksbank importers
+* Add income/expense report
+* Show more information in category and budget views
 
 ## [0.1.3](https://github.com/agstrike/silverstrike/releases/tag/0.1.3) - 2018-05-15
 

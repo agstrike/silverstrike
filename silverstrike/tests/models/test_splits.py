@@ -84,7 +84,7 @@ class SplitQuerySetTests(TestCase):
             date=date.today(),
             src=self.personal,
             dst=self.foreign,
-            recurrence=RecurringTransaction.MONTHLY,
+            interval=RecurringTransaction.MONTHLY,
             transaction_type=Transaction.WITHDRAW)
         self.withdraw_transaction.recurrence = recurrence
         self.withdraw_transaction.save()

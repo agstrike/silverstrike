@@ -14,15 +14,23 @@ from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, Category, Split
 
 
-class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
+class CategoryIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/category_index.html'
+    model = Category
+
+    def get_queryset(self):
+        return super().get_queryset().filter(active=True)
+
+
+class CategoryByMonth(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'silverstrike/category_by_month.html'
 
     def dispatch(self, request, *args, **kwargs):
         if 'month' in kwargs:
             self.month = date(kwargs.pop('year'), kwargs.pop('month'), 1)
         else:
             self.month = date.today().replace(day=1)
-        return super(CategoryIndex, self).dispatch(request, *args, **kwargs)
+        return super(CategoryByMonth, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,18 +38,44 @@ class CategoryIndex(LoginRequiredMixin, generic.TemplateView):
         dstart = self.month
         dend = last_day_of_month(dstart)
 
-        categories = Split.objects.personal().past().date_range(dstart, dend).order_by(
+        expenses = Split.objects.personal().expense().past().date_range(dstart, dend).order_by(
             'category').values('category', 'category__name').annotate(spent=Sum('amount'))
+        income = Split.objects.personal().income().past().date_range(dstart, dend).order_by(
+            'category').values('category', 'category__name').annotate(income=Sum('amount'))
 
-        categories = [(e['category'], e['category__name'], abs(e['spent'])) for e in categories]
+        categories = []
+        sum_income = sum(x['income'] for x in income)
+        sum_expense = sum(x['spent'] for x in expenses)
 
-        all_categories = list(Category.objects.exclude(active=False).values_list('id', 'name'))
-        for id, name, spent in categories:
-            if id:
-                all_categories.remove((id, name))
-        for id, name in all_categories:
-            categories.append((id, name, 0))
+        category_map = {}
+        for index, c in enumerate(expenses):
+            id = c['category']
+            categories.append({
+                'id': id,
+                'name': c['category__name'] or '',
+                'spent': c['spent'],
+                'income': 0
+            })
+            category_map[id] = index
+
+        for c in income:
+            id = c['category']
+            if id in category_map:
+                categories[category_map[id]]['income'] = c['income']
+            else:
+                categories.push({
+                    'id': id,
+                    'name': c['category__name'] or '',
+                    'income': c['income'],
+                    'spent': 0
+                })
+
+        categories.sort(key=lambda c: c['name'])
+
         context['categories'] = categories
+        context['sum_income'] = sum_income
+        context['sum_expense'] = sum_expense
+
         context['month'] = self.month
         context['next_month'] = self.month + relativedelta(months=1)
         context['previous_month'] = self.month - relativedelta(months=1)

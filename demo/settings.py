@@ -151,7 +151,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 # Uncomment to prevent signup
 # ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
 
-APPEND_SLASH = False
+#APPEND_SLASH = False
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
