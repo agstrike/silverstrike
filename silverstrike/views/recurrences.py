@@ -111,7 +111,7 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         response = super().form_valid(form)
         self.object.recurrence = self.recurrence
         self.object.save()
-        self.recurrence.update_date()
+        self.recurrence.update_date(save=True)
         self.recurrence.save()
         return response
 
@@ -143,7 +143,7 @@ class RecurrenceSplitCreateView(LoginRequiredMixin, generic.edit.CreateView):
         form = self.get_form(self.get_form_class())
 
         if form.is_valid():
-            self.recurrence.update_date()
+            self.recurrence.update_date(save=True)
             self.recurrence.save()
             transaction = form.save(commit=False)
             formset = self.formset_class(self.request.POST, instance=transaction)
@@ -170,22 +170,24 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         context['submenu'] = 'all'
         income = 0
         expenses = 0
-        today = date.today()
-        last = last_day_of_month(today)
+        first = date.today().replace(day=1)
+        last = last_day_of_month(first)
         remaining = 0
-        for t in RecurringTransaction.objects.not_disabled():
-            if (t.date.month == today.month and t.date.year == today.year):
-                if t.transaction_type == Transaction.WITHDRAW:
-                    expenses += t.amount
-                    if t.date <= last:
-                        remaining -= t.amount
-                elif t.transaction_type == Transaction.DEPOSIT:
-                    income += t.amount
-                    if t.date <= last:
-                        remaining += t.amount
+        for t in RecurringTransaction.objects.not_disabled().exclude(
+                transaction_type=RecurringTransaction.TRANSFER):
+            if t.transaction_type == Transaction.WITHDRAW:
+                past_expenses = t.sum_amount(first, last)
+                future_expenses = t.sum_future_amount(last)
+                expenses += past_expenses + future_expenses
+                remaining += future_expenses
+            else:
+                past_income = t.sum_amount(first, last)
+                future_income = t.sum_future_amount(last)
+                income += past_income + future_income
+                remaining += future_income
         context['expenses'] = expenses
         context['income'] = income
-        context['total'] = income - expenses
+        context['total'] = income + expenses
         context['remaining'] = remaining
         return context
 

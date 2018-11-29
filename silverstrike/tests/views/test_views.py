@@ -1,3 +1,7 @@
+from datetime import date
+
+from dateutil.relativedelta import relativedelta
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
@@ -5,7 +9,9 @@ from django.urls import reverse
 from silverstrike.forms import (DepositForm, RecurringDepositForm,
                                 RecurringTransferForm, RecurringWithdrawForm, TransferForm,
                                 WithdrawForm)
+from silverstrike.lib import last_day_of_month
 from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.tests import create_recurring_transaction, create_transaction
 
 
 class ViewTests(TestCase):
@@ -143,6 +149,44 @@ class ViewTests(TestCase):
         context = self.client.get(reverse('recurrences')).context
         self.assertEqual(context['menu'], 'recurrences')
         self.assertEqual(context['submenu'], 'all')
+
+    def test_context_sums_RecurringTransactionIndex(self):
+        last_month = date.today() - relativedelta(months=1)
+        this_month = date.today()
+        next_month = date.today() + relativedelta(months=1)
+        days_in_this_month = last_day_of_month(date.today()).day
+        end_of_month_diff = days_in_this_month - date.today().day + 1
+        withdraw_recurrence = create_recurring_transaction(
+            'withdraw recurrence', self.personal, self.expense, 1, RecurringTransaction.WITHDRAW,
+            RecurringTransaction.DAILY, date=this_month)
+        deposit_recurrence = create_recurring_transaction(
+            'deposit recurrence', self.revenue, self.personal, 2, RecurringTransaction.DEPOSIT,
+            RecurringTransaction.DAILY, date=this_month)
+        transfer_recurrence = create_recurring_transaction(
+            'transfer recurrence', self.personal, self.account, 1000, RecurringTransaction.TRANSFER,
+            RecurringTransaction.DAILY, date=this_month)
+        for dates in [last_month, this_month, next_month]:
+            withdraw = create_transaction('withdraw', self.personal, self.expense,
+                                          100, Transaction.WITHDRAW, date=dates)
+            deposit = create_transaction('deposit', self.revenue, self.personal,
+                                         100, Transaction.DEPOSIT, date=dates)
+            transfer = create_transaction('transfer', self.personal, self.account,
+                                          100, Transaction.TRANSFER, date=dates)
+            withdraw.recurrence = withdraw_recurrence
+            deposit.recurrence = deposit_recurrence
+            transfer.recurrence = transfer_recurrence
+            withdraw.save()
+            deposit.save()
+            transfer.save()
+        expenses_this_month = -100 + -end_of_month_diff
+        income_this_month = 100 + (end_of_month_diff*2)
+        total_this_month = income_this_month + expenses_this_month
+        remaining_this_month = end_of_month_diff
+        context = self.client.get(reverse('recurrences')).context
+        self.assertEqual(context['expenses'], expenses_this_month)
+        self.assertEqual(context['income'], income_this_month)
+        self.assertEqual(context['total'], total_this_month)
+        self.assertEqual(context['remaining'], remaining_this_month)
 
     def test_context_RecurringTransferCreate(self):
         context = self.client.get(reverse('recurring_transfer_new')).context

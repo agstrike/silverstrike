@@ -166,18 +166,9 @@ class DepositForm(DepositMixin, TransactionForm):
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = models.RecurringTransaction
-        fields = [
-            'title',
-            'date',
-            'amount',
-            'source_account',
-            'destination_account',
-            'category',
-            'recurrence',
-            'skip',
-            'weekend_handling',
-            'last_day_in_month',
-            'notes']
+        fields = ['title', 'date', 'amount', 'source_account', 'destination_account',
+                  'category', 'recurrence', 'skip', 'weekend_handling', 'last_day_in_month',
+                  'notes']
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
     category = forms.ModelChoiceField(

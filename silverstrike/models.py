@@ -371,8 +371,10 @@ class RecurringTransaction(BaseTransaction):
     def is_due(self):
         return date.today() >= self.date
 
-    def update_date(self):
+    def update_date(self, date=None, save=False):
         delta = None
+        if not date:
+            date = self.date
         if self.recurrence == self.MONTHLY:
             delta = relativedelta(months=1)
         elif self.recurrence == self.QUARTERLY:
@@ -388,17 +390,24 @@ class RecurringTransaction(BaseTransaction):
         else:
             return
         delta *= self.skip + 1
-        self.date += delta
-        if self.last_day_in_month:
-            self.date = last_day_of_month(self.date)
-        if self.date.weekday() > 4:
-            if self.weekend_handling == self.NEXT_WEEKDAY:
-                self.date += relativedelta(days=7 - self.date.weekday())
-            elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
-                self.date -= relativedelta(days=self.date.weekday() - 4)
-        for split in self.splits.all():
-            split.date = self.date
-            split.save()
+        while True:
+            date += delta
+            if self.last_day_in_month:
+                date = last_day_of_month(self.date)
+            if date.weekday() > 4:
+                if self.weekend_handling == self.SKIP:
+                    continue
+                elif self.weekend_handling == self.NEXT_WEEKDAY:
+                    date += relativedelta(days=7 - date.weekday())
+                elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
+                    date -= relativedelta(days=date.weekday() - 4)
+            if save:
+                self.date = date
+                self.save()
+                for split in self.splits.all():
+                    split.date = self.date
+                    split.save()
+            return date
 
     @property
     def is_disabled(self):
@@ -414,6 +423,23 @@ class RecurringTransaction(BaseTransaction):
     def average_amount(self):
         return Split.objects.personal().recurrence(self.id).aggregate(
             models.Avg('amount'))['amount__avg']
+
+    def sum_amount(self, start_date=None, end_date=None):
+        if start_date and end_date:
+            return (Split.objects.personal().recurrence(self.id).filter(
+                date__range=[start_date, end_date]).aggregate(models.Sum('amount'))['amount__sum']
+                or 0)
+        else:
+            return (Split.objects.personal().recurrence(self.id).aggregate(
+                models.Sum('amount'))['amount__sum'] or 0)
+
+    def sum_future_amount(self, end_date):
+        date = self.date
+        _sum = 0
+        while date <= end_date:
+            _sum += self.amount
+            date = self.update_date(date=date)
+        return _sum
 
     @classmethod
     def outstanding_transaction_sum(cls):

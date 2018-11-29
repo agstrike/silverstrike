@@ -123,7 +123,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date.today() + relativedelta(days=1))
         for split in recurrence.splits.all():
             self.assertEquals(split.date, date.today() + relativedelta(days=1))
@@ -132,7 +132,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(
             recurrence.date, date.today() + relativedelta(weeks=1))
         for split in recurrence.splits.all():
@@ -142,7 +142,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.MONTHLY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date.today() + relativedelta(months=1))
         for split in recurrence.splits.all():
             self.assertEquals(
@@ -152,7 +152,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.QUARTERLY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(
             recurrence.date, date.today() + relativedelta(months=3))
         for split in recurrence.splits.all():
@@ -163,7 +163,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.BIANNUALLY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(
             recurrence.date, date.today() + relativedelta(months=6))
         for split in recurrence.splits.all():
@@ -174,7 +174,7 @@ class RecurrenceTests(TestCase):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.ANNUALLY)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date.today() + relativedelta(years=1))
         for split in recurrence.splits.all():
             self.assertEquals(split.date, date.today() + relativedelta(years=1))
@@ -185,7 +185,7 @@ class RecurrenceTests(TestCase):
             RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY)
         for skip in range(1, 2):
             recurrence.skip = skip
-            recurrence.update_date()
+            recurrence.update_date(save=True)
             self.assertEquals(recurrence.date,
                               date.today() + relativedelta(weeks=skip + 1))
 
@@ -199,7 +199,7 @@ class RecurrenceTests(TestCase):
             date=date(2018, 1, 1))
         recurrence.skip = 4
         recurrence.weekend_handling = RecurringTransaction.SKIP
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 11))
         """
 
@@ -210,7 +210,7 @@ class RecurrenceTests(TestCase):
             date=date(2018, 1, 1))
         recurrence.skip = 4
         recurrence.weekend_handling = RecurringTransaction.PREVIOUS_WEEKDAY
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 1) + relativedelta(days=4))
 
     def test_weekend_handling_next(self):
@@ -220,7 +220,7 @@ class RecurrenceTests(TestCase):
             date=date(2018, 1, 1))
         recurrence.skip = 4
         recurrence.weekend_handling = RecurringTransaction.NEXT_WEEKDAY
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 1) + relativedelta(weeks=1))
 
     def test_last_day_of_month(self):
@@ -228,14 +228,14 @@ class RecurrenceTests(TestCase):
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY,
             date=date(2018, 1, 1), last_day_in_month=True)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 31))
 
     def test_update_disabled_recurrences(self):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.DISABLED)
-        recurrence.update_date()
+        recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date.today())
 
     def test_active_recurrences_are_not_disabled(self):
@@ -331,3 +331,81 @@ class RecurrenceTests(TestCase):
     def test_outstanding_sum(self):
         # TODO add a test
         pass
+
+    def test_sum_amount_for_withdrawls(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.personal, self.foreign, 100,
+            RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY)
+        for year in [1999, 2000, 2001]:
+            for month in [1, 6, 12]:
+                for day in [1, 15, 28]:
+                    transaction = create_transaction(
+                        recurrence.title, self.personal, self.foreign, 100,
+                        recurrence.transaction_type, date=date(year, month, day))
+                    transaction.recurrence = recurrence
+                    transaction.save()
+        self.assertEqual(recurrence.sum_amount(), -2700)
+        self.assertEqual(recurrence.sum_amount(date(2000, 1, 1), date(2000, 12, 28)), -900)
+        self.assertEqual(recurrence.sum_amount(date(2001, 1, 1), date(2001, 1, 31)), -300)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(1999, 1, 2)), -100)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(2001, 12, 28)), -2700)
+
+    def test_sum_amount_for_deposits(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.foreign, self.personal, 100,
+            RecurringTransaction.DEPOSIT, RecurringTransaction.WEEKLY)
+        for year in [1999, 2000, 2001]:
+            for month in [1, 6, 12]:
+                for day in [1, 15, 28]:
+                    transaction = create_transaction(
+                        recurrence.title, self.foreign, self.personal, 100,
+                        recurrence.transaction_type, date=date(year, month, day))
+                    transaction.recurrence = recurrence
+                    transaction.save()
+        self.assertEqual(recurrence.sum_amount(), 2700)
+        self.assertEqual(recurrence.sum_amount(date(2000, 1, 1), date(2000, 12, 28)), 900)
+        self.assertEqual(recurrence.sum_amount(date(2001, 1, 1), date(2001, 1, 31)), 300)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(1999, 1, 2)), 100)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(2001, 12, 28)), 2700)
+
+    def test_sum_amount_for_transfers(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.personal, self.savings, 100,
+            RecurringTransaction.TRANSFER, RecurringTransaction.WEEKLY)
+        for year in [1999, 2000, 2001]:
+            for month in [1, 6, 12]:
+                for day in [1, 15, 28]:
+                    transaction = create_transaction(
+                        recurrence.title, self.personal, self.savings, 100,
+                        recurrence.transaction_type, date=date(year, month, day))
+                    transaction.recurrence = recurrence
+                    transaction.save()
+        self.assertEqual(recurrence.sum_amount(), 0)
+        self.assertEqual(recurrence.sum_amount(date(2000, 1, 1), date(2000, 12, 28)), 0)
+        self.assertEqual(recurrence.sum_amount(date(2001, 1, 1), date(2001, 1, 31)), 0)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(1999, 1, 2)), 0)
+        self.assertEqual(recurrence.sum_amount(date(1999, 1, 1), date(2001, 12, 28)), 0)
+
+    def test_sum_future_amount_for_withdrawals(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.personal, self.foreign, 100,
+            RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY, date=date(2000, 1, 1))
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 31)), -500)
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 7)), -100)
+        self.assertEqual(recurrence.sum_future_amount(date(1999, 1, 1)), 0)
+
+    def test_sum_future_amount_for_deposits(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.foreign, self.personal, 100,
+            RecurringTransaction.DEPOSIT, RecurringTransaction.WEEKLY, date=date(2000, 1, 1))
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 31)), 500)
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 7)), 100)
+        self.assertEqual(recurrence.sum_future_amount(date(1999, 1, 1)), 0)
+
+    def test_sum_future_amount_for_transfers(self):
+        recurrence = create_recurring_transaction(
+            'some recurrence', self.personal, self.savings, 100,
+            RecurringTransaction.TRANSFER, RecurringTransaction.WEEKLY, date=date(2000, 1, 1))
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 31)), 500)
+        self.assertEqual(recurrence.sum_future_amount(date(2000, 1, 7)), 100)
+        self.assertEqual(recurrence.sum_future_amount(date(1999, 1, 1)), 0)
