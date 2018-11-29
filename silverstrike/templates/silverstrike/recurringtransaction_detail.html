@@ -2,57 +2,86 @@
 {% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
+{% load tags %}
+{% load humanize %}
 
 {% block content_header %}
-<h1>{{ recurrence.title|title }}</h1>
+<h1>{{ recurrence.title }}</h1>
 <ol class="breadcrumb">
-  <li><a href="/">{% trans 'Home' %}</a></li>
-  <li><a href="{% url 'recurrences' %}">{% trans 'Recurrences' %}</a></li>
-  <li class="active">{{ recurrence.title|title }}</li>
+<li><a href="/">{% trans 'Home' %}</a></li>
+<li><a href="{% url 'recurrences' %}">{% trans 'Recurrences' %}</a></li>
+<li class="active">{{ recurrence }}</li>
 </ol>
 {% endblock %}
 
 {% block content %}
-<div class="row">
-<div class="col-md-9">
 <div class="box">
   <div class="box-header">
   <h3 class="box-title">{% trans 'Recurrence Details' %}</h3>
 </div>
 <div class="box-body">
 <table class="table">
-  <tr><th>{% trans 'Recurrence' %}</th><td>{{ recurrence.get_recurrence }}</td></tr>
+  <tr><th>{% trans 'Transaction Type' %}</th><td>{{ recurrence.get_transaction_type_str }}</td></tr>
   <tr>
-    <th>{% trans 'Next expected ocurrence' %}</th><td>{{ recurrence.date }}</td>
+    <th>{% trans 'Date' %}</th><td>{{ recurrence.date }}</td>
   </tr>
   <tr>
-    <th>{% trans 'Source' %}</th><td><a href="{{ recurrence.src.get_absolute_url }}">{{ recurrence.src }}</a></td>
+    <th>{% trans 'Total amount' %}</th><td{% if recurrence.is_withdraw %} class="text-red"{% elif recurrence.is_deposit %} class="text-green"{% endif %}>{{ recurrence.amount|intcomma }}</td>
   </tr>
-  <tr>
-    <th>{% trans 'Destination' %}</th><td><a href="{{ recurrence.dst.get_absolute_url }}">{{ recurrence.dst }}</a></td>
-  </tr>
-  <tr>
-    <th>{% trans 'Amount' %}</th><td{% if recurrence.is_deposit %} class="text-green"{% elif recurrence.is_withdraw %} class="text-red"{% endif %}>{{ recurrence.amount }}</td>
-  </tr>
-  <tr>
-    <th>{% trans 'Average amount' %}</th><td>{{ recurrence.average_amount }}</td>
-  </tr>
-  {% if recurrence.category %}
-  <tr><th>{% trans 'Category' %}</th><td>
-    <a href="{{ recurrence.category.get_absolute_url }}">{{ recurrence.category }}</a>
-  </td></tr>
-  {% endif %}
   {% if recurrence.notes %}
   <tr><th>{% trans 'Notes' %}</th><td>{{ recurrence.notes }}</td></tr>
   {% endif %}
+  <tr>
+    <th>{% trans 'Recurrence' %}</th><td>{{ recurrence.get_recurrence }}</td>
+  </tr>
+  <tr>
+    <th>{% trans 'Skip' %}</th><td>{{ recurrence.skip }}</td>
+  </tr>
 </table>
 </div>
 <div class="box-footer">
   <div class="btn-bar">
+    {% if recurrence.is_split and not recurrence.is_system %}
+    <a class="btn btn-success" href="{% url 'recurrence_split_create' recurrence.pk %}">{% trans 'Create Transaction' %}</a>
+    {% endif %}
+    {% if not recurrence.is_split and not recurrence.is_system %}
     <a class="btn btn-success" href="{% url 'recurrence_transaction_create' recurrence.pk %}">{% trans 'Create Transaction' %}</a>
-    <a class="btn btn-default" href="{% url 'recurrence_update' recurrence.pk %}">{% trans 'Edit' %}</a>
-    <a class="btn btn-danger" href="{% url 'recurrence_delete' recurrence.pk %}">{% trans 'Delete' %}</a>
+    <a href="{% url 'recurrence_update' recurrence.id %}" class="btn btn-default">{% trans 'Edit' %}</a>
+    {% endif %}
+    {% if not recurrence.is_system %}
+    <a href="{% url 'recurring_split_update' recurrence.id %}" class="btn btn-default">{% trans 'Edit as Split transaction' %}</a>
+    {% endif %}
+    <a href="{% url 'recurrence_delete' recurrence.id %}" class="btn btn-danger">{% trans 'Delete' %}</a>
   </div>
+</div>
+</div>
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">{% trans 'Splits' %}</h3>
+</div>
+<div class="box-body table-responsive">
+<table class="table">
+  <tr>
+  <th>{% trans 'Title' %}</th>
+  <th>{% trans 'Account' %}</th>
+  <th>{% trans 'Opposing Account' %}</th>
+  <th>{% trans 'Amount' %}</th>
+  <th>{% trans 'Date' %}</th>
+  <th>{% trans 'Category' %}</th>
+  </tr>
+  {% for split in recurrence.splits.transfers_once %}
+  <tr>
+    <td>{{ split.title }}</td>
+    <td><a href="{{ split.account.get_absolute_url }}">{{ split.account }}</a></td>
+    <td><a href="{{ split.opposing_account.get_absolute_url }}">{{ split.opposing_account }}</a></td>
+    <td{% if split.is_withdraw %} class="text-red"{% elif split.is_deposit %} class="text-green"{% endif %}>
+      {% if split.is_transfer %}{{ split.amount|negate|intcomma }}{% else %}{{ split.amount|intcomma }}{% endif %}
+    </td>
+    <td>{{ split.date }}</td>
+    <td>{% if split.category %}<a href="{{ split.category.get_absolute_url }}">{{ split.category }}</a>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
 </div>
 </div>
 <div class="box">
@@ -77,7 +106,6 @@
 </div>
 <div class="box-footer">
   <a class="btn btn-primary" href="{% url 'transactions' %}?recurrence={{ recurrence.pk }}">{% trans 'Show all' %}</a>
-</div>
 </div>
 </div>
 </div>

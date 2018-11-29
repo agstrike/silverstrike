@@ -23,9 +23,9 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
             models.Sum('amount'))['amount__sum'] or 0
         queryset = queryset.date_range(dstart, dend)
         context['income'] = abs(queryset.income().aggregate(
-                models.Sum('amount'))['amount__sum'] or 0)
+            models.Sum('amount'))['amount__sum'] or 0)
         context['expenses'] = abs(queryset.expense().aggregate(
-                models.Sum('amount'))['amount__sum'] or 0)
+            models.Sum('amount'))['amount__sum'] or 0)
         context['difference'] = context['income'] - context['expenses']
 
         context['accounts'] = Account.objects.personal().shown_on_dashboard()
@@ -43,9 +43,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         context['working_balance'] = context['balance'] + outstanding
         outstanding = 0
         for r in recurrences:
-            if r.transaction_type == Transaction.WITHDRAW:
-                outstanding -= r.amount
-            elif r.transaction_type == Transaction.DEPOSIT:
+            if r.transaction_type != Transaction.TRANSFER:
                 outstanding += r.amount
             if r.is_due:
                 context['overdue_transactions'] = True
@@ -61,7 +59,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
             models.Sum('amount'))['amount__sum'] or 0)
 
         context['previous_expenses'] = abs(queryset.expense().aggregate(
-                models.Sum('amount'))['amount__sum'] or 0)
+            models.Sum('amount'))['amount__sum'] or 0)
         context['previous_difference'] = context['previous_income'] - context['previous_expenses']
         context['today'] = date.today()
         context['last_month'] = previous_first

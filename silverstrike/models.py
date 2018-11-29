@@ -104,7 +104,7 @@ class Account(models.Model):
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
         transaction = Transaction.objects.create(title=_('Initial Balance'),
-                                                 transaction_type=Transaction.SYSTEM)
+                                                 transaction_type=BaseTransaction.SYSTEM)
         Split.objects.create(transaction=transaction, amount=-amount,
                              account=system, opposing_account=self)
         Split.objects.create(transaction=transaction, amount=amount,
@@ -116,7 +116,7 @@ class TransactionQuerySet(models.QuerySet):
         return self.order_by('-date')[:10]
 
 
-class Transaction(models.Model):
+class BaseTransaction(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
     TRANSFER = 3
@@ -129,6 +129,7 @@ class Transaction(models.Model):
     )
 
     class Meta:
+        abstract = True
         ordering = ['-date', 'title']
 
     title = models.CharField(max_length=64)
@@ -136,33 +137,14 @@ class Transaction(models.Model):
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
     last_modified = models.DateTimeField(auto_now=True)
-    recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
-                                   related_name='recurrences', blank=True, null=True)
-
-    objects = TransactionQuerySet.as_manager()
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse('transaction_detail', args=[self.pk])
 
     def get_transaction_type_str(self):
         for i, name in self.TRANSACTION_TYPES:
             if i == self.transaction_type:
                 return name
-
-    @property
-    def amount(self):
-        if self.transaction_type == Transaction.TRANSFER:
-            return abs(
-                self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
-        else:
-            return self.splits.personal().aggregate(models.Sum('amount'))['amount__sum'] or 0
-
-    @property
-    def is_split(self):
-        return len(self.splits.all()) > 2
 
     @property
     def is_system(self):
@@ -181,7 +163,29 @@ class Transaction(models.Model):
         return self.transaction_type == self.DEPOSIT
 
 
-class SplitQuerySet(models.QuerySet):
+class Transaction(BaseTransaction):
+    recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
+                                   related_name='recurrences', blank=True, null=True)
+
+    objects = TransactionQuerySet.as_manager()
+
+    def get_absolute_url(self):
+        return reverse('transaction_detail', args=[self.pk])
+
+    @property
+    def amount(self):
+        if self.transaction_type == BaseTransaction.TRANSFER:
+            return abs(
+                self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
+        else:
+            return self.splits.personal().aggregate(models.Sum('amount'))['amount__sum'] or 0
+
+    @property
+    def is_split(self):
+        return len(self.splits.all()) > 2
+
+
+class BaseSplitQuerySet(models.QuerySet):
     def personal(self):
         return self.filter(account__account_type=Account.PERSONAL)
 
@@ -211,49 +215,58 @@ class SplitQuerySet(models.QuerySet):
     def past(self):
         return self.filter(date__lte=date.today())
 
-    def recurrence(self, recurrence_id):
-        return self.filter(transaction__recurrence_id=recurrence_id)
 
-
-class Split(models.Model):
-    account = models.ForeignKey(Account, models.CASCADE, related_name='incoming_transactions')
-    opposing_account = models.ForeignKey(Account, models.CASCADE,
-                                         related_name='outgoing_transactions')
+class BaseSplit(models.Model):
+    account = models.ForeignKey(Account, models.CASCADE,
+                                related_name='%(app_label)s_%(class)s_incoming_transactions')
+    opposing_account = models.ForeignKey(
+        Account,
+        models.CASCADE,
+        related_name='%(app_label)s_%(class)s_outgoing_transactions')
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(default=date.today)
     category = models.ForeignKey('Category', models.SET_NULL, blank=True, null=True,
-                                 related_name='splits')
-    transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
-                                    blank=True, null=True)
+                                 related_name='%(app_label)s_%(class)s_splits')
     last_modified = models.DateTimeField(auto_now=True)
 
-    objects = SplitQuerySet.as_manager()
-
     class Meta:
+        abstract = True
         ordering = ['-date', 'title']
 
     def __str__(self):
         return self.title
 
-    @property
-    def is_transfer(self):
-        return self.transaction.transaction_type == Transaction.TRANSFER
 
-    @property
-    def is_withdraw(self):
-        return self.transaction.transaction_type == Transaction.WITHDRAW
+class SplitQuerySet(BaseSplitQuerySet):
+    def recurrence(self, recurrence_id):
+        return self.filter(transaction__recurrence_id=recurrence_id)
 
-    @property
-    def is_deposit(self):
-        return self.transaction.transaction_type == Transaction.DEPOSIT
 
-    @property
-    def is_system(self):
-        return self.transaction.transaction_type == Transaction.SYSTEM
+class Split(BaseSplit):
+    transaction = models.ForeignKey(Transaction, models.CASCADE, related_name='splits',
+                                    blank=True, null=True)
+
+    objects = SplitQuerySet.as_manager()
 
     def get_absolute_url(self):
         return self.transaction.get_absolute_url()
+
+    @property
+    def is_transfer(self):
+        return self.transaction.transaction_type == BaseTransaction.TRANSFER
+
+    @property
+    def is_withdraw(self):
+        return self.transaction.transaction_type == BaseTransaction.WITHDRAW
+
+    @property
+    def is_deposit(self):
+        return self.transaction.transaction_type == BaseTransaction.DEPOSIT
+
+    @property
+    def is_system(self):
+        return self.transaction.transaction_type == BaseTransaction.SYSTEM
 
 
 class Category(models.Model):
@@ -271,8 +284,8 @@ class Category(models.Model):
     @property
     def money_spent(self):
         return abs(Split.objects.filter(
-                category=self, account__account_type=Account.PERSONAL,
-                transaction__transaction_type=Transaction.WITHDRAW).aggregate(
+            category=self, account__account_type=Account.PERSONAL,
+            transaction__transaction_type=BaseTransaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 
     def get_absolute_url(self):
@@ -307,8 +320,11 @@ class RecurringTransactionManager(models.Manager):
         queryset = self.get_queryset().filter(date__lte=month)
         return queryset.exclude(interval=RecurringTransaction.DISABLED)
 
+    def not_disabled(self):
+        return self.exclude(recurrence=RecurringTransaction.DISABLED)
 
-class RecurringTransaction(models.Model):
+
+class RecurringTransaction(BaseTransaction):
     DISABLED = 0
     MONTHLY = 1
     QUARTERLY = 2
@@ -326,7 +342,7 @@ class RecurringTransaction(models.Model):
         (ANNUALLY, _('Annually')),
         (WEEKLY, _('Weekly')),
         (DAILY, _('Daily')),
-        )
+    )
 
     SAME_DAY = 0
     PREVIOUS_WEEKDAY = 1
@@ -344,22 +360,11 @@ class RecurringTransaction(models.Model):
 
     objects = RecurringTransactionManager()
 
-    title = models.CharField(max_length=64)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    next_date = models.DateField()
-    src = models.ForeignKey(Account, models.CASCADE)
-    dst = models.ForeignKey(Account, models.CASCADE,
-                            related_name='opposing_recurring_transactions')
-    interval = models.IntegerField(choices=RECCURENCE_OPTIONS)
-    transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
-    category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
-    last_modified = models.DateTimeField(auto_now=True)
+    recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+    transaction_type = models.IntegerField(choices=BaseTransaction.TRANSACTION_TYPES[:3])
 
     multiplier = models.PositiveIntegerField(default=1)
     weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
-
-    def __str__(self):
-        return self.title
 
     def get_absolute_url(self):
         return reverse('recurrence_detail', args=[self.pk])
@@ -371,8 +376,8 @@ class RecurringTransaction(models.Model):
     def update_date(self, date=None, save=False):
         delta = None
         if not date:
-            date = self.next_date
         if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
+            date = self.date
             delta = relativedelta(months=1)
         elif self.interval == self.QUARTERLY:
             delta = relativedelta(months=3)
@@ -386,6 +391,9 @@ class RecurringTransaction(models.Model):
             delta = relativedelta(days=1)
         else:
             return
+                    split.save()
+                    split.date = self.date
+                for split in self.splits.all():
         delta *= self.multiplier
         while True:
             date += delta
@@ -399,8 +407,8 @@ class RecurringTransaction(models.Model):
                 elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
                     date -= relativedelta(days=date.weekday() - 4)
             if save:
-                self.next_date = date
                 self.save()
+                self.date = date
             return date
 
     @property
@@ -414,24 +422,26 @@ class RecurringTransaction(models.Model):
                 return name
 
     @property
-    def signed_amount(self):
-        if self.transaction_type == Transaction.WITHDRAW:
-            return -self.amount
-        else:
-            return self.amount
-
-    @property
-    def is_withdraw(self):
-        return self.transaction_type == Transaction.WITHDRAW
-
-    @property
-    def is_deposit(self):
-        return self.transaction_type == Transaction.DEPOSIT
-
-    @property
     def average_amount(self):
         return Split.objects.personal().recurrence(self.id).aggregate(
             models.Avg('amount'))['amount__avg']
+
+    def sum_amount(self, start_date=None, end_date=None):
+        if start_date and end_date:
+            return (Split.objects.personal().recurrence(self.id).filter(
+                date__range=[start_date, end_date]).aggregate(models.Sum('amount'))['amount__sum']
+                or 0)
+        else:
+            return (Split.objects.personal().recurrence(self.id).aggregate(
+                models.Sum('amount'))['amount__sum'] or 0)
+
+    def sum_future_amount(self, end_date):
+        date = self.date
+        _sum = 0
+        while date <= end_date:
+            _sum += self.amount
+            date = self.update_date(date=date)
+        return _sum
 
     @classmethod
     def outstanding_transaction_sum(cls):
@@ -439,12 +449,53 @@ class RecurringTransaction(models.Model):
         outstanding = 0
         dend = last_day_of_month(date.today())
         transactions = cls.objects.due_in_month().exclude(
-            transaction_type=Transaction.TRANSFER)
+            transaction_type=BaseTransaction.TRANSFER)
         for t in transactions:
-            while t.next_date <= dend:
-                if t.transaction_type == Transaction.WITHDRAW:
-                    outstanding -= t.amount
-                else:
-                    outstanding += t.amount
+            while t.date <= dend:
+                outstanding += t.amount
                 t.update_date()
         return outstanding
+
+    @property
+    def amount(self):
+        if self.transaction_type == BaseTransaction.TRANSFER:
+            return abs(
+                self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
+        else:
+            return self.splits.personal().aggregate(models.Sum('amount'))['amount__sum'] or 0
+
+    @property
+    def is_split(self):
+        return len(self.splits.all()) > 2
+
+
+class RecurringSplitQuerySet(BaseSplitQuerySet):
+    def not_disabled(self):
+        return self.exclude(transaction__recurrence=RecurringTransaction.DISABLED)
+
+
+class RecurringSplit(BaseSplit):
+    transaction = models.ForeignKey(RecurringTransaction, models.CASCADE,
+                                    related_name='splits',
+                                    blank=True, null=True)
+
+    objects = RecurringSplitQuerySet.as_manager()
+
+    def get_absolute_url(self):
+        return self.transaction.get_absolute_url()
+
+    @property
+    def is_transfer(self):
+        return self.transaction.transaction_type == BaseTransaction.TRANSFER
+
+    @property
+    def is_withdraw(self):
+        return self.transaction.transaction_type == BaseTransaction.WITHDRAW
+
+    @property
+    def is_deposit(self):
+        return self.transaction.transaction_type == BaseTransaction.DEPOSIT
+
+    @property
+    def is_disabled(self):
+        return self.transaction.recurrence == RecurringTransaction.DISABLED

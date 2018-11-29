@@ -21,7 +21,7 @@ def import_csv(csv_path):
                     notes=line[8],
                     iban=line[5],
                     amount=amount
-                    ))
+                ))
             except ValueError as e:
                 # first line contains headers...
                 print(e)

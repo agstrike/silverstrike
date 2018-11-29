@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
-from silverstrike.tests import create_transaction
+from silverstrike.tests import create_recurring_transaction, create_transaction
 
 
 class SplitQuerySetTests(TestCase):
@@ -78,14 +78,13 @@ class SplitQuerySetTests(TestCase):
         self.assertEqual(queryset.count(), 2)
 
     def test_recurrence(self):
-        recurrence = RecurringTransaction.objects.create(
-            title='some recurrence',
-            amount=25,
-            date=date.today(),
-            src=self.personal,
-            dst=self.foreign,
-            interval=RecurringTransaction.MONTHLY,
-            transaction_type=Transaction.WITHDRAW)
+        recurrence = create_recurring_transaction(
+            'recurrence',
+            self.personal,
+            self.foreign,
+            100,
+            RecurringTransaction.WITHDRAW,
+            RecurringTransaction.MONTHLY)
         self.withdraw_transaction.recurrence = recurrence
         self.withdraw_transaction.save()
         queryset = Split.objects.personal().recurrence(recurrence)
@@ -111,3 +110,39 @@ class SplitModelTests(TestCase):
         split = Split.objects.first()
         self.assertEqual(split.get_absolute_url(), reverse('transaction_detail',
                                                            args=[split.transaction.id]))
+
+    def test_is_transfer(self):
+        transaction = create_transaction('meh', self.personal, self.savings,
+                                         100, Transaction.TRANSFER)
+        for split in transaction.splits.all():
+            self.assertTrue(split.is_transfer)
+            self.assertFalse(split.is_withdraw)
+            self.assertFalse(split.is_deposit)
+            self.assertFalse(split.is_system)
+
+    def test_is_withdraw(self):
+        transaction = create_transaction('meh', self.personal, self.foreign,
+                                         100, Transaction.WITHDRAW)
+        for split in transaction.splits.all():
+            self.assertTrue(split.is_withdraw)
+            self.assertFalse(split.is_transfer)
+            self.assertFalse(split.is_deposit)
+            self.assertFalse(split.is_system)
+
+    def test_is_deposit(self):
+        transaction = create_transaction('meh', self.foreign, self.personal,
+                                         100, Transaction.DEPOSIT)
+        for split in transaction.splits.all():
+            self.assertTrue(split.is_deposit)
+            self.assertFalse(split.is_withdraw)
+            self.assertFalse(split.is_transfer)
+            self.assertFalse(split.is_system)
+
+    def test_is_system(self):
+        self.personal.set_initial_balance(100)
+        transaction = Transaction.objects.first()
+        for split in transaction.splits.all():
+            self.assertTrue(split.is_system)
+            self.assertFalse(split.is_withdraw)
+            self.assertFalse(split.is_deposit)
+            self.assertFalse(split.is_transfer)

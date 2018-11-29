@@ -30,7 +30,7 @@
 {% for transaction in object_list %}
 <tr>
   <td><a href="{{ transaction.get_absolute_url }}">{{ transaction.title }}</a></td>
-  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.signed_amount }}</td>
+  <td{% if transaction.is_deposit %} class="text-green"{% elif transaction.is_withdraw %} class="text-red" {% endif %}>{{ transaction.amount }}</td>
   <td><a href="{{ transaction.src.get_absolute_url }}">{{ transaction.src }}</a></td>
   <td><a href="{{ transaction.dst.get_absolute_url }}">{{ transaction.dst }}</a></td>
 {% endfor %}
