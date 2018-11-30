@@ -76,7 +76,7 @@ class RecurringTransactionQuerySetTests(TestCase):
             RecurringTransaction.ANNUALLY)
         queryset = RecurringTransaction.objects.not_disabled()
         for recurrence in queryset:
-            self.assertNotEqual(recurrence.recurrence, RecurringTransaction.DISABLED)
+            self.assertNotEqual(recurrence.interval, RecurringTransaction.DISABLED)
 
 
 class RecurrenceTests(TestCase):
@@ -179,28 +179,20 @@ class RecurrenceTests(TestCase):
         for split in recurrence.splits.all():
             self.assertEquals(split.date, date.today() + relativedelta(years=1))
 
-    def test_update_skip(self):
+    def test_update_multiplier(self):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY)
-        for skip in range(1, 2):
-            recurrence.skip = skip
+        for multiplier in range(1, 2):
+            recurrence.multiplier = multiplier
             recurrence.update_date(save=True)
             self.assertEquals(recurrence.date,
-                              date.today() + relativedelta(weeks=skip + 1))
+                              date.today() + relativedelta(weeks=multiplier))
 
     def test_weekend_handling_skip(self):
         pass
         """
         Not implemented yet
-        recurrence = create_recurring_transaction(
-            'some recurrence', self.personal, self.foreign, 100,
-            RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY,
-            date=date(2018, 1, 1))
-        recurrence.skip = 4
-        recurrence.weekend_handling = RecurringTransaction.SKIP
-        recurrence.update_date(save=True)
-        self.assertEquals(recurrence.date, date(2018, 1, 11))
         """
 
     def test_weekend_handling_previous(self):
@@ -208,7 +200,7 @@ class RecurrenceTests(TestCase):
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY,
             date=date(2018, 1, 1))
-        recurrence.skip = 4
+        recurrence.multiplier = 5
         recurrence.weekend_handling = RecurringTransaction.PREVIOUS_WEEKDAY
         recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 1) + relativedelta(days=4))
@@ -218,18 +210,18 @@ class RecurrenceTests(TestCase):
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY,
             date=date(2018, 1, 1))
-        recurrence.skip = 4
+        recurrence.multiplier = 5
         recurrence.weekend_handling = RecurringTransaction.NEXT_WEEKDAY
         recurrence.update_date(save=True)
         self.assertEquals(recurrence.date, date(2018, 1, 1) + relativedelta(weeks=1))
 
-    def test_last_day_of_month(self):
+    def test_end_of_month(self):
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
-            RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY,
-            date=date(2018, 1, 1), last_day_in_month=True)
+            RecurringTransaction.WITHDRAW, RecurringTransaction.END_OF_MONTH,
+            date=date(2018, 2, 28))
         recurrence.update_date(save=True)
-        self.assertEquals(recurrence.date, date(2018, 1, 31))
+        self.assertEquals(recurrence.date, date(2018, 3, 31))
 
     def test_update_disabled_recurrences(self):
         recurrence = create_recurring_transaction(
@@ -251,10 +243,10 @@ class RecurrenceTests(TestCase):
         self.assertTrue(recurrence.is_disabled)
 
     def test_recurrence_string(self):
-        self.assertEquals(self.recurrence.get_recurrence, 'Monthly same date')
         recurrence = create_recurring_transaction(
             'some recurrence', self.personal, self.foreign, 100,
             RecurringTransaction.WITHDRAW, RecurringTransaction.MONTHLY)
+        self.assertEquals(recurrence.get_recurrence, 'Monthly same date')
 
     def test_amount_for_withdraws(self):
         recurrence = create_recurring_transaction(

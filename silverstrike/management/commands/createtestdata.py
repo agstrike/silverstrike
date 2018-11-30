@@ -20,20 +20,11 @@ def _create_transaction(date, amount, src, dst, title, category, type, recurrenc
                          amount=amount, category=category, date=date, title=title)
 
 
-def _create_recurring_transaction(
-        title,
-        src,
-        dst,
-        amount,
-        type,
-        recurrence,
-        skip=0,
-        date=date.today(),
-        last_day_in_month=False,
-        category=None):
+def _create_recurring_transaction(title, src, dst, amount, type, interval, multiplier=1,
+                                  date=date.today(), last_day_in_month=False, category=None):
     r = RecurringTransaction.objects.create(title=title, date=date,
-                                            transaction_type=type, recurrence=recurrence, skip=skip,
-                                            last_day_in_month=last_day_in_month)
+                                            transaction_type=type, interval=interval,
+                                            multiplier=multiplier)
     RecurringSplit.objects.bulk_create([
         RecurringSplit(title=title, account=src, opposing_account=dst,
                        amount=-amount, transaction=r, date=date, category=category),
@@ -78,34 +69,17 @@ class Command(BaseCommand):
         self.insurance, _ = Category.objects.get_or_create(name='insurance')
         self.leisure, _ = Category.objects.get_or_create(name='leisure')
 
-        self.rent = _create_recurring_transaction(
-            'rent',
-            self.checking,
-            self.landlord,
-            900,
-            RecurringTransaction.WITHDRAW,
-            RecurringTransaction.MONTHLY,
-            category=self.home,
-            date=(
-                date.today() +
-                relativedelta(
-                    months=+
-                    1)).replace(
-                day=2))
-        self.insurnace_r = _create_recurring_transaction(
-            'insurance',
-            self.checking,
-            self.insurer,
-            70,
-            RecurringTransaction.WITHDRAW,
-            RecurringTransaction.MONTHLY,
-            category=self.insurance,
-            date=(
-                date.today() +
-                relativedelta(
-                    months=+
-                    1)).replace(
-                day=15))
+        self.rent = _create_recurring_transaction('rent', self.checking, self.landlord, 900,
+                                                  RecurringTransaction.WITHDRAW,
+                                                  RecurringTransaction.MONTHLY, category=self.home,
+                                                  date=(date.today() + relativedelta(
+                                                      months=+1)).replace(day=2))
+        self.insurnace_r = _create_recurring_transaction('insurance', self.checking, self.insurer,
+                                                         70, RecurringTransaction.WITHDRAW,
+                                                         RecurringTransaction.MONTHLY,
+                                                         category=self.insurance,
+                                                         date=(date.today() + relativedelta(
+                                                             months=+1)).replace(day=15))
 
         self.MONTHLY = [
             ('income', [1], self.work, self.checking, [2500, 3000], None, D, None),

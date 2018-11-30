@@ -60,8 +60,8 @@
         <th>{% trans 'Amount' %}</th>
         <th class="hidden-xs">{% trans 'Account' %}</th>
         <th class="hidden-xs">{% trans 'Opposing Account' %}</th>
-        <th class="hidden-xs">{% trans 'Recurrence' %}</th>
-        <th class="hidden-xs">{% trans 'Skip' %}</th>
+        <th class="hidden-xs">{% trans 'Interval' %}</th>
+        <th class="hidden-xs">{% trans 'Multiplier' %}</th>
       </tr>
       {% for recurrence in recurrences %}
       <tr>
@@ -74,7 +74,7 @@
         <td class="hidden-xs"><a href="{{ recurrence.account.get_absolute_url }}">{{ recurrence.account }}</a></td>
         <td class="hidden-xs">{% if not recurrence.is_system %}<a href="{{ recurrence.opposing_account.get_absolute_url }}">{{ recurrence.opposing_account }}</a>{% endif %}</td>
         <td class="hidden-xs">{{ recurrence.transaction.get_recurrence }}</td>
-        <td class="hidden-xs">{{ recurrence.transaction.skip }}</td>
+        <td class="hidden-xs">{{ recurrence.transaction.multiplier }}</td>
       </tr>
       {% endfor %}
     </table>

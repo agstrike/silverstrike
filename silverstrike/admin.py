@@ -20,7 +20,7 @@ class RecurringSplitInline(admin.TabularInline):
 class RecurringTransactionAdmin(admin.ModelAdmin):
     inlines = [RecurringSplitInline]
     search_fields = ['title']
-    list_display = ('title', 'interval', 'next_date', 'amount')
+    list_display = ('title', 'interval', 'date', 'amount')
     list_filter = ('interval',)
 
 

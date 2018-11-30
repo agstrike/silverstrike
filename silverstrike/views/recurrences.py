@@ -55,8 +55,8 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         initial['amount'] = self.recurrence.amount
         initial['category'] = self.recurrence.category
         initial['date'] = self.recurrence.date
-        initial['recurrence'] = self.recurrence.transaction.recurrence
-        initial['skip'] = self.recurrence.transaction.skip
+        initial['interval'] = self.recurrence.transaction.interval
+        initial['multiplier'] = self.recurrence.transaction.multiplier
         return initial
 
     def get_queryset(self):

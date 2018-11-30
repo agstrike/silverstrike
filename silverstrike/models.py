@@ -111,11 +111,6 @@ class Account(models.Model):
                              account=self, opposing_account=system)
 
 
-class TransactionQuerySet(models.QuerySet):
-    def last_10(self):
-        return self.order_by('-date')[:10]
-
-
 class BaseTransaction(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2
@@ -161,6 +156,11 @@ class BaseTransaction(models.Model):
     @property
     def is_deposit(self):
         return self.transaction_type == self.DEPOSIT
+
+
+class TransactionQuerySet(models.QuerySet):
+    def last_10(self):
+        return self.order_by('-date')[:10]
 
 
 class Transaction(BaseTransaction):
@@ -321,7 +321,7 @@ class RecurringTransactionManager(models.Manager):
         return queryset.exclude(interval=RecurringTransaction.DISABLED)
 
     def not_disabled(self):
-        return self.exclude(recurrence=RecurringTransaction.DISABLED)
+        return self.exclude(interval=RecurringTransaction.DISABLED)
 
 
 class RecurringTransaction(BaseTransaction):
@@ -356,13 +356,12 @@ class RecurringTransaction(BaseTransaction):
     )
 
     class Meta:
-        ordering = ['next_date']
+        ordering = ['date']
 
     objects = RecurringTransactionManager()
 
-    recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+    interval = models.IntegerField(choices=RECCURENCE_OPTIONS)
     transaction_type = models.IntegerField(choices=BaseTransaction.TRANSACTION_TYPES[:3])
-
     multiplier = models.PositiveIntegerField(default=1)
     weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
 
@@ -371,13 +370,13 @@ class RecurringTransaction(BaseTransaction):
 
     @property
     def is_due(self):
-        return date.today() >= self.next_date
+        return date.today() >= self.date
 
     def update_date(self, date=None, save=False):
         delta = None
         if not date:
-        if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
             date = self.date
+        if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
             delta = relativedelta(months=1)
         elif self.interval == self.QUARTERLY:
             delta = relativedelta(months=3)
@@ -391,9 +390,6 @@ class RecurringTransaction(BaseTransaction):
             delta = relativedelta(days=1)
         else:
             return
-                    split.save()
-                    split.date = self.date
-                for split in self.splits.all():
         delta *= self.multiplier
         while True:
             date += delta
@@ -407,8 +403,11 @@ class RecurringTransaction(BaseTransaction):
                 elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
                     date -= relativedelta(days=date.weekday() - 4)
             if save:
-                self.save()
                 self.date = date
+                self.save()
+                for split in self.splits.all():
+                    split.date = self.date
+                    split.save()
             return date
 
     @property
@@ -471,7 +470,7 @@ class RecurringTransaction(BaseTransaction):
 
 class RecurringSplitQuerySet(BaseSplitQuerySet):
     def not_disabled(self):
-        return self.exclude(transaction__recurrence=RecurringTransaction.DISABLED)
+        return self.exclude(transaction__interval=RecurringTransaction.DISABLED)
 
 
 class RecurringSplit(BaseSplit):
@@ -498,4 +497,4 @@ class RecurringSplit(BaseSplit):
 
     @property
     def is_disabled(self):
-        return self.transaction.recurrence == RecurringTransaction.DISABLED
+        return self.transaction.interval == RecurringTransaction.DISABLED

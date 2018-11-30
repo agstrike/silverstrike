@@ -32,34 +32,22 @@ class RecurringSplitQuerySetTests(TestCase):
             date=date(2200, 1, 1))
 
     def test_not_disabled(self):
-        create_recurring_transaction(
-            'disabled',
-            self.personal,
-            self.foreign,
-            100,
-            RecurringTransaction.WITHDRAW,
-            RecurringTransaction.DISABLED)
+        create_recurring_transaction('disabled', self.personal, self.foreign,
+                                     100, RecurringTransaction.WITHDRAW,
+                                     RecurringTransaction.DISABLED)
         create_recurring_transaction('daily', self.personal, self.foreign, 100,
                                      RecurringTransaction.WITHDRAW, RecurringTransaction.DAILY)
         create_recurring_transaction('weekly', self.personal, self.foreign, 100,
                                      RecurringTransaction.WITHDRAW, RecurringTransaction.WEEKLY)
-        create_recurring_transaction(
-            'monthly',
-            self.personal,
-            self.foreign,
-            100,
-            RecurringTransaction.WITHDRAW,
-            RecurringTransaction.MONTHLY)
-        create_recurring_transaction(
-            'annually',
-            self.personal,
-            self.foreign,
-            100,
-            RecurringTransaction.WITHDRAW,
-            RecurringTransaction.ANNUALLY)
+        create_recurring_transaction('monthly', self.personal, self.foreign,
+                                     100, RecurringTransaction.WITHDRAW,
+                                     RecurringTransaction.MONTHLY)
+        create_recurring_transaction('annually', self.personal, self.foreign,
+                                     100, RecurringTransaction.WITHDRAW,
+                                     RecurringTransaction.ANNUALLY)
         queryset = RecurringSplit.objects.not_disabled()
         for split in queryset:
-            self.assertNotEqual(split.transaction.recurrence,
+            self.assertNotEqual(split.transaction.interval,
                                 RecurringTransaction.DISABLED)
 
     def test_personal(self):
@@ -126,22 +114,14 @@ class RecurringSplitModelTests(TestCase):
 
     def test_str_method(self):
         recurrence = create_recurring_transaction(
-            'some recurrence',
-            self.personal,
-            self.savings,
-            100,
-            RecurringTransaction.TRANSFER,
+            'some recurrence', self.personal, self.savings, 100, RecurringTransaction.TRANSFER,
             RecurringTransaction.MONTHLY)
         split = recurrence.splits.first()
         self.assertEqual(str(split), split.title)
 
     def test_split_absolute_url(self):
         recurrence = create_recurring_transaction(
-            'some recurrence',
-            self.personal,
-            self.savings,
-            100,
-            RecurringTransaction.TRANSFER,
+            'some recurrence', self.personal, self.savings, 100, RecurringTransaction.TRANSFER,
             RecurringTransaction.MONTHLY)
         split = recurrence.splits.first()
         self.assertEqual(split.get_absolute_url(),
@@ -149,11 +129,7 @@ class RecurringSplitModelTests(TestCase):
 
     def test_is_transfer(self):
         recurrence = create_recurring_transaction(
-            'recurrence',
-            self.personal,
-            self.savings,
-            100,
-            RecurringTransaction.TRANSFER,
+            'recurrence', self.personal, self.savings, 100, RecurringTransaction.TRANSFER,
             RecurringTransaction.MONTHLY)
         for split in recurrence.splits.all():
             self.assertTrue(split.is_transfer)
@@ -162,11 +138,7 @@ class RecurringSplitModelTests(TestCase):
 
     def test_is_withdraw(self):
         recurrence = create_recurring_transaction(
-            'recurrence',
-            self.personal,
-            self.foreign,
-            100,
-            RecurringTransaction.WITHDRAW,
+            'recurrence', self.personal, self.foreign, 100, RecurringTransaction.WITHDRAW,
             RecurringTransaction.MONTHLY)
         for split in recurrence.splits.all():
             self.assertTrue(split.is_withdraw)
@@ -175,31 +147,19 @@ class RecurringSplitModelTests(TestCase):
 
     def test_is_deposit(self):
         recurrence = create_recurring_transaction(
-            'recurrence',
-            self.foreign,
-            self.personal,
-            100,
-            RecurringTransaction.DEPOSIT,
+            'recurrence', self.foreign, self.personal, 100, RecurringTransaction.DEPOSIT,
             RecurringTransaction.MONTHLY)
         for split in recurrence.splits.all():
             self.assertTrue(split.is_deposit)
-            self.assertFalse(split.is_withdraw)
             self.assertFalse(split.is_transfer)
+            self.assertFalse(split.is_withdraw)
 
     def test_is_disabled(self):
         disabled_recurrence = create_recurring_transaction(
-            'recurrence',
-            self.foreign,
-            self.personal,
-            100,
-            RecurringTransaction.DEPOSIT,
+            'recurrence', self.foreign, self.personal, 100, RecurringTransaction.DEPOSIT,
             RecurringTransaction.DISABLED)
         recurrence = create_recurring_transaction(
-            'recurrence',
-            self.foreign,
-            self.personal,
-            100,
-            RecurringTransaction.DEPOSIT,
+            'recurrence', self.foreign, self.personal, 100, RecurringTransaction.DEPOSIT,
             RecurringTransaction.MONTHLY)
         disabled_split = disabled_recurrence.splits.first()
         split = recurrence.splits.first()

@@ -12,14 +12,13 @@ class RecurringTransactionFormTests(TestCase):
         self.savings = Account.objects.create(name='savings')
         self.foreign = Account.objects.create(name='foreign',
                                               account_type=Account.FOREIGN)
+        self.other_foreign = Account.objects.create(name='other foreign',
+                                                    account_type=Account.FOREIGN)
 
     def test_available_form_fields(self):
         form = RecurringTransactionForm()
         fields = ['title', 'date', 'amount', 'source_account',
-                  'destination_account', 'category', 'notes', 'recurrence',
-                  'skip', 'weekend_handling', 'last_day_in_month']
-        fields = ['title', 'date', 'amount',
-                  'src', 'dst', 'category', 'interval',
+                  'destination_account', 'category', 'notes', 'interval',
                   'multiplier', 'weekend_handling']
         self.assertEqual(len(form.fields), len(fields))
         for field in fields:
@@ -27,24 +26,21 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_negative_amount(self):
         form = RecurringTransactionForm({
-            'amount': -100, 'date': '2100-01-01', 'skip': 0,
-            'source_account': self.personal.id,
-            'destination_account': self.savings.id,
-            'recurrence': RecurringTransaction.MONTHLY, 'title': 'foo',
-            'weekend_handling': RecurringTransaction.SKIP})
             'amount': -100, 'date': '2100-01-01', 'multiplier': 1,
-            'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'source_account': self.personal.id, 'title': 'foo',
+            'destination_account': self.savings.id,
+            'interval': RecurringTransaction.MONTHLY,
+            'weekend_handling': RecurringTransaction.SKIP})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertIn('amount', form.errors)
 
     def test_positive_less_than_minimum(self):
         form = RecurringTransactionForm({
-            'amount': .001, 'date': '2100-01-01', 'skip': 0,
+            'amount': .001, 'date': '2100-01-01', 'multiplier': 1,
             'source_account': self.personal.id,
             'destination_account': self.savings.id,
-            'recurrence': RecurringTransaction.MONTHLY, 'title': 'foo',
+            'interval': RecurringTransaction.MONTHLY, 'title': 'foo',
             'weekend_handling': RecurringTransaction.SKIP})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
@@ -52,23 +48,20 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_past_date(self):
         form = RecurringTransactionForm({
-            'amount': 100, 'skip': 0,
+            'amount': 100, 'multiplier': 1,
             'weekend_handling': RecurringTransaction.SKIP,
             'source_account': self.personal.id,
             'destination_account': self.savings.id, 'date': '2016-01-01',
-            'recurrence': RecurringTransaction.MONTHLY, 'title': 'foo'})
-            'amount': 100, 'multiplier': 1, 'weekend_handling': RecurringTransaction.SKIP,
-            'src': personal.id, 'dst': other.id, 'date': '2016-01-01',
             'interval': RecurringTransaction.MONTHLY, 'title': 'foo'})
         self.assertTrue(form.is_valid())
 
     def test_RecurringDepositForm(self):
         for i in range(1, 3):
             form = RecurringDepositForm({
-                'amount': 100, 'date': '2100-01-01', 'skip': 0,
+                'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
                 'source_account': 'new foreign account',
                 'destination_account': self.personal.id,
-                'recurrence': RecurringTransaction.MONTHLY,
+                'interval': RecurringTransaction.MONTHLY,
                 'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
             self.assertTrue(form.is_valid())
             form.clean()
@@ -76,7 +69,7 @@ class RecurringTransactionFormTests(TestCase):
             self.assertIsInstance(deposit, RecurringTransaction)
             self.assertEqual(len(RecurringTransaction.objects.all()), i)
             self.assertEqual(len(RecurringSplit.objects.all()), 2 * i)
-            self.assertEqual(len(Account.objects.all()), 5)  # System account is also present
+            self.assertEqual(len(Account.objects.all()), 6)  # System account is also present
             self.assertTrue(deposit.is_deposit)
             self.assertEqual(len(deposit.splits.income()), 1)
             self.assertEqual(deposit.splits.income().first().opposing_account,
@@ -92,10 +85,10 @@ class RecurringTransactionFormTests(TestCase):
     def test_RecurringWithdrawForm(self):
         for i in range(1, 3):
             form = RecurringWithdrawForm({
-                'amount': 100, 'date': '2100-01-01', 'skip': 0,
+                'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
                 'source_account': self.personal.id,
                 'destination_account': 'new foreign account',
-                'recurrence': RecurringTransaction.MONTHLY,
+                'interval': RecurringTransaction.MONTHLY,
                 'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
             self.assertTrue(form.is_valid())
             form.clean()
@@ -103,7 +96,7 @@ class RecurringTransactionFormTests(TestCase):
             self.assertIsInstance(withdraw, RecurringTransaction)
             self.assertEqual(len(RecurringTransaction.objects.all()), i)
             self.assertEqual(len(RecurringSplit.objects.all()), 2 * i)
-            self.assertEqual(len(Account.objects.all()), 5)  # System account is also present
+            self.assertEqual(len(Account.objects.all()), 6)  # System account is also present
             self.assertTrue(withdraw.is_withdraw)
             self.assertEqual(len(withdraw.splits.expense()), 1)
             self.assertEqual(withdraw.splits.expense().first().opposing_account,
@@ -118,10 +111,10 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_RecurringTransferForm(self):
         form = RecurringTransferForm({
-            'amount': 100, 'date': '2100-01-01', 'skip': 0,
+            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'source_account': self.personal.id,
             'destination_account': self.savings.id,
-            'recurrence': RecurringTransaction.MONTHLY,
+            'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
         self.assertTrue(form.is_valid())
         form.clean()
@@ -129,20 +122,10 @@ class RecurringTransactionFormTests(TestCase):
         self.assertIsInstance(transfer, RecurringTransaction)
         self.assertEqual(len(RecurringTransaction.objects.all()), 1)
         self.assertEqual(len(RecurringSplit.objects.all()), 2)
-        self.assertEqual(len(Account.objects.all()), 4)  # System account is also present
+        self.assertEqual(len(Account.objects.all()), 5)  # System account is also present
         self.assertTrue(transfer.is_transfer)
         self.assertEqual(len(transfer.splits.transfers_once()), 1)
         self.assertEqual(RecurringSplit.objects.all().aggregate(
             models.Sum('amount'))['amount__sum'], 0)
         for split in transfer.splits.all():
             self.assertTrue(split.is_transfer)
-
-    def test_two_foreign_accounts(self):
-        first = Account.objects.create(name='foo', account_type=Account.FOREIGN)
-        other = Account.objects.create(name='bar', account_type=Account.FOREIGN)
-        form = RecurringTransactionForm({
-            'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
-            'src': other.id, 'dst': first.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
-        self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 1)

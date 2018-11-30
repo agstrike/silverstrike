@@ -205,10 +205,10 @@ class ViewTests(TestCase):
 
     def test_context_and_initial_RecurringTransferUpdate(self):
         form = RecurringTransferForm({
-            'amount': 123, 'date': '2017-01-01', 'skip': 0,
+            'amount': 123, 'date': '2017-01-01', 'multiplier': 0,
             'source_account': self.account.pk,
             'destination_account': self.personal.pk,
-            'recurrence': RecurringTransaction.MONTHLY,
+            'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
         self.assertTrue(form.is_valid())
@@ -221,9 +221,9 @@ class ViewTests(TestCase):
                                                'destination_account': self.personal.pk,
                                                'amount': 123,
                                                'date': '2017-01-01',
-                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'interval': RecurringTransaction.MONTHLY,
                                                'weekend_handling': RecurringTransaction.SKIP,
-                                               'skip': 0},
+                                               'multiplier': 0},
                                               args=[transfer.pk]),
                              reverse('recurrence_detail',
                                      args=[transfer.pk]))
@@ -238,10 +238,10 @@ class ViewTests(TestCase):
 
     def test_context_and_initial_RecurringWithdrawUpdate(self):
         form = RecurringWithdrawForm({
-            'amount': 123, 'date': '2017-01-01', 'skip': 0,
+            'amount': 123, 'date': '2017-01-01', 'multiplier': 0,
             'source_account': self.account.pk,
             'destination_account': self.expense,
-            'recurrence': RecurringTransaction.MONTHLY,
+            'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
         self.assertTrue(form.is_valid())
@@ -254,9 +254,9 @@ class ViewTests(TestCase):
                                                'destination_account': self.expense,
                                                'amount': 123,
                                                'date': '2017-01-01',
-                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'interval': RecurringTransaction.MONTHLY,
                                                'weekend_handling': RecurringTransaction.SKIP,
-                                               'skip': 0},
+                                               'multiplier': 0},
                                               args=[withdraw.pk]),
                              reverse('recurrence_detail',
                                      args=[withdraw.pk]))
@@ -271,10 +271,10 @@ class ViewTests(TestCase):
 
     def test_context_and_initial_RecurringDepositUpdate(self):
         form = RecurringDepositForm({
-            'amount': 123, 'date': '2017-01-01', 'skip': 0,
+            'amount': 123, 'date': '2017-01-01', 'multiplier': 0,
             'source_account': self.revenue,
             'destination_account': self.account.pk,
-            'recurrence': RecurringTransaction.MONTHLY,
+            'interval': RecurringTransaction.MONTHLY,
             'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
 
         self.assertTrue(form.is_valid())
@@ -287,9 +287,9 @@ class ViewTests(TestCase):
                                                'destination_account': self.account.pk,
                                                'amount': 123,
                                                'date': '2017-01-01',
-                                               'recurrence': RecurringTransaction.MONTHLY,
+                                               'interval': RecurringTransaction.MONTHLY,
                                                'weekend_handling': RecurringTransaction.SKIP,
-                                               'skip': 0},
+                                               'multiplier': 0},
                                               args=[deposit.pk]),
                              reverse('recurrence_detail',
                                      args=[deposit.pk]))
