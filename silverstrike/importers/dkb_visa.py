@@ -20,4 +20,4 @@ def import_csv(csv_path):
             except ValueError:
                 # first line contains headers
                 pass
-    return lines[1:]
+    return lines
