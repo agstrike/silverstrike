@@ -8,9 +8,9 @@ Webapp based on Django to manage personal finances
 There is a [demo](https://demo.silverstrike.org/) available.
 It is regularly updated from the master branch.
 
-## Get your own instance
+## Get SilverStrike running on your machine
 
-Setup instructions can be found in the [wiki](https://github.com/agstrike/silverstrike/wiki/Setup-instructions)
+Setup instructions can be found in on the [website](silverstrike.org). There are instructions for a [development setup](https://silverstrike.org/dev-setup/) and others that are more suitable for a [production use](https://silverstrike.org/setup/).
 
 ## Contributing
 
