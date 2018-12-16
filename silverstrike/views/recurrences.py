@@ -16,6 +16,18 @@ class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
     success_url = reverse_lazy('recurrences')
 
 
+class ReccurrenceSetNextOccurence(LoginRequiredMixin, generic.View):
+
+    def post(self, request, *args, **kwargs):
+        for r in RecurringTransaction.objects.due_in_month():
+            old = r.date
+            t = r.recurrences.first()
+            while t.date >= r.date:
+                r.update_date()
+            if old != r.date:
+                r.save()
+
+
 class RecurrenceDetailView(LoginRequiredMixin, generic.DetailView):
     model = RecurringTransaction
     context_object_name = 'recurrence'
