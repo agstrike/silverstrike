@@ -17,7 +17,7 @@ class RecurringTransactionQuerySetTests(TestCase):
         self.date = date(2018, 1, 31)
 
     def test_due_in_month(self):
-        last_day_of_month = date(date.today().year, date.today().month + 1, 1)
+        last_day_of_month = date.today() + relativedelta(months=1)
         last_day_of_month = last_day_of_month - relativedelta(days=1)
         for diff in [1, 2, 5]:
             create_recurring_transaction(
