@@ -47,7 +47,7 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         initial['source_account'] = self.recurrence.src
         initial['destination_account'] = self.recurrence.dst
         initial['amount'] = self.recurrence.amount
-        initial['date'] = self.recurrence.next_date
+        initial['date'] = self.recurrence.date
         initial['recurrence'] = self.recurrence.pk
         initial['category'] = self.recurrence.category
         return initial
@@ -81,14 +81,14 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         for t in context['transactions']:
             if t.interval == RecurringTransaction.MONTHLY or (
                     t.interval == RecurringTransaction.ANNUALLY and
-                    t.next_date.month == today.month and t.next_date.year == today.year):
+                    t.date.month == today.month and t.date.year == today.year):
                 if t.transaction_type == Transaction.WITHDRAW:
                     expenses += t.amount
-                    if t.next_date <= last:
+                    if t.date <= last:
                         remaining -= t.amount
                 elif t.transaction_type == Transaction.DEPOSIT:
                     income += t.amount
-                    if t.next_date <= last:
+                    if t.date <= last:
                         remaining += t.amount
         context['expenses'] = expenses
         context['income'] = income

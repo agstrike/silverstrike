@@ -316,22 +316,19 @@ class RecurringTransaction(models.Model):
     ANNUALLY = 4
     WEEKLY = 5
     DAILY = 6
-    END_OF_MONTH = 7
+
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
-        (MONTHLY, _('Monthly same date')),
-        (END_OF_MONTH, _('Monthly (last day)')),
-        (QUARTERLY, _('Quarterly')),
-        (BIANNUALLY, _('Biannually')),
-        (ANNUALLY, _('Annually')),
-        (WEEKLY, _('Weekly')),
         (DAILY, _('Daily')),
+        (WEEKLY, _('Weekly')),
+        (MONTHLY, _('Monthly')),
         )
 
     SAME_DAY = 0
     PREVIOUS_WEEKDAY = 1
     NEXT_WEEKDAY = 2
     SKIP = 3
+
     WEEKEND_SKIPPING = (
         (SKIP, _('Skip recurrence')),
         (SAME_DAY, _('Same day')),
@@ -340,13 +337,14 @@ class RecurringTransaction(models.Model):
     )
 
     class Meta:
-        ordering = ['next_date']
+        ordering = ['date']
 
     objects = RecurringTransactionManager()
 
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    next_date = models.DateField()
+    usual_month_day = models.PositiveIntegerField(default=0)
+    date = models.DateField()
     src = models.ForeignKey(Account, models.CASCADE)
     dst = models.ForeignKey(Account, models.CASCADE,
                             related_name='opposing_recurring_transactions')
@@ -366,13 +364,17 @@ class RecurringTransaction(models.Model):
 
     @property
     def is_due(self):
-        return date.today() >= self.next_date
+        return date.today() >= self.date
 
     def update_date(self, date=None, save=False):
+        """
+        Calculates the date to the next occurence and optionally saves it.
+        It uses the usual_month_day if set for setting the correct day in a monthly recurrence
+        """
         delta = None
         if not date:
-            date = self.next_date
-        if self.interval == self.MONTHLY or self.interval == self.END_OF_MONTH:
+            date = self.date
+        if self.interval == self.MONTHLY:
             delta = relativedelta(months=1)
         elif self.interval == self.QUARTERLY:
             delta = relativedelta(months=3)
@@ -389,8 +391,15 @@ class RecurringTransaction(models.Model):
         delta *= self.multiplier
         while True:
             date += delta
-            if self.interval == self.END_OF_MONTH:
-                date = last_day_of_month(date)
+            if self.usual_month_day > 0 and self.interval == self.MONTHLY:
+                day = self.usual_month_day
+                while True:
+                    try:
+                        date = date.replace(day=day)
+                        break
+                    except ValueError:
+                        day -= 1
+                        pass
             if date.weekday() > 4:
                 if self.weekend_handling == self.SKIP:
                     continue
@@ -399,7 +408,7 @@ class RecurringTransaction(models.Model):
                 elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
                     date -= relativedelta(days=date.weekday() - 4)
             if save:
-                self.next_date = date
+                self.date = date
                 self.save()
             return date
 
@@ -441,7 +450,7 @@ class RecurringTransaction(models.Model):
         transactions = cls.objects.due_in_month().exclude(
             transaction_type=Transaction.TRANSFER)
         for t in transactions:
-            while t.next_date <= dend:
+            while t.date <= dend:
                 if t.transaction_type == Transaction.WITHDRAW:
                     outstanding -= t.amount
                 else:
