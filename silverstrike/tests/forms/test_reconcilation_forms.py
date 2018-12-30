@@ -28,5 +28,5 @@ class ReconcilationFormTests(TestCase):
         self.assertEqual(self.account.balance, 100)
         form.save()
         self.assertEqual(self.account.balance, 50)
-        self.assertEqual(Transaction.objects.last().amount, -50)
+        self.assertEqual(Transaction.objects.last().amount, 50)
         self.assertEqual(Transaction.objects.last().transaction_type, Transaction.SYSTEM)

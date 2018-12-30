@@ -101,7 +101,10 @@ def import_firefly(csv_path):
 
             transaction = models.Transaction.objects.create(
                 title=line[title], date=line[date],
-                transaction_type=t_type)
+                transaction_type=t_type,
+                src_id=line[source],
+                dst_id=line[destination],
+                amount=line[amount])
             models.Split.objects.bulk_create(
                 [models.Split(
                     account_id=line[source], title=line[title],

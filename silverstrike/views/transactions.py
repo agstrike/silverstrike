@@ -85,12 +85,12 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     def get_initial(self):
         initial = super().get_initial()
         self.transaction = Split.objects.get(transaction_id=self.kwargs.get('pk'), amount__gt=0)
-        initial['source_account'] = self.transaction.opposing_account.pk
-        initial['destination_account'] = self.transaction.account.pk
+        initial['src'] = self.transaction.opposing_account.pk
+        initial['dst'] = self.transaction.account.pk
         if self.object.transaction_type == Transaction.WITHDRAW:
-            initial['destination_account'] = self.transaction.account
+            initial['dst'] = self.transaction.account
         elif self.object.transaction_type == Transaction.DEPOSIT:
-            initial['source_account'] = self.transaction.opposing_account
+            initial['src'] = self.transaction.opposing_account
         initial['amount'] = self.transaction.amount
         initial['category'] = self.transaction.category
         initial['value_date'] = self.transaction.date

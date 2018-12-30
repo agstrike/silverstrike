@@ -8,5 +8,4 @@ class CommandsTestCase(TestCase):
     def test_createtestdata(self):
         args = []
         opts = {}
-        Transaction.objects.create(title='meh', transaction_type=1)
         call_command('createtestdata', *args, **opts)

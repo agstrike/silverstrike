@@ -102,7 +102,10 @@ class Account(models.Model):
     def set_initial_balance(self, amount):
         system = Account.objects.get(account_type=Account.SYSTEM)
         transaction = Transaction.objects.create(title=_('Initial Balance'),
-                                                 transaction_type=Transaction.SYSTEM)
+                                                 transaction_type=Transaction.SYSTEM,
+                                                 src=system,
+                                                 dst=self,
+                                                 amount=amount)
         Split.objects.create(transaction=transaction, amount=-amount,
                              account=system, opposing_account=self)
         Split.objects.create(transaction=transaction, amount=amount,
@@ -133,6 +136,9 @@ class Transaction(models.Model):
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPES)
+    src = models.ForeignKey(Account, models.CASCADE, 'debits')
+    dst = models.ForeignKey(Account, models.CASCADE, 'credits')
+    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     last_modified = models.DateTimeField(auto_now=True)
     recurrence = models.ForeignKey('RecurringTransaction', models.SET_NULL,
                                    related_name='recurrences', blank=True, null=True)
@@ -149,14 +155,6 @@ class Transaction(models.Model):
         for i, name in self.TRANSACTION_TYPES:
             if i == self.transaction_type:
                 return name
-
-    @property
-    def amount(self):
-        if self.transaction_type == Transaction.TRANSFER:
-            return abs(
-                self.splits.transfers_once().aggregate(models.Sum('amount'))['amount__sum'] or 0)
-        else:
-            return self.splits.personal().aggregate(models.Sum('amount'))['amount__sum'] or 0
 
     @property
     def is_split(self):
@@ -196,7 +194,7 @@ class SplitQuerySet(models.QuerySet):
         return self.filter(category=category)
 
     def transfers_once(self):
-        return self.personal().exclude(opposing_account__account_type=Account.PERSONAL,
+        return self.exclude(opposing_account__account_type=Account.PERSONAL,
                                        amount__gte=0)
 
     def exclude_transfers(self):
