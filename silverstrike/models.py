@@ -303,7 +303,7 @@ class RecurringTransactionManager(models.Manager):
             month = date.today()
         month = last_day_of_month(month)
         queryset = self.get_queryset().filter(date__lte=month)
-        return queryset.exclude(recurrence=RecurringTransaction.DISABLED)
+        return queryset.exclude(interval=RecurringTransaction.DISABLED)
 
 
 class RecurringTransaction(models.Model):
@@ -312,13 +312,30 @@ class RecurringTransaction(models.Model):
     QUARTERLY = 2
     BIANNUALLY = 3
     ANNUALLY = 4
+    WEEKLY = 5
+    DAILY = 6
+
     RECCURENCE_OPTIONS = (
         (DISABLED, _('Disabled')),
+        (DAILY, _('Daily')),
+        (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
         (ANNUALLY, _('Annually'))
         )
+
+    SAME_DAY = 0
+    PREVIOUS_WEEKDAY = 1
+    NEXT_WEEKDAY = 2
+    SKIP = 3
+
+    WEEKEND_SKIPPING = (
+        (SKIP, _('Skip recurrence')),
+        (SAME_DAY, _('Same day')),
+        (PREVIOUS_WEEKDAY, _('Previous weekday')),
+        (NEXT_WEEKDAY, _('Next weekday'))
+    )
 
     class Meta:
         ordering = ['date']
@@ -327,14 +344,18 @@ class RecurringTransaction(models.Model):
 
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    usual_month_day = models.PositiveIntegerField(default=0)
     date = models.DateField()
     src = models.ForeignKey(Account, models.CASCADE)
     dst = models.ForeignKey(Account, models.CASCADE,
                             related_name='opposing_recurring_transactions')
-    recurrence = models.IntegerField(choices=RECCURENCE_OPTIONS)
+    interval = models.IntegerField(choices=RECCURENCE_OPTIONS)
     transaction_type = models.IntegerField(choices=Transaction.TRANSACTION_TYPES[:3])
     category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
+
+    multiplier = models.PositiveIntegerField(default=1)
+    weekend_handling = models.IntegerField(default=SAME_DAY, choices=WEEKEND_SKIPPING)
 
     def __str__(self):
         return self.title
@@ -346,24 +367,60 @@ class RecurringTransaction(models.Model):
     def is_due(self):
         return date.today() >= self.date
 
-    def update_date(self):
-        if self.recurrence == self.MONTHLY:
-            self.date += relativedelta(months=+1)
-        elif self.recurrence == self.QUARTERLY:
-            self.date += relativedelta(months=+3)
-        elif self.recurrence == self.BIANNUALLY:
-            self.date += relativedelta(months=+6)
-        elif self.recurrence == self.ANNUALLY:
-            self.date += relativedelta(years=+1)
+    def update_date(self, date=None, save=False):
+        """
+        Calculates the date to the next occurence and optionally saves it.
+        It uses the usual_month_day if set for setting the correct day in a monthly recurrence
+        """
+        delta = None
+        if not date:
+            date = self.date
+        if self.interval == self.MONTHLY:
+            delta = relativedelta(months=1)
+        elif self.interval == self.QUARTERLY:
+            delta = relativedelta(months=3)
+        elif self.interval == self.BIANNUALLY:
+            delta = relativedelta(months=6)
+        elif self.interval == self.ANNUALLY:
+            delta = relativedelta(years=1)
+        elif self.interval == self.WEEKLY:
+            delta = relativedelta(weeks=1)
+        elif self.interval == self.DAILY:
+            delta = relativedelta(days=1)
+        else:
+            return
+        delta *= self.multiplier
+        while True:
+            date += delta
+            if self.usual_month_day > 0 and self.interval not in [self.WEEKLY, self.DAILY]:
+                day = self.usual_month_day
+                while True:
+                    try:
+                        date = date.replace(day=day)
+                        break
+                    except ValueError:
+                        day -= 1
+                        pass
+            if date.weekday() > 4 and self.interval not in [self.WEEKLY, self.DAILY]:
+                if self.weekend_handling == self.SKIP:
+                    continue
+                elif self.weekend_handling == self.NEXT_WEEKDAY:
+                    date += relativedelta(days=7 - date.weekday())
+                elif self.weekend_handling == self.PREVIOUS_WEEKDAY:
+                    date -= relativedelta(days=date.weekday() - 4)
+            if save:
+                self.date = date
+                self.save()
+            return date
 
     @property
     def is_disabled(self):
-        return self.recurrence == self.DISABLED
+        return self.interval == self.DISABLED
 
     @property
     def get_recurrence(self):
         for r, name in self.RECCURENCE_OPTIONS:
-            if r == self.recurrence:
+            if r == self.interval:
                 return name
 
     @property

@@ -56,8 +56,7 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         response = super().form_valid(form)
         self.object.recurrence = self.recurrence
         self.object.save()
-        self.recurrence.update_date()
-        self.recurrence.save()
+        self.recurrence.update_date(save=True)
         return response
 
 
@@ -69,7 +68,7 @@ class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
 class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/recurring_transactions.html'
     context_object_name = 'transactions'
-    queryset = RecurringTransaction.objects.exclude(recurrence=RecurringTransaction.DISABLED)
+    queryset = RecurringTransaction.objects.exclude(interval=RecurringTransaction.DISABLED)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,8 +79,8 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
         last = last_day_of_month(today)
         remaining = 0
         for t in context['transactions']:
-            if t.recurrence == RecurringTransaction.MONTHLY or (
-                    t.recurrence == RecurringTransaction.ANNUALLY and
+            if t.interval == RecurringTransaction.MONTHLY or (
+                    t.interval == RecurringTransaction.ANNUALLY and
                     t.date.month == today.month and t.date.year == today.year):
                 if t.transaction_type == Transaction.WITHDRAW:
                     expenses += t.amount
@@ -100,5 +99,5 @@ class RecurringTransactionIndex(LoginRequiredMixin, generic.ListView):
 
 class DisabledRecurrencesView(LoginRequiredMixin, generic.ListView):
     template_name = 'silverstrike/disabled_recurrences.html'
-    queryset = RecurringTransaction.objects.filter(recurrence=RecurringTransaction.DISABLED)
+    queryset = RecurringTransaction.objects.filter(interval=RecurringTransaction.DISABLED)
     paginate_by = 20

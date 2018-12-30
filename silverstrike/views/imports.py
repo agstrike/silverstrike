@@ -37,7 +37,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
         importer = self.kwargs['importer']
         context['data'] = importers.IMPORTERS[importer].import_csv(file.file.path)
         context['recurrences'] = models.RecurringTransaction.objects.exclude(
-            recurrence=models.RecurringTransaction.DISABLED)
+            interval=models.RecurringTransaction.DISABLED)
         return context
 
     def post(self, request, *args, **kwargs):

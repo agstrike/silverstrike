@@ -154,8 +154,8 @@ class DepositForm(TransactionForm):
 class RecurringTransactionForm(forms.ModelForm):
     class Meta:
         model = models.RecurringTransaction
-        fields = ['title', 'date', 'amount',
-                  'src', 'dst', 'category', 'recurrence']
+        fields = ['title', 'date', 'amount', 'src', 'dst', 'category',
+                  'interval', 'multiplier', 'weekend_handling', 'usual_month_day']
 
     def clean_amount(self):
         amount = self.cleaned_data['amount']

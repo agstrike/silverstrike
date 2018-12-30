@@ -8,6 +8,8 @@ All notable changes to SilverStrike will be documented here.
 * Add DKB and Volksbank importers
 * Add income/expense report
 * Show more information in category and budget views
+* Add Daily and Weekly recurrences
+* Add ability to customize recurrences by specifing multipliers and special handling of weekends
 
 ## [0.1.3](https://github.com/agstrike/silverstrike/releases/tag/0.1.3) - 2018-05-15
 

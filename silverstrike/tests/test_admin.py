@@ -99,7 +99,7 @@ class AccountAdminTests(TestCase):
             date=date.today(),
             src=self.personal,
             dst=self.first,
-            recurrence=RecurringTransaction.MONTHLY,
+            interval=RecurringTransaction.MONTHLY,
             transaction_type=Transaction.WITHDRAW)
         self.modeladmin.merge_accounts(request, Account.objects.foreign().exclude(pk=self.third.pk))
         recurrence.refresh_from_db()

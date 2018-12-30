@@ -57,12 +57,12 @@ class Command(BaseCommand):
 
         self.rent, _ = RecurringTransaction.objects.update_or_create(
             title='rent', src=self.checking, dst=self.landlord,
-            defaults={'recurrence': RecurringTransaction.MONTHLY,
+            defaults={'interval': RecurringTransaction.MONTHLY,
                       'transaction_type': W, 'category': self.home, 'amount': 900,
                       'date': (date.today() + relativedelta(months=+1)).replace(day=2)})
         self.insurnace_r, _ = RecurringTransaction.objects.update_or_create(
             title='insurance', src=self.checking, dst=self.insurer,
-            defaults={'recurrence': RecurringTransaction.MONTHLY,
+            defaults={'interval': RecurringTransaction.MONTHLY,
                       'transaction_type': W, 'category': self.insurance, 'amount': 70,
                       'date': (date.today() + relativedelta(months=+1)).replace(day=15)})
 
