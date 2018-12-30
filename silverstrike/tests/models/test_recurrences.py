@@ -1,7 +1,5 @@
 from datetime import date
 
-from dateutil.relativedelta import relativedelta
-
 from django.test import TestCase
 from django.urls import reverse
 

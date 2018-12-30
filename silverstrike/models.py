@@ -7,8 +7,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from silverstrike.lib import last_day_of_month
-
 
 class AccountQuerySet(models.QuerySet):
     def personal(self):
