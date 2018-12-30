@@ -322,7 +322,7 @@ class RecurringTransaction(models.Model):
         (MONTHLY, _('Monthly')),
         (QUARTERLY, _('Quarterly')),
         (BIANNUALLY, _('Biannually')),
-        (ANNUALLY, _('Anually'))
+        (ANNUALLY, _('Annually'))
         )
 
     SAME_DAY = 0
@@ -401,7 +401,7 @@ class RecurringTransaction(models.Model):
                     except ValueError:
                         day -= 1
                         pass
-            if date.weekday() > 4:
+            if date.weekday() > 4 and self.interval not in [self.WEEKLY, self.DAILY]:
                 if self.weekend_handling == self.SKIP:
                     continue
                 elif self.weekend_handling == self.NEXT_WEEKDAY:

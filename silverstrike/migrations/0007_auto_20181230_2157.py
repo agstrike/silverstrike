@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recurringtransaction',
             name='interval',
-            field=models.IntegerField(choices=[(0, 'Disabled'), (6, 'Daily'), (5, 'Weekly'), (1, 'Monthly'), (2, 'Quarterly'), (3, 'Biannually'), (4, 'Anually')]),
+            field=models.IntegerField(choices=[(0, 'Disabled'), (6, 'Daily'), (5, 'Weekly'), (1, 'Monthly'), (2, 'Quarterly'), (3, 'Biannually'), (4, 'Annually')]),
         ),
     ]

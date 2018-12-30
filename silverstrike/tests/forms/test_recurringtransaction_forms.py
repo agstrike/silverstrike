@@ -9,7 +9,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm()
         fields = ['title', 'date', 'amount',
                   'src', 'dst', 'category', 'interval',
-                  'multiplier', 'weekend_handling']
+                  'multiplier', 'weekend_handling', 'usual_month_day']
         self.assertEqual(len(form.fields), len(fields))
         for field in fields:
             self.assertIn(field, form.fields)
@@ -20,7 +20,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': -100, 'date': '2100-01-01', 'multiplier': 1,
             'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP, 'usual_month_day': 0})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertIn('amount', form.errors)
@@ -31,7 +31,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': 100, 'multiplier': 1, 'weekend_handling': RecurringTransaction.SKIP,
             'src': personal.id, 'dst': other.id, 'date': '2016-01-01',
-            'interval': RecurringTransaction.MONTHLY, 'title': 'foo'})
+            'interval': RecurringTransaction.MONTHLY, 'title': 'foo', 'usual_month_day': 0})
         self.assertTrue(form.is_valid())
 
     def test_transfer(self):
@@ -40,7 +40,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP, 'usual_month_day': 0})
         self.assertTrue(form.is_valid())
         transaction = form.save()
         self.assertEqual(transaction.transaction_type, Transaction.TRANSFER)
@@ -52,7 +52,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP, 'usual_month_day': 0})
         self.assertTrue(form.is_valid())
         transaction = form.save()
         self.assertIsNotNone(transaction)
@@ -64,7 +64,7 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': other.id, 'dst': personal.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP, 'usual_month_day': 0})
         self.assertTrue(form.is_valid())
         transaction = form.save()
         self.assertIsNotNone(transaction)
@@ -76,6 +76,6 @@ class RecurringTransactionFormTests(TestCase):
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': other.id, 'dst': first.id, 'interval': RecurringTransaction.MONTHLY,
-            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP})
+            'title': 'foo', 'weekend_handling': RecurringTransaction.SKIP, 'usual_month_day': 0})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
