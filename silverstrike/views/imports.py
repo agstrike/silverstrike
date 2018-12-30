@@ -60,18 +60,27 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()
-            transaction_type = -1
+            transaction = models.Transaction()
             if account.account_type == models.Account.PERSONAL:
-                transaction_type = models.Transaction.TRANSFER
+                transaction.transaction_type = models.Transaction.TRANSFER
+                if amount < 0:
+                    transaction.src = self.kwargs['account']
+                    transaction.dst = account
+                else:
+                    transaction.src = account
+                    transaction.dst = self.kwargs['account']
             elif account.account_type == models.Account.FOREIGN:
                 if amount < 0:
-                    transaction_type = models.Transaction.WITHDRAW
+                    transaction.transaction_type = models.Transaction.WITHDRAW
+                    transaction.src_id = self.kwargs['account']
+                    transaction.dst = account
                 else:
-                    transaction_type = models.Transaction.DEPOSIT
-            transaction = models.Transaction()
+                    transaction.transaction_type = models.Transaction.DEPOSIT
+                    transaction.dst_id = self.kwargs['account']
+                    transaction.src = account
             transaction.title = title
             transaction.date = date
-            transaction.transaction_type = transaction_type
+
             if recurrence > 0:
                 transaction.recurrence_id = recurrence
             transaction.save()
