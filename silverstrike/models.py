@@ -320,6 +320,9 @@ class RecurringTransaction(models.Model):
         (DAILY, _('Daily')),
         (WEEKLY, _('Weekly')),
         (MONTHLY, _('Monthly')),
+        (QUARTERLY, _('Quarterly')),
+        (BIANNUALLY, _('Biannually')),
+        (ANNUALLY, _('Anually'))
         )
 
     SAME_DAY = 0
@@ -389,7 +392,7 @@ class RecurringTransaction(models.Model):
         delta *= self.multiplier
         while True:
             date += delta
-            if self.usual_month_day > 0 and self.interval == self.MONTHLY:
+            if self.usual_month_day > 0 and self.interval not in [self.WEEKLY, self.DAILY]:
                 day = self.usual_month_day
                 while True:
                     try:
