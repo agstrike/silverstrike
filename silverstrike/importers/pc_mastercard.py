@@ -1,9 +1,9 @@
 import csv
 import datetime
+import logging
 
 from silverstrike.importers.import_statement import ImportStatement
 
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,8 @@ def import_csv(csv_path):
         for line in csviter:
             logger.info("Line %s", line)
             try:
-                transaction_time = datetime.datetime.strptime(line[2] + ' ' + line[3], '%m/%d/%Y %I:%M %p')
+                transaction_time = datetime.datetime.strptime(line[2] + ' ' + line[3],
+                                                              '%m/%d/%Y %I:%M %p')
                 lines.append(ImportStatement(
                     notes=line[0],
                     account=line[1],

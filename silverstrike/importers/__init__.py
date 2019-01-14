@@ -1,4 +1,4 @@
-from . import dkb, dkb_visa, volksbank, pc_mastercard, ofx
+from . import dkb, dkb_visa, ofx, pc_mastercard, volksbank
 
 IMPORTERS = [
     pc_mastercard,
