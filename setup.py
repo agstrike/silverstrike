@@ -35,6 +35,7 @@ setup(
         'django-allauth',
         'python-dateutil',
         'django-cors-headers',
+        'ofxparse',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
