@@ -1,9 +1,10 @@
 
+import logging
+
 from ofxparse import OfxParser
 
 from silverstrike.importers.import_statement import ImportStatement
 
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -25,11 +26,10 @@ def import_csv(ofx_path):
                         transaction_date=transaction_time,
                         amount=transaction.amount
                         ))
-                except ValueError as e:
+                except ValueError:
                     logger.error("Cannot import transaction: {}".format(transaction))
                     pass
-        except ValueError as fe:
+        except ValueError:
             logger.error("Failed to import all transactions! Wrong file format?")
 
     return transactions
-
