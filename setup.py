@@ -35,8 +35,10 @@ setup(
         'django-allauth',
         'python-dateutil',
         'django-cors-headers',
-        'ofxparse',
     ],
+    extras_require={
+        'OFX Importing': ['ofxparse'],
+    },
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
@@ -45,11 +47,11 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     keywords='finance django money money-manager',
-    python_requires='>=3.4',
+    python_requires='>=3.5',
 )
 

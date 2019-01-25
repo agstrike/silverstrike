@@ -1,17 +1,23 @@
-from . import dkb, dkb_visa, ofx, pc_mastercard, volksbank
+from . import dkb, dkb_visa, pc_mastercard, volksbank
 
 IMPORTERS = [
-    pc_mastercard,
-    ofx,
     dkb,
     dkb_visa,
+    pc_mastercard,
     volksbank,
 ]
 
 IMPORTER_NAMES = [
-    'PC MasterCard',
-    'OFX Importer',
     'DKB Giro',
     'DKB Visa',
+    'PC MasterCard',
     'Volksbank',
 ]
+
+try:
+    import ofxparse
+    from . import ofx
+    IMPORTERS.append(ofx)
+    IMPORTER_NAMES.append('OFX Importer')
+except ImportError:
+    pass
