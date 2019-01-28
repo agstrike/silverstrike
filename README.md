@@ -10,7 +10,7 @@ It is regularly updated from the master branch.
 
 ## Get SilverStrike running on your machine
 
-Setup instructions can be found in on the [website](silverstrike.org). There are instructions for a [development setup](https://silverstrike.org/dev-setup/) and others that are more suitable for a [production use](https://silverstrike.org/setup/).
+Setup instructions can be found in on the [website](https://silverstrike.org). There are instructions for a [development setup](https://silverstrike.org/dev-setup/) and others that are more suitable for a [production use](https://silverstrike.org/setup/).
 
 ## Contributing
 
