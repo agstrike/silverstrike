@@ -121,7 +121,7 @@ class Transaction(models.Model):
     SYSTEM = 4
     TRANSACTION_TYPES = (
         (DEPOSIT, 'Deposit'),
-        (WITHDRAW, 'Withdrawl'),
+        (WITHDRAW, 'Withdrawal'),
         (TRANSFER, 'Transfer'),
         (SYSTEM, 'Reconcile'),
     )
