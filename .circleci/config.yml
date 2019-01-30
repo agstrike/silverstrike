@@ -1,0 +1,82 @@
+version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+      - test-3.5
+      - test-3.7
+      - lint
+jobs:
+  test-3.6: &test-template
+    docker:
+      - image: circleci/python:3.6-stretch
+    working_directory: ~/silverstrike
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Install dependencies
+          command: |
+            sudo pip install tox
+            tox --notest
+      - save_cache:
+          paths:
+            - ./.tox
+          key: v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Run tests
+          command: |
+            tox -e django2.0,django2.1
+
+  test-3.5:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.5-stretch
+
+  test-3.7:
+    docker:
+      - image: circleci/python:3.7-stretch
+    working_directory: ~/silverstrike
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Install dependencies
+          command: |
+            sudo pip install tox
+            tox --notest
+      - save_cache:
+          paths:
+            - ./.tox
+          key: v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Run tests
+          command: |
+            tox -e django2.0,django2.1,codecov
+  lint:
+    docker:
+      - image: circleci/python:3.7-stretch
+    working_directory: ~/silverstrike
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Install dependencies
+          command: |
+            sudo pip install tox
+            tox --notest
+      - save_cache:
+          paths:
+            - ./.tox
+          key: v1-dependencies-{{ checksum "setup.py" }}
+      - run:
+          name: Run tests
+          command: |
+            tox -e flake
