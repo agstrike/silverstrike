@@ -93,7 +93,7 @@ class RecurrenceTests(TestCase):
         self.assertTrue(self.recurrence.is_deposit)
         self.assertFalse(self.recurrence.is_withdraw)
 
-    def test_average_amount_for_withdrawls(self):
+    def test_average_amount_for_withdrawals(self):
         for i in range(1, 11):
             t = create_transaction('meh', self.personal, self.foreign, i * 10, Transaction.WITHDRAW)
             t.recurrence = self.recurrence
