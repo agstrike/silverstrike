@@ -4,7 +4,7 @@ import datetime
 from silverstrike.importers.import_statement import ImportStatement
 
 
-def import_csv(csv_path):
+def import_transactions(csv_path):
     lines = []
     with open(csv_path, encoding='latin-1') as csv_file:
         for line in csv.reader(csv_file, delimiter=';'):
@@ -15,8 +15,8 @@ def import_csv(csv_path):
                 if line[12] == 'S':
                     amount = -amount
                 lines.append(ImportStatement(
-                    book_date=datetime.datetime.strptime(line[1], '%d.%m.%Y'),
-                    transaction_date=datetime.datetime.strptime(line[0], '%d.%m.%Y'),
+                    book_date=datetime.datetime.strptime(line[1], '%d.%m.%Y').date(),
+                    transaction_date=datetime.datetime.strptime(line[0], '%d.%m.%Y').date(),
                     account=line[3],
                     notes=line[8],
                     iban=line[5],

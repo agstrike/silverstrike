@@ -15,7 +15,6 @@ IMPORTER_NAMES = [
 ]
 
 try:
-    import ofxparse
     from . import ofx
     IMPORTERS.append(ofx)
     IMPORTER_NAMES.append('OFX Importer')
