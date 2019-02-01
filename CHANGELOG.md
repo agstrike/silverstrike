@@ -11,6 +11,9 @@ All notable changes to SilverStrike will be documented here.
 * Add Daily and Weekly recurrences
 * Add ability to customize recurrences by specifing multipliers and special handling of weekends
 
+### Fixed
+* Return 404 instead of 500 when using an incorrect account url
+
 ## [0.1.3](https://github.com/agstrike/silverstrike/releases/tag/0.1.3) - 2018-05-15
 
 ### Added

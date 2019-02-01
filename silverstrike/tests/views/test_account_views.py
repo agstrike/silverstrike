@@ -118,6 +118,11 @@ class AccountDetailViewTests(AbstractAccountViewTests):
             self.account.id, datetime.date(2017, 6, 1), datetime.date(2018, 2, 1)]))
         self.assertEqual(response.status_code, 200)
 
+    def test_unknown_account_returns_404(self):
+        response = self.client.get(reverse('account_detail', args=[
+            999999, datetime.date(2017, 6, 1), datetime.date(2018, 2, 1)]))
+        self.assertEqual(response.status_code, 404)
+
     def test_dataset_for_personal_accounts(self):
         """
         TODO Not sure how to test that...
