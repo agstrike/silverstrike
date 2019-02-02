@@ -68,7 +68,7 @@ class TransactionModelTests(TestCase):
     def test_transaction_type_string_withdraw(self):
         transaction = create_transaction('meh', self.personal, self.foreign,
                                          100, Transaction.WITHDRAW)
-        self.assertEqual(transaction.get_transaction_type_str(), 'Withdrawl')
+        self.assertEqual(transaction.get_transaction_type_str(), 'Withdrawal')
 
     def test_transaction_type_string_deposit(self):
         transaction = create_transaction('meh', self.foreign, self.personal,
