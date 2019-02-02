@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 {
   "name": "SilverStrike",
   "short_name": "AgStrike",
