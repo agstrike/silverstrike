@@ -75,5 +75,5 @@ class SplitInline(admin.TabularInline):
 class TransactionAdmin(admin.ModelAdmin):
     inlines = [SplitInline]
     date_hierarchy = 'date'
-    list_display = ['title', 'src', 'dst', 'amount', 'transaction_type']
+    list_display = ['title', 'src', 'dst', 'date', 'amount', 'transaction_type']
     search_fields = ['title', 'notes', 'splits__title']
