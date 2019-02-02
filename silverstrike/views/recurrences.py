@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import DepositForm, RecurringTransactionForm, TransferForm, WithdrawForm
@@ -28,6 +28,7 @@ class ReccurrenceSetNextOccurence(LoginRequiredMixin, generic.View):
             if old != r.date:
                 r.save()
         return HttpResponseRedirect(reverse('recurrences'))
+
 
 class RecurrenceDetailView(LoginRequiredMixin, generic.DetailView):
     model = RecurringTransaction
