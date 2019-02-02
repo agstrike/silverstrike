@@ -80,7 +80,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                     transaction.src = account
             transaction.title = title
             transaction.date = date
-            transaction.amount = amount
+            transaction.amount = abs(amount)
 
             if recurrence > 0:
                 transaction.recurrence_id = recurrence
