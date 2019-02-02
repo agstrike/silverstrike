@@ -49,7 +49,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             recurrence = int(request.POST.get('recurrence-{}'.format(i), '-1'))
             book_date = data[i].book_date
             date = data[i].transaction_date
-            if not (title or account):
+            if not (title and account):
                 continue
             amount = float(data[i].amount)
             if amount == 0:
