@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
@@ -105,7 +105,10 @@ class AccountView(LoginRequiredMixin, generic.ListView):
     model = Split
 
     def dispatch(self, request, *args, **kwargs):
-        self.account = Account.objects.get(pk=self.kwargs['pk'])
+        try:
+            self.account = Account.objects.get(pk=self.kwargs['pk'])
+        except Account.DoesNotExist:
+            raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
         if self.account.account_type == Account.SYSTEM:
             return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
@@ -167,7 +170,10 @@ class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
     model = Transaction
 
     def dispatch(self, request, *args, **kwargs):
-        self.account = Account.objects.get(pk=kwargs['pk'])
+        try:
+            self.account = Account.objects.get(pk=self.kwargs['pk'])
+        except Account.DoesNotExist:
+            raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
         if self.account.account_type != Account.PERSONAL:
             return HttpResponse(_('You can not reconcile this account'), status=403)
         return super(ReconcileView, self).dispatch(request, *args, **kwargs)
