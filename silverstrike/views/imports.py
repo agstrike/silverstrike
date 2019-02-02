@@ -64,11 +64,11 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             if account.account_type == models.Account.PERSONAL:
                 transaction.transaction_type = models.Transaction.TRANSFER
                 if amount < 0:
-                    transaction.src = self.kwargs['account']
+                    transaction.src_id = self.kwargs['account']
                     transaction.dst = account
                 else:
                     transaction.src = account
-                    transaction.dst = self.kwargs['account']
+                    transaction.dst_id = self.kwargs['account']
             elif account.account_type == models.Account.FOREIGN:
                 if amount < 0:
                     transaction.transaction_type = models.Transaction.WITHDRAW
@@ -80,6 +80,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                     transaction.src = account
             transaction.title = title
             transaction.date = date
+            transaction.amount = amount
 
             if recurrence > 0:
                 transaction.recurrence_id = recurrence
