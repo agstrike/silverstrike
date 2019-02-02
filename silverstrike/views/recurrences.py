@@ -24,7 +24,7 @@ class ReccurrenceSetNextOccurence(LoginRequiredMixin, generic.View):
             old = r.date
             t = r.recurrences.first()
             while t.date >= r.date:
-                r.update_date()
+                r.date = r.update_date()
             if old != r.date:
                 r.save()
         return HttpResponseRedirect(reverse('recurrences'))
