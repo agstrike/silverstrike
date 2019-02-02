@@ -74,6 +74,10 @@
 <div class="box-footer">
   <a href="{% url 'recurrence_create' %}" class="btn btn-primary">{% trans 'Create' %}</a>
   <a href="{% url 'disabled_recurrences' %}" class="btn btn-default">{% trans 'Show disabled recurrences' %}</a>
+  <form style="display: inline-block;" method="POST" action="{% url 'update_current_recurrences' %}">
+    {% csrf_token %}
+    <button class="btn btn-warning">{% trans 'Update current recurrence' %}</button>
+  </form>
 </div>
 </div>
 {% endblock %}

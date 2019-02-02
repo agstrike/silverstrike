@@ -120,6 +120,10 @@ urlpatterns = [
          api.get_accounts_balance, name='api_accounts_balance'),
     path('api/category_spending/<dstart>/<dend>/',
          api.category_spending, name='category_spending'),
+    path('api/update_current_recurrences/',
+         recurrence_views.ReccurrenceSetNextOccurence.as_view(),
+         name='update_current_recurrences'),
+
 
     path('manifest.json', TemplateView.as_view(template_name='silverstrike/manifest.json'),
          name='manifest'),
