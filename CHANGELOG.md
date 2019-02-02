@@ -5,11 +5,12 @@ All notable changes to SilverStrike will be documented here.
 ## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.3...master)
 ### Added
 * Format large numbers to make them easier to read
-* Add DKB and Volksbank importers
+* Add DKB, Volksbank, PC Mastercard and ofx importers
 * Add income/expense report
 * Show more information in category and budget views
 * Add Daily and Weekly recurrences
 * Add ability to customize recurrences by specifing multipliers and special handling of weekends
+
 
 ### Fixed
 * Return 404 instead of 500 when using an incorrect account url
