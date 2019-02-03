@@ -30,12 +30,16 @@
                         <th>{% trans 'Notes' %}</th>
                         <th>{% trans 'Recurrence' %}</th>
                         <th>{% trans 'Amount' %}</th>
+                        <th>{% trans 'Ignore' %}</th>
                     </tr>
                 {% for datum in data %}
                 <tr>
                     <td><input type="date" value="{{ datum.transaction_date|date:'Y-m-d' }}" name="date-{{forloop.counter0}}"></td>
                     <td>{{ datum.book_date|date:"SHORT_DATE_FORMAT" }}</td>
-                    <td><input class="account-input" type="text" name="account-{{forloop.counter0}}" autocomplete="off"></td>
+                    <td><input class="account-input" type="text" name="account-{{forloop.counter0}}" autocomplete="off"
+                        {% if datum.account %} value="{{ datum.account }}"
+                        {% endif %}
+                    ></td>
                     <td>{{ datum.account }}</td>
                     <td><input type="text" name="title-{{forloop.counter0}}"></td>
                     <td>{{ datum.notes }}</td>
@@ -48,6 +52,7 @@
                         </select>
                     </td>
                     <td>{{ datum.amount }}</td>
+                    <td><input type="checkbox" name="ignore-{{forloop.counter0}}" {% if datum.ignore %}checked="true"{% endif %}"></td>   
                 </tr>
                 {% endfor %}
                 </table>

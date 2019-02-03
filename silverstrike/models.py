@@ -116,6 +116,8 @@ class TransactionQuerySet(models.QuerySet):
     def last_10(self):
         return self.order_by('-date')[:10]
 
+    def date_range(self, dstart, dend):
+        return self.filter(date__gte=dstart, date__lte=dend)
 
 class Transaction(models.Model):
     DEPOSIT = 1

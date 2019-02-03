@@ -1,4 +1,5 @@
 import csv
+from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
@@ -34,7 +35,33 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
         context = super(ImportProcessView, self).get_context_data(**kwargs)
         file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
         importer = self.kwargs['importer']
+
+        iban_accounts = { a.iban: a for a in models.Account.objects.exclude(iban='')}
         context['data'] = importers.IMPORTERS[importer].import_transactions(file.file.path)
+        max_date = date(1970, 1, 1)
+        min_date = date(3000, 1, 1)
+        for datum in context['data']:
+            if datum.book_date < min_date:
+                min_date = datum.book_date
+            if datum.book_date > max_date:
+                max_date = datum.book_date
+            if datum.iban and datum.iban in iban_accounts:
+                datum.account = iban_accounts[datum.iban]
+
+        # duplicate detection
+        transactions = set()
+        for t in models.Transaction.objects.date_range(min_date, max_date):
+            if t.is_transfer:
+                transactions.add('{}-{}-{}'.format(t.src_id, t.date, t.amount))
+                transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
+            elif t.is_deposit:
+                transactions.add('{}-{}-{}'.format(t.src_id, t.date, t.amount))
+            elif t.is_withdraw:
+                transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
+        for datum in context['data']:
+            if hasattr(datum.account, 'id') and '{}-{}-{}'.format(datum.account.id, datum.book_date, abs(datum.amount)) in transactions:
+                datum.ignore = True
+
         context['recurrences'] = models.RecurringTransaction.objects.exclude(
             interval=models.RecurringTransaction.DISABLED).order_by('title')
         return context
@@ -47,9 +74,10 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             title = request.POST.get('title-{}'.format(i), '')
             account = request.POST.get('account-{}'.format(i), '')
             recurrence = int(request.POST.get('recurrence-{}'.format(i), '-1'))
+            ignore = request.POST.get('ignore-{}'.format(i), '')
             book_date = data[i].book_date
             date = data[i].transaction_date
-            if not (title and account):
+            if not (title and account) or ignore:
                 continue
             amount = float(data[i].amount)
             if amount == 0:
