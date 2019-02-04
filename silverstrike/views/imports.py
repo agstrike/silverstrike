@@ -1,4 +1,5 @@
 import csv
+import json
 from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,22 @@ from django.views import generic
 from silverstrike import forms
 from silverstrike import importers
 from silverstrike import models
+
+
+def _update_account(account, data):
+    ibans = json.loads(account.import_ibans)
+    names = json.loads(account.import_names)
+    save = False
+    if data.iban and data.iban not in ibans:
+        ibans.append(data.iban)
+        account.import_ibans = ibans
+        save = True
+    if data.account and data.account not in names:
+        names.append(data.account)
+        account.import_names = names
+        save = True
+    if save:
+        account.save()
 
 
 class ImportView(LoginRequiredMixin, generic.TemplateView):
@@ -35,8 +52,22 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
         context = super(ImportProcessView, self).get_context_data(**kwargs)
         file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
         importer = self.kwargs['importer']
-
-        iban_accounts = { a.iban: a for a in models.Account.objects.exclude(iban='')}
+        iban_accounts = dict()
+        names = dict()
+        for a in models.Account.objects.all():
+            try:
+                for iban in json.loads(a.import_ibans):
+                    iban_accounts[iban] = a
+            except:
+                pass
+            try:
+                for name in json.loads(a.import_names):
+                    if name in names and names[name] != a:
+                        del names[name]
+                        continue
+                    names[name] = a
+            except:
+                pass
         context['data'] = importers.IMPORTERS[importer].import_transactions(file.file.path)
         max_date = date(1970, 1, 1)
         min_date = date(3000, 1, 1)
@@ -46,7 +77,9 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             if datum.book_date > max_date:
                 max_date = datum.book_date
             if datum.iban and datum.iban in iban_accounts:
-                datum.account = iban_accounts[datum.iban]
+                datum.suggested_account = iban_accounts[datum.iban]
+            elif datum.account in names:
+                datum.suggested_account = names[datum.account]
 
         # duplicate detection
         transactions = set()
@@ -59,7 +92,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             elif t.is_withdraw:
                 transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
         for datum in context['data']:
-            if hasattr(datum.account, 'id') and '{}-{}-{}'.format(datum.account.id, datum.book_date, abs(datum.amount)) in transactions:
+            if hasattr(datum, 'suggested_account') and '{}-{}-{:.2f}'.format(datum.suggested_account.id, datum.book_date, abs(datum.amount)) in transactions:
                 datum.ignore = True
 
         context['recurrences'] = models.RecurringTransaction.objects.exclude(
@@ -85,6 +118,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             account, _ = models.Account.objects.get_or_create(
                 name=account,
                 defaults={'account_type': models.Account.FOREIGN})
+            _update_account(account, data[i])
             if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()

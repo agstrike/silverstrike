@@ -41,6 +41,8 @@ class Account(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
     iban = models.CharField(max_length=34, blank=True, null=True)
+    import_ibans = models.TextField(default='[]')
+    import_names = models.TextField(default='[]')
 
     objects = AccountQuerySet.as_manager()
 
