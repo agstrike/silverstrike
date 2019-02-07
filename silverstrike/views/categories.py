@@ -63,7 +63,7 @@ class CategoryByMonth(LoginRequiredMixin, generic.TemplateView):
             if id in category_map:
                 categories[category_map[id]]['income'] = c['income']
             else:
-                categories.push({
+                categories.append({
                     'id': id,
                     'name': c['category__name'] or '',
                     'income': c['income'],
