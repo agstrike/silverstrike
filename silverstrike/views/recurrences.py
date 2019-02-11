@@ -23,6 +23,8 @@ class ReccurrenceSetNextOccurence(LoginRequiredMixin, generic.View):
         for r in RecurringTransaction.objects.due_in_month():
             old = r.date
             t = r.recurrences.first()
+            if not t:
+                continue
             while t.date >= r.date:
                 r.date = r.update_date()
             if old != r.date:
