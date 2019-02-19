@@ -65,6 +65,13 @@
         <a href="{% url 'account_update' account.pk %}" class="btn btn-warning">{% trans 'Edit' %}</a>
         {% if account.is_personal %}
         <a href="{% url 'account_reconcile' account.pk %}" class="btn btn-danger">{% trans 'Reconcile' %}</a>
+        <br>
+        <br>
+        <a href="{% url 'deposit_new' %}" class="btn btn-success">{% trans 'Deposit' %}</a>
+
+        <a href="{% url 'transfer_new' %}" class="btn btn-warning">{% trans 'Transfer' %}</a>
+
+        <a href="{% url 'withdraw_new' %}" class="btn btn-danger">{% trans 'Withdraw' %}</a>
         {% endif %}
       </div>
 
