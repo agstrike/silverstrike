@@ -18,11 +18,11 @@ def _update_account(account, data):
     save = False
     if data.iban and data.iban not in ibans:
         ibans.append(data.iban)
-        account.import_ibans = ibans
+        account.import_ibans = json.dumps(ibans)
         save = True
     if data.account and data.account not in names:
         names.append(data.account)
-        account.import_names = names
+        account.import_names = json.dumps(names)
         save = True
     if save:
         account.save()
