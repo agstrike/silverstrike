@@ -31,25 +31,27 @@
     <div class="box-body">
       {% csrf_token %}
       {% for field in form %}
-      <div class="form-group">
-        {% if field|widget_type != "checkboxinput" %}
-        <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
-        <div class="col-sm-8">
-          {% render_field field placeholder=field.label class="form-control" %}
-        </div>
-        {% else %}
-        <div class="col-sm-offset-2 col-sm-8 ">
-          <div class="checkbox">
-            <label>
-              {{ field }}
-              {{ field.label }}
-            </label>
+      <div class="form-group{% if field.errors%} has-error{% endif%}">
+        <div class="row">
+          {% if field|widget_type != "checkboxinput" %}
+          <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          <div class="col-sm-8">
+            {% render_field field placeholder=field.label class="form-control" %}
           </div>
+          {% else %}
+          <div class="col-sm-offset-2 col-sm-8 ">
+            <div class="checkbox">
+              <label>
+                {{ field }}
+                {{ field.label }}
+              </label>
+            </div>
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
-        {% for error in  field.errors %}
-        <span class="help-block">{{ errror }}</span>
-            {% endfor %}
+        {% for error in field.errors %}
+        <div class="help-block col-sm-offset-2 col-sm-8">{{ error }}</div>
+        {% endfor %}
       </div>
       {% endfor %}
     </div>

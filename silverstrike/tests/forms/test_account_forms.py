@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from silverstrike import forms
+from silverstrike import forms, models
 
 
 class AccountCreateFormTests(TestCase):
@@ -19,3 +19,13 @@ class AccountCreateFormTests(TestCase):
         self.assertEqual(account.name, 'foo')
         self.assertTrue(account.active)
         self.assertFalse(account.show_on_dashboard)
+    
+    def test_unique_name(self):
+        models.Account.objects.create(name='foo')
+        form = forms.AccountCreateForm({
+            'name': 'foo', 'initial_balance': 100, 'active': True
+        })
+        self.assertFalse(form.is_valid())
+        
+        self.assertEqual(len(form.errors), 1)
+        self.assertIn('name', form.errors)

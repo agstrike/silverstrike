@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
+from django.core.exceptions import ValidationError
 
 from silverstrike import importers, models
 
@@ -18,6 +19,13 @@ class AccountCreateForm(forms.ModelForm):
         fields = ['name', 'initial_balance', 'active', 'show_on_dashboard']
 
     initial_balance = forms.DecimalField(max_digits=10, decimal_places=2, initial=0)
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if models.Account.objects.filter(name=name).exists():
+            raise ValidationError(_('An account with this name already exists'))
+        return name
+
 
     def save(self, commit=True):
         account = super(AccountCreateForm, self).save(commit)
