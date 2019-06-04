@@ -9,7 +9,7 @@ class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = models.ImportFile
         fields = ['file']
-    account = forms.ModelChoiceField(queryset=models.Account.objects.personal())
+    account = forms.ModelChoiceField(queryset=models.Account.objects.personal().active())
     importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
 
 

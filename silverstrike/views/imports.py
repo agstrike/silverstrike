@@ -23,7 +23,6 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
         self.object = form.save()
         account = form.cleaned_data['account']
         importer = form.cleaned_data['importer']
-        print(importer)
         return HttpResponseRedirect(
             reverse('import_process', args=[self.object.pk, account.pk, importer]))
 
