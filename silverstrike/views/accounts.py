@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import generic
 
-from silverstrike.forms import AccountCreateForm, ReconcilationForm
+from silverstrike.forms import AccountCreateForm, ForeignAccountForm, ReconcilationForm
 from silverstrike.models import Account, Split, Transaction
 
 
@@ -24,7 +24,7 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
 
 class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Account
-    fields = ['name']
+    form_class = ForeignAccountForm
 
     def form_valid(self, form):
         account = form.save(commit=False)
