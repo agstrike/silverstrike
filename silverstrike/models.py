@@ -121,6 +121,7 @@ class TransactionQuerySet(models.QuerySet):
     def date_range(self, dstart, dend):
         return self.filter(date__gte=dstart, date__lte=dend)
 
+
 class Transaction(models.Model):
     DEPOSIT = 1
     WITHDRAW = 2

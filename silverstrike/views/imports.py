@@ -58,7 +58,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             try:
                 for iban in json.loads(a.import_ibans):
                     iban_accounts[iban] = a
-            except:
+            except json.decoder.JSONDecodeError:
                 pass
             try:
                 for name in json.loads(a.import_names):
@@ -66,7 +66,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                         del names[name]
                         continue
                     names[name] = a
-            except:
+            except json.decoder.JSONDecodeError:
                 pass
         context['data'] = importers.IMPORTERS[importer].import_transactions(file.file.path)
         max_date = date(1970, 1, 1)
@@ -92,7 +92,8 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             elif t.is_withdraw:
                 transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
         for datum in context['data']:
-            if hasattr(datum, 'suggested_account') and '{}-{}-{:.2f}'.format(datum.suggested_account.id, datum.book_date, abs(datum.amount)) in transactions:
+            if hasattr(datum, 'suggested_account') and '{}-{}-{:.2f}'.format(
+                    datum.suggested_account.id, datum.book_date, abs(datum.amount)) in transactions:
                 datum.ignore = True
 
         context['recurrences'] = models.RecurringTransaction.objects.exclude(
