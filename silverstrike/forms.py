@@ -1,6 +1,6 @@
 from django import forms
-from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
 
 from silverstrike import importers, models
 
@@ -9,8 +9,20 @@ class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = models.ImportFile
         fields = ['file']
-    account = forms.ModelChoiceField(queryset=models.Account.objects.personal())
+    account = forms.ModelChoiceField(queryset=models.Account.objects.personal().active())
     importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
+
+
+class ForeignAccountForm(forms.ModelForm):
+    class Meta:
+        model = models.Account
+        fields = ['name']
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if models.Account.objects.filter(name=name, account_type=models.Account.FOREIGN).exists():
+            raise ValidationError(_('An account with this name already exists'))
+        return name
 
 
 class AccountCreateForm(forms.ModelForm):
@@ -22,10 +34,9 @@ class AccountCreateForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if models.Account.objects.filter(name=name).exists():
+        if models.Account.objects.filter(name=name, account_type=models.Account.PERSONAL).exists():
             raise ValidationError(_('An account with this name already exists'))
         return name
-
 
     def save(self, commit=True):
         account = super(AccountCreateForm, self).save(commit)
