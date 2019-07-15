@@ -1,5 +1,5 @@
 from rest_framework import views, viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
@@ -15,7 +15,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     permission_classes = (ProtectSystemAccount,)
 
-    @detail_route()
+    @action(detail=True)
     def transactions(self, request, pk=None):
         account = self.get_object()
         transactions = Split.objects.filter(account=account)
