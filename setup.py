@@ -29,12 +29,12 @@ setup(
     packages=['silverstrike'],
     include_package_data=True,
     install_requires=[
-        'django>=2.0',
-        'djangorestframework',
+        'django>=2.2',
+        'djangorestframework>=3.10',
         'django-widgets-improved',
-        'django-allauth',
+        'django-allauth>=0.40',
         'python-dateutil',
-        'django-cors-headers',
+        'django-cors-headers>=3.1',
     ],
     extras_require={
         'OFX Importing': ['ofxparse'],
