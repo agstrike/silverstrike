@@ -1,0 +1,33 @@
+name: Test and Lint
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.5, 3.6, 3.7]
+        tox: [django2.0, django2.1, django2.2, flake, codecov]
+        exclude:
+        - python: 3.5
+          tox: flake
+        - python: 3.5
+          tox: codecov
+        - python: 3.5
+          tox: flake
+        - python: 3.6
+          tox: codecov
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox
+    - name: Test
+      run: |
+        tox -e ${{ matrix.tox }}
