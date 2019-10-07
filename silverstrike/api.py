@@ -2,7 +2,9 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.db import models
-from django.http import JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
 
 from .models import Account, Split
 
@@ -19,8 +21,11 @@ def get_accounts(request, account_type):
 
 @login_required
 def get_accounts_balance(request, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    try:
+        dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+        dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    except ValueError:
+        return HttpResponseBadRequest(_('Invalid date format, expected yyyy-mm-dd'))
     dataset = []
     for account in Account.objects.personal().active():
         data = list(zip(*account.get_data_points(dstart, dend)))
@@ -34,17 +39,23 @@ def get_accounts_balance(request, dstart, dend):
 
 @login_required
 def get_account_balance(request, account_id, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
-    account = Account.objects.get(pk=account_id)
+    account = get_object_or_404(Account, pk=account_id)
+    try:
+        dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+        dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    except ValueError:
+        return HttpResponseBadRequest(_('Invalid date format, expected yyyy-mm-dd'))
     labels, data = zip(*account.get_data_points(dstart, dend))
     return JsonResponse({'data': data, 'labels': labels})
 
 
 @login_required
 def get_balances(request, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    try:
+        dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
+        dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
+    except ValueError:
+        return HttpResponseBadRequest(_('Invalid date format, expected yyyy-mm-dd'))
     balance = Split.objects.personal().exclude_transfers().filter(date__lt=dstart).aggregate(
             models.Sum('amount'))['amount__sum'] or 0
     splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend).order_by('date')
@@ -68,8 +79,11 @@ def get_balances(request, dstart, dend):
 
 @login_required
 def category_spending(request, dstart, dend):
-    dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
-    dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
+    try:
+        dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d')
+        dend = datetime.datetime.strptime(dend, '%Y-%m-%d')
+    except ValueError:
+        return HttpResponseBadRequest(_('Invalid date format, expected yyyy-mm-dd'))
     res = Split.objects.expense().past().date_range(dstart, dend).order_by('category').values(
         'category__name').annotate(spent=models.Sum('amount'))
     if res:
