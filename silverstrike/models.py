@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 
 class AccountQuerySet(models.QuerySet):
