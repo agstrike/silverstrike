@@ -29,7 +29,7 @@ class BudgetIndex(LoginRequiredMixin, generic.edit.FormView):
         # assigned categories
         self.budgets = Budget.objects.for_month(self.month)
         budget_spending = Split.objects.personal().past().date_range(
-            self.month, last_day_of_month(self.month)).values(
+            self.month, last_day_of_month(self.month)).order_by('category').values(
                 'category', 'category__name').annotate(spent=Sum('amount'))
 
         self.budget_spending = {e['category']: abs(e['spent']) for e in budget_spending}
