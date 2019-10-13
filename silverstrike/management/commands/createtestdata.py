@@ -9,18 +9,14 @@ from django.core.management.base import BaseCommand
 from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
 
 
-def _create_transaction(date, amount, src, dst, title, category, type, recurrence):
-    transaction = Transaction.objects.create(title=title, date=date,
-                                             transaction_type=type,
-                                             recurrence=recurrence)
-    Split.objects.create(account=src, opposing_account=dst, transaction=transaction,
-                         amount=-amount, category=category, date=date, title=title)
-    Split.objects.create(account=dst, opposing_account=src, transaction=transaction,
-                         amount=amount, category=category, date=date, title=title)
-
-
 class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument('--prune', action='store_true',
+                            help='Clears all data before inserting new objects')
+
     def handle(self, *args, **options):
+        if options['prune']:
+            self._prune()
         self._initialize()
         today = date.today()
         try:
@@ -32,49 +28,68 @@ class Command(BaseCommand):
         while start_date < today:
             self._create_monthly(start_date.year, start_date.month)
             start_date += relativedelta(months=+1)
+        Transaction.objects.bulk_create(self.transactions)
+        Split.objects.bulk_create(self.splits)
+
+    def _prune(self):
+        Account.objects.exclude(account_type=Account.SYSTEM).delete()
+        Category.objects.all().delete()
+        RecurringTransaction.objects.all().delete()
+        Transaction.objects.all().delete()
+        Split.objects.all().delete()
 
     def _initialize(self):
         D = Transaction.DEPOSIT
         W = Transaction.WITHDRAW
         T = Transaction.TRANSFER
-        self.work, _ = Account.objects.get_or_create(name='work', account_type=Account.FOREIGN)
+        self.transactions = []
+        self.splits = []
+        self.counter = 100
+        self.work, _ = Account.objects.get_or_create(name='Work', account_type=Account.FOREIGN)
 
-        self.checking, _ = Account.objects.get_or_create(name='checking', show_on_dashboard=True)
-        self.savings, _ = Account.objects.get_or_create(name='savings', show_on_dashboard=True)
+        self.checking, _ = Account.objects.get_or_create(name='Checking', show_on_dashboard=True)
+        self.savings, _ = Account.objects.get_or_create(name='Savings', show_on_dashboard=True)
 
         self.landlord, _ = Account.objects.get_or_create(
-            name='landlord', account_type=Account.FOREIGN)
+            name='Landlord', account_type=Account.FOREIGN)
         self.supermarket, _ = Account.objects.get_or_create(
-            name='supermarket', account_type=Account.FOREIGN)
+            name='Supermarket', account_type=Account.FOREIGN)
         self.insurer, _ = Account.objects.get_or_create(
-            name='insurnace', account_type=Account.FOREIGN)
-        self.club, _ = Account.objects.get_or_create(name='club', account_type=Account.FOREIGN)
+            name='Insurnace', account_type=Account.FOREIGN)
+        self.club, _ = Account.objects.get_or_create(name='Club', account_type=Account.FOREIGN)
 
-        self.home, _ = Category.objects.get_or_create(name='home')
-        self.groceries, _ = Category.objects.get_or_create(name='groceries')
-        self.insurance, _ = Category.objects.get_or_create(name='insurance')
-        self.leisure, _ = Category.objects.get_or_create(name='leisure')
+        self.home, _ = Category.objects.get_or_create(name='Home')
+        self.groceries, _ = Category.objects.get_or_create(name='Groceries')
+        self.insurance, _ = Category.objects.get_or_create(name='Insurance')
+        self.leisure, _ = Category.objects.get_or_create(name='Leisure')
+        self.income_category, _ = Category.objects.get_or_create(name='Income')
 
+        self.income, _ = RecurringTransaction.objects.update_or_create(
+            title='Income', src=self.work, dst=self.checking,
+            defaults={'interval': RecurringTransaction.MONTHLY,
+                      'transaction_type': D, 'category': self.home, 'amount': 2000,
+                      'date': (date.today() + relativedelta(months=+1)).replace(day=1)})
         self.rent, _ = RecurringTransaction.objects.update_or_create(
-            title='rent', src=self.checking, dst=self.landlord,
+            title='Rent', src=self.checking, dst=self.landlord,
             defaults={'interval': RecurringTransaction.MONTHLY,
                       'transaction_type': W, 'category': self.home, 'amount': 900,
                       'date': (date.today() + relativedelta(months=+1)).replace(day=2)})
         self.insurnace_r, _ = RecurringTransaction.objects.update_or_create(
-            title='insurance', src=self.checking, dst=self.insurer,
+            title='Insurance', src=self.checking, dst=self.insurer,
             defaults={'interval': RecurringTransaction.MONTHLY,
-                      'transaction_type': W, 'category': self.insurance, 'amount': 70,
+                      'transaction_type': W, 'category': self.insurance, 'amount': 170,
                       'date': (date.today() + relativedelta(months=+1)).replace(day=15)})
 
         self.MONTHLY = [
-            ('income', [1], self.work, self.checking, [2500, 3000], None, D, None),
-            ('rent', [2], self.checking, self.landlord, [900, 901], self.home, W, self.rent),
-            ('saving', [27], self.checking, self.savings, [50, 200], None, T, None),
-            ('groceries', [1, 5, 10, 13, 15, 20, 21, 25, 27], self.checking, self.supermarket,
-             [50, 100], self.groceries, W, None),
-            ('insurance', [15], self.checking, self.insurer, [70, 200], self.insurance, W,
+            ('Income', [1], self.work, self.checking, [2200, 2201], self.income_category,
+             D, self.income),
+            ('Rent', [2], self.checking, self.landlord, [1000, 1001], self.home, W, self.rent),
+            ('Saving', [27], self.checking, self.savings, [150, 200], None, T, None),
+            ('Groceries', [3, 10, 17, 26], self.checking, self.supermarket,
+             [80, 150], self.groceries, W, None),
+            ('Insurance', [15], self.checking, self.insurer, [300, 301], self.insurance, W,
              self.insurnace_r),
-            ('clubbing', [3, 8, 17, 22, 27], self.checking, self.club, [20, 100], self.leisure, W,
+            ('Clubbing', [15, 25], self.checking, self.club, [80, 120], self.leisure, W,
              None),
         ]
 
@@ -82,5 +97,16 @@ class Command(BaseCommand):
         for title, days, src, dst, amountRange, category, type, recurrence in self.MONTHLY:
             for day in days:
                 amount = randrange(amountRange[0], amountRange[1])
-                _create_transaction(date(year, month, day), amount, src, dst,
-                                    title, category, type, recurrence)
+                transaction_date = date(year, month, day)
+                if transaction_date > date.today():
+                    continue
+                self.transactions.append(Transaction(
+                    title=title, date=transaction_date, id=self.counter,
+                    transaction_type=type, recurrence=recurrence))
+                self.splits.append(Split(
+                    account=src, opposing_account=dst, transaction_id=self.counter,
+                    amount=-amount, category=category, date=transaction_date, title=title))
+                self.splits.append(Split(
+                    account=dst, opposing_account=src, transaction_id=self.counter,
+                    amount=amount, category=category, date=transaction_date, title=title))
+                self.counter += 1
