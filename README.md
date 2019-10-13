@@ -1,5 +1,5 @@
 # SilverStrike
-[![Build Status](https://travis-ci.org/agstrike/silverstrike.svg?branch=master)](https://travis-ci.org/agstrike/silverstrike)
+[![Actions Status](https://github.com/agstrike/silverstrike/workflows/Test%20and%20Lint/badge.svg)](https://github.com/agstrike/silverstrike/actions)
 [![codecov](https://codecov.io/gh/agstrike/silverstrike/branch/master/graph/badge.svg)](https://codecov.io/gh/agstrike/silverstrike)
 
 Webapp based on Django to manage personal finances
