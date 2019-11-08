@@ -29,8 +29,8 @@ setup(
     packages=['silverstrike'],
     include_package_data=True,
     install_requires=[
-        'django>=2.0',
-        'djangorestframework',
+        'django>=2.0,<3.0',
+        'djangorestframework<3.8',
         'django-widgets-improved',
         'django-allauth',
         'python-dateutil',
