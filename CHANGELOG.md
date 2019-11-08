@@ -4,6 +4,10 @@ All notable changes to SilverStrike will be documented here.
 
 ## [Unreleased](https://github.com/agstrike/silverstrike/compare/0.1.3...master)
 
+## [0.1.4](https://github.com/agstrike/silverstrike/releases/tag/0.1.4) - 2019-11-08
+### Fixed
+* Pinned the versions of Django and DRF
+
 ## [0.1.3](https://github.com/agstrike/silverstrike/releases/tag/0.1.3) - 2018-05-15
 
 ### Added

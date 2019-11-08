@@ -14,15 +14,14 @@ def get_version():
 
 
 version = get_version()
-long_description = """SilverStrike is a Django based webapp to help you
-manage your personal finances.
-"""
+README = open(path.join(here, 'README.md')).read()
 
 setup(
     name='silverstrike',
     version=version,
     description='Django webapp to manage personal finances',
-    long_description=long_description,
+    long_description=README,
+    long_description_content_type="text/markdown",
     author='Simon Hanna',
     url='https://github.com/agstrike/silverstrike',
     license='MIT',
