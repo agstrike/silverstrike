@@ -22,6 +22,14 @@ class ImportTests(TestCase):
         t = transactions[0]
         self.assertEqual(t.amount, -40.03)
         self.assertEqual(t.book_date, date(2018, 10, 18))
+    
+    def test_bankofamerica(self):
+        transactions = importers.boa.import_transactions(
+            os.path.join(self.base_dir, 'bankofamerica.csv'))
+        self.assertEqual(len(transactions), 4)
+        t = transactions[0]
+        self.assertEqual(t.amount, -142.00)
+        self.assertEqual(t.book_date, date(2019, 12, 20))
 
     @skipUnless(hasattr(importers, 'ofx'), 'ofxparse is not installed')
     def test_ofx(self):
