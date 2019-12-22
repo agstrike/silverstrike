@@ -30,6 +30,14 @@ class ImportTests(TestCase):
         t = transactions[0]
         self.assertEqual(t.amount, -142.00)
         self.assertEqual(t.book_date, date(2019, 12, 20))
+    
+    def test_chase(self):
+        transactions = importers.chase.import_transactions(
+            os.path.join(self.base_dir, 'chase.csv'))
+        self.assertEqual(len(transactions), 9)
+        t = transactions[0]
+        self.assertEqual(t.amount, -41.83)
+        self.assertEqual(t.book_date, date(2019, 11, 28))
 
     @skipUnless(hasattr(importers, 'ofx'), 'ofxparse is not installed')
     def test_ofx(self):
