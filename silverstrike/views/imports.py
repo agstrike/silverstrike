@@ -1,4 +1,6 @@
 import csv
+import json
+from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,6 +10,22 @@ from django.views import generic
 from silverstrike import forms
 from silverstrike import importers
 from silverstrike import models
+
+
+def _update_account(account, data):
+    ibans = json.loads(account.import_ibans)
+    names = json.loads(account.import_names)
+    save = False
+    if data.iban and data.iban not in ibans:
+        ibans.append(data.iban)
+        account.import_ibans = json.dumps(ibans)
+        save = True
+    if data.account and data.account not in names:
+        names.append(data.account)
+        account.import_names = json.dumps(names)
+        save = True
+    if save:
+        account.save()
 
 
 class ImportView(LoginRequiredMixin, generic.TemplateView):
@@ -34,7 +52,50 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
         context = super(ImportProcessView, self).get_context_data(**kwargs)
         file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
         importer = self.kwargs['importer']
+        iban_accounts = dict()
+        names = dict()
+        for a in models.Account.objects.all():
+            try:
+                for iban in json.loads(a.import_ibans):
+                    iban_accounts[iban] = a
+            except json.decoder.JSONDecodeError:
+                pass
+            try:
+                for name in json.loads(a.import_names):
+                    if name in names and names[name] != a:
+                        del names[name]
+                        continue
+                    names[name] = a
+            except json.decoder.JSONDecodeError:
+                pass
         context['data'] = importers.IMPORTERS[importer].import_transactions(file.file.path)
+        max_date = date(1970, 1, 1)
+        min_date = date(3000, 1, 1)
+        for datum in context['data']:
+            if datum.book_date < min_date:
+                min_date = datum.book_date
+            if datum.book_date > max_date:
+                max_date = datum.book_date
+            if datum.iban and datum.iban in iban_accounts:
+                datum.suggested_account = iban_accounts[datum.iban]
+            elif datum.account in names:
+                datum.suggested_account = names[datum.account]
+
+        # duplicate detection
+        transactions = set()
+        for t in models.Transaction.objects.date_range(min_date, max_date):
+            if t.is_transfer:
+                transactions.add('{}-{}-{}'.format(t.src_id, t.date, t.amount))
+                transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
+            elif t.is_deposit:
+                transactions.add('{}-{}-{}'.format(t.src_id, t.date, t.amount))
+            elif t.is_withdraw:
+                transactions.add('{}-{}-{}'.format(t.dst_id, t.date, t.amount))
+        for datum in context['data']:
+            if hasattr(datum, 'suggested_account') and '{}-{}-{:.2f}'.format(
+                    datum.suggested_account.id, datum.book_date, abs(datum.amount)) in transactions:
+                datum.ignore = True
+
         context['recurrences'] = models.RecurringTransaction.objects.exclude(
             interval=models.RecurringTransaction.DISABLED).order_by('title')
         return context
@@ -47,9 +108,10 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             title = request.POST.get('title-{}'.format(i), '')
             account = request.POST.get('account-{}'.format(i), '')
             recurrence = int(request.POST.get('recurrence-{}'.format(i), '-1'))
+            ignore = request.POST.get('ignore-{}'.format(i), '')
             book_date = data[i].book_date
             date = data[i].transaction_date
-            if not (title or account):
+            if not (title and account) or ignore:
                 continue
             amount = float(data[i].amount)
             if amount == 0:
@@ -57,21 +119,32 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             account, _ = models.Account.objects.get_or_create(
                 name=account,
                 defaults={'account_type': models.Account.FOREIGN})
+            _update_account(account, data[i])
             if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()
-            transaction_type = -1
+            transaction = models.Transaction()
             if account.account_type == models.Account.PERSONAL:
-                transaction_type = models.Transaction.TRANSFER
+                transaction.transaction_type = models.Transaction.TRANSFER
+                if amount < 0:
+                    transaction.src_id = self.kwargs['account']
+                    transaction.dst = account
+                else:
+                    transaction.src = account
+                    transaction.dst_id = self.kwargs['account']
             elif account.account_type == models.Account.FOREIGN:
                 if amount < 0:
-                    transaction_type = models.Transaction.WITHDRAW
+                    transaction.transaction_type = models.Transaction.WITHDRAW
+                    transaction.src_id = self.kwargs['account']
+                    transaction.dst = account
                 else:
-                    transaction_type = models.Transaction.DEPOSIT
-            transaction = models.Transaction()
+                    transaction.transaction_type = models.Transaction.DEPOSIT
+                    transaction.dst_id = self.kwargs['account']
+                    transaction.src = account
             transaction.title = title
             transaction.date = date
-            transaction.transaction_type = transaction_type
+            transaction.amount = abs(amount)
+
             if recurrence > 0:
                 transaction.recurrence_id = recurrence
             transaction.save()

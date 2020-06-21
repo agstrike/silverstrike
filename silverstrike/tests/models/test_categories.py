@@ -17,7 +17,8 @@ class CategoryModelTests(TestCase):
         expense = Account.objects.create(
             name='some_account', account_type=Account.FOREIGN)
         transaction = Transaction.objects.create(title='transaction',
-                                                 transaction_type=Transaction.WITHDRAW)
+                                                 transaction_type=Transaction.WITHDRAW,
+                                                 src=account, dst=expense, amount=25.02)
         t = Split.objects.create(
             account=account, opposing_account=expense,
             transaction=transaction, amount=-25.02, category=category)

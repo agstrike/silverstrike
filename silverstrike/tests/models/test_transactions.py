@@ -48,7 +48,7 @@ class TransactionModelTests(TestCase):
     def test_withdraw_amount(self):
         transaction = create_transaction('meh', self.personal, self.foreign,
                                          100, Transaction.WITHDRAW)
-        self.assertEqual(transaction.amount, -100)
+        self.assertEqual(transaction.amount, 100)
 
     def test_transfer_amount(self):
         transaction = create_transaction('meh', self.personal, self.savings,

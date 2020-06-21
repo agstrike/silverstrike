@@ -42,20 +42,20 @@
           {% endfor %}
         </div>
       </div>
-      <div class="form-group{% if form.source_account.errors %} has-error{% endif %}">
-        <label class="col-sm-2 control-label" for="{{ form.source_account.id_for_label }}">{{ form.source_account.label }}</label>
+      <div class="form-group{% if form.src.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.src.id_for_label }}">{{ form.src.label }}</label>
         <div class="col-sm-8">
-          {{ form.source_account|add_class:"form-control" }}
-          {% for error in form.source_account.errors %}
+          {{ form.src|add_class:"form-control" }}
+          {% for error in form.src.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
         </div>
       </div>
-      <div class="form-group{% if form.destination_account.errors %} has-error{% endif %}">
-        <label class="col-sm-2 control-label" for="{{ form.destination_account.id_for_label }}">{{ form.destination_account.label }}</label>
+      <div class="form-group{% if form.dst.errors %} has-error{% endif %}">
+        <label class="col-sm-2 control-label" for="{{ form.dst.id_for_label }}">{{ form.dst.label }}</label>
         <div class="col-sm-8">
-          {{ form.destination_account|add_class:"form-control" }}
-          {% for error in form.destination_account.errors %}
+          {{ form.dst|add_class:"form-control" }}
+          {% for error in form.dst.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
         </div>
@@ -127,14 +127,14 @@ $(function() {
   orientation: 'bottom'
 
   });
-  if ($('input#id_source_account').length > 0) {
+  if ($('input#id_src').length > 0) {
       $.getJSON('{% url 'api_accounts' 'FOREIGN' %}').done(function (data) {
-          $('#id_source_account').typeahead({source: data});
+          $('#id_src').typeahead({source: data});
       });
   }
-  if ($('input#id_destination_account').length > 0) {
+  if ($('input#id_dst').length > 0) {
       $.getJSON('{% url 'api_accounts' 'FOREIGN' %}').done(function (data) {
-          $('#id_destination_account').typeahead({source: data});
+          $('#id_dst').typeahead({source: data});
       });
   }
   $('.date-input').attr('autocomplete', 'off');

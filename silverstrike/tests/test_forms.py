@@ -13,8 +13,8 @@ class FormTests(TestCase):
     def test_TransferForm(self):
         data = {
             'title': 'transfer',
-            'source_account': self.account.pk,
-            'destination_account': self.personal.pk,
+            'src': self.account.pk,
+            'dst': self.personal.pk,
             'amount': 123,
             'date': '2017-01-01'
             }
@@ -35,8 +35,8 @@ class FormTests(TestCase):
     def test_DepositForm(self):
         data = {
             'title': 'deposit',
-            'source_account': 'Work account',
-            'destination_account': self.account.pk,
+            'src': 'Work account',
+            'dst': self.account.pk,
             'amount': 123,
             'date': '2017-01-01'
             }
@@ -64,8 +64,8 @@ class FormTests(TestCase):
     def test_WithdrawForm(self):
         data = {
             'title': 'withdraw',
-            'source_account': self.account.pk,
-            'destination_account': 'Supermarket a',
+            'src': self.account.pk,
+            'dst': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
             }
@@ -93,8 +93,8 @@ class FormTests(TestCase):
     def test_different_revenue_accounts(self):
         data = {
             'title': 'deposit',
-            'source_account': 'Job a',
-            'destination_account': self.account.pk,
+            'src': 'Job a',
+            'dst': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.DEPOSIT,
@@ -102,7 +102,7 @@ class FormTests(TestCase):
         form = DepositForm(data)
         self.assertTrue(form.is_valid())
         form.save()
-        data['source_account'] = 'Job b'
+        data['src'] = 'Job b'
         form = DepositForm(data)
         self.assertTrue(form.is_valid())
         form.save()
@@ -112,15 +112,15 @@ class FormTests(TestCase):
     def test_different_expense_accounts(self):
         data = {
             'title': 'withdraw',
-            'source_account': self.account.pk,
-            'destination_account': 'Supermarket a',
+            'src': self.account.pk,
+            'dst': 'Supermarket a',
             'amount': 123,
             'date': '2017-01-01'
             }
         form = WithdrawForm(data)
         self.assertTrue(form.is_valid())
         form.save()
-        data['destination_account'] = 'Supermarket b'
+        data['dst'] = 'Supermarket b'
         form = WithdrawForm(data)
         self.assertTrue(form.is_valid())
         form.save()
@@ -130,8 +130,8 @@ class FormTests(TestCase):
     def test_transfer_to_same_account(self):
         data = {
             'title': 'transfer',
-            'source_account': self.account.pk,
-            'destination_account': self.account.pk,
+            'src': self.account.pk,
+            'dst': self.account.pk,
             'amount': 123,
             'date': '2017-01-01',
             'transaction_type': Transaction.TRANSFER
@@ -139,8 +139,8 @@ class FormTests(TestCase):
         form = TransferForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 2)
-        self.assertEqual(len(form.errors['source_account']), 1)
-        self.assertEqual(len(form.errors['destination_account']), 1)
+        self.assertEqual(len(form.errors['src']), 1)
+        self.assertEqual(len(form.errors['dst']), 1)
 
     def test_transfer_form_only_shows_personal_accounts(self):
         pass

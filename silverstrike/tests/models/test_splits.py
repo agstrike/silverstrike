@@ -28,7 +28,7 @@ class SplitQuerySetTests(TestCase):
         self.assertEqual(queryset.count(), 5)
 
     def test_transfers_once(self):
-        queryset = Split.objects.transfers_once()
+        queryset = Split.objects.personal().transfers_once()
         # this time we should get exactly 4.
         self.assertEqual(queryset.count(), 4)
 
