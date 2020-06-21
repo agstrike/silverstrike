@@ -101,6 +101,7 @@ class Command(BaseCommand):
                 if transaction_date > date.today():
                     continue
                 self.transactions.append(Transaction(
+                    src=src, dst=dst,
                     title=title, date=transaction_date, id=self.counter,
                     transaction_type=type, recurrence=recurrence))
                 self.splits.append(Split(
