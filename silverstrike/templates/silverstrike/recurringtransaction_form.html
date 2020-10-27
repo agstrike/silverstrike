@@ -59,22 +59,3 @@
 </div>
 </div>
 {% endblock %}
-
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
-<script>
-$(function() {
-  $('#id_date').datepicker({
-    autoclose: true,
-    format: 'yyyy-mm-dd',
-    startDate: '0d',
-    orientation: 'bottom'
-  });
-  $('#id_date').attr('autocomplete', 'off');
-})
-</script>
-{% endblock %}

@@ -72,7 +72,7 @@
       <div class="form-group{% if form.date.errors %} has-error{% endif %}">
         <label class="col-sm-2 control-label" for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
         <div class="col-sm-8">
-          {{ form.date|add_class:"form-control date-input" }}
+          {{ form.date|add_class:"form-control" }}
           {% for error in form.date.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
@@ -81,7 +81,7 @@
       <div class="form-group{% if form.value_date.errors %} has-error{% endif %}">
         <label class="col-sm-2 control-label" for="{{ form.value_date.id_for_label }}">{{ form.value_date.label }}</label>
         <div class="col-sm-8">
-          {{ form.value_date|add_class:"form-control date-input" }}
+          {{ form.value_date|add_class:"form-control" }}
           {% for error in form.value_date.errors %}
           <span class="help-block">{{ error }}</span>
           {% endfor %}
@@ -111,22 +111,11 @@
 </div>
 {% endblock %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static 'vendor/css/bootstrap-datepicker.min.css' %}">
-{% endblock %}
-
 {% block scripts %}
-<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'vendor/js/bootstrap3-typeahead.min.js' %}"></script>
 
 <script>
 $(function() {
-  $('.date-input').datepicker({
-  autoclose: true,
-  format: 'yyyy-mm-dd',
-  orientation: 'bottom'
-
-  });
   if ($('input#id_src').length > 0) {
       $.getJSON('{% url 'api_accounts' 'FOREIGN' %}').done(function (data) {
           $('#id_src').typeahead({source: data});
@@ -137,7 +126,6 @@ $(function() {
           $('#id_dst').typeahead({source: data});
       });
   }
-  $('.date-input').attr('autocomplete', 'off');
 })
 </script>
 {% endblock %}
