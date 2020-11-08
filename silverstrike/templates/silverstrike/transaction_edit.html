@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
+{% load tags %}
 
 {% block content_header %}
 <h1>Transactions
@@ -123,7 +124,7 @@
 $(function() {
   $('.date-input').datepicker({
   autoclose: true,
-  format: 'yyyy-mm-dd',
+  format: '{{ date_format|dateformat_py2js }}',
   orientation: 'bottom'
 
   });
