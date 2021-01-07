@@ -11,7 +11,9 @@ class SplitQuerySetTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
         self.savings = Account.objects.create(name='savings')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=Account.AccountType.FOREIGN)
 
         self.transfer_transaction = create_transaction(
             'transfer', self.personal, self.savings, 100, Transaction.TRANSFER, date(2017, 1, 1))
@@ -97,7 +99,9 @@ class SplitModelTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
         self.savings = Account.objects.create(name='savings')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=Account.AccountType.FOREIGN)
 
     def test_split_str_method(self):
         transaction = create_transaction('meh', self.foreign, self.personal,

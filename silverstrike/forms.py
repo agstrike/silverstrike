@@ -8,7 +8,7 @@ from silverstrike import importers, models
 class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = models.ImportFile
-        fields = ['file']
+        fields = ['file', 'account', 'importer']
     account = forms.ModelChoiceField(queryset=models.Account.objects.personal().active())
     importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
 
@@ -20,7 +20,8 @@ class ForeignAccountForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if models.Account.objects.filter(name=name, account_type=models.Account.AccountType.FOREIGN).exists():
+        if models.Account.objects.filter(name=name,
+                                         account_type=models.Account.AccountType.FOREIGN).exists():
             raise ValidationError(_('An account with this name already exists'))
         return name
 
@@ -34,7 +35,8 @@ class AccountCreateForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if models.Account.objects.filter(name=name, account_type=models.Account.AccountType.PERSONAL).exists():
+        if models.Account.objects.filter(name=name,
+                                         account_type=models.Account.AccountType.PERSONAL).exists():
             raise ValidationError(_('An account with this name already exists'))
         return name
 
@@ -159,8 +161,9 @@ class DepositForm(TransactionForm):
                           widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
     def clean_src(self):
-        account, _ = models.Account.objects.get_or_create(name=self.cleaned_data['src'],
-                                                          account_type=models.Account.AccountType.FOREIGN)
+        account, _ = models.Account.objects.get_or_create(
+            name=self.cleaned_data['src'],
+            account_type=models.Account.AccountType.FOREIGN)
         return account
 
     def clean(self):

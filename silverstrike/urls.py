@@ -130,7 +130,7 @@ urlpatterns = [
 
     path('import/', import_views.ImportView.as_view(), name='import'),
     path('import/upload/', import_views.ImportUploadView.as_view(), name='import_upload'),
-    path('import/process/<uuid:uuid>/<int:account>/<int:importer>/',
+    path('import/process/<uuid:uuid>/',
          import_views.ImportProcessView.as_view(), name='import_process'),
 
     path('import/firefly/', import_views.ImportFireflyView.as_view(), name='import_firefly'),

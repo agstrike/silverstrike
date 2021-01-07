@@ -10,7 +10,9 @@ from silverstrike.tests import create_transaction
 class TransactionQuerySetTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=Account.AccountType.FOREIGN)
 
     def test_last_10_returns_at_most_10(self):
         for i in range(1, 32):
@@ -32,7 +34,9 @@ class TransactionModelTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
         self.savings = Account.objects.create(name='savings')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=Account.AccountType.FOREIGN)
 
     def test_transaction_str_method(self):
         transaction = create_transaction('transaction', self.personal, self.foreign,

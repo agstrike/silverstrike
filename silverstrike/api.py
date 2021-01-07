@@ -13,7 +13,7 @@ from .models import Account, Split
 def get_accounts(request, account_type):
     accounts = Account.objects.exclude(account_type=Account.AccountType.SYSTEM)
     if account_type != 'all':
-        account_type = getattr(Account, account_type)
+        account_type = getattr(Account.AccountType, account_type)
         accounts = accounts.filter(account_type=account_type)
 
     return JsonResponse(list(accounts.values_list('name', flat=True)), safe=False)

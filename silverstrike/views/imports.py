@@ -39,10 +39,8 @@ class ImportUploadView(LoginRequiredMixin, generic.edit.CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        account = form.cleaned_data['account']
-        importer = form.cleaned_data['importer']
         return HttpResponseRedirect(
-            reverse('import_process', args=[self.object.pk, account.pk, importer]))
+            reverse('import_process', args=[self.object.pk]))
 
 
 class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
@@ -51,7 +49,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ImportProcessView, self).get_context_data(**kwargs)
         file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
-        importer = self.kwargs['importer']
+        importer = file.importer
         iban_accounts = dict()
         names = dict()
         for a in models.Account.objects.all():
@@ -102,7 +100,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         file = models.ImportFile.objects.get(uuid=self.kwargs['uuid'])
-        importer = self.kwargs['importer']
+        importer = file.importer
         data = importers.IMPORTERS[importer].import_transactions(file.file.path)
         for i in range(len(data)):
             title = request.POST.get('title-{}'.format(i), '')
@@ -127,19 +125,19 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
             if account.account_type == models.Account.AccountType.PERSONAL:
                 transaction.transaction_type = models.Transaction.TRANSFER
                 if amount < 0:
-                    transaction.src_id = self.kwargs['account']
+                    transaction.src_id = file.account_id
                     transaction.dst = account
                 else:
                     transaction.src = account
-                    transaction.dst_id = self.kwargs['account']
+                    transaction.dst_id = file.account_id
             elif account.account_type == models.Account.AccountType.FOREIGN:
                 if amount < 0:
                     transaction.transaction_type = models.Transaction.WITHDRAW
-                    transaction.src_id = self.kwargs['account']
+                    transaction.src_id = file.account_id
                     transaction.dst = account
                 else:
                     transaction.transaction_type = models.Transaction.DEPOSIT
-                    transaction.dst_id = self.kwargs['account']
+                    transaction.dst_id = file.account_id
                     transaction.src = account
             transaction.title = title
             transaction.date = date
@@ -154,7 +152,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 amount=amount,
                 date=book_date,
                 transaction=transaction,
-                account_id=self.kwargs['account'],
+                account_id=file.account_id,
                 opposing_account=account
                 )
             models.Split.objects.create(
@@ -163,7 +161,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 date=date,
                 transaction=transaction,
                 account=account,
-                opposing_account_id=self.kwargs['account']
+                opposing_account_id=file.account_id
                 )
         return HttpResponseRedirect('/')
 

@@ -45,7 +45,9 @@ class Command(BaseCommand):
         self.transactions = []
         self.splits = []
         self.counter = 100
-        self.work, _ = Account.objects.get_or_create(name='Work', account_type=Account.AccountType.FOREIGN)
+        self.work, _ = Account.objects.get_or_create(
+            name='Work',
+            account_type=Account.AccountType.FOREIGN)
 
         self.checking, _ = Account.objects.get_or_create(name='Checking', show_on_dashboard=True)
         self.savings, _ = Account.objects.get_or_create(name='Savings', show_on_dashboard=True)
@@ -56,7 +58,9 @@ class Command(BaseCommand):
             name='Supermarket', account_type=Account.AccountType.FOREIGN)
         self.insurer, _ = Account.objects.get_or_create(
             name='Insurnace', account_type=Account.AccountType.FOREIGN)
-        self.club, _ = Account.objects.get_or_create(name='Club', account_type=Account.AccountType.FOREIGN)
+        self.club, _ = Account.objects.get_or_create(
+            name='Club',
+            account_type=Account.AccountType.FOREIGN)
 
         self.home, _ = Category.objects.get_or_create(name='Home')
         self.groceries, _ = Category.objects.get_or_create(name='Groceries')

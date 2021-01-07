@@ -195,7 +195,9 @@ class SplitQuerySet(models.QuerySet):
         return self.filter(category=category)
 
     def transfers_once(self):
-        return self.exclude(opposing_account__account_type=Account.AccountType.PERSONAL, amount__gte=0)
+        return self.exclude(
+            opposing_account__account_type=Account.AccountType.PERSONAL,
+            amount__gte=0)
 
     def exclude_transfers(self):
         return self.exclude(account__account_type=Account.AccountType.PERSONAL,
@@ -292,6 +294,9 @@ class Budget(models.Model):
 class ImportFile(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(upload_to='imports')
+    created_at = models.DateTimeField(auto_now_add=True)
+    account = models.ForeignKey(Account, models.SET_NULL, null=True)
+    importer = models.PositiveIntegerField(null=True)
 
 
 class RecurringTransactionManager(models.Manager):
