@@ -7,17 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.5, 3.6, 3.7]
-        tox: [django2.0, django2.1, django2.2, flake, codecov]
+        python: [3.6, 3.7, 3.8, 3.9]
+        tox: [django3.0, django3.1, flake, codecov]
         exclude:
-        - python: 3.5
-          tox: flake
-        - python: 3.5
-          tox: codecov
-        - python: 3.5
+        - python: 3.6
           tox: flake
         - python: 3.6
           tox: codecov
+        - python: 3.7
+          tox: flake
+        - python: 3.7
+          tox: codecov
+        - python: 3.8
+          tox: flake
+        - python: 3.8
+          tox: codecov
+
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python }}
