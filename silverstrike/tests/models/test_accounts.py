@@ -7,7 +7,9 @@ from silverstrike.models import Account, Split
 class AccountQuerysetTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='Personal')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=Account.AccountType.FOREIGN)
 
     def test_personal_queryset(self):
         queryset = Account.objects.personal()

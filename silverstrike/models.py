@@ -195,7 +195,9 @@ class SplitQuerySet(models.QuerySet):
         return self.filter(category=category)
 
     def transfers_once(self):
-        return self.exclude(opposing_account__account_type=Account.AccountType.PERSONAL, amount__gte=0)
+        return self.exclude(
+            opposing_account__account_type=Account.AccountType.PERSONAL,
+            amount__gte=0)
 
     def exclude_transfers(self):
         return self.exclude(account__account_type=Account.AccountType.PERSONAL,

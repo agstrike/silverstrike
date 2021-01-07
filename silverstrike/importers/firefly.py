@@ -14,8 +14,9 @@ def import_firefly(csv_path):
     notes = 'notes'
     transaction_type = 'transaction_type'
 
-    system_account, _ = models.Account.objects.get_or_create(account_type=models.Account.AccountType.SYSTEM,
-                                                             defaults={'name': 'System Account'})
+    system_account, _ = models.Account.objects.get_or_create(
+        account_type=models.Account.AccountType.SYSTEM,
+        defaults={'name': 'System Account'})
 
     personal_accounts = dict()
     foreign_accounts = dict()
@@ -59,8 +60,9 @@ def import_firefly(csv_path):
                 if line[destination] in foreign_accounts:
                     line[destination] = foreign_accounts[line[destination]]
                 else:
-                    a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.AccountType.FOREIGN)
+                    a = models.Account.objects.create(
+                        name=line[destination],
+                        account_type=models.Account.AccountType.FOREIGN)
                     foreign_accounts[a.name] = a.id
                     line[destination] = a.id
 
@@ -72,8 +74,9 @@ def import_firefly(csv_path):
                 if line[destination] in personal_accounts:
                     line[destination] = personal_accounts[line[destination]]
                 else:
-                    a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.AccountType.PERSONAL)
+                    a = models.Account.objects.create(
+                        name=line[destination],
+                        account_type=models.Account.AccountType.PERSONAL)
                     personal_accounts[a.name] = a.id
                     line[destination] = a.id
 
@@ -82,8 +85,9 @@ def import_firefly(csv_path):
                 if line[destination] in foreign_accounts:
                     line[destination] = foreign_accounts[line[destination]]
                 else:
-                    a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.AccountType.FOREIGN)
+                    a = models.Account.objects.create(
+                        name=line[destination],
+                        account_type=models.Account.AccountType.FOREIGN)
                     foreign_accounts[a.name] = a.id
                     line[destination] = a.id
             elif line[transaction_type] == 'Opening balance':
