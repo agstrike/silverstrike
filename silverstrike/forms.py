@@ -8,7 +8,7 @@ from silverstrike import importers, models
 class ImportUploadForm(forms.ModelForm):
     class Meta:
         model = models.ImportFile
-        fields = ['file']
+        fields = ['file', 'account', 'importer']
     account = forms.ModelChoiceField(queryset=models.Account.objects.personal().active())
     importer = forms.ChoiceField(choices=enumerate(importers.IMPORTER_NAMES))
 

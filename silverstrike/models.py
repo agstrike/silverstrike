@@ -292,6 +292,9 @@ class Budget(models.Model):
 class ImportFile(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(upload_to='imports')
+    created_at = models.DateTimeField(auto_now_add=True)
+    account = models.ForeignKey(Account, models.SET_NULL, null=True)
+    importer = models.PositiveIntegerField(null=True)
 
 
 class RecurringTransactionManager(models.Manager):
