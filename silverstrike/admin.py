@@ -34,7 +34,7 @@ class AccountAdmin(admin.ModelAdmin):
             return
         for account in accounts:
             failure = False
-            if account.account_type != models.Account.FOREIGN:
+            if account.account_type != models.Account.AccountType.FOREIGN:
                 self.message_user(request, _(
                     'You can only merge foreign accounts, "{}" isn\'t.'.format(account.name)))
                 failure = True

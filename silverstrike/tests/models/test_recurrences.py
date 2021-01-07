@@ -10,7 +10,7 @@ from silverstrike.tests import create_transaction
 class RecurrenceTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.FOREIGN)
+        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
 
         self.date = date(2018, 1, 30)
         self.recurrence = RecurringTransaction.objects.create(

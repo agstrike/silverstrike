@@ -59,12 +59,12 @@ class RecurrenceNameView(views.APIView):
 class PersonalAccountsView(views.APIView):
     def get(self, request, format=None):
         serializer = serializers.AccountSerializer(
-            Account.objects.filter(account_type=Account.PERSONAL), many=True)
+            Account.objects.filter(account_type=Account.AccountType.PERSONAL), many=True)
         return Response(serializer.data)
 
 
 class ForeignAccountsView(views.APIView):
     def get(self, request, format=None):
         serializer = serializers.AccountSerializer(
-            Account.objects.filter(account_type=Account.FOREIGN), many=True)
+            Account.objects.filter(account_type=Account.AccountType.FOREIGN), many=True)
         return Response(serializer.data)

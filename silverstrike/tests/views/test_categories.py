@@ -13,9 +13,9 @@ class ViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.FOREIGN)
+            name="expense account", account_type=Account.AccountType.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.FOREIGN)
+            name="revenue account", account_type=Account.AccountType.FOREIGN)
 
     def test_context_CategoryIndex_with_no_categories(self):
         context = self.client.get(reverse('category_by_month')).context

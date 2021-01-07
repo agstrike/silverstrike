@@ -28,7 +28,7 @@ class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
 
     def form_valid(self, form):
         account = form.save(commit=False)
-        account.account_type = Account.FOREIGN
+        account.account_type = Account.AccountType.FOREIGN
         account.save()
         return HttpResponseRedirect(reverse_lazy('foreign_accounts'))
 
@@ -39,18 +39,18 @@ class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.AccountType.SYSTEM:
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.post(self, request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.AccountType.SYSTEM:
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.get(self, request, *args, **kwargs)
 
     def get_form_class(self):
-        if self.object.account_type != Account.PERSONAL:
+        if self.object.account_type != Account.AccountType.PERSONAL:
             self.fields = ['name']
         return super(AccountUpdate, self).get_form_class()
 
@@ -61,14 +61,14 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.AccountType.SYSTEM:
             return HttpResponse(_('You are not allowed to delete this account'), status=403)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == Account.SYSTEM:
+        if self.object.account_type == Account.AccountType.SYSTEM:
             return HttpResponse(_('You are not allowed to delete this account'), status=403)
         self.object.delete()
         return HttpResponseRedirect(self.success_url)
@@ -109,7 +109,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
             self.account = Account.objects.get(pk=self.kwargs['pk'])
         except Account.DoesNotExist:
             raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
-        if self.account.account_type == Account.SYSTEM:
+        if self.account.account_type == Account.AccountType.SYSTEM:
             return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
             self.dstart = None
@@ -174,7 +174,7 @@ class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
             self.account = Account.objects.get(pk=self.kwargs['pk'])
         except Account.DoesNotExist:
             raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
-        if self.account.account_type != Account.PERSONAL:
+        if self.account.account_type != Account.AccountType.PERSONAL:
             return HttpResponse(_('You can not reconcile this account'), status=403)
         return super(ReconcileView, self).dispatch(request, *args, **kwargs)
 

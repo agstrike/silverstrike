@@ -14,15 +14,15 @@ def import_firefly(csv_path):
     notes = 'notes'
     transaction_type = 'transaction_type'
 
-    system_account, _ = models.Account.objects.get_or_create(account_type=models.Account.SYSTEM,
+    system_account, _ = models.Account.objects.get_or_create(account_type=models.Account.AccountType.SYSTEM,
                                                              defaults={'name': 'System Account'})
 
     personal_accounts = dict()
     foreign_accounts = dict()
     for name, id, t in models.Account.objects.all().values_list('name', 'id', 'account_type'):
-        if t == models.Account.PERSONAL:
+        if t == models.Account.AccountType.PERSONAL:
             personal_accounts[name] = id
-        elif t == models.Account.FOREIGN:
+        elif t == models.Account.AccountType.FOREIGN:
             foreign_accounts[name] = id
 
     categories = dict()
@@ -48,7 +48,7 @@ def import_firefly(csv_path):
                 line[source] = personal_accounts[line[source]]
             else:
                 a = models.Account.objects.create(name=line[source],
-                                                  account_type=models.Account.PERSONAL)
+                                                  account_type=models.Account.AccountType.PERSONAL)
                 personal_accounts[a.name] = a.id
                 line[source] = a.id
 
@@ -60,7 +60,7 @@ def import_firefly(csv_path):
                     line[destination] = foreign_accounts[line[destination]]
                 else:
                     a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.FOREIGN)
+                                                      account_type=models.Account.AccountType.FOREIGN)
                     foreign_accounts[a.name] = a.id
                     line[destination] = a.id
 
@@ -73,7 +73,7 @@ def import_firefly(csv_path):
                     line[destination] = personal_accounts[line[destination]]
                 else:
                     a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.PERSONAL)
+                                                      account_type=models.Account.AccountType.PERSONAL)
                     personal_accounts[a.name] = a.id
                     line[destination] = a.id
 
@@ -83,7 +83,7 @@ def import_firefly(csv_path):
                     line[destination] = foreign_accounts[line[destination]]
                 else:
                     a = models.Account.objects.create(name=line[destination],
-                                                      account_type=models.Account.FOREIGN)
+                                                      account_type=models.Account.AccountType.FOREIGN)
                     foreign_accounts[a.name] = a.id
                     line[destination] = a.id
             elif line[transaction_type] == 'Opening balance':

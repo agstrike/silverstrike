@@ -14,5 +14,5 @@ def create_transaction(title, src, dst, amount, type, date=date.today(), categor
     return t
 
 
-def create_account(name, account_type=Account.PERSONAL):
+def create_account(name, account_type=Account.AccountType.PERSONAL):
     return Account.objects.create(name=name, account_type=account_type)

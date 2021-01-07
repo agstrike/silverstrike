@@ -16,9 +16,9 @@ class AbstractAccountViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.FOREIGN)
+            name="expense account", account_type=Account.AccountType.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.FOREIGN)
+            name="revenue account", account_type=Account.AccountType.FOREIGN)
 
 
 class AccountDetailViewTests(AbstractAccountViewTests):
@@ -29,7 +29,7 @@ class AccountDetailViewTests(AbstractAccountViewTests):
         self.assertEqual(context['dstart'], today - datetime.timedelta(days=30))
 
     def test_view_system_account(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         response = self.client.get(reverse('account_view', args=[system.id]))
         self.assertEqual(response.status_code, 403)
 
@@ -152,7 +152,7 @@ class ForeignAccountCreateViewTests(TestCase):
         self.assertRedirects(response, reverse('foreign_accounts'))
         self.assertEqual(Account.objects.count(), 2)
         account = Account.objects.last()
-        self.assertEqual(account.account_type, Account.FOREIGN)
+        self.assertEqual(account.account_type, Account.AccountType.FOREIGN)
         self.assertEqual(account.name, 'foobar')
 
 
@@ -197,12 +197,12 @@ class AccountUpdateTests(AbstractAccountViewTests):
         self.assertNotIn('active', context['form'].fields)
 
     def test_system_AccountUpdateView(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         response = self.client.get(reverse('account_update', args=[system.id]))
         self.assertEqual(response.status_code, 403)
 
     def test_post_system_AccountUpdateView(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         response = self.client.post(reverse('account_update', args=[system.id]), {})
         self.assertEqual(response.status_code, 403)
 
@@ -239,7 +239,7 @@ class AccountDeleteTests(AbstractAccountViewTests):
         self.assertEqual(Account.objects.personal().count(), 1)
 
     def test_delete_system_account(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         response = self.client.get(reverse('account_delete', args=[system.id]))
         self.assertEqual(response.status_code, 403)
         self.assertEqual(Account.objects.get(pk=system.id), system)
@@ -264,7 +264,7 @@ class AccountReconcileView(AbstractAccountViewTests):
         self.assertEqual(response.status_code, 403)
 
     def test_system_account(self):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         response = self.client.get(reverse('account_reconcile', args=[system.id]))
         self.assertEqual(response.status_code, 403)
 

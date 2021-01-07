@@ -10,7 +10,7 @@ class AccountSerializer(serializers.ModelSerializer):
         read_only_fields = ('last_modified',)
 
     def validate_account_type(self, value):
-        if value == Account.SYSTEM:
+        if value == Account.AccountType.SYSTEM:
             raise serializers.ValidationError("You can't create system accounts")
         return value
 

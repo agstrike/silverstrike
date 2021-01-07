@@ -15,7 +15,7 @@ class CategoryModelTests(TestCase):
 
         account = Account.objects.create(name='some_account')
         expense = Account.objects.create(
-            name='some_account', account_type=Account.FOREIGN)
+            name='some_account', account_type=Account.AccountType.FOREIGN)
         transaction = Transaction.objects.create(title='transaction',
                                                  transaction_type=Transaction.WITHDRAW,
                                                  src=account, dst=expense, amount=25.02)

@@ -118,13 +118,13 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 continue
             account, _ = models.Account.objects.get_or_create(
                 name=account,
-                defaults={'account_type': models.Account.FOREIGN})
+                defaults={'account_type': models.Account.AccountType.FOREIGN})
             _update_account(account, data[i])
             if not account.iban and hasattr(data[i], 'iban'):
                 account.iban = data[i].iban
                 account.save()
             transaction = models.Transaction()
-            if account.account_type == models.Account.PERSONAL:
+            if account.account_type == models.Account.AccountType.PERSONAL:
                 transaction.transaction_type = models.Transaction.TRANSFER
                 if amount < 0:
                     transaction.src_id = self.kwargs['account']
@@ -132,7 +132,7 @@ class ImportProcessView(LoginRequiredMixin, generic.TemplateView):
                 else:
                     transaction.src = account
                     transaction.dst_id = self.kwargs['account']
-            elif account.account_type == models.Account.FOREIGN:
+            elif account.account_type == models.Account.AccountType.FOREIGN:
                 if amount < 0:
                     transaction.transaction_type = models.Transaction.WITHDRAW
                     transaction.src_id = self.kwargs['account']

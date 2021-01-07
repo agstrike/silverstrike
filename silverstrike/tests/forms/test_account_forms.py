@@ -30,7 +30,7 @@ class AccountCreateFormTests(TestCase):
         self.assertIn('name', form.errors)
 
     def test_unique_name_foregin_accounts(self):
-        models.Account.objects.create(name='foo', account_type=models.Account.FOREIGN)
+        models.Account.objects.create(name='foo', account_type=models.Account.AccountType.FOREIGN)
         form = forms.ForeignAccountForm({
             'name': 'foo'
         })
@@ -39,7 +39,7 @@ class AccountCreateFormTests(TestCase):
         self.assertIn('name', form.errors)
 
     def test_unique_allows_different_types(self):
-        models.Account.objects.create(name='foo', account_type=models.Account.FOREIGN)
+        models.Account.objects.create(name='foo', account_type=models.Account.AccountType.FOREIGN)
         models.Account.objects.create(name='bar')
         form = forms.AccountCreateForm({
             'name': 'foo', 'initial_balance': 100, 'active': True

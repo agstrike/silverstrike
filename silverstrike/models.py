@@ -10,10 +10,10 @@ from django.utils.translation import gettext as _
 
 class AccountQuerySet(models.QuerySet):
     def personal(self):
-        return self.filter(account_type=Account.PERSONAL)
+        return self.filter(account_type=Account.AccountType.PERSONAL)
 
     def foreign(self):
-        return self.filter(account_type=Account.FOREIGN)
+        return self.filter(account_type=Account.AccountType.FOREIGN)
 
     def active(self):
         return self.filter(active=True)
@@ -26,17 +26,13 @@ class AccountQuerySet(models.QuerySet):
 
 
 class Account(models.Model):
-    PERSONAL = 1
-    FOREIGN = 2
-    SYSTEM = 3
-    ACCOUNT_TYPES = (
-        (PERSONAL, _('Personal')),
-        (FOREIGN, _('Foreign')),
-        (SYSTEM, _('System')),
-    )
+    class AccountType(models.IntegerChoices):
+        PERSONAL = 1, _('Personal')
+        FOREIGN = 2, _('Foreign')
+        SYSTEM = 3, _('System')
 
     name = models.CharField(max_length=64)
-    account_type = models.IntegerField(choices=ACCOUNT_TYPES, default=PERSONAL)
+    account_type = models.IntegerField(choices=AccountType.choices, default=AccountType.PERSONAL)
     active = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
     show_on_dashboard = models.BooleanField(default=False)
@@ -55,11 +51,11 @@ class Account(models.Model):
 
     @property
     def account_type_str(self):
-        return Account.ACCOUNT_TYPES[self.account_type - 1][1]
+        return Account.AccountType.labels[self.account_type - 1]
 
     @property
     def is_personal(self):
-        return self.account_type == Account.PERSONAL
+        return self.account_type == Account.AccountType.PERSONAL
 
     @property
     def transaction_num(self):
@@ -102,7 +98,7 @@ class Account(models.Model):
         return data_points
 
     def set_initial_balance(self, amount):
-        system = Account.objects.get(account_type=Account.SYSTEM)
+        system = Account.objects.get(account_type=Account.AccountType.SYSTEM)
         transaction = Transaction.objects.create(title=_('Initial Balance'),
                                                  transaction_type=Transaction.SYSTEM,
                                                  src=system,
@@ -184,13 +180,13 @@ class Transaction(models.Model):
 
 class SplitQuerySet(models.QuerySet):
     def personal(self):
-        return self.filter(account__account_type=Account.PERSONAL)
+        return self.filter(account__account_type=Account.AccountType.PERSONAL)
 
     def income(self):
-        return self.filter(opposing_account__account_type=Account.FOREIGN, amount__gt=0)
+        return self.filter(opposing_account__account_type=Account.AccountType.FOREIGN, amount__gt=0)
 
     def expense(self):
-        return self.filter(opposing_account__account_type=Account.FOREIGN, amount__lt=0)
+        return self.filter(opposing_account__account_type=Account.AccountType.FOREIGN, amount__lt=0)
 
     def date_range(self, dstart, dend):
         return self.filter(date__gte=dstart, date__lte=dend)
@@ -199,11 +195,11 @@ class SplitQuerySet(models.QuerySet):
         return self.filter(category=category)
 
     def transfers_once(self):
-        return self.exclude(opposing_account__account_type=Account.PERSONAL, amount__gte=0)
+        return self.exclude(opposing_account__account_type=Account.AccountType.PERSONAL, amount__gte=0)
 
     def exclude_transfers(self):
-        return self.exclude(account__account_type=Account.PERSONAL,
-                            opposing_account__account_type=Account.PERSONAL)
+        return self.exclude(account__account_type=Account.AccountType.PERSONAL,
+                            opposing_account__account_type=Account.AccountType.PERSONAL)
 
     def upcoming(self):
         return self.filter(date__gt=date.today())
@@ -271,7 +267,7 @@ class Category(models.Model):
     @property
     def money_spent(self):
         return abs(Split.objects.filter(
-                category=self, account__account_type=Account.PERSONAL,
+                category=self, account__account_type=Account.AccountType.PERSONAL,
                 transaction__transaction_type=Transaction.WITHDRAW).aggregate(
             models.Sum('amount'))['amount__sum'] or 0)
 

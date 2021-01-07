@@ -32,7 +32,7 @@ class Command(BaseCommand):
         Split.objects.bulk_create(self.splits)
 
     def _prune(self):
-        Account.objects.exclude(account_type=Account.SYSTEM).delete()
+        Account.objects.exclude(account_type=Account.AccountType.SYSTEM).delete()
         Category.objects.all().delete()
         RecurringTransaction.objects.all().delete()
         Transaction.objects.all().delete()
@@ -45,18 +45,18 @@ class Command(BaseCommand):
         self.transactions = []
         self.splits = []
         self.counter = 100
-        self.work, _ = Account.objects.get_or_create(name='Work', account_type=Account.FOREIGN)
+        self.work, _ = Account.objects.get_or_create(name='Work', account_type=Account.AccountType.FOREIGN)
 
         self.checking, _ = Account.objects.get_or_create(name='Checking', show_on_dashboard=True)
         self.savings, _ = Account.objects.get_or_create(name='Savings', show_on_dashboard=True)
 
         self.landlord, _ = Account.objects.get_or_create(
-            name='Landlord', account_type=Account.FOREIGN)
+            name='Landlord', account_type=Account.AccountType.FOREIGN)
         self.supermarket, _ = Account.objects.get_or_create(
-            name='Supermarket', account_type=Account.FOREIGN)
+            name='Supermarket', account_type=Account.AccountType.FOREIGN)
         self.insurer, _ = Account.objects.get_or_create(
-            name='Insurnace', account_type=Account.FOREIGN)
-        self.club, _ = Account.objects.get_or_create(name='Club', account_type=Account.FOREIGN)
+            name='Insurnace', account_type=Account.AccountType.FOREIGN)
+        self.club, _ = Account.objects.get_or_create(name='Club', account_type=Account.AccountType.FOREIGN)
 
         self.home, _ = Category.objects.get_or_create(name='Home')
         self.groceries, _ = Category.objects.get_or_create(name='Groceries')

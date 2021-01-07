@@ -140,11 +140,11 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
         next_month = self.current_month + relativedelta(months=1)
         two_months_ago = self.current_month - relativedelta(months=2)
         last_month = self.current_month - relativedelta(months=1)
-        splits = context['category'].splits.filter(account__account_type=Account.PERSONAL,
+        splits = context['category'].splits.filter(account__account_type=Account.AccountType.PERSONAL,
                                                    date__gte=self.current_month,
                                                    date__lt=next_month)
         last_two_months_splits = context['category'].splits.filter(
-            account__account_type=Account.PERSONAL,
+            account__account_type=Account.AccountType.PERSONAL,
             date__gte=two_months_ago, date__lt=self.current_month)
         sum_last_month = 0
         sum_two_months_ago = 0

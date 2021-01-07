@@ -7,7 +7,7 @@ from silverstrike.models import Account, Split
 class AccountQuerysetTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='Personal')
-        self.foreign = Account.objects.create(name='foreign', account_type=Account.FOREIGN)
+        self.foreign = Account.objects.create(name='foreign', account_type=Account.AccountType.FOREIGN)
 
     def test_personal_queryset(self):
         queryset = Account.objects.personal()
@@ -52,9 +52,9 @@ class AccountModelTests(TestCase):
     def test_account_type_str_method(self):
         account = Account.objects.create(name='first')
         self.assertEqual(account.account_type_str, 'Personal')
-        account.account_type = Account.FOREIGN
+        account.account_type = Account.AccountType.FOREIGN
         self.assertEqual(account.account_type_str, 'Foreign')
-        account.account_type = Account.SYSTEM
+        account.account_type = Account.AccountType.SYSTEM
         self.assertEqual(account.account_type_str, 'System')
 
     def test_account_transaction_number(self):

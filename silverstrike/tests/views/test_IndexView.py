@@ -15,7 +15,7 @@ class IndexViewTestCase(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal')
         self.foreign = Account.objects.create(
-            name="foreign account", account_type=Account.FOREIGN)
+            name="foreign account", account_type=Account.AccountType.FOREIGN)
 
     def test_menu_entry_IndexView(self):
         context = self.client.get(reverse('index')).context

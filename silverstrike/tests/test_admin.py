@@ -30,9 +30,9 @@ request.user = MockSuperUser()
 
 class AccountAdminTests(TestCase):
     def setUp(self):
-        self.first = create_account(name='first', account_type=Account.FOREIGN)
-        self.second = create_account(name='second', account_type=Account.FOREIGN)
-        self.third = create_account(name='third', account_type=Account.FOREIGN)
+        self.first = create_account(name='first', account_type=Account.AccountType.FOREIGN)
+        self.second = create_account(name='second', account_type=Account.AccountType.FOREIGN)
+        self.third = create_account(name='third', account_type=Account.AccountType.FOREIGN)
         self.personal = create_account(name='personal')
         create_transaction('first', self.personal, self.first, 50, Transaction.WITHDRAW)
         create_transaction('second', self.personal, self.second, 100, Transaction.WITHDRAW)

@@ -14,7 +14,7 @@ class UpdateRecurrenceDateTests(TestCase):
         self.client.login(username='admin', password='pass')
         self.account = Account.objects.create(name='first account')
         self.foreign = Account.objects.create(
-            name="other account", account_type=Account.FOREIGN)
+            name="other account", account_type=Account.AccountType.FOREIGN)
         self.recurrence = RecurringTransaction.objects.create(
             title='A recurrence',
             amount=500,

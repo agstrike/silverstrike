@@ -20,7 +20,7 @@ class ForeignAccountForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if models.Account.objects.filter(name=name, account_type=models.Account.FOREIGN).exists():
+        if models.Account.objects.filter(name=name, account_type=models.Account.AccountType.FOREIGN).exists():
             raise ValidationError(_('An account with this name already exists'))
         return name
 
@@ -34,7 +34,7 @@ class AccountCreateForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if models.Account.objects.filter(name=name, account_type=models.Account.PERSONAL).exists():
+        if models.Account.objects.filter(name=name, account_type=models.Account.AccountType.PERSONAL).exists():
             raise ValidationError(_('An account with this name already exists'))
         return name
 
@@ -85,9 +85,9 @@ class TransactionForm(forms.ModelForm):
     value_date = forms.DateField(required=False)
 
     src = forms.ModelChoiceField(queryset=models.Account.objects.filter(
-        account_type=models.Account.PERSONAL, active=True))
+        account_type=models.Account.AccountType.PERSONAL, active=True))
     dst = forms.ModelChoiceField(queryset=models.Account.objects.filter(
-        account_type=models.Account.PERSONAL, active=True))
+        account_type=models.Account.AccountType.PERSONAL, active=True))
 
     def save(self, commit=True):
         transaction = super().save(commit)
@@ -146,7 +146,7 @@ class WithdrawForm(TransactionForm):
     def clean_dst(self):
         account, _ = models.Account.objects.get_or_create(
             name=self.cleaned_data['dst'],
-            account_type=models.Account.FOREIGN)
+            account_type=models.Account.AccountType.FOREIGN)
         return account
 
     def clean(self):
@@ -160,7 +160,7 @@ class DepositForm(TransactionForm):
 
     def clean_src(self):
         account, _ = models.Account.objects.get_or_create(name=self.cleaned_data['src'],
-                                                          account_type=models.Account.FOREIGN)
+                                                          account_type=models.Account.AccountType.FOREIGN)
         return account
 
     def clean(self):
@@ -184,12 +184,12 @@ class RecurringTransactionForm(forms.ModelForm):
         super(RecurringTransactionForm, self).clean()
         src = self.cleaned_data['src']
         dst = self.cleaned_data['dst']
-        if src.account_type == models.Account.PERSONAL:
-            if dst.account_type == models.Account.PERSONAL:
+        if src.account_type == models.Account.AccountType.PERSONAL:
+            if dst.account_type == models.Account.AccountType.PERSONAL:
                 self.transaction_type = models.Transaction.TRANSFER
             else:
                 self.transaction_type = models.Transaction.WITHDRAW
-        elif dst.account_type == models.Account.PERSONAL:
+        elif dst.account_type == models.Account.AccountType.PERSONAL:
             self.transaction_type = models.Transaction.DEPOSIT
         else:
             raise forms.ValidationError(
@@ -217,7 +217,7 @@ class ReconcilationForm(forms.ModelForm):
     def save(self, commit=True):
         transaction = super().save(False)
         transaction.transaction_type = models.Transaction.SYSTEM
-        transaction.src = models.Account.objects.get(account_type=models.Account.SYSTEM)
+        transaction.src = models.Account.objects.get(account_type=models.Account.AccountType.SYSTEM)
         transaction.dst = models.Account.objects.get(pk=self.account)
 
         balance = self.cleaned_data['balance']
@@ -245,9 +245,9 @@ class SplitForm(forms.ModelForm):
         model = models.Split
         fields = ['title', 'account', 'opposing_account', 'date', 'amount', 'category']
     account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
-        account_type=models.Account.SYSTEM))
+        account_type=models.Account.AccountType.SYSTEM))
     opposing_account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
-        account_type=models.Account.SYSTEM))
+        account_type=models.Account.AccountType.SYSTEM))
 
 
 TransactionFormSet = forms.models.inlineformset_factory(
