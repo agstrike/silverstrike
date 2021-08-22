@@ -443,8 +443,8 @@ class RecurringTransaction(models.Model):
 
     @property
     def average_amount(self):
-        return Split.objects.personal().recurrence(self.id).aggregate(
-            models.Avg('amount'))['amount__avg']
+        return round(Split.objects.personal().recurrence(self.id).aggregate(
+            models.Avg('amount'))['amount__avg'], 2)
 
     @classmethod
     def outstanding_transaction_sum(cls):
