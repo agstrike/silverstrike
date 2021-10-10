@@ -25,6 +25,7 @@ class AccountAdmin(admin.ModelAdmin):
     actions = ['merge_accounts']
     search_fields = ['name']
 
+    @admin.action(description=_('Merges all selected accounts into the last instance provided'))
     def merge_accounts(self, request, queryset):
         accounts = list(queryset)
         if len(accounts) < 2:
