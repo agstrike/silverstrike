@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python: [3.6, 3.7, 3.8, 3.9]
-        tox: [django3.0, django3.1, django3.2, flake, codecov]
+        tox: [django3.2, flake, codecov]
         exclude:
         - python: 3.6
           tox: flake
