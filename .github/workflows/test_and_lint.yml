@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.6, 3.7, 3.8, 3.9, 3.10]
+        python: [3.6, 3.7, 3.8, 3.9, '3.10']
         tox: [django3.0, django3.1, django3.2, flake, codecov]
         exclude:
         - python: 3.6
