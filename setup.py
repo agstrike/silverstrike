@@ -34,6 +34,7 @@ setup(
         'django-widgets-improved',
         'django-allauth>=0.40',
         'python-dateutil',
+        'pytz',
         'django-cors-headers>=3.5',
     ],
     extras_require={
