@@ -1,0 +1,6 @@
+env
+.tox
+data
+.git
+__pycache__
+*.pyc

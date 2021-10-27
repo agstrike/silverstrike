@@ -110,3 +110,6 @@ coverage
 # vim tmp files
 *.swp
 .vscode
+
+
+data
