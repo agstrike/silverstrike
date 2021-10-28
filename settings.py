@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 
 # Quick-start development settings - unsuitable for production
@@ -149,10 +149,7 @@ LOGIN_URL = 'account_login'
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
-# Uncomment to prevent signup
-# ACCOUNT_ADAPTER = 'silverstrike.models.SignupDisabledAdapter'
-
-#APPEND_SLASH = False
+# APPEND_SLASH = False
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -181,4 +178,3 @@ LOGGING = {
         }
     }
 }
-
