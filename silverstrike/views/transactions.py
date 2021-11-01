@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils import formats
 from django.views import generic
 
 from silverstrike.forms import DepositForm, TransactionFormSet, TransferForm, WithdrawForm
@@ -75,6 +76,7 @@ class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
         context = super(TransactionCreate, self).get_context_data(**kwargs)
         context['menu'] = 'transactions'
         context['submenu'] = self.type
+        context['date_format'] = formats.get_format("DATE_INPUT_FORMATS")[0]
         return context
 
 
@@ -111,6 +113,7 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
+        context['date_format'] = formats.get_format("DATE_INPUT_FORMATS")[0]
         return context
 
 
