@@ -182,6 +182,9 @@ class SplitQuerySet(models.QuerySet):
     def personal(self):
         return self.filter(account__account_type=Account.AccountType.PERSONAL)
 
+    def personal_dashboard(self):
+        return self.filter(account__account_type=Account.AccountType.PERSONAL, account__show_on_dashboard=True)
+
     def income(self):
         return self.filter(opposing_account__account_type=Account.AccountType.FOREIGN, amount__gt=0)
 

@@ -21,6 +21,11 @@
     <button id="currentMonth" class="btn btn-s btn-default range-chooser">{% trans 'Current Month' %}</button>
     <!--button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button-->
   </div>
+  <div class="row text-right">
+      <span>
+      {% trans 'Include Non-dashboard Accounts' %} <input title="{% trans 'Include Non-dashboard Accounts' %}" type="checkbox" id="include_non_dashboard_accounts" class=""></input>
+      </span>&nbsp;
+  </div>
 </div>
 </div>
 <div class="row">
@@ -202,10 +207,46 @@ var one_month = 0;
 var three_months = 1;
 var six_months = 2;
 var twelve_months = 3;
+var current_chart_range = three_months;
 var accountChartData = new Array(4);
 var balanceChartData = new Array(4);
 var categoryChartData = new Array(4);
 
+function get_balance_data(url_data, callback) {
+  url = "";
+  if ($('#include_non_dashboard_accounts')[0].checked) {
+      switch (url_data) {
+          case one_month:
+              url = "{% url 'api_non_dashboard_balance' first_day_of_month last_day_of_month %}"
+              break;
+          case three_months:
+              url = "{% url 'api_non_dashboard_balance' minus_3_months today %}"
+              break;
+          case six_months:
+              url = "{% url 'api_non_dashboard_balance' minus_6_months today %}"
+              break;
+          case twelve_months:
+              url = "{% url 'api_non_dashboard_balance' minus_12_months today %}"
+              break;
+      }
+  } else {
+      switch (url_data) {
+          case one_month:
+              url = "{% url 'api_balance' first_day_of_month last_day_of_month %}"
+              break;
+          case three_months:
+              url = "{% url 'api_balance' minus_3_months today %}"
+              break;
+          case six_months:
+              url = "{% url 'api_balance' minus_6_months today %}"
+              break;
+          case twelve_months:
+              url = "{% url 'api_balance' minus_12_months today %}"
+              break;
+      }
+  }
+  $.getJSON(url, {}, function(res, status) { callback(res, status) });
+}
 
 // initialize
 $.getJSON("{% url 'api_accounts_balance' minus_3_months today %}", {}, function(res, status) {
@@ -223,7 +264,15 @@ $.getJSON("{% url 'category_spending' minus_3_months today %}", {}, function(res
 });
 
 // update charts
+$('#include_non_dashboard_accounts').click(function() {
+    get_balance_data(current_chart_range,  function(res, status) {
+        drawBalances(res);
+        balanceChartData[three_months] = res;
+    });
+});
+
 $('#12month').click(function() {
+  current_chart_range = twelve_months;
   if (accountChartData[twelve_months] == null) {
     $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
       updateAccountChart(res);
@@ -233,7 +282,7 @@ $('#12month').click(function() {
       updateAccountChart(accountChartData[twelve_months]);
   }
   if (balanceChartData[twelve_months] == null) {
-    $.getJSON("{% url 'api_balance' minus_12_months today %}", {}, function(res, status) {
+    get_balance_data(twelve_months, function(res, status) {
       updateBalanceChart(res);
       balanceChartData[twelve_months] = res;
     });
@@ -252,6 +301,7 @@ $('#12month').click(function() {
 
 
 $('#6month').click(function() {
+  current_chart_range = six_months;
   if (accountChartData[six_months] == null) {
     $.getJSON("{% url 'api_accounts_balance' minus_6_months today %}", {}, function(res, status) {
       updateAccountChart(res);
@@ -262,7 +312,7 @@ $('#6month').click(function() {
   }
 
   if (balanceChartData[six_months] == null) {
-    $.getJSON("{% url 'api_balance' minus_6_months today %}", {}, function(res, status) {
+    get_balance_data(six_months, function(res, status) {
       updateBalanceChart(res);
       balanceChartData[six_months] = res;
     });
@@ -281,6 +331,7 @@ $('#6month').click(function() {
 });
 
 $('#3month').click(function() {
+  current_chart_range = three_months;
   updateAccountChart(accountChartData[three_months]);
   updateBalanceChart(balanceChartData[three_months]);
   updateCategoryChart(categoryChartData[three_months]);
@@ -288,6 +339,7 @@ $('#3month').click(function() {
 
 
 $('#currentMonth').click(function() {
+  current_chart_range = one_month;
   if (accountChartData[one_month] == null) {
     $.getJSON("{% url 'api_accounts_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
       updateAccountChart(res);
@@ -298,7 +350,7 @@ $('#currentMonth').click(function() {
   }
 
   if (balanceChartData[one_month] == null) {
-    $.getJSON("{% url 'api_balance' first_day_of_month last_day_of_month %}", {}, function(res, status) {
+    get_balance_data(one_month, function(res, status) {
       updateBalanceChart(res);
       balanceChartData[one_month] = res;
     });

@@ -18,7 +18,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         dend = last_day_of_month(dstart)
         context = super().get_context_data(**kwargs)
         context['menu'] = 'home'
-        queryset = Split.objects.personal().past()
+        queryset = Split.objects.personal_dashboard().past()
         context['balance'] = queryset.aggregate(
             models.Sum('amount'))['amount__sum'] or 0
         queryset = queryset.date_range(dstart, dend)
