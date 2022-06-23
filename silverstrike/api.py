@@ -50,15 +50,28 @@ def get_account_balance(request, account_id, dstart, dend):
 
 
 @login_required
-def get_balances(request, dstart, dend):
+def get_balances(request, dstart, dend, include_non_dashboard_accounts=False):
+    return _get_balances(request, dstart, dend, False);
+
+
+@login_required
+def get_non_dashboard_balances(request, dstart, dend, include_non_dashboard_accounts=False):
+    return _get_balances(request, dstart, dend, True);
+
+
+def _get_balances(request, dstart, dend, include_non_dashboard_accounts=False):
     try:
         dstart = datetime.datetime.strptime(dstart, '%Y-%m-%d').date()
         dend = datetime.datetime.strptime(dend, '%Y-%m-%d').date()
     except ValueError:
         return HttpResponseBadRequest(_('Invalid date format, expected yyyy-mm-dd'))
-    balance = Split.objects.personal().exclude_transfers().filter(date__lt=dstart).aggregate(
-            models.Sum('amount'))['amount__sum'] or 0
-    splits = Split.objects.personal().exclude_transfers().date_range(dstart, dend).order_by('date')
+    if include_non_dashboard_accounts:
+        account_objects = Split.objects.personal()
+    else:
+        account_objects = Split.objects.personal_dashboard()
+    balance = account_objects.exclude_transfers().filter(date__lt=dstart).aggregate(
+        models.Sum('amount'))['amount__sum'] or 0
+    splits = account_objects.exclude_transfers().date_range(dstart, dend).order_by('date')
     data_points = []
     labels = []
     days = (dend - dstart).days

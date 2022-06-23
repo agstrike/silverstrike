@@ -85,6 +85,10 @@ class SplitQuerySet(models.QuerySet):
     def expense(self):
         return self.filter(opposing_account__account_type=AccountType.FOREIGN, amount__lt=0)
 
+    def personal_dashboard(self):
+        return self.filter(account__account_type=AccountType.PERSONAL,
+                           account__show_on_dashboard=True)
+
     def date_range(self, dstart, dend):
         return self.filter(date__gte=dstart, date__lte=dend)
 
