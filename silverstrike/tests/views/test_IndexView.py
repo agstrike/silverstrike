@@ -13,7 +13,8 @@ class IndexViewTestCase(TestCase):
         User.objects.create_superuser(username='admin', email='email@example.com', password='pass')
         self.client.login(username='admin', password='pass')
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
-        self.personal = Account.objects.create(name='personal')
+        self.personal = Account.objects.create(name='personal', show_on_dashboard=True)
+        self.cash = Account.objects.create(name='cash', show_on_dashboard=False)
         self.foreign = Account.objects.create(
             name="foreign account", account_type=AccountType.FOREIGN)
 
@@ -43,6 +44,14 @@ class IndexViewTestCase(TestCase):
                            Transaction.WITHDRAW, date(2100, 1, 1))
         context = self.client.get(reverse('index')).context
         self.assertEqual(context['balance'], 0)
+
+    def test_balance_does_not_count_non_dashboard_accounts(self):
+        create_transaction('meh', self.foreign, self.account, 1000,
+                           Transaction.DEPOSIT, date(2015, 1, 1))
+        create_transaction('meh', self.cash, self.foreign, 500,
+                           Transaction.DEPOSIT, date(2015, 1, 1))
+        context = self.client.get(reverse('index')).context
+        self.assertEqual(context['balance'], 1000)
 
     def test_income(self):
         pass
