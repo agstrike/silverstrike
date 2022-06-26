@@ -19,6 +19,7 @@
     <button id="6month" class="btn btn-s btn-default range-chooser">{% trans 'Last 6 Months' %}</button>
     <button id="3month" class="btn btn-s btn-default range-chooser">{% trans 'Last 3 Months' %}</button>
     <button id="currentMonth" class="btn btn-s btn-default range-chooser">{% trans 'Current Month' %}</button>
+    <button id="all-time" class="btn btn-s btn-default range-chooser">{% trans 'All Time' %}</button>
     <!--button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button-->
   </div>
 </div>
@@ -202,6 +203,7 @@ var one_month = 0;
 var three_months = 1;
 var six_months = 2;
 var twelve_months = 3;
+var all_time = 10;
 var accountChartData = new Array(4);
 var balanceChartData = new Array(4);
 var categoryChartData = new Array(4);
@@ -223,6 +225,34 @@ $.getJSON("{% url 'category_spending' minus_3_months today %}", {}, function(res
 });
 
 // update charts
+$('#all-time').click(function() {
+    if (accountChartData[twelve_months] == null) {
+        $.getJSON("{% url 'api_accounts_balance' all_time today %}", {}, function(res, status) {
+            updateAccountChart(res);
+            accountChartData[all_time] = res;
+        });
+    } else {
+        updateAccountChart(accountChartData[all_time]);
+    }
+    if (balanceChartData[all_time] == null) {
+        $.getJSON("{% url 'api_balance' all_time today %}", {}, function(res, status) {
+            updateBalanceChart(res);
+            balanceChartData[all_time] = res;
+        });
+    } else {
+        updateBalanceChart(balanceChartData[all_time]);
+    }
+    if (categoryChartData[all_time] == null) {
+        $.getJSON("{% url 'category_spending' all_time today %}", {}, function(res, status) {
+            updateCategoryChart(res);
+            categoryChartData[all_time] = res;
+        });
+    } else {
+        updateCategoryChart(categoryChartData[all_time]);
+    }
+});
+
+
 $('#12month').click(function() {
   if (accountChartData[twelve_months] == null) {
     $.getJSON("{% url 'api_accounts_balance' minus_12_months today %}", {}, function(res, status) {
