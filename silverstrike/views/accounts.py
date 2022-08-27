@@ -88,7 +88,7 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
         for b in balances:
             for a in accounts:
                 if a['id'] == b['account_id']:
-                    a['balance'] = b['amount__sum']
+                    a['balance'] = round(b['amount__sum'], 2)
         context['accounts'] = accounts
         return context
 

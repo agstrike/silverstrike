@@ -23,9 +23,9 @@ class IncomeExpenseReport(generic.TemplateView):
         for i, e in zip(incomes, expenses):
             result.append({
                 'month': i['m'],
-                'income': i['total'],
-                'expense': e['total'],
-                'total': i['total'] + e['total']
+                'income': round(i['total'], 2),
+                'expense': round(e['total'], 2),
+                'total': round(i['total'] + e['total'], 2)
             })
         context['result'] = result
         return context
