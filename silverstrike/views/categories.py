@@ -11,7 +11,7 @@ from django.views import generic
 
 from silverstrike.forms import CategoryAssignFormset
 from silverstrike.lib import last_day_of_month
-from silverstrike.models import Account, Category, Split
+from silverstrike.models import AccountType, Category, Split
 
 
 class CategoryIndex(LoginRequiredMixin, generic.ListView):
@@ -141,11 +141,11 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
         two_months_ago = self.current_month - relativedelta(months=2)
         last_month = self.current_month - relativedelta(months=1)
         splits = context['category'].splits.filter(
-            account__account_type=Account.AccountType.PERSONAL,
+            account__account_type=AccountType.PERSONAL,
             date__gte=self.current_month,
             date__lt=next_month)
         last_two_months_splits = context['category'].splits.filter(
-            account__account_type=Account.AccountType.PERSONAL,
+            account__account_type=AccountType.PERSONAL,
             date__gte=two_months_ago, date__lt=self.current_month)
         sum_last_month = 0
         sum_two_months_ago = 0

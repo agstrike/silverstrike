@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.models import Account, AccountType, RecurringTransaction, Transaction
 from silverstrike.tests import create_transaction
 
 
@@ -14,7 +14,7 @@ class UpdateRecurrenceDateTests(TestCase):
         self.client.login(username='admin', password='pass')
         self.account = Account.objects.create(name='first account')
         self.foreign = Account.objects.create(
-            name="other account", account_type=Account.AccountType.FOREIGN)
+            name="other account", account_type=AccountType.FOREIGN)
         self.recurrence = RecurringTransaction.objects.create(
             title='A recurrence',
             amount=500,

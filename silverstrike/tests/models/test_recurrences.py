@@ -3,7 +3,7 @@ from datetime import date
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.models import Account, AccountType, RecurringTransaction, Transaction
 from silverstrike.tests import create_transaction
 
 
@@ -12,7 +12,7 @@ class RecurrenceTests(TestCase):
         self.personal = Account.objects.create(name='personal')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
         self.date = date(2018, 1, 30)
         self.recurrence = RecurringTransaction.objects.create(

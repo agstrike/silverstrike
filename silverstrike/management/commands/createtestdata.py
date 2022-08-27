@@ -6,7 +6,8 @@ from dateutil.relativedelta import relativedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
-from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
+from silverstrike.models import (Account, AccountType, Category,
+                                 RecurringTransaction, Split, Transaction)
 
 
 class Command(BaseCommand):
@@ -32,7 +33,7 @@ class Command(BaseCommand):
         Split.objects.bulk_create(self.splits)
 
     def _prune(self):
-        Account.objects.exclude(account_type=Account.AccountType.SYSTEM).delete()
+        Account.objects.exclude(account_type=AccountType.SYSTEM).delete()
         Category.objects.all().delete()
         RecurringTransaction.objects.all().delete()
         Transaction.objects.all().delete()
@@ -47,20 +48,20 @@ class Command(BaseCommand):
         self.counter = 100
         self.work, _ = Account.objects.get_or_create(
             name='Work',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
         self.checking, _ = Account.objects.get_or_create(name='Checking', show_on_dashboard=True)
         self.savings, _ = Account.objects.get_or_create(name='Savings', show_on_dashboard=True)
 
         self.landlord, _ = Account.objects.get_or_create(
-            name='Landlord', account_type=Account.AccountType.FOREIGN)
+            name='Landlord', account_type=AccountType.FOREIGN)
         self.supermarket, _ = Account.objects.get_or_create(
-            name='Supermarket', account_type=Account.AccountType.FOREIGN)
+            name='Supermarket', account_type=AccountType.FOREIGN)
         self.insurer, _ = Account.objects.get_or_create(
-            name='Insurnace', account_type=Account.AccountType.FOREIGN)
+            name='Insurnace', account_type=AccountType.FOREIGN)
         self.club, _ = Account.objects.get_or_create(
             name='Club',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
         self.home, _ = Category.objects.get_or_create(name='Home')
         self.groceries, _ = Category.objects.get_or_create(name='Groceries')

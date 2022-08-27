@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account, Transaction
+from silverstrike.models import Account, AccountType, Transaction
 from silverstrike.tests import create_transaction
 
 
@@ -15,7 +15,7 @@ class IndexViewTestCase(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal')
         self.foreign = Account.objects.create(
-            name="foreign account", account_type=Account.AccountType.FOREIGN)
+            name="foreign account", account_type=AccountType.FOREIGN)
 
     def test_menu_entry_IndexView(self):
         context = self.client.get(reverse('index')).context

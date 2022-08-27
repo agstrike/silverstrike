@@ -2,7 +2,8 @@ from rest_framework import views, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
+from silverstrike.models import (Account, AccountType, Category,
+                                 RecurringTransaction, Split, Transaction)
 from silverstrike.rest import serializers
 from silverstrike.rest.permissions import ProtectSystemAccount
 from silverstrike.rest.serializers import (AccountSerializer, CategorySerializer,
@@ -59,12 +60,12 @@ class RecurrenceNameView(views.APIView):
 class PersonalAccountsView(views.APIView):
     def get(self, request, format=None):
         serializer = serializers.AccountSerializer(
-            Account.objects.filter(account_type=Account.AccountType.PERSONAL), many=True)
+            Account.objects.filter(account_type=AccountType.PERSONAL), many=True)
         return Response(serializer.data)
 
 
 class ForeignAccountsView(views.APIView):
     def get(self, request, format=None):
         serializer = serializers.AccountSerializer(
-            Account.objects.filter(account_type=Account.AccountType.FOREIGN), many=True)
+            Account.objects.filter(account_type=AccountType.FOREIGN), many=True)
         return Response(serializer.data)

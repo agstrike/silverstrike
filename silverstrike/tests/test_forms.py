@@ -2,7 +2,7 @@ from django.db import models
 from django.test import TestCase
 
 from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
-from silverstrike.models import Account, Split, Transaction
+from silverstrike.models import Account, AccountType, Split, Transaction
 
 
 class FormTests(TestCase):
@@ -49,9 +49,9 @@ class FormTests(TestCase):
             self.assertEqual(len(Split.objects.all()), 2 * i)
             self.assertEqual(len(Account.objects.all()), 4)  # System account is also present
             self.assertEqual(len(Account.objects.filter(
-                account_type=Account.AccountType.FOREIGN)), 1)
+                account_type=AccountType.FOREIGN)), 1)
             new_account = Account.objects.get(
-                account_type=Account.AccountType.FOREIGN)
+                account_type=AccountType.FOREIGN)
             self.assertEqual(Split.objects.all().aggregate(
                 models.Sum('amount'))['amount__sum'], 0)
             self.assertTrue(
@@ -78,9 +78,9 @@ class FormTests(TestCase):
             self.assertEqual(len(Split.objects.all()), 2 * i)
             self.assertEqual(len(Account.objects.all()), 4)  # System account is also present
             self.assertEqual(len(Account.objects.filter(
-                account_type=Account.AccountType.FOREIGN)), 1)
+                account_type=AccountType.FOREIGN)), 1)
             new_account = Account.objects.get(
-                account_type=Account.AccountType.FOREIGN)
+                account_type=AccountType.FOREIGN)
             self.assertTrue(
                 Split.objects.get(account_id=self.account.pk, opposing_account=new_account,
                                   amount=-123, transaction=transaction).is_withdraw)
@@ -107,7 +107,7 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEqual(len(Account.objects.filter(
-            account_type=Account.AccountType.FOREIGN)), 2)
+            account_type=AccountType.FOREIGN)), 2)
 
     def test_different_expense_accounts(self):
         data = {
@@ -125,7 +125,7 @@ class FormTests(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEqual(len(Account.objects.filter(
-            account_type=Account.AccountType.FOREIGN)), 2)
+            account_type=AccountType.FOREIGN)), 2)
 
     def test_transfer_to_same_account(self):
         data = {

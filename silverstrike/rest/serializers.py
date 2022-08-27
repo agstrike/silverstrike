@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
+from silverstrike.models import (Account, AccountType, Category,
+                                 RecurringTransaction, Split, Transaction)
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -10,7 +11,7 @@ class AccountSerializer(serializers.ModelSerializer):
         read_only_fields = ('last_modified',)
 
     def validate_account_type(self, value):
-        if value == Account.AccountType.SYSTEM:
+        if value == AccountType.SYSTEM:
             raise serializers.ValidationError("You can't create system accounts")
         return value
 
