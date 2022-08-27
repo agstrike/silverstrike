@@ -3,7 +3,7 @@ from datetime import date
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account, Transaction
+from silverstrike.models import Account, AccountType, Transaction
 from silverstrike.tests import create_transaction
 
 
@@ -12,7 +12,7 @@ class TransactionQuerySetTests(TestCase):
         self.personal = Account.objects.create(name='personal')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
     def test_last_10_returns_at_most_10(self):
         for i in range(1, 32):
@@ -36,7 +36,7 @@ class TransactionModelTests(TestCase):
         self.savings = Account.objects.create(name='savings')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
     def test_transaction_str_method(self):
         transaction = create_transaction('transaction', self.personal, self.foreign,

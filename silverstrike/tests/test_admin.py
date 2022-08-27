@@ -4,7 +4,7 @@ from django.contrib.admin.sites import AdminSite
 from django.test import TestCase
 
 from silverstrike.admin import AccountAdmin
-from silverstrike.models import Account, RecurringTransaction, Split, Transaction
+from silverstrike.models import Account, AccountType, RecurringTransaction, Split, Transaction
 from silverstrike.tests import create_account, create_transaction
 
 
@@ -30,9 +30,9 @@ request.user = MockSuperUser()
 
 class AccountAdminTests(TestCase):
     def setUp(self):
-        self.first = create_account(name='first', account_type=Account.AccountType.FOREIGN)
-        self.second = create_account(name='second', account_type=Account.AccountType.FOREIGN)
-        self.third = create_account(name='third', account_type=Account.AccountType.FOREIGN)
+        self.first = create_account(name='first', account_type=AccountType.FOREIGN)
+        self.second = create_account(name='second', account_type=AccountType.FOREIGN)
+        self.third = create_account(name='third', account_type=AccountType.FOREIGN)
         self.personal = create_account(name='personal')
         create_transaction('first', self.personal, self.first, 50, Transaction.WITHDRAW)
         create_transaction('second', self.personal, self.second, 100, Transaction.WITHDRAW)

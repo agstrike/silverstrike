@@ -3,7 +3,8 @@ from datetime import date
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account, Category, RecurringTransaction, Split, Transaction
+from silverstrike.models import (Account, AccountType, Category,
+                                 RecurringTransaction, Split, Transaction)
 from silverstrike.tests import create_transaction
 
 
@@ -13,7 +14,7 @@ class SplitQuerySetTests(TestCase):
         self.savings = Account.objects.create(name='savings')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
         self.transfer_transaction = create_transaction(
             'transfer', self.personal, self.savings, 100, Transaction.TRANSFER, date(2017, 1, 1))
@@ -101,7 +102,7 @@ class SplitModelTests(TestCase):
         self.savings = Account.objects.create(name='savings')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
     def test_split_str_method(self):
         transaction = create_transaction('meh', self.foreign, self.personal,

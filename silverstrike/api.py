@@ -6,14 +6,14 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as _
 
-from .models import Account, Split
+from .models import Account, AccountType, Split
 
 
 @login_required
 def get_accounts(request, account_type):
-    accounts = Account.objects.exclude(account_type=Account.AccountType.SYSTEM)
+    accounts = Account.objects.exclude(account_type=AccountType.SYSTEM)
     if account_type != 'all':
-        account_type = getattr(Account.AccountType, account_type)
+        account_type = getattr(AccountType, account_type)
         accounts = accounts.filter(account_type=account_type)
 
     return JsonResponse(list(accounts.values_list('name', flat=True)), safe=False)

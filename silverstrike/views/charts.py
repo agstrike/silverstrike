@@ -5,8 +5,8 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
-from silverstrike.models import Transaction
 from silverstrike.lib import last_day_of_month
+from silverstrike.models import Transaction
 
 
 class ChartView(LoginRequiredMixin, generic.TemplateView):

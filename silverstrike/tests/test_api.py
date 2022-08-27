@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account
+from silverstrike.models import Account, AccountType
 
 
 class ApiTests(TestCase):
@@ -13,14 +13,14 @@ class ApiTests(TestCase):
         self.client.login(username='admin', password='pass')
         Account.objects.bulk_create(
             [Account(name=t[1], account_type=t[0],
-                     show_on_dashboard=True) for t in Account.AccountType.choices])
+                     show_on_dashboard=True) for t in AccountType.choices])
 
     def test_get_accounts_return_value(self):
-        for t in Account.AccountType.choices:
+        for t in AccountType.choices:
             response = self.client.get(reverse('api_accounts', args=[t[1].upper()]))
             data = json.loads(response.content.decode('utf-8'))
             queryset = Account.objects.filter(account_type=t[0])
-            queryset = queryset.exclude(account_type=Account.AccountType.SYSTEM)
+            queryset = queryset.exclude(account_type=AccountType.SYSTEM)
             self.assertEqual(data, list(queryset.values_list('name', flat=True)))
 
     def test_get_account_balance_invalid_date(self):

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from silverstrike.models import Account
+from silverstrike.models import Account, AccountType
 
 
 class AccountIndexViewTests(TestCase):
@@ -12,9 +12,9 @@ class AccountIndexViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.AccountType.FOREIGN)
+            name="expense account", account_type=AccountType.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.AccountType.FOREIGN)
+            name="revenue account", account_type=AccountType.FOREIGN)
 
     def test_ChartView(self):
         # TODO

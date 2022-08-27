@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from silverstrike.forms import RecurringTransactionForm
-from silverstrike.models import Account, RecurringTransaction, Transaction
+from silverstrike.models import Account, AccountType, RecurringTransaction, Transaction
 
 
 class RecurringTransactionFormTests(TestCase):
@@ -48,7 +48,7 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_withdraw(self):
         personal = Account.objects.create(name='foo')
-        other = Account.objects.create(name='bar', account_type=Account.AccountType.FOREIGN)
+        other = Account.objects.create(name='bar', account_type=AccountType.FOREIGN)
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': personal.id, 'dst': other.id, 'interval': RecurringTransaction.MONTHLY,
@@ -60,7 +60,7 @@ class RecurringTransactionFormTests(TestCase):
 
     def test_deposit(self):
         personal = Account.objects.create(name='foo')
-        other = Account.objects.create(name='bar', account_type=Account.AccountType.FOREIGN)
+        other = Account.objects.create(name='bar', account_type=AccountType.FOREIGN)
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': other.id, 'dst': personal.id, 'interval': RecurringTransaction.MONTHLY,
@@ -71,8 +71,8 @@ class RecurringTransactionFormTests(TestCase):
         self.assertEqual(transaction.transaction_type, Transaction.DEPOSIT)
 
     def test_two_foreign_accounts(self):
-        first = Account.objects.create(name='foo', account_type=Account.AccountType.FOREIGN)
-        other = Account.objects.create(name='bar', account_type=Account.AccountType.FOREIGN)
+        first = Account.objects.create(name='foo', account_type=AccountType.FOREIGN)
+        other = Account.objects.create(name='bar', account_type=AccountType.FOREIGN)
         form = RecurringTransactionForm({
             'amount': 100, 'date': '2100-01-01', 'multiplier': 1,
             'src': other.id, 'dst': first.id, 'interval': RecurringTransaction.MONTHLY,

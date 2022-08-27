@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from silverstrike.models import Account, Split
+from silverstrike.models import Account, AccountType, Split
 
 
 class AccountQuerysetTests(TestCase):
@@ -9,7 +9,7 @@ class AccountQuerysetTests(TestCase):
         self.personal = Account.objects.create(name='Personal')
         self.foreign = Account.objects.create(
             name='foreign',
-            account_type=Account.AccountType.FOREIGN)
+            account_type=AccountType.FOREIGN)
 
     def test_personal_queryset(self):
         queryset = Account.objects.personal()
@@ -54,9 +54,9 @@ class AccountModelTests(TestCase):
     def test_account_type_str_method(self):
         account = Account.objects.create(name='first')
         self.assertEqual(account.account_type_str, 'Personal')
-        account.account_type = Account.AccountType.FOREIGN
+        account.account_type = AccountType.FOREIGN
         self.assertEqual(account.account_type_str, 'Foreign')
-        account.account_type = Account.AccountType.SYSTEM
+        account.account_type = AccountType.SYSTEM
         self.assertEqual(account.account_type_str, 'System')
 
     def test_account_transaction_number(self):

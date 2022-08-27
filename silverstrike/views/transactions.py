@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from silverstrike.forms import DepositForm, TransactionFormSet, TransferForm, WithdrawForm
-from silverstrike.models import Account, Split, Transaction
+from silverstrike.models import AccountType, Split, Transaction
 
 
 class TransactionDetailView(LoginRequiredMixin, generic.DetailView):
@@ -34,7 +34,7 @@ class TransactionIndex(LoginRequiredMixin, generic.ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(account__account_type=Account.AccountType.PERSONAL)
+        queryset = super().get_queryset().filter(account__account_type=AccountType.PERSONAL)
 
         if 'category' in self.request.GET:
             queryset = queryset.filter(category_id=self.request.GET['category'])

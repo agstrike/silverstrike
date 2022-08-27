@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.forms import DepositForm, TransferForm, WithdrawForm
-from silverstrike.models import Account, Transaction
+from silverstrike.models import Account, AccountType, Transaction
 
 
 class ViewTests(TestCase):
@@ -13,9 +13,9 @@ class ViewTests(TestCase):
         self.account = Account.objects.create(name='first account', show_on_dashboard=True)
         self.personal = Account.objects.create(name='personal account')
         self.expense = Account.objects.create(
-            name="expense account", account_type=Account.AccountType.FOREIGN)
+            name="expense account", account_type=AccountType.FOREIGN)
         self.revenue = Account.objects.create(
-            name="revenue account", account_type=Account.AccountType.FOREIGN)
+            name="revenue account", account_type=AccountType.FOREIGN)
 
     def test_context_TransactionIndex(self):
         context = self.client.get(reverse('transactions')).context

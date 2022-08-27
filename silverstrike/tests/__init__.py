@@ -1,6 +1,6 @@
 from datetime import date
 
-from silverstrike.models import Account, Split, Transaction
+from silverstrike.models import Account, AccountType, Split, Transaction
 
 
 def create_transaction(title, src, dst, amount, type, date=date.today(), category=None):
@@ -14,5 +14,5 @@ def create_transaction(title, src, dst, amount, type, date=date.today(), categor
     return t
 
 
-def create_account(name, account_type=Account.AccountType.PERSONAL):
+def create_account(name, account_type=AccountType.PERSONAL):
     return Account.objects.create(name=name, account_type=account_type)
