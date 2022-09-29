@@ -10,7 +10,21 @@ It is regularly updated from the master branch.
 
 ## Get SilverStrike running on your machine
 
-Setup instructions can be found in on the [website](https://silverstrike.org). There are instructions for a [development setup](https://silverstrike.org/dev-setup/) and others that are more suitable for a [production use](https://silverstrike.org/setup/).
+The easiest way to deploy SilverStrike is to clone this repository and use the provided docker-compose file. Check out you own branch so you can persist your configuration. 
+You need to set a SECRET_KEY and should update the domain names and then you can start it up. 
+You can generate yourself a random secrety key by running `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`
+
+After starting the container, you should create yourself a user account
+`docker-compose exec -it ags python manage.py createsuperuser`
+
+To update SilverStrike simply fetch the changes from GitHub and rebuild your container.
+
+By default sqlite is used which should be enough for a local installation. If you'd rather use postgresdb or mariadb you can uncomment the relevant parts in the docker-compose.
+
+In the deploy directory you can find a couple of files:
+- **nginx.conf** minimal nginx configuration for a reverse proxy setup
+- **local_settings.py** Use this file to override any of the settings found in `settings.py`
+- **demo_middleware.py** If you want to use some kind of external authentication you could use this as a starting point
 
 ## Contributing
 

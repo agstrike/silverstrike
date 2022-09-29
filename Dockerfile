@@ -2,7 +2,7 @@ FROM index.docker.io/library/python:slim
 
 WORKDIR /app
 # Copy the code
-ADD manage.py docker/requirements.txt docker/settings.py setup.py urls.py docker/wsgi.py /app/
+ADD manage.py deploy/requirements.txt deploy/settings.py setup.py urls.py deploy/wsgi.py /app/
 ADD silverstrike /app/silverstrike
 
 # install deps

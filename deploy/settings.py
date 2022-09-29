@@ -26,7 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST', 'localhost')]
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST')]
+CSRF_TRUSTED_ORIGINS=[os.environ.get('CSRF_TRUSTED_ORIGIN')]
 
 SITE_ID = 1
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

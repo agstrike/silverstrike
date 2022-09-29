@@ -1,0 +1,46 @@
+version: "3"
+services:
+  ags:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      # - SECRET_KEY=REPLACE_ME
+      - DATABASE_URL=sqlite:////data/db.sqlite3
+      # - DATABASE_URL=mysql://agsuser:agspassword@mariadb/agsdb
+      # - DATABASE_URL=postgres://agsuser:rootpassword@postgresdb/agsdb
+      - ALLOWED_HOST=demo.silverstrike.org
+      - CSRF_TRUSTED_ORIGIN=https://demo.silverstrike.org
+    ports:
+      - "21000:8000"
+    volumes:
+      - data:/data
+      - ./deploy/local_settings.py:/app/local_settings.py
+      # - ./deploy/demo_middleware.py:/app/demo_middleware.py
+    # depends_on:
+    #   - mariadb
+    #   - postgresdb
+
+  # postgresdb:
+  #   image: postgres:14
+  #   environment:
+  #     - POSTGRES_PASSWORD=rootpassword
+  #     - POSTGRES_DB=agsdb
+  #     - POSTGRES_USER=agsuser
+  #   volumes:
+  #     - postgresdb_data:/var/lib/postgresql/data
+
+  # mariadb:
+  #   image: mariadb:10
+  #   environment:
+  #     - MARIADB_ROOT_PASSWORD=rootpassword
+  #     - MARIADB_DATABASE=agsdb
+  #     - MARIADB_USER=agsuser
+  #     - MARIADB_PASSWORD=agspassword
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql
+volumes:
+  data:
+  # mariadb_data:
+  # postgresdb_data:
