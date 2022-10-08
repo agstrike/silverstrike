@@ -7,22 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.6, 3.7, 3.8, 3.9]
-        tox: [django3.2, flake, codecov]
+        python: [3.8, 3.9, '3.10']
+        tox: [django, flake, codecov]
         exclude:
-        - python: 3.6
-          tox: flake
-        - python: 3.6
-          tox: codecov
-        - python: 3.7
-          tox: flake
-        - python: 3.7
-          tox: codecov
         - python: 3.8
           tox: flake
         - python: 3.8
           tox: codecov
-
+        - python: 3.9
+          tox: flake
+        - python: 3.9
+          tox: codecov
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python }}
@@ -62,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./docker/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: simhnna/silverstrike:dev
 

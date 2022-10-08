@@ -23,7 +23,7 @@ Explain the problem and include additional details to help reproduce the problem
 
 ### Translation
 
-Translation is done using [crowdin](https://crowdin.com/project/silverstrike). You should be able to translate and suggest translations for existing languages right after creating an account there. If you would like to rights to approve suggestions for specific languages or add entirely new languages, don't hesitate to contact me on crowdin.
+Feel free to copy the english language translation, and create a pull request for your language
 
 
 ### Feature Requests

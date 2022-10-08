@@ -29,7 +29,7 @@ setup(
     packages=['silverstrike'],
     include_package_data=True,
     install_requires=[
-        'django>=3.1',
+        'django>=4.1',
         'djangorestframework>=3.12',
         'django-widgets-improved',
         'django-allauth>=0.40',
@@ -43,16 +43,16 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 4.1',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     keywords='finance django money money-manager',
-    python_requires='>=3.5',
+    python_requires='>=3.8',
 )
 
