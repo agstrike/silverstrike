@@ -1,9 +1,9 @@
-
 from datetime import date
 
 from django.db import models
 from django.urls import reverse
 
+from .errors import TransactionSplitConsistencyValidationError, TransactionSplitSumValidationError
 from .account_type import AccountType
 
 
@@ -42,6 +42,36 @@ class Transaction(models.Model):
                                    related_name='recurrences', blank=True, null=True)
 
     objects = TransactionQuerySet.as_manager()
+
+    def clean_amounts_per_transaction(self):
+        amounts_per_transaction = {}
+        split_amount_for_primary_account = 0
+
+        for split in self.splits.all():
+            if split.account not in amounts_per_transaction:
+                amounts_per_transaction[split.account] = 0
+            amounts_per_transaction[split.account] += split.amount
+            if split.opposing_account not in amounts_per_transaction:
+                amounts_per_transaction[split.opposing_account] = 0
+            amounts_per_transaction[split.opposing_account] += split.amount
+
+            if split.account == self.src:
+                split_amount_for_primary_account += split.amount
+
+        for account, amount in amounts_per_transaction.items():
+            if amount != 0:
+                raise TransactionSplitSumValidationError(account)
+
+        if self.is_split:
+            if split_amount_for_primary_account != self.amount:
+                raise TransactionSplitConsistencyValidationError(self.src)
+
+    def clean_fields(self, exclude=None):
+        self.clean_amounts_per_transaction()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
