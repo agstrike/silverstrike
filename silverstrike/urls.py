@@ -114,6 +114,8 @@ urlpatterns = [
 
     path('api/accounts/<account_type>/', api.get_accounts, name='api_accounts'),
     path('api/balance/<dstart>/<dend>/', api.get_balances, name='api_balance'),
+    path('api/non_dashboard_balance/<dstart>/<dend>/',
+         api.get_non_dashboard_balances, name='api_non_dashboard_balance'),
     path('api/account/<int:account_id>/balance/<dstart>/<dend>/',
          api.get_account_balance, name='api_account_balance'),
     path('api/accounts_balance/<dstart>/<dend>/',
