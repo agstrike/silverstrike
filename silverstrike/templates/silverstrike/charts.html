@@ -22,10 +22,11 @@
     <button id="all-time" class="btn btn-s btn-default range-chooser">{% trans 'All Time' %}</button>
     <!--button id="custom" class="btn btn-s btn-default range-chooser">Custom Range</button-->
   </div>
-  <div class="row text-right">
+    <div class="row text-right" style="margin-right: 18px;">
       <span>
-      {% trans 'Include Non-dashboard Accounts' %} <input title="{% trans 'Include Non-dashboard Accounts' %}" type="checkbox" id="include_non_dashboard_accounts" class=""></input>
-      </span>&nbsp;
+        <label for="include_non_dashboard_accounts">{% trans 'Include Non-dashboard Accounts' %}</label>
+        <input type="checkbox" id="include_non_dashboard_accounts"></input>
+      </span>
   </div>
 </div>
 </div>

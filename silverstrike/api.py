@@ -51,12 +51,12 @@ def get_account_balance(request, account_id, dstart, dend):
 
 @login_required
 def get_balances(request, dstart, dend, include_non_dashboard_accounts=False):
-    return _get_balances(request, dstart, dend, False);
+    return _get_balances(request, dstart, dend, False)
 
 
 @login_required
 def get_non_dashboard_balances(request, dstart, dend, include_non_dashboard_accounts=False):
-    return _get_balances(request, dstart, dend, True);
+    return _get_balances(request, dstart, dend, True)
 
 
 def _get_balances(request, dstart, dend, include_non_dashboard_accounts=False):
