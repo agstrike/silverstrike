@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as RestValidationError
 
-from silverstrike.models import Account, Transaction
+from silverstrike.models import Account, AccountType, Transaction
 from silverstrike.models.errors import TransactionSplitSumValidationError
 from silverstrike.rest.serializers import TransactionSerializer
 
@@ -38,7 +38,9 @@ def create_rest_transaction_with_splits(title, src, dst, amount, type, splits, d
 class RestTests(TestCase):
     def setUp(self):
         self.personal = Account.objects.create(name='personal')
-        self.foreign = Account.objects.create(name='foreign')
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=AccountType.FOREIGN)
 
     def test_rest_validates_required_fields_are_set(self):
         serializer = TransactionSerializer()
@@ -65,15 +67,16 @@ class RestTests(TestCase):
                             create_split("meh split 2",
                                          self.foreign,
                                          self.personal,
-                                         60)]
+                                         70)]
 
         with self.assertRaises(DjangoValidationError,
                                msg="create transaction with splits should validate "
                                    "transaction is in balance") as error:
-            create_rest_transaction_with_splits('meh', self.foreign, self.personal, -70,
-                                                Transaction.WITHDRAW,
-                                                unbalanced_split)
-        assert TransactionSplitSumValidationError(self.personal).message in error.exception.messages
-
-    def test_transaction_serialization_saves(self):
-        pass
+            create_rest_transaction_with_splits('meh',
+                                                src=self.personal,
+                                                dst=self.foreign,
+                                                amount=70,
+                                                type=Transaction.WITHDRAW,
+                                                splits=unbalanced_split)
+        self.assertIn(TransactionSplitSumValidationError(self.personal).message,
+                      error.exception.messages)

@@ -3,7 +3,8 @@ from datetime import date
 from django.db import models
 from django.urls import reverse
 
-from .errors import TransactionSplitConsistencyValidationError, TransactionSplitSumValidationError
+from .errors import TransactionAccountTypeValidationError, TransactionSignValidationError, \
+    TransactionSplitConsistencyValidationError, TransactionSplitSumValidationError
 from .account_type import AccountType
 
 
@@ -45,7 +46,7 @@ class Transaction(models.Model):
 
     def clean_amounts_per_transaction(self):
         amounts_per_transaction = {}
-        split_amount_for_primary_account = 0
+        split_amount_for_source_account = 0
 
         for split in self.splits.all():
             if split.account not in amounts_per_transaction:
@@ -56,18 +57,63 @@ class Transaction(models.Model):
             amounts_per_transaction[split.opposing_account] += split.amount
 
             if split.account == self.src:
-                split_amount_for_primary_account += split.amount
+                split_amount_for_source_account += split.amount
 
         for account, amount in amounts_per_transaction.items():
             if amount != 0:
                 raise TransactionSplitSumValidationError(account)
 
-        if self.is_split:
-            if split_amount_for_primary_account != self.amount:
-                raise TransactionSplitConsistencyValidationError(self.src)
+        if self.splits.count() > 0:
+            split_amount_for_source_account *= -1
+
+            if split_amount_for_source_account != self.amount:
+                raise TransactionSplitConsistencyValidationError(self.src,
+                                                                 split_amount_for_source_account,
+                                                                 self.amount)
+
+    def clean_transaction_amount(self):
+        if self.amount < 0:
+            raise TransactionSignValidationError()
+
+    def clean_transaction_deposit_accounts(self):
+        if self.src.account_type != AccountType.FOREIGN:
+            raise TransactionAccountTypeValidationError(self.src.account_type_str, "Deposit",
+                                                        "source")
+        if self.dst.account_type != AccountType.PERSONAL:
+            raise TransactionAccountTypeValidationError(self.dst.account_type_str, "Deposit",
+                                                        "destination")
+
+    def clean_transaction_withdraw_accounts(self):
+        if self.src.account_type != AccountType.PERSONAL:
+            raise TransactionAccountTypeValidationError(self.src.account_type_str, "Withdraw",
+                                                        "source")
+        if self.dst.account_type != AccountType.FOREIGN:
+            raise TransactionAccountTypeValidationError(self.dst.account_type_str, "Withdraw",
+                                                        "destination")
+
+    def clean_transaction_transfer_accounts(self):
+        if self.src.account_type != AccountType.PERSONAL:
+            raise TransactionAccountTypeValidationError(self.src.account_type_str, "Transfer",
+                                                        "source")
+        if self.dst.account_type != AccountType.PERSONAL:
+            raise TransactionAccountTypeValidationError(self.dst.account_type_str, "Transfer",
+                                                        "destination")
+
+    def clean_transaction_types(self):
+        if self.transaction_type == self.DEPOSIT:
+            self.clean_transaction_deposit_accounts()
+        elif self.transaction_type == self.WITHDRAW:
+            self.clean_transaction_withdraw_accounts()
+        elif self.transaction_type == self.TRANSFER:
+            self.clean_transaction_transfer_accounts()
 
     def clean_fields(self, exclude=None):
-        self.clean_amounts_per_transaction()
+        if 'amount' not in exclude:
+            self.clean_transaction_amount()
+        if 'transaction_type' not in exclude:
+            self.clean_transaction_types()
+        if 'src' not in exclude:
+            self.clean_amounts_per_transaction()
 
     def save(self, *args, **kwargs):
         self.full_clean()
