@@ -48,7 +48,7 @@ class IndexViewTestCase(TestCase):
     def test_balance_does_not_count_non_dashboard_accounts(self):
         create_transaction('meh', self.foreign, self.account, 1000,
                            Transaction.DEPOSIT, date(2015, 1, 1))
-        create_transaction('meh', self.cash, self.foreign, 500,
+        create_transaction('meh', self.foreign, self.cash, 500,
                            Transaction.DEPOSIT, date(2015, 1, 1))
         context = self.client.get(reverse('index')).context
         self.assertEqual(context['balance'], 1000)

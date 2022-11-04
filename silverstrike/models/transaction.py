@@ -112,7 +112,7 @@ class Transaction(models.Model):
             self.clean_transaction_amount()
         if 'transaction_type' not in exclude:
             self.clean_transaction_types()
-        if 'src' not in exclude:
+        if 'src' not in exclude and not self._state.adding:
             self.clean_amounts_per_transaction()
 
     def save(self, *args, **kwargs):
