@@ -42,7 +42,7 @@ class SplitSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        required_fields = ('title', 'src', 'dst', 'date', 'transaction_type', 'splits')
+        required_fields = ('title', 'src', 'amount', 'dst', 'date', 'transaction_type', 'splits')
         read_only_fields = ('last_modified',)
         fields = ('id', *required_fields, *read_only_fields)
 
