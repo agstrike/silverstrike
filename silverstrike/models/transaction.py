@@ -45,10 +45,34 @@ class Transaction(models.Model):
     objects = TransactionQuerySet.as_manager()
 
     def clean_amounts_per_transaction(self):
-        amounts_per_transaction = {}
+
+        if self.splits.count() > 0:
+            all_splits = self.splits.all()
+            self.validate_transaction_split(all_splits)
+            self.validate_transaction_split_and_main_amount(self.src, self.amount, all_splits)
+
+    @staticmethod
+    def validate_transaction_split_and_main_amount(src, src_amount, splits) -> bool:
         split_amount_for_source_account = 0
 
-        for split in self.splits.all():
+        for split in splits:
+            if split.account == src:
+                split_amount_for_source_account += split.amount
+
+        split_amount_for_source_account *= -1
+
+        if split_amount_for_source_account != src_amount:
+            raise TransactionSplitConsistencyValidationError(src,
+                                                             split_amount_for_source_account,
+                                                             src_amount)
+
+        return True
+
+    @staticmethod
+    def validate_transaction_split(splits) -> bool:
+        amounts_per_transaction = {}
+
+        for split in splits:
             if split.account not in amounts_per_transaction:
                 amounts_per_transaction[split.account] = 0
             amounts_per_transaction[split.account] += split.amount
@@ -56,20 +80,11 @@ class Transaction(models.Model):
                 amounts_per_transaction[split.opposing_account] = 0
             amounts_per_transaction[split.opposing_account] += split.amount
 
-            if split.account == self.src:
-                split_amount_for_source_account += split.amount
-
         for account, amount in amounts_per_transaction.items():
             if amount != 0:
                 raise TransactionSplitSumValidationError(account)
 
-        if self.splits.count() > 0:
-            split_amount_for_source_account *= -1
-
-            if split_amount_for_source_account != self.amount:
-                raise TransactionSplitConsistencyValidationError(self.src,
-                                                                 split_amount_for_source_account,
-                                                                 self.amount)
+        return True
 
     def clean_transaction_amount(self):
         if self.amount < 0:
