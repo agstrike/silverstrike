@@ -25,6 +25,9 @@ class RecurrenceTests(TestCase):
             interval=RecurringTransaction.MONTHLY,
             transaction_type=Transaction.WITHDRAW)
 
+    def test_average_with_no_transactions(self):
+        self.assertEqual(self.recurrence.average_amount, '—')
+
     def test_str_method(self):
         self.assertEqual('{}'.format(self.recurrence), 'some recurrence')
 
