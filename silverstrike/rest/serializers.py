@@ -42,15 +42,18 @@ class SplitSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'title', 'date', 'transaction_type', 'splits', 'last_modified')
+        required_fields = ('title', 'src', 'amount', 'dst', 'date', 'transaction_type', 'splits')
         read_only_fields = ('last_modified',)
+        fields = ('id', *required_fields, *read_only_fields)
 
     splits = SplitSerializer(many=True)
 
     def validate(self, data):
-        split_sum = sum([split['amount'] for split in data['splits']])
-        if split_sum != 0:
-            raise serializers.ValidationError("The sum of splits does not balance")
+        # most of the validation will be done during create
+        for field in TransactionSerializer.Meta.required_fields:
+            if data.get(field) is None:
+                raise serializers.ValidationError(
+                    f"Not all fields are specified. Missing field {field}")
         return data
 
     def create(self, validated_data):
@@ -59,6 +62,8 @@ class TransactionSerializer(serializers.ModelSerializer):
 
         for split in split_data:
             Split.objects.create(transaction=transaction, **split)
+
+        transaction.full_clean()
         return transaction
 
     def update(self, instance, validated_data):

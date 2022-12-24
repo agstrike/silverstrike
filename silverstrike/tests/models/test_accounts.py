@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from silverstrike.models import Account, AccountType, Split
+from silverstrike.models import Account, AccountType, Split, Transaction
+from silverstrike.tests import create_transaction, create_transaction_with_splits, \
+    create_transaction_without_split
 
 
 class AccountQuerysetTests(TestCase):
@@ -42,6 +44,12 @@ class AccountQuerysetTests(TestCase):
 
 
 class AccountModelTests(TestCase):
+    def setUp(self):
+        self.personal = Account.objects.create(name='Personal')
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=AccountType.FOREIGN)
+
     def test_account_str_method(self):
         account = Account.objects.create(name='some_account')
         self.assertEqual(str(account), account.name)
@@ -83,3 +91,41 @@ class AccountModelTests(TestCase):
         account.set_initial_balance(10)
         split = Split.objects.first()
         self.assertTrue(split.is_system)
+
+    def test_account_balance_with_simple_withdraw_transaction_does_not_affect_balance(self):
+        create_transaction_without_split(
+            title="some transaction",
+            src=self.personal,
+            dst=self.foreign,
+            type=Transaction.WITHDRAW,
+            amount=50)
+
+        self.assertEqual(self.personal.balance, 0)
+        self.assertEqual(self.foreign.balance, 0)
+
+    def test_account_balance_withdraw_transaction(self):
+        create_transaction(
+            title="some transaction",
+            src=self.personal,
+            dst=self.foreign,
+            type=Transaction.WITHDRAW,
+            amount=50)
+
+        self.assertEqual(self.personal.balance, -50)
+        self.assertEqual(self.foreign.balance, 50)
+
+    def test_account_balance_with_simple_deposit_transaction(self):
+        create_transaction(
+            title="some transaction",
+            src=self.foreign,
+            dst=self.personal,
+            type=Transaction.DEPOSIT,
+            amount=50)
+
+        self.assertEqual(self.personal.balance, 50)
+        self.assertEqual(self.foreign.balance, -50)
+
+    def initial_balance(self):
+        account = Account.objects.create(name='some_account')
+        self.assertEqual(account.balance, 0)
+        return account

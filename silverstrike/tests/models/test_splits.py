@@ -1,11 +1,14 @@
 from datetime import date
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 
 from silverstrike.models import (Account, AccountType, Category,
                                  RecurringTransaction, Split, Transaction)
-from silverstrike.tests import create_transaction
+from silverstrike.models import TransactionSplitConsistencyValidationError, \
+    TransactionSplitSumValidationError
+from silverstrike.tests import create_transaction, create_transaction_with_splits
 
 
 class SplitQuerySetTests(TestCase):
@@ -105,8 +108,11 @@ class SplitModelTests(TestCase):
             account_type=AccountType.FOREIGN)
 
     def test_split_str_method(self):
-        transaction = create_transaction('meh', self.foreign, self.personal,
-                                         100, Transaction.DEPOSIT)
+        transaction = create_transaction('meh',
+                                         src=self.foreign,
+                                         dst=self.personal,
+                                         amount=100,
+                                         type=Transaction.DEPOSIT)
         split = transaction.splits.first()
         self.assertEqual(str(split), split.title)
 
@@ -116,3 +122,130 @@ class SplitModelTests(TestCase):
         split = Split.objects.first()
         self.assertEqual(split.get_absolute_url(), reverse('transaction_detail',
                                                            args=[split.transaction.id]))
+
+
+class SplitValidationTests(TestCase):
+    def setUp(self):
+        self.personal = Account.objects.create(name='personal')
+        self.savings = Account.objects.create(name='savings')
+        self.foreign = Account.objects.create(
+            name='foreign',
+            account_type=AccountType.FOREIGN)
+
+    def test_split_raises_validation_error_for_unbalanced_sum(self):
+        unbalanced_split = [
+            Split(title="meh split 1",
+                  account=self.personal,
+                  opposing_account=self.foreign,
+                  amount=-50,
+                  date=date.today()),
+            Split(title="meh split 2",
+                  account=self.foreign,
+                  opposing_account=self.personal,
+                  amount=70,
+                  date=date.today())
+        ]
+
+        with self.assertRaises(ValidationError,
+                               msg="create transaction with splits should validate "
+                                   "transaction is in balance") as error:
+            create_transaction_with_splits('meh',
+                                           self.personal,
+                                           self.foreign,
+                                           70,
+                                           Transaction.WITHDRAW,
+                                           unbalanced_split)
+        self.assert_split_sum_error(error, self.personal)
+
+    def test_split_validates_amount_sum(self):
+        balanced_split = [
+            Split(title="meh split 1", account=self.personal, opposing_account=self.foreign,
+                  amount=-50, date=date.today()),
+            Split(title="meh split 2", account=self.foreign, opposing_account=self.personal,
+                  amount=25, date=date.today()),
+            Split(title="meh split 3", account=self.foreign, opposing_account=self.personal,
+                  amount=25, date=date.today()),
+        ]
+
+        create_transaction_with_splits('meh', self.personal, self.foreign, 50,
+                                       Transaction.WITHDRAW,
+                                       balanced_split)
+
+    def test_transaction_validates_split_sum_is_correct_sign_withdraw(self):
+        balanced_split = [
+            Split(title="meh split 1", account=self.personal, opposing_account=self.foreign,
+                  amount=50, date=date.today()),
+            Split(title="meh split 1", account=self.foreign, opposing_account=self.personal,
+                  amount=-50, date=date.today()),
+        ]
+
+        with self.assertRaises(ValidationError,
+                               msg="create transaction with splits should validate "
+                                   "transaction consistent with split") as error:
+            create_transaction_with_splits('meh', self.personal, self.foreign, 50,
+                                           Transaction.WITHDRAW,
+                                           balanced_split)
+        self.assertIn(TransactionSplitConsistencyValidationError(
+            self.personal, "-50.00", 50).message, error.exception.messages)
+
+    def test_transaction_validates_split_sum_is_correct_sign_deposit(self):
+        balanced_split = [
+            Split(title="meh split 1", account=self.personal, opposing_account=self.foreign,
+                  amount=-50, date=date.today()),
+            Split(title="meh split 2", account=self.foreign, opposing_account=self.personal,
+                  amount=50, date=date.today()),
+        ]
+
+        with self.assertRaises(ValidationError,
+                               msg="create transaction with splits should validate "
+                                   "transaction consistent with split") as error:
+            create_transaction_with_splits('meh',
+                                           src=self.foreign,
+                                           dst=self.personal,
+                                           amount=50,
+                                           type=Transaction.DEPOSIT,
+                                           splits=balanced_split)
+        self.assertIn(TransactionSplitConsistencyValidationError(
+            self.foreign, "-50.00", 50).message, error.exception.messages)
+
+    def test_transaction_validates_split_sum_is_correct_sign_transfer(self):
+        balanced_split = [
+            Split(title="meh split 1", account=self.personal, opposing_account=self.savings,
+                  amount=-50, date=date.today()),
+            Split(title="meh split 2", account=self.savings, opposing_account=self.personal,
+                  amount=50, date=date.today()),
+        ]
+
+        with self.assertRaises(ValidationError,
+                               msg="create transaction with splits should validate "
+                                   "transaction consistent with split") as error:
+            create_transaction_with_splits('meh',
+                                           src=self.savings,
+                                           dst=self.personal,
+                                           amount=50,
+                                           type=Transaction.TRANSFER,
+                                           splits=balanced_split)
+        self.assertIn(TransactionSplitConsistencyValidationError(
+            self.savings, "-50.00", 50).message, error.exception.messages)
+
+    def test_transaction_validates_split_sum_is_transaction_amount(self):
+        balanced_split = [
+            Split(title="meh split 1", account=self.personal, opposing_account=self.foreign,
+                  amount=-50, date=date.today()),
+            Split(title="meh split 2", account=self.foreign, opposing_account=self.personal,
+                  amount=25, date=date.today()),
+            Split(title="meh split 3", account=self.foreign, opposing_account=self.personal,
+                  amount=25, date=date.today()),
+        ]
+
+        with self.assertRaises(ValidationError,
+                               msg="create transaction with splits should validate "
+                                   "transaction consistent with split") as error:
+            create_transaction_with_splits('meh', self.personal, self.foreign, 70,
+                                           Transaction.WITHDRAW,
+                                           balanced_split)
+        self.assertIn(TransactionSplitConsistencyValidationError(
+            self.personal, "50.00", 70).message, error.exception.messages)
+
+    def assert_split_sum_error(self, error, account):
+        self.assertIn(TransactionSplitSumValidationError(account).message, error.exception.messages)

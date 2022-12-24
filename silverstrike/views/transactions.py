@@ -131,10 +131,20 @@ class SplitCreate(LoginRequiredMixin, generic.edit.CreateView):
         if form.is_valid():
             transaction = form.save(commit=False)
             formset = self.formset_class(self.request.POST, instance=transaction)
-            if formset.is_valid():
+            splits = []
+            for f in formset.forms:
+                splits.append(f.instance)
+            if formset.is_valid() \
+                    and Transaction.validate_transaction_split(splits) \
+                    and Transaction.validate_transaction_split_and_main_amount(transaction.src,
+                                                                               transaction.amount,
+                                                                               splits):
+
                 transaction.save()
                 formset.save()
                 return HttpResponseRedirect(reverse('transaction_detail', args=[transaction.id]))
+            else:
+                raise ValueError(f"Formset is not valid: {formset.errors}")
         return self.render_to_response(self.get_context_data(form=form))
 
 
@@ -161,6 +171,7 @@ class SplitUpdate(LoginRequiredMixin, generic.edit.UpdateView):
                 split_sums = sum([x for x in fields if x is not None])
                 if split_sums == 0:
                     transaction.save()
+                    transaction.clean_amounts_per_transaction(formset)
                     formset.save()
                     return HttpResponseRedirect(reverse('transaction_detail',
                                                         args=[transaction.id]))
