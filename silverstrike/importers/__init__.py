@@ -1,10 +1,12 @@
-from . import dkb, dkb_visa, pc_mastercard, volksbank
+from . import dkb, dkb_visa, pc_mastercard, volksbank, boa, chase
 
 IMPORTERS = [
     dkb,
     dkb_visa,
     pc_mastercard,
     volksbank,
+    boa,
+    chase,
 ]
 
 IMPORTER_NAMES = [
@@ -12,6 +14,8 @@ IMPORTER_NAMES = [
     'DKB Visa',
     'PC MasterCard',
     'Volksbank',
+    'Bank of America',
+    'Chase',
 ]
 
 try:
