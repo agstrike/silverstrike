@@ -16,6 +16,11 @@ class RecurrenceCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = RecurringTransaction
     success_url = reverse_lazy('recurrences')
 
+    def get_form_kwargs(self):
+        kwargs = super(RecurrenceCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 class ReccurrenceSetNextOccurence(LoginRequiredMixin, generic.View):
 
@@ -41,6 +46,11 @@ class RecurrenceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     form_class = RecurringTransactionForm
     model = RecurringTransaction
     success_url = reverse_lazy('recurrences')
+
+    def get_form_kwargs(self):
+        kwargs = super(RecurrenceUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateView):
@@ -74,6 +84,11 @@ class RecurrenceTransactionCreateView(LoginRequiredMixin, generic.edit.CreateVie
         self.object.save()
         self.recurrence.update_date(save=True)
         return response
+
+    def get_form_kwargs(self):
+        kwargs = super(RecurrenceTransactionCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class RecurrenceDeleteView(LoginRequiredMixin, generic.edit.DeleteView):

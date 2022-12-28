@@ -27,6 +27,10 @@ class ForeignAccountForm(forms.ModelForm):
 
 
 class AccountCreateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(AccountCreateForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.Account
         fields = ['name', 'initial_balance', 'active', 'show_on_dashboard']
@@ -41,9 +45,13 @@ class AccountCreateForm(forms.ModelForm):
         return name
 
     def save(self, commit=True):
-        account = super(AccountCreateForm, self).save(commit)
+        account = super(AccountCreateForm, self).save(commit=False)
+        account.author = self.request.user
+        account.save()
         if self.cleaned_data['initial_balance']:
-            account.set_initial_balance(self.cleaned_data['initial_balance'])
+            initial_balance = self.cleaned_data['initial_balance']
+            author = self.request.user
+            account.set_initial_balance(author, initial_balance)
         return account
 
 
@@ -76,6 +84,10 @@ BudgetFormSet = forms.formset_factory(BudgetForm, extra=0)
 
 
 class TransactionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(TransactionForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.Transaction
         fields = ['title', 'src', 'dst',
@@ -92,18 +104,23 @@ class TransactionForm(forms.ModelForm):
         account_type=models.AccountType.PERSONAL, active=True))
 
     def save(self, commit=True):
-        transaction = super().save(commit)
+        author = self.request.user
+        transaction = super().save(commit=False)
+        transaction.author = author
+        transaction = super().save()
         src = transaction.src
         dst = transaction.dst
         amount = transaction.amount
         value_date = self.cleaned_data.get('value_date') or transaction.date
         models.Split.objects.update_or_create(
+            author = author,
             transaction=transaction, amount__lt=0,
             defaults={'amount': -amount, 'account': src,
                       'opposing_account': dst, 'date': value_date,
                       'title': transaction.title,
                       'category': self.cleaned_data['category']})
         models.Split.objects.update_or_create(
+            author = author,
             transaction=transaction, amount__gt=0,
             defaults={'amount': amount, 'account': dst,
                       'opposing_account': src, 'date': value_date,
@@ -147,6 +164,7 @@ class WithdrawForm(TransactionForm):
 
     def clean_dst(self):
         account, _ = models.Account.objects.get_or_create(
+            author=self.request.user,
             name=self.cleaned_data['dst'],
             account_type=models.AccountType.FOREIGN)
         return account
@@ -162,6 +180,7 @@ class DepositForm(TransactionForm):
 
     def clean_src(self):
         account, _ = models.Account.objects.get_or_create(
+            author=self.request.user,
             name=self.cleaned_data['src'],
             account_type=models.AccountType.FOREIGN)
         return account
@@ -172,6 +191,10 @@ class DepositForm(TransactionForm):
 
 
 class RecurringTransactionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(RecurringTransactionForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.RecurringTransaction
         fields = ['title', 'date', 'amount', 'src', 'dst', 'category',
@@ -201,6 +224,7 @@ class RecurringTransactionForm(forms.ModelForm):
     def save(self, commit=False):
         recurrence = super(RecurringTransactionForm, self).save(commit=False)
         recurrence.transaction_type = self.transaction_type
+        recurrence.author = self.request.user
         recurrence.save()
         return recurrence
 

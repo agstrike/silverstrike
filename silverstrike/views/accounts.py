@@ -20,6 +20,13 @@ class AccountCreate(LoginRequiredMixin, generic.edit.CreateView):
         context = super(AccountCreate, self).get_context_data(**kwargs)
         context['menu'] = 'accounts'
         return context
+    
+    def get_form_kwargs(self):
+        kwargs = super(AccountCreate, self).get_form_kwargs()
+        if kwargs['instance'] is None:
+            kwargs['instance'] = Account()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
@@ -31,6 +38,13 @@ class ForeignAccountCreate(LoginRequiredMixin, generic.edit.CreateView):
         account.account_type = AccountType.FOREIGN
         account.save()
         return HttpResponseRedirect(reverse_lazy('foreign_accounts'))
+    
+    def get_form_kwargs(self):
+        kwargs = super(AccountCreate, self).get_form_kwargs()
+        if kwargs['instance'] is None:
+            kwargs['instance'] = Account()
+        kwargs['instance'].author = self.request.user
+        return kwargs
 
 
 class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
@@ -39,13 +53,21 @@ class AccountUpdate(LoginRequiredMixin, generic.edit.UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == AccountType.SYSTEM:
+        if (
+            self.object.author != self.request.user
+            or
+            self.object.account_type == AccountType.SYSTEM
+           ):
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.post(self, request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.account_type == AccountType.SYSTEM:
+        if (
+            self.object.author != self.request.user
+            or
+            self.object.account_type == Account.AccountType.SYSTEM
+           ):
             return HttpResponse(_('You are not allowed to edit this account'), status=403)
         return generic.edit.ProcessFormView.get(self, request, *args, **kwargs)
 
@@ -60,6 +82,30 @@ class AccountDelete(LoginRequiredMixin, generic.edit.DeleteView):
     queryset = Account.objects.exclude(account_type=AccountType.SYSTEM)
     success_url = reverse_lazy('accounts')
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if (
+            self.object.author != self.request.user
+            or
+            self.object.account_type == Account.AccountType.SYSTEM
+           ):
+           return HttpResponse(_('You are not allowed to delete this account'), status=403)
+        if self.object.account_type == Account.AccountType.SYSTEM:
+            return HttpResponse(_('You are not allowed to delete this account'), status=403)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if (
+            self.object.author != self.request.user
+            or
+            self.object.account_type == Account.AccountType.SYSTEM
+           ):
+            return HttpResponse(_('You are not allowed to delete this account'), status=403)
+        self.object.delete()
+        return HttpResponseRedirect(self.success_url)
+
 
 class AccountIndex(LoginRequiredMixin, generic.TemplateView):
     template_name = 'silverstrike/accounts.html'
@@ -67,9 +113,10 @@ class AccountIndex(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'accounts'
-        balances = Split.objects.personal().past().order_by('account_id').values(
+        balances = Split.objects.personal().past().order_by('account_id').filter(
+            author=self.request.user).values(
             'account_id').annotate(Sum('amount'))
-        accounts = list(Account.objects.personal().values('id', 'name', 'active'))
+        accounts = list(Account.objects.filter(author=self.request.user).personal().values('id', 'name', 'active'))
         for a in accounts:
             a['balance'] = 0
         for b in balances:
@@ -96,8 +143,12 @@ class AccountView(LoginRequiredMixin, generic.ListView):
             self.account = Account.objects.get(pk=self.kwargs['pk'])
         except Account.DoesNotExist:
             raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
-        if self.account.account_type == AccountType.SYSTEM:
-            return HttpResponse(_('Account not accessible'), status=403)
+        if (
+            self.account.author != self.request.user
+            or
+            self.account.account_type == Account.AccountType.SYSTEM
+           ):
+           return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
             self.dstart = None
             self.dend = None
@@ -161,7 +212,11 @@ class ReconcileView(LoginRequiredMixin, generic.edit.CreateView):
             self.account = Account.objects.get(pk=self.kwargs['pk'])
         except Account.DoesNotExist:
             raise Http404(_('Account with id {} could not be found'.format(self.kwargs['pk'])))
-        if self.account.account_type != AccountType.PERSONAL:
+        if (
+            self.account.author != self.request.user
+            or
+            self.account.account_type != Account.AccountType.PERSONAL
+           ):
             return HttpResponse(_('You can not reconcile this account'), status=403)
         return super(ReconcileView, self).dispatch(request, *args, **kwargs)
 

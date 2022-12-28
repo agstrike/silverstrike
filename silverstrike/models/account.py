@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 
 from .account_type import AccountType
 from .transaction import Split, Transaction
@@ -27,6 +28,8 @@ class AccountQuerySet(models.QuerySet):
 
 class Account(models.Model):
 
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True,
+        related_name='accounts')
     name = models.CharField(max_length=64)
     account_type = models.IntegerField(choices=AccountType.choices, default=AccountType.PERSONAL)
     active = models.BooleanField(default=True)
@@ -93,14 +96,17 @@ class Account(models.Model):
         data_points.append((dend, balance))
         return data_points
 
-    def set_initial_balance(self, amount):
+    def set_initial_balance(self, author, amount):
         system = Account.objects.get(account_type=AccountType.SYSTEM)
-        transaction = Transaction.objects.create(title=_('Initial Balance'),
+        transaction = Transaction.objects.create(author=author,
+                                                 title=_('Initial Balance'),
                                                  transaction_type=Transaction.SYSTEM,
                                                  src=system,
                                                  dst=self,
                                                  amount=amount)
-        Split.objects.create(transaction=transaction, amount=-amount,
+        Split.objects.create(author=author,
+                             transaction=transaction, amount=-amount,
                              account=system, opposing_account=self)
-        Split.objects.create(transaction=transaction, amount=amount,
+        Split.objects.create(author=author,
+                             transaction=transaction, amount=amount,
                              account=self, opposing_account=system)

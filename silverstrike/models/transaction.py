@@ -3,6 +3,7 @@ from datetime import date
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from .account_type import AccountType
 
@@ -30,6 +31,8 @@ class Transaction(models.Model):
     class Meta:
         ordering = ['-date', 'title']
 
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True,
+        related_name='transactions')
     title = models.CharField(max_length=64)
     date = models.DateField(default=date.today)
     notes = models.TextField(blank=True, null=True)
@@ -115,6 +118,8 @@ class SplitQuerySet(models.QuerySet):
 
 
 class Split(models.Model):
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True,
+            related_name='splits')
     account = models.ForeignKey('Account', models.CASCADE, related_name='incoming_transactions')
     opposing_account = models.ForeignKey('Account', models.CASCADE,
                                          related_name='outgoing_transactions')

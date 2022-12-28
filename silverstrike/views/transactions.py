@@ -61,7 +61,13 @@ class TransactionCreate(LoginRequiredMixin, generic.edit.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.type = kwargs.pop('type')
+        self.author = self.request.user
         return super(TransactionCreate, self).dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(TransactionCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_form_class(self):
         if self.type == 'transfer':
@@ -108,6 +114,11 @@ class TransactionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         else:
             return TransferForm
 
+    def get_form_kwargs(self):
+        kwargs = super(TransactionUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'transactions'
@@ -132,6 +143,7 @@ class SplitCreate(LoginRequiredMixin, generic.edit.CreateView):
             transaction = form.save(commit=False)
             formset = self.formset_class(self.request.POST, instance=transaction)
             if formset.is_valid():
+                transaction.author = self.request.user
                 transaction.save()
                 formset.save()
                 return HttpResponseRedirect(reverse('transaction_detail', args=[transaction.id]))

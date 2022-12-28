@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 
 from .account import Account
 from .category import Category
@@ -57,6 +58,7 @@ class RecurringTransaction(models.Model):
 
     objects = RecurringTransactionManager()
 
+    author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     title = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     usual_month_day = models.PositiveIntegerField(default=0)
