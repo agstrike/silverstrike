@@ -146,7 +146,7 @@ class AccountView(LoginRequiredMixin, generic.ListView):
         if (
             self.account.author != self.request.user
             or
-            self.account.account_type == Account.AccountType.SYSTEM
+            self.account.account_type == AccountType.SYSTEM
            ):
            return HttpResponse(_('Account not accessible'), status=403)
         if self.kwargs['period'] == 'all':
