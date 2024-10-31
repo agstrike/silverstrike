@@ -4,9 +4,13 @@
 
 Webapp based on Django to manage personal finances
 
-## Demo
-There is a [demo](https://demo.silverstrike.org/) available.
-It is regularly updated from the master branch.
+
+> [!NOTE]  
+> Current status: I've moved on to managing my finances using a simplified workflow and am no longer actively using or developing Silverstrike.
+> 
+> I will continue keeping it compatible to current or at least LTS releases of django but won't be adding any features.
+> I'll be accepting merge requests and if somebody wants to continue working on it I'm open to transfering the project over eventually.
+
 
 ## Get SilverStrike running on your machine
 
@@ -34,10 +38,3 @@ If you speak languages other than english, you are welcome to help translate Sil
 If nothing of the above suits you, you can still contribute by opening issues about defects and things that could be improved or request entirely new features that you think would help others.
 
 More information can be found [here](https://github.com/agstrike/silverstrike/blob/master/CONTRIBUTING.md).
-
-## Branding
-
-SilverStrike is derived from the German name Silberschlag. Silberschlag is the name of a crater on the moon which is named after a German Scientist.
-
-SilverStrike is abbreviated as AgStrike or simply AgS. SilverStrike is pronounced AgS or SilverStrike.
-An alternative way of writing SilverStrike is `silverstrike` with no capital letters. Abbreviations have to be written as mentioned here.

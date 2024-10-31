@@ -10,8 +10,8 @@ services:
       - DATABASE_URL=sqlite:////data/db.sqlite3
       # - DATABASE_URL=mysql://agsuser:agspassword@mariadb/agsdb
       # - DATABASE_URL=postgres://agsuser:rootpassword@postgresdb/agsdb
-      - ALLOWED_HOST=demo.silverstrike.org
-      - CSRF_TRUSTED_ORIGIN=https://demo.silverstrike.org
+      - ALLOWED_HOST=example.com
+      - CSRF_TRUSTED_ORIGIN=https://example.com
     ports:
       - "21000:8000"
     volumes:
