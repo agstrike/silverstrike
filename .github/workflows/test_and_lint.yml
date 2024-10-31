@@ -7,16 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8, 3.9, '3.10']
+        python: [3.11, 3.12]
         tox: [django, flake, codecov]
         exclude:
-        - python: 3.8
+        - python: 3.11
           tox: flake
-        - python: 3.8
-          tox: codecov
-        - python: 3.9
-          tox: flake
-        - python: 3.9
+        - python: 3.11
           tox: codecov
     steps:
     - uses: actions/checkout@v1
