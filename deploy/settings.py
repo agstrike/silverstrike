@@ -170,6 +170,11 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugTrue',
         }
     },
+    'django': {
+        'handlers': ['console'],
+        'propagate': True,
+        'level': 'ERROR'
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG',

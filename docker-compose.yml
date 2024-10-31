@@ -6,12 +6,12 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      # - SECRET_KEY=REPLACE_ME
+      - SECRET_KEY=REPLACE_ME # replace this with a randomly generated value. Especially if running in production
       - DATABASE_URL=sqlite:////data/db.sqlite3
       # - DATABASE_URL=mysql://agsuser:agspassword@mariadb/agsdb
       # - DATABASE_URL=postgres://agsuser:rootpassword@postgresdb/agsdb
-      - ALLOWED_HOST=example.com
-      - CSRF_TRUSTED_ORIGIN=https://example.com
+      - ALLOWED_HOST=localhost # replace with used hostname
+      - CSRF_TRUSTED_ORIGIN=http://localhost:21000 # replace with used origin
     ports:
       - "21000:8000"
     volumes:
