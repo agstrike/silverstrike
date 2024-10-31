@@ -7,21 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8, 3.9, '3.10']
+        python: [3.11, 3.12]
         tox: [django, flake, codecov]
         exclude:
-        - python: 3.8
+        - python: 3.11
           tox: flake
-        - python: 3.8
-          tox: codecov
-        - python: 3.9
-          tox: flake
-        - python: 3.9
+        - python: 3.11
           tox: codecov
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
     - name: Install dependencies
@@ -40,21 +36,21 @@ jobs:
     steps:
     
       - name: Check Out Repo 
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: simhnna
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           context: ./
           file: ./Dockerfile
