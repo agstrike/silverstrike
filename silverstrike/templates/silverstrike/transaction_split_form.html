@@ -39,7 +39,7 @@
           </label>
           <div class="col-sm-8">
             {% if field|widget_type == 'dateinput' %}
-            {{ field|add_class:"form-control dateinput" }}
+            {{ field|add_class:"form-control" }}
             {% else %}
             {{ field|add_class:"form-control" }}
             {% endif %}
@@ -69,11 +69,7 @@
           <td class="text-center">{{ field }}</td>
           {% else %}
           <td class="form-group{% if field.errors %} has-error{% endif %}">
-            {% if field|widget_type == 'dateinput' %}
-            {{ field|add_class:"form-control dateinput" }}
-            {% else %}
             {{ field|add_class:"form-control" }}
-            {% endif %}
           </td>
           {% endif %}
           {% endfor %}

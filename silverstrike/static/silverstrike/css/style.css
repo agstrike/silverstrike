@@ -31,6 +31,11 @@
   line-height: inherit !important;
 }
 
+/* Fix for adminlte dateinput issue */
+input[type="date"].form-control {
+  line-height: unset;
+}
+
 /* fix for adminlte issue https://github.com/almasaeed2010/AdminLTE/issues/1607 */
 @media (max-width: 767px) {
   .skin-blue-light .main-header .navbar .dropdown-menu li a {

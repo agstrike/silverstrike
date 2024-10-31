@@ -80,11 +80,14 @@ class TransactionForm(forms.ModelForm):
         model = models.Transaction
         fields = ['title', 'src', 'dst',
                   'amount', 'date', 'value_date', 'category', 'notes']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
 
     amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=0.01)
     category = forms.ModelChoiceField(
         queryset=models.Category.objects.exclude(active=False).order_by('name'), required=False)
-    value_date = forms.DateField(required=False)
+    value_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
 
     src = forms.ModelChoiceField(queryset=models.Account.objects.filter(
         account_type=models.AccountType.PERSONAL, active=True))
@@ -176,6 +179,9 @@ class RecurringTransactionForm(forms.ModelForm):
         model = models.RecurringTransaction
         fields = ['title', 'date', 'amount', 'src', 'dst', 'category',
                   'interval', 'multiplier', 'weekend_handling', 'usual_month_day']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
 
     def clean_amount(self):
         amount = self.cleaned_data['amount']
@@ -247,6 +253,9 @@ class SplitForm(forms.ModelForm):
     class Meta:
         model = models.Split
         fields = ['title', 'account', 'opposing_account', 'date', 'amount', 'category']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
     account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(
         account_type=models.AccountType.SYSTEM))
     opposing_account = forms.ModelChoiceField(queryset=models.Account.objects.exclude(

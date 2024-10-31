@@ -21,11 +21,15 @@
       {% csrf_token %}
       <div class="form-group">
         <label class="control-label col-sm-2" for="{{ form.start.id_for_label }}">{{ form.start.label }}</label>
-        <div class="col-sm-8">{{ form.start|add_class:"form-control date-input" }}</div>
+        <div class="col-sm-8">
+          <input id="id_start" class="form-control" type="date" name="start">
+        </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="{{ form.end.id_for_label }}">{{ form.end.label }}</label>
-        <div class="col-sm-8">{{ form.end|add_class:"form-control date-input" }}</div>
+        <div class="col-sm-8">
+          <input id="id_end" class="form-control" type="date" name="end">
+        </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="{{ form.accounts.id_for_label }}">{{ form.accounts.label }}</label>
@@ -40,19 +44,4 @@
   </form>
 
 </div>
-{% endblock %}
-{% block scripts %}
-<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
-
-<script>
-$(function() {
-  $('.date-input').datepicker({
-  autoclose: true,
-  format: 'yyyy-mm-dd',
-  orientation: 'bottom'
-
-  });
-  $('.date-input').attr('autocomplete', 'off');
-})
-</script>
 {% endblock %}
